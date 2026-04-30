@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Auditoria Visual — Lucas Machut</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<style>
+  :root {
+    --ink: #0f0d0b;
+    --ivory: #f4ede0;
+    --ivory-dim: #e8ddd0;
+    --gold: #b8966a;
+    --gold-light: #d4b48a;
+    --mid: #6b6560;
+    --rule: rgba(184,150,106,0.25);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--ivory);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABhGlDQ1BJQ0MgcHJvZmlsZQAAeJx9kT1Iw0AYht+mSkUqDnYQcchQnSyIijhqFYpQIdQKrTqYXPoHTRqSFBdHwbXg4M9i1cHFWVcHV0EQ/AFxc3NSdJES70sKLWI8uLuHd+99uXsHCI0q06yeMUDTbTOViou5/KoYekUfBhBFTMIsY1ZSkvgdX/cI8P0uxlX+d3/GgFqwGBAQiWeZYdrEG8TTm7bBeZ84zIqySnxOPGbShcSPXFe8fONccljgmWEzm54jDhOLpQ5WOpgVTY14ijisajrlC7nLKuctznqt5lp98hcGC/rKMtdpDSOBRSwkQYECGzVUYMMmWqkUMynaj3fxhx2/RC6FXCswcixgAxWy6wcPgN+9tQqTk15SIgV0vzjOxzAQ2gWaDcd5HjvOyQkQfgautI6/0TZmvtEvtbXYETAIbFfXGscBe7uAQO9TRqyLUtIU4kLge+A9o0BfbcgPOP1kpuzu4DlAjmaWuAEODoGxAmWvebw7s7u3f892+vcDGRxyvwnxlIUAAAAJcEhZcwAALiMAAC4jAXilP3YAAAAHdElNRQfoBQkQHjmdOh9aAAAAGXRFWHRDb21tZW50AENyZWF0ZWQgd2l0aCBHSU1QV4EOFwAAABBJREFUaN7twQEBAAAAgiD/r25IQAEAAAAAAAAAAAAAAAAAAAAwBMEAAQ==");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.08;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .t-display {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+  }
+  .t-serif { font-family: 'Cormorant Garamond', serif; }
+
+  /* ── LAYOUT ── */
+  section { position: relative; }
+
+  .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  .container-wide {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  hr.rule {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 0;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ── SECTION: HERO ── */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 96px;
+    padding-top: 96px;
+    background: var(--ink);
+    overflow: hidden;
+  }
+
+  #hero .hero-eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 48px;
+  }
+
+  #hero .hero-headline {
+    font-size: clamp(48px, 6vw, 88px);
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    line-height: 1.05;
+    max-width: 820px;
+    color: var(--ivory);
+  }
+
+  #hero .hero-sub {
+    margin-top: 40px;
+    font-size: 16px;
+    color: var(--mid);
+    max-width: 420px;
+    line-height: 1.6;
+    letter-spacing: 0.01em;
+  }
+
+  #hero .hero-cta-row {
+    margin-top: 64px;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+
+  .btn-gold {
+    display: inline-block;
+    padding: 14px 36px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    cursor: pointer;
+    background: transparent;
+  }
+  .btn-gold:hover {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .hero-scroll-hint {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+  }
+
+  /* Decorative large number */
+  .deco-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(120px, 14vw, 200px);
+    font-weight: 300;
+    line-height: 1;
+    color: rgba(184,150,106,0.06);
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* ── SECTION: INTRO ── */
+  #intro {
+    padding: 120px 0;
+    background: var(--ivory);
+    color: var(--ink);
+  }
+
+  #intro .intro-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+  }
+
+  #intro .intro-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(24px, 2.8vw, 36px);
+    font-weight: 400;
+    line-height: 1.5;
+    max-width: 760px;
+    color: var(--ink);
+  }
+
+  #intro .intro-body em {
+    font-style: italic;
+    color: #5a4a3a;
+  }
+
+  #intro .intro-tagline {
+    margin-top: 48px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border-left: 2px solid var(--gold);
+    padding-left: 20px;
+  }
+
+  /* ── SECTION: PARA QUEM ── */
+  #para-quem {
+    padding: 120px 0;
+    background: var(--ink);
+  }
+
+  #para-quem .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 56px;
+  }
+
+  #para-quem .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ivory);
+    max-width: 600px;
+    margin-bottom: 64px;
+  }
+
+  .criteria-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .criteria-list li {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2vw, 22px);
+    font-weight: 400;
+    color: var(--ivory-dim);
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    transition: color 0.2s;
+  }
+  .criteria-list li:first-child { border-top: 1px solid var(--rule); }
+  .criteria-list li:hover { color: var(--ivory); }
+
+  .criteria-list li .li-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    color: var(--gold);
+    padding-top: 6px;
+    min-width: 28px;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ── SECTION: O QUE ANALISO ── */
+  #analiso {
+    padding: 120px 0;
+    background: #f4ede0;
+    color: var(--ink);
+  }
+
+  #analiso .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 56px;
+  }
+
+  #analiso .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 80px;
+  }
+
+  .platform-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .platform-card {
+    background: rgba(15,13,11,0.05);
+    padding: 48px 36px;
+    position: relative;
+  }
+
+  .platform-card .plat-name {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .platform-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .platform-card ul li {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    color: #3a3028;
+    padding-left: 16px;
+    position: relative;
+  }
+  .platform-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 4px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  /* ── SECTION: O QUE VOCE RECEBE ── */
+  #recebe {
+    padding: 120px 0;
+    background: var(--ink);
+  }
+
+  #recebe .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 56px;
+  }
+
+  #recebe .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 80px;
+  }
+
+  .offer-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .offer-card {
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .offer-card.free {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--rule);
+  }
+
+  .offer-card.paid {
+    background: var(--gold);
+    color: var(--ink);
+  }
+
+  .offer-card .offer-tag {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .offer-card.free .offer-tag { color: var(--gold); }
+  .offer-card.paid .offer-tag { color: rgba(15,13,11,0.6); }
+
+  .offer-card .offer-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: 36px;
+  }
+  .offer-card.free .offer-name { color: var(--ivory); }
+  .offer-card.paid .offer-name { color: var(--ink); }
+
+  .offer-card ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .offer-card ul li {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.5;
+    padding-left: 20px;
+    position: relative;
+  }
+  .offer-card.free ul li { color: var(--ivory-dim); }
+  .offer-card.paid ul li { color: rgba(15,13,11,0.8); }
+
+  .offer-card ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 10px;
+    width: 6px;
+    height: 1px;
+  }
+  .offer-card.free ul li::before { background: var(--gold); }
+  .offer-card.paid ul li::before { background: var(--ink); }
+
+  .offer-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .offer-meta .offer-prazo {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .offer-card.free .offer-prazo { color: var(--mid); }
+  .offer-card.paid .offer-prazo { color: rgba(15,13,11,0.6); }
+
+  .offer-meta .offer-valor {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 32px;
+    font-weight: 400;
+  }
+  .offer-card.free .offer-valor { color: var(--ivory); }
+  .offer-card.paid .offer-valor { color: var(--ink); }
+
+  .offer-note {
+    margin-top: 28px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-style: italic;
+    line-height: 1.6;
+    padding-top: 28px;
+    border-top: 1px solid;
+  }
+  .offer-card.free .offer-note {
+    color: var(--mid);
+    border-color: var(--rule);
+  }
+  .offer-card.paid .offer-note {
+    color: rgba(15,13,11,0.6);
+    border-color: rgba(15,13,11,0.15);
+  }
+
+  /* ── SECTION: DIFERENCIAL ── */
+  #diferencial {
+    padding: 120px 0;
+    background: var(--ivory);
+    color: var(--ink);
+  }
+
+  #diferencial .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 56px;
+  }
+
+  #diferencial .diff-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  #diferencial .diff-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 3.2vw, 42px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+
+  #diferencial .diff-text {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #4a3d30;
+  }
+
+  #diferencial .diff-text p + p { margin-top: 24px; }
+
+  /* ── SECTION: COMO FUNCIONA ── */
+  #como {
+    padding: 120px 0;
+    background: var(--ink);
+  }
+
+  #como .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 56px;
+  }
+
+  #como .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 300;
+    color: var(--ivory);
+    margin-bottom: 80px;
+    max-width: 500px;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .step {
+    padding: 40px 32px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--rule);
+    position: relative;
+  }
+
+  .step .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: rgba(184,150,106,0.2);
+    line-height: 1;
+    margin-bottom: 24px;
+  }
+
+  .step .step-text {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ivory-dim);
+  }
+
+  /* ── SECTION: SOBRE ── */
+  #sobre {
+    padding: 120px 0;
+    background: var(--ink);
+    border-top: 1px solid var(--rule);
+  }
+
+  #sobre .sobre-grid {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  #sobre .sobre-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+
+  #sobre .sobre-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    color: var(--ivory);
+    line-height: 1.1;
+  }
+
+  #sobre .sobre-body {
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: #9a8f83;
+  }
+
+  #sobre .sobre-body p + p { margin-top: 20px; }
+
+  #sobre .sobre-body strong {
+    color: var(--ivory);
+    font-weight: 400;
+  }
+
+  #sobre .sobre-contacts {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  #sobre .sobre-contacts a {
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    color: var(--gold);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  #sobre .sobre-contacts a:hover { color: var(--gold-light); }
+
+  /* ── SECTION: CTA FINAL ── */
+  #cta {
+    padding: 160px 0;
+    background: var(--gold);
+    color: var(--ink);
+    text-align: center;
+  }
+
+  #cta .cta-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(15,13,11,0.5);
+    margin-bottom: 32px;
+  }
+
+  #cta .cta-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 5vw, 68px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--ink);
+    max-width: 700px;
+    margin: 0 auto 24px;
+  }
+
+  #cta .cta-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(15,13,11,0.6);
+    max-width: 480px;
+    margin: 0 auto 56px;
+    line-height: 1.7;
+  }
+
+  .btn-dark {
+    display: inline-block;
+    padding: 16px 48px;
+    background: var(--ink);
+    color: var(--ivory);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+  .btn-dark:hover { opacity: 0.8; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 40px 0;
+    background: var(--ink);
+    border-top: 1px solid var(--rule);
+  }
+
+  footer .foot-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 48px;
+  }
+
+  footer .foot-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--mid);
+    letter-spacing: 0.1em;
+  }
+
+  footer .foot-copy {
+    font-size: 12px;
+    color: #3a3028;
+    letter-spacing: 0.08em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .container, .container-wide { padding: 0 24px; }
+
+    .platform-grid { grid-template-columns: 1fr; }
+    .offer-grid { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    #diferencial .diff-body { grid-template-columns: 1fr; gap: 40px; }
+    #sobre .sobre-grid { grid-template-columns: 1fr; gap: 40px; }
+    footer .foot-inner { flex-direction: column; gap: 12px; }
+  }
+
+  @media (max-width: 480px) {
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 80 56" xmlns="http://www.w3.org/2000/svg">
+    <rect width="80" height="56" fill="#0f0d0b"/>
+    <rect x="8" y="10" width="40" height="2" fill="#b8966a" opacity="0.4"/>
+    <rect x="8" y="16" width="64" height="4" fill="#f4ede0" opacity="0.9"/>
+    <rect x="8" y="22" width="52" height="4" fill="#f4ede0" opacity="0.9"/>
+    <rect x="8" y="28" width="44" height="4" fill="#f4ede0" opacity="0.6"/>
+    <rect x="8" y="38" width="20" height="8" fill="none" stroke="#b8966a" stroke-width="1"/>
+    <text x="18" y="43.5" font-size="4" fill="#b8966a" text-anchor="middle" font-family="serif">LM</text>
+  </svg>
+</template>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="container">
+    <p class="hero-eyebrow reveal">Auditoria Visual — Lucas Machut</p>
+    <h1 class="hero-headline reveal reveal-delay-1">
+      Você sabe que o seu hotel<br>
+      é melhor do que as suas<br>
+      fotos mostram.
+    </h1>
+    <p class="hero-sub reveal reveal-delay-2">
+      E isso está custando reservas.
+    </p>
+    <div class="hero-cta-row reveal reveal-delay-3">
+      <a href="#cta" class="btn-gold">Quero minha análise gratuita</a>
+      <span class="hero-scroll-hint">Entender o serviço ↓</span>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ── INTRO ── -->
+<section id="intro">
+  <div class="container">
+    <p class="intro-label reveal">O que é</p>
+    <p class="intro-body reveal reveal-delay-1">
+      A Auditoria Visual é uma análise profissional da sua comunicação visual —
+      Instagram, Booking e site — feita com o olhar de <em>um viajante europeu
+      que ainda não te conhece</em> e está decidindo onde reservar.
+      <br><br>
+      Não é uma crítica. É um diagnóstico.
+    </p>
+    <p class="intro-tagline reveal reveal-delay-2">
+      Em menos de 48 horas, você recebe um documento claro com o que está funcionando,<br>
+      o que está faltando e o que está fazendo seus hóspedes escolherem outro lugar.
+    </p>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ── PARA QUEM ── -->
+<section id="para-quem">
+  <div class="container" style="position:relative;">
+    <div class="deco-num">01</div>
+    <p class="section-label reveal">Para quem é</p>
+    <div class="reveal reveal-delay-1" style="max-width:720px;">
+      <p class="t-serif" style="font-size:clamp(20px,2.2vw,28px);font-weight:400;line-height:1.55;color:var(--ivory);margin-bottom:32px;">
+        Você investe no seu estabelecimento. Cuida dos detalhes, treina a equipe, pensa na experiência do hóspede.
+        Mas na hora de mostrar tudo isso online — algo não fecha.
+      </p>
+      <p style="font-size:15px;font-weight:300;line-height:1.85;color:#9a8f83;margin-bottom:24px;">
+        As reservas não chegam na proporção que você esperava. Os comentários são bons, mas o perfil não cresce. Você já trocou de fotógrafo, já postou mais, já tentou alguns reels — e ainda sente que o que aparece na tela não faz jus ao que as pessoas encontram quando chegam.
+      </p>
+      <p style="font-size:15px;font-weight:300;line-height:1.85;color:#9a8f83;margin-bottom:32px;">
+        O problema raramente está onde você está procurando. Na maioria dos casos, não é a qualidade das fotos. Não é a frequência das postagens. É uma combinação de sinais visuais que, juntos, impedem o hóspede certo de se sentir chamado pelo seu lugar — antes mesmo de ler uma linha de texto.
+      </p>
+      <p style="font-size:14px;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);border-left:2px solid var(--gold);padding-left:20px;">
+        É exatamente isso que o Método Regard analisa.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ── MÉTODO REGARD ── -->
+<section id="analiso">
+  <div class="container">
+    <p class="section-label reveal">O que é</p>
+    <h2 class="section-title reveal reveal-delay-1" style="color:var(--ink);">O Método Regard</h2>
+    <div class="reveal reveal-delay-2" style="max-width:760px;">
+      <p class="t-serif" style="font-size:clamp(20px,2.2vw,28px);font-weight:400;line-height:1.55;color:var(--ink);margin-bottom:32px;">
+        Uma análise desenvolvida para responder a uma única pergunta : <em>o que está impedindo o hóspede certo de escolher o seu estabelecimento ?</em>
+      </p>
+      <p style="font-size:15px;font-weight:300;line-height:1.85;color:#4a3d30;margin-bottom:24px;">
+        Em 48 horas, você recebe um diagnóstico completo da sua comunicação visual — o que está funcionando, o que está faltando, e onde estão as oportunidades que ainda não foram exploradas.
+      </p>
+      <p style="font-size:15px;font-weight:300;line-height:1.85;color:#4a3d30;">
+        O resultado não é uma lista de problemas. É clareza sobre o que fazer primeiro, com exemplos visuais concretos do que seria possível para o seu lugar.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ── DIFERENCIAL ── -->
+<section id="diferencial">
+  <div class="container">
+    <p class="section-label reveal">Por que isso é diferente</p>
+    <div class="diff-body">
+      <div class="diff-quote reveal reveal-delay-1">
+        "Sou francês, vivo no Brasil, e trabalho especificamente com hospitalidade."
+      </div>
+      <div class="diff-text reveal reveal-delay-2">
+        <p>
+          Isso significa que analiso o seu estabelecimento com dois olhares ao mesmo tempo : o do viajante europeu que ainda não te conhece e está comparando opções no Booking, e o do profissional que entende o mercado brasileiro e sabe o que faz um hóspede de alto padrão reservar sem precisar perguntar o preço.
+        </p>
+        <p>
+          A maioria dos fotógrafos chega com a câmera. Eu chego com perguntas. O que falta mostrar ? O que o hóspede sente quando chega às 20h e não existe nenhum conteúdo noturno ? O que a ausência de pessoas nas fotos comunica, mesmo sem querer ?
+        </p>
+        <p>
+          <strong style="color:var(--ink)">Essa combinação — olhar externo, vivência local, método estruturado — é o que torna o Método Regard diferente de qualquer análise genérica ou checklist de redes sociais.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ── O QUE VOCE RECEBE ── -->
+<section id="recebe">
+  <div class="container-wide">
+    <div class="container" style="padding:0; position:relative;">
+      <div class="deco-num">02</div>
+      <p class="section-label reveal">O que você recebe</p>
+      <h2 class="section-title reveal reveal-delay-1">Dois formatos.<br>Uma decisão clara.</h2>
+    </div>
+    <div class="offer-grid reveal reveal-delay-2">
+      <div class="offer-card free">
+        <p class="offer-tag">Gratuita</p>
+        <h3 class="offer-name">Análise Rápida</h3>
+        <ul>
+          <li>As 3 principais oportunidades do seu perfil</li>
+          <li>O impacto direto de cada uma nas suas reservas</li>
+          <li>Um exemplo visual do que seria possível</li>
+          <li>Uma proposta de conversa de 20 minutos</li>
+        </ul>
+        <div class="offer-meta">
+          <span class="offer-prazo">Prazo de entrega</span>
+          <span class="offer-valor">24 horas</span>
+        </div>
+        <p class="offer-note">
+          "Essa análise é o ponto de partida. É uma forma de você ver, de forma concreta, o que está faltando — antes de decidir qualquer coisa."
+        </p>
+      </div>
+      <div class="offer-card paid">
+        <p class="offer-tag">Diagnóstico Profissional</p>
+        <h3 class="offer-name">Auditoria Completa</h3>
+        <ul>
+          <li>Análise quantificada das três plataformas</li>
+          <li>Diagnóstico das 5 falhas com capturas anotadas do seu próprio perfil</li>
+          <li>Análise do hóspede ideal vs. o que seu conteúdo comunica hoje</li>
+          <li>3 prioridades de ação por impacto e esforço</li>
+          <li>Referências visuais do que seria possível</li>
+          <li>Proposta personalizada de produção de conteúdo</li>
+        </ul>
+        <div class="offer-meta">
+          <span class="offer-prazo">Prazo de entrega</span>
+          <span class="offer-valor">R$ 350 – R$ 500</span>
+        </div>
+        <p class="offer-note">
+          "Se contratar a produção, o valor da auditoria é descontado integralmente do projeto."
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ── COMO FUNCIONA ── -->
+<section id="como">
+  <div class="container-wide">
+    <div class="container" style="padding:0;">
+      <p class="section-label reveal">Como funciona</p>
+      <h2 class="section-title reveal reveal-delay-1">Simples.<br>Sem reuniões longas.</h2>
+    </div>
+    <div class="steps reveal reveal-delay-2">
+      <div class="step">
+        <div class="step-num">1</div>
+        <p class="step-text">Você me envia o nome do estabelecimento e os links do Instagram, Booking e site</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <p class="step-text">Eu faço a análise com base em uma metodologia própria de 30 critérios visuais</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <p class="step-text">Você recebe o documento em até 48 horas, direto no WhatsApp ou e-mail</p>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <p class="step-text">Se quiser avançar, agendamos uma conversa de 20 minutos para apresentar os resultados</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<!-- ── SOBRE ── -->
+<section id="sobre">
+  <div class="container">
+    <div class="sobre-grid">
+      <div>
+        <p class="sobre-label reveal">Sobre</p>
+        <h2 class="sobre-name reveal reveal-delay-1">Lucas<br>Machut</h2>
+      </div>
+      <div class="sobre-body reveal reveal-delay-2">
+        <p>
+          Filmmaker e fotógrafo francês radicado no Brasil. Trabalho com hotéis boutique, pousadas premium, villas e restaurantes de experiência — com foco em traduzir atmosfera, identidade e experiência dos hóspedes em <strong>conteúdo visual que gera desejo e confiança antes mesmo da reserva</strong>.
+        </p>
+        <p>
+          Utilizo câmera profissional <strong>Canon R6 Mark II</strong>, gimbal estabilizado, <strong>drone FPV DJI Avata 2</strong>, iluminação e captação de áudio profissional.
+        </p>
+        <p>
+          Falo português, francês e inglês — o que me permite criar conteúdo pensado para o hóspede brasileiro e para o viajante internacional ao mesmo tempo.
+        </p>
+        <div class="sobre-contacts">
+          <a href="https://instagram.com/lucasmachut.visuals">@lucasmachut.visuals</a>
+          <a href="mailto:lucasmachut.visuals@gmail.com">lucasmachut.visuals@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA FINAL ── -->
+<section id="cta">
+  <div>
+    <p class="cta-eyebrow reveal">Ponto de partida</p>
+    <h2 class="cta-headline reveal reveal-delay-1">
+      Quero receber minha análise gratuita.
+    </h2>
+    <p class="cta-sub reveal reveal-delay-2">
+      Me envia o nome do seu estabelecimento e os links das suas plataformas.
+      Em 24 horas você recebe o documento. Sem compromisso.
+    </p>
+    <a href="mailto:lucasmachut.visuals@gmail.com" class="btn-dark reveal reveal-delay-3">
+      Solicitar análise gratuita
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="foot-inner">
+    <span class="foot-name">Lucas Machut — Auditoria Visual</span>
+    <span class="foot-copy">lucasmachut.visuals@gmail.com</span>
+  </div>
+</footer>
+
+<!-- Tweaks -->
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accentColor": "#b8966a",
+  "darkBg": "#0f0d0b",
+  "lightBg": "#f4ede0",
+  "bodyFont": "DM Sans"
+}/*EDITMODE-END*/;
+
+function TweaksApp() {
+  const [tweaks, setTweak] = useTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    document.documentElement.style.setProperty('--gold', tweaks.accentColor);
+    document.documentElement.style.setProperty('--gold-light', tweaks.accentColor + 'bb');
+    document.documentElement.style.setProperty('--ink', tweaks.darkBg);
+    document.documentElement.style.setProperty('--ivory', tweaks.lightBg);
+    document.body.style.setProperty('font-family', `'${tweaks.bodyFont}', sans-serif`);
+  }, [tweaks]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection title="Cor de destaque">
+        <TweakColor label="Dourado" id="accentColor" value={tweaks.accentColor} onChange={v => setTweak('accentColor', v)} />
+      </TweakSection>
+      <TweakSection title="Fundos">
+        <TweakColor label="Fundo escuro" id="darkBg" value={tweaks.darkBg} onChange={v => setTweak('darkBg', v)} />
+        <TweakColor label="Fundo claro" id="lightBg" value={tweaks.lightBg} onChange={v => setTweak('lightBg', v)} />
+      </TweakSection>
+      <TweakSection title="Tipografia">
+        <TweakSelect label="Fonte corpo" id="bodyFont" value={tweaks.bodyFont}
+          options={['DM Sans','Jost','Outfit','Lato','Work Sans']}
+          onChange={v => setTweak('bodyFont', v)} />
+      </TweakSection>
+    </TweaksPanel>
+  );
+}
+
+const tweaksRoot = document.createElement('div');
+document.body.appendChild(tweaksRoot);
+ReactDOM.createRoot(tweaksRoot).render(<TweaksApp />);
+</script>
+
+<!-- Scroll reveal -->
+<script>
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

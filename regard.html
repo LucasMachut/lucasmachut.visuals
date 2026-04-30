@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auditoria Visual — Lucas Machut Visuals</title>
+  <meta name="description" content="O Método Regard: uma análise profissional da sua comunicação visual para hotéis, pousadas e lugares de experiência. Instagram, Booking e site — em 48 horas." />
+  <meta name="robots" content="index, follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* ── PAGE-SPECIFIC: REGARD ── */
+
+    /* Hero escuro com tipografia grande */
+    .rg-hero {
+      background: var(--bg-dark);
+      color: var(--cream);
+      padding: var(--s20) 0 var(--s16);
+      padding-top: calc(var(--nav-h) + var(--s16));
+    }
+
+    .rg-hero .wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--s8);
+    }
+
+    .rg-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s6);
+    }
+
+    .rg-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(40px, 6vw, 84px);
+      font-weight: 300;
+      line-height: 1.05;
+      color: var(--cream);
+      max-width: 860px;
+      margin-bottom: var(--s4);
+    }
+
+    .rg-hero .rg-sub {
+      font-size: clamp(18px, 2vw, 22px);
+      font-weight: 300;
+      color: var(--text-muted);
+      margin-bottom: var(--s8);
+    }
+
+    .rg-hero .rg-cta-row {
+      display: flex;
+      align-items: center;
+      gap: var(--s4);
+      flex-wrap: wrap;
+    }
+
+    .rg-hero .rg-scroll {
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    /* Linha separadora */
+    .rg-rule {
+      border: none;
+      border-top: 1px solid var(--line);
+      margin: 0;
+    }
+
+    .rg-rule--dark {
+      border-color: rgba(250,247,243,0.08);
+    }
+
+    /* Container padrão */
+    .rg-wrap {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 var(--s8);
+    }
+
+    /* Labels de seção */
+    .rg-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s6);
+    }
+
+    /* ── INTRO ── */
+    .rg-intro {
+      background: var(--cream);
+      padding: var(--s16) 0;
+    }
+
+    .rg-intro .intro-body {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 400;
+      line-height: 1.5;
+      max-width: 760px;
+      color: var(--text);
+      margin-bottom: var(--s6);
+    }
+
+    .rg-intro .intro-body em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .rg-intro .intro-tagline {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-left: 2px solid var(--accent);
+      padding-left: var(--s3);
+      max-width: 680px;
+      line-height: 1.7;
+    }
+
+    /* ── PARA QUEM ── */
+    .rg-paraquem {
+      background: var(--bg-dark);
+      color: var(--cream);
+      padding: var(--s16) 0;
+      position: relative;
+    }
+
+    .rg-paraquem .deco-num {
+      position: absolute;
+      top: var(--s8);
+      right: var(--s8);
+      font-family: var(--font-serif);
+      font-size: clamp(80px, 12vw, 160px);
+      font-weight: 300;
+      color: rgba(122,98,72,0.08);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .rg-paraquem .pq-lead {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--cream);
+      max-width: 720px;
+      margin-bottom: var(--s4);
+    }
+
+    .rg-paraquem .pq-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 720px;
+      margin-bottom: var(--s3);
+    }
+
+    .rg-paraquem .pq-highlight {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      border-left: 2px solid var(--accent);
+      padding-left: var(--s3);
+      margin-top: var(--s4);
+    }
+
+    /* ── MÉTODO REGARD ── */
+    .rg-metodo {
+      background: var(--bg);
+      padding: var(--s16) 0;
+    }
+
+    .rg-metodo h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4.5vw, 58px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: var(--s8);
+    }
+
+    .rg-metodo .metodo-lead {
+      font-family: var(--font-serif);
+      font-size: clamp(20px, 2.2vw, 28px);
+      font-weight: 400;
+      line-height: 1.55;
+      color: var(--text);
+      max-width: 760px;
+      margin-bottom: var(--s4);
+    }
+
+    .rg-metodo .metodo-lead em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .rg-metodo .metodo-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin-bottom: var(--s3);
+    }
+
+    /* ── DIFERENCIAL ── */
+    .rg-diferencial {
+      background: var(--cream);
+      padding: var(--s16) 0;
+    }
+
+    .rg-diferencial .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s16);
+      align-items: start;
+    }
+
+    .rg-diferencial .diff-quote {
+      font-family: var(--font-serif);
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.3;
+      color: var(--text);
+    }
+
+    .rg-diferencial .diff-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+    }
+
+    .rg-diferencial .diff-text p + p { margin-top: var(--s3); }
+
+    .rg-diferencial .diff-text strong {
+      color: var(--text);
+      font-weight: 400;
+    }
+
+    /* ── O QUE VOCÊ RECEBE ── */
+    .rg-recebe {
+      background: var(--bg-dark);
+      padding: var(--s16) 0;
+      position: relative;
+    }
+
+    .rg-recebe .deco-num {
+      position: absolute;
+      top: var(--s8);
+      right: var(--s8);
+      font-family: var(--font-serif);
+      font-size: clamp(80px, 12vw, 160px);
+      font-weight: 300;
+      color: rgba(122,98,72,0.08);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
+
+    .rg-recebe h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4.5vw, 58px);
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: var(--s10);
+    }
+
+    .offer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--s2);
+    }
+
+    .offer-card {
+      padding: var(--s10) var(--s8);
+    }
+
+    .offer-card--free {
+      background: rgba(250,247,243,0.03);
+      border: 1px solid rgba(250,247,243,0.1);
+    }
+
+    .offer-card--paid {
+      background: var(--accent);
+    }
+
+    .offer-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: var(--s2);
+    }
+
+    .offer-card--free .offer-tag { color: var(--accent); }
+    .offer-card--paid .offer-tag { color: rgba(28,20,9,0.6); }
+
+    .offer-name {
+      font-family: var(--font-serif);
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 400;
+      line-height: 1.1;
+      margin-bottom: var(--s6);
+    }
+
+    .offer-card--free .offer-name { color: var(--cream); }
+    .offer-card--paid .offer-name { color: var(--bg-dark); }
+
+    .offer-card ul {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s2);
+      margin-bottom: var(--s6);
+    }
+
+    .offer-card ul li {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.6;
+      padding-left: var(--s3);
+      position: relative;
+    }
+
+    .offer-card--free ul li { color: rgba(250,247,243,0.7); }
+    .offer-card--paid ul li { color: rgba(28,20,9,0.8); }
+
+    .offer-card ul li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 6px;
+      height: 1px;
+    }
+    .offer-card--free ul li::before { background: var(--accent); }
+    .offer-card--paid ul li::before { background: var(--bg-dark); }
+
+    .offer-meta {
+      display: flex;
+      flex-direction: column;
+      gap: var(--s1);
+      margin-bottom: var(--s4);
+    }
+
+    .offer-prazo {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .offer-card--free .offer-prazo { color: var(--text-muted); }
+    .offer-card--paid .offer-prazo { color: rgba(28,20,9,0.5); }
+
+    .offer-valor {
+      font-family: var(--font-serif);
+      font-size: 32px;
+      font-weight: 400;
+    }
+    .offer-card--free .offer-valor { color: var(--cream); }
+    .offer-card--paid .offer-valor { color: var(--bg-dark); }
+
+    .offer-note {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-style: italic;
+      line-height: 1.6;
+      padding-top: var(--s4);
+      border-top: 1px solid;
+    }
+    .offer-card--free .offer-note {
+      color: var(--text-muted);
+      border-color: rgba(250,247,243,0.1);
+    }
+    .offer-card--paid .offer-note {
+      color: rgba(28,20,9,0.6);
+      border-color: rgba(28,20,9,0.15);
+    }
+
+    /* ── COMO FUNCIONA ── */
+    .rg-como {
+      background: var(--bg-dark);
+      padding: var(--s16) 0;
+      border-top: 1px solid rgba(250,247,243,0.08);
+    }
+
+    .rg-como h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4.5vw, 58px);
+      font-weight: 300;
+      color: var(--cream);
+      margin-bottom: var(--s10);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--s2);
+    }
+
+    .step-card {
+      padding: var(--s6) var(--s5);
+      background: rgba(250,247,243,0.03);
+      border: 1px solid rgba(250,247,243,0.08);
+    }
+
+    .step-num {
+      font-family: var(--font-serif);
+      font-size: 56px;
+      font-weight: 300;
+      color: rgba(122,98,72,0.2);
+      line-height: 1;
+      margin-bottom: var(--s4);
+    }
+
+    .step-text {
+      font-size: 14px;
+      font-weight: 300;
+      line-height: 1.7;
+      color: rgba(250,247,243,0.6);
+    }
+
+    /* ── SOBRE ── */
+    .rg-sobre {
+      background: var(--bg-dark);
+      padding: var(--s16) 0;
+      border-top: 1px solid rgba(250,247,243,0.08);
+    }
+
+    .rg-sobre .sobre-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: var(--s16);
+      align-items: start;
+    }
+
+    .rg-sobre .sobre-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: var(--s2);
+    }
+
+    .rg-sobre .sobre-name {
+      font-family: var(--font-serif);
+      font-size: clamp(32px, 4vw, 52px);
+      font-weight: 300;
+      color: var(--cream);
+      line-height: 1.1;
+    }
+
+    .rg-sobre .sobre-body {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--text-muted);
+    }
+
+    .rg-sobre .sobre-body p + p { margin-top: var(--s3); }
+
+    .rg-sobre .sobre-body strong {
+      color: var(--cream);
+      font-weight: 400;
+    }
+
+    .rg-sobre .sobre-contacts {
+      margin-top: var(--s6);
+      display: flex;
+      flex-direction: column;
+      gap: var(--s1);
+    }
+
+    .rg-sobre .sobre-contacts a {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .rg-sobre .sobre-contacts a:hover { opacity: 0.7; }
+
+    /* ── CTA FINAL ── */
+    .rg-cta {
+      background: var(--accent);
+      color: var(--bg-dark);
+      padding: var(--s20) 0;
+      text-align: center;
+    }
+
+    .rg-cta .cta-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(28,20,9,0.5);
+      margin-bottom: var(--s5);
+    }
+
+    .rg-cta h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 5vw, 68px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--bg-dark);
+      max-width: 700px;
+      margin: 0 auto var(--s4);
+    }
+
+    .rg-cta .cta-sub {
+      font-size: 15px;
+      font-weight: 300;
+      color: rgba(28,20,9,0.6);
+      max-width: 480px;
+      margin: 0 auto var(--s8);
+      line-height: 1.7;
+    }
+
+    .btn--regard {
+      display: inline-block;
+      padding: 14px 48px;
+      background: var(--bg-dark);
+      color: var(--cream);
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .btn--regard:hover { opacity: 0.8; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .rg-wrap { padding: 0 var(--s5); }
+      .rg-hero .wrap { padding: 0 var(--s5); }
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 680px) {
+      .rg-wrap { padding: 0 var(--s3); }
+      .rg-hero .wrap { padding: 0 var(--s3); }
+      .rg-diferencial .diff-grid { grid-template-columns: 1fr; gap: var(--s8); }
+      .offer-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .rg-sobre .sobre-grid { grid-template-columns: 1fr; gap: var(--s8); }
+      .rg-cta { padding: var(--s16) var(--s3); }
+      .rg-hero { padding-top: calc(var(--nav-h) + var(--s10)); padding-bottom: var(--s12); }
+      .rg-hero .rg-cta-row { flex-direction: column; align-items: flex-start; }
+      .offer-card { padding: var(--s6) var(--s4); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =====================================================
+       HEADER
+       ===================================================== -->
+  <header class="header" role="banner">
+    <a href="index.html" class="logo">Lucas Machut</a>
+
+    <nav class="nav" aria-label="Navegação principal">
+      <ul class="nav__links">
+        <li><a href="portfolio.html" class="nav__link">Work</a></li>
+        <li><a href="services.html" class="nav__link">Services</a></li>
+        <li><a href="regard.html" class="nav__link">REGARD</a></li>
+        <li><a href="contact.html" class="nav__link">Contact</a></li>
+      </ul>
+      <a href="contact.html" class="nav__cta">Falar sobre um projeto</a>
+      <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Mobile menu -->
+  <nav class="nav__mobile" aria-label="Menu mobile">
+    <a href="portfolio.html" class="nav__mobile-link">Work</a>
+    <a href="services.html" class="nav__mobile-link">Services</a>
+    <a href="regard.html" class="nav__mobile-link">REGARD</a>
+    <a href="contact.html" class="nav__mobile-link">Contact</a>
+    <a href="contact.html" class="nav__mobile-cta">Falar sobre um projeto</a>
+  </nav>
+
+  <main>
+
+    <!-- ── HERO ── -->
+    <section class="rg-hero">
+      <div class="wrap">
+        <p class="rg-eyebrow fi">Auditoria Visual — Lucas Machut</p>
+        <h1 class="fi fi-d1">
+          Você sabe que o seu hotel<br>
+          é melhor do que as suas<br>
+          fotos mostram.
+        </h1>
+        <p class="rg-sub fi fi-d2">E isso está custando reservas.</p>
+        <div class="rg-cta-row fi fi-d3">
+          <a href="#cta-final" class="btn btn--dark">Quero minha análise gratuita</a>
+          <span class="rg-scroll">Entender o serviço ↓</span>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rg-rule" />
+
+    <!-- ── O QUE É ── -->
+    <section class="rg-intro">
+      <div class="rg-wrap">
+        <p class="rg-label fi">O que é</p>
+        <p class="intro-body fi fi-d1">
+          A Auditoria Visual é uma análise profissional da sua comunicação visual —
+          Instagram, Booking e site — feita com o olhar de <em>um viajante europeu
+          que ainda não te conhece</em> e está decidindo onde reservar.
+          <br><br>
+          Não é uma crítica. É um diagnóstico.
+        </p>
+        <p class="intro-tagline fi fi-d2">
+          Em menos de 48 horas, você recebe um documento claro com o que está funcionando,
+          o que está faltando e o que está fazendo seus hóspedes escolherem outro lugar.
+        </p>
+      </div>
+    </section>
+
+    <hr class="rg-rule" />
+
+    <!-- ── PARA QUEM ── -->
+    <section class="rg-paraquem">
+      <div class="rg-wrap" style="position:relative;">
+        <div class="deco-num" aria-hidden="true">01</div>
+        <p class="rg-label fi">Para quem é</p>
+        <p class="pq-lead fi fi-d1">
+          Você investe no seu estabelecimento. Cuida dos detalhes, treina a equipe, pensa na experiência do hóspede.
+          Mas na hora de mostrar tudo isso online — algo não fecha.
+        </p>
+        <p class="pq-body fi fi-d2">
+          As reservas não chegam na proporção que você esperava. Os comentários são bons, mas o perfil não cresce. Você já trocou de fotógrafo, já postou mais, já tentou alguns reels — e ainda sente que o que aparece na tela não faz jus ao que as pessoas encontram quando chegam.
+        </p>
+        <p class="pq-body fi fi-d2">
+          O problema raramente está onde você está procurando. Na maioria dos casos, não é a qualidade das fotos. Não é a frequência das postagens. É uma combinação de sinais visuais que, juntos, impedem o hóspede certo de se sentir chamado pelo seu lugar — antes mesmo de ler uma linha de texto.
+        </p>
+        <p class="pq-highlight fi fi-d3">
+          É exatamente isso que o Método Regard analisa.
+        </p>
+      </div>
+    </section>
+
+    <hr class="rg-rule rg-rule--dark" />
+
+    <!-- ── O MÉTODO REGARD ── -->
+    <section class="rg-metodo">
+      <div class="rg-wrap">
+        <p class="rg-label fi">O método</p>
+        <h2 class="fi fi-d1">O Método Regard</h2>
+        <p class="metodo-lead fi fi-d2">
+          Uma análise desenvolvida para responder a uma única pergunta: <em>o que está impedindo o hóspede certo de escolher o seu estabelecimento?</em>
+        </p>
+        <p class="metodo-body fi fi-d3">
+          Em 48 horas, você recebe um diagnóstico completo da sua comunicação visual — o que está funcionando, o que está faltando, e onde estão as oportunidades que ainda não foram exploradas.
+        </p>
+        <p class="metodo-body fi fi-d3">
+          O resultado não é uma lista de problemas. É clareza sobre o que fazer primeiro, com exemplos visuais concretos do que seria possível para o seu lugar.
+        </p>
+      </div>
+    </section>
+
+    <hr class="rg-rule" />
+
+    <!-- ── POR QUE É DIFERENTE ── -->
+    <section class="rg-diferencial">
+      <div class="rg-wrap">
+        <p class="rg-label fi">Por que isso é diferente</p>
+        <div class="diff-grid">
+          <div class="diff-quote fi fi-d1">
+            "Sou francês, vivo no Brasil, e trabalho especificamente com hospitalidade."
+          </div>
+          <div class="diff-text fi fi-d2">
+            <p>
+              Isso significa que analiso o seu estabelecimento com dois olhares ao mesmo tempo: o do viajante europeu que ainda não te conhece e está comparando opções no Booking, e o do profissional que entende o mercado brasileiro e sabe o que faz um hóspede de alto padrão reservar sem precisar perguntar o preço.
+            </p>
+            <p>
+              A maioria dos fotógrafos chega com a câmera. Eu chego com perguntas. O que falta mostrar? O que o hóspede sente quando chega às 20h e não existe nenhum conteúdo noturno? O que a ausência de pessoas nas fotos comunica, mesmo sem querer?
+            </p>
+            <p>
+              <strong>Essa combinação — olhar externo, vivência local, método estruturado — é o que torna o Método Regard diferente de qualquer análise genérica ou checklist de redes sociais.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rg-rule" />
+
+    <!-- ── O QUE VOCÊ RECEBE ── -->
+    <section class="rg-recebe">
+      <div class="rg-wrap" style="position:relative;">
+        <div class="deco-num" aria-hidden="true">02</div>
+        <p class="rg-label fi">O que você recebe</p>
+        <h2 class="fi fi-d1">Dois formatos.<br>Uma decisão clara.</h2>
+      </div>
+      <div class="rg-wrap">
+        <div class="offer-grid fi fi-d2">
+
+          <div class="offer-card offer-card--free">
+            <p class="offer-tag">Gratuita</p>
+            <h3 class="offer-name">Análise Rápida</h3>
+            <ul>
+              <li>As 3 principais oportunidades do seu perfil</li>
+              <li>O impacto direto de cada uma nas suas reservas</li>
+              <li>Um exemplo visual do que seria possível</li>
+              <li>Uma proposta de conversa de 20 minutos</li>
+            </ul>
+            <div class="offer-meta">
+              <span class="offer-prazo">Prazo de entrega</span>
+              <span class="offer-valor">24 horas</span>
+            </div>
+            <p class="offer-note">
+              "Essa análise é o ponto de partida. É uma forma de você ver, de forma concreta, o que está faltando — antes de decidir qualquer coisa."
+            </p>
+          </div>
+
+          <div class="offer-card offer-card--paid">
+            <p class="offer-tag">Diagnóstico Profissional</p>
+            <h3 class="offer-name">Auditoria Completa</h3>
+            <ul>
+              <li>Análise quantificada das três plataformas</li>
+              <li>Diagnóstico das 5 falhas com capturas anotadas do seu próprio perfil</li>
+              <li>Análise do hóspede ideal vs. o que seu conteúdo comunica hoje</li>
+              <li>3 prioridades de ação por impacto e esforço</li>
+              <li>Referências visuais do que seria possível</li>
+              <li>Proposta personalizada de produção de conteúdo</li>
+            </ul>
+            <div class="offer-meta">
+              <span class="offer-prazo">Investimento</span>
+              <span class="offer-valor">R$ 350 – R$ 500</span>
+            </div>
+            <p class="offer-note">
+              "Se contratar a produção, o valor da auditoria é descontado integralmente do projeto."
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="rg-rule rg-rule--dark" />
+
+    <!-- ── COMO FUNCIONA ── -->
+    <section class="rg-como">
+      <div class="rg-wrap">
+        <p class="rg-label fi">Como funciona</p>
+        <h2 class="fi fi-d1">Simples.<br>Sem reuniões longas.</h2>
+        <div class="steps-grid fi fi-d2">
+          <div class="step-card">
+            <div class="step-num">1</div>
+            <p class="step-text">Você me envia o nome do estabelecimento e os links do Instagram, Booking e site</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">2</div>
+            <p class="step-text">Eu faço a análise com base em uma metodologia própria de 30 critérios visuais</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">3</div>
+            <p class="step-text">Você recebe o documento em até 48 horas, direto no WhatsApp ou e-mail</p>
+          </div>
+          <div class="step-card">
+            <div class="step-num">4</div>
+            <p class="step-text">Se quiser avançar, agendamos uma conversa de 20 minutos para apresentar os resultados</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr class="rg-rule rg-rule--dark" />
+
+    <!-- ── SOBRE ── -->
+    <section class="rg-sobre">
+      <div class="rg-wrap">
+        <div class="sobre-grid">
+          <div>
+            <p class="sobre-label fi">Sobre</p>
+            <h2 class="sobre-name fi fi-d1">Lucas<br>Machut</h2>
+          </div>
+          <div class="sobre-body fi fi-d2">
+            <p>
+              Filmmaker e fotógrafo francês radicado no Brasil. Trabalho com hotéis boutique, pousadas premium, villas e restaurantes de experiência — com foco em traduzir atmosfera, identidade e experiência dos hóspedes em <strong>conteúdo visual que gera desejo e confiança antes mesmo da reserva</strong>.
+            </p>
+            <p>
+              Utilizo câmera profissional <strong>Canon R6 Mark II</strong>, gimbal estabilizado, <strong>drone FPV DJI Avata 2</strong>, iluminação e captação de áudio profissional.
+            </p>
+            <p>
+              Falo português, francês e inglês — o que me permite criar conteúdo pensado para o hóspede brasileiro e para o viajante internacional ao mesmo tempo.
+            </p>
+            <div class="sobre-contacts">
+              <a href="https://www.instagram.com/lucasmachut.visuals" target="_blank" rel="noopener noreferrer">@lucasmachut.visuals</a>
+              <a href="mailto:lucasmachut.visuals@gmail.com">lucasmachut.visuals@gmail.com</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── CTA FINAL ── -->
+    <section class="rg-cta" id="cta-final">
+      <p class="cta-eyebrow fi">Ponto de partida</p>
+      <h2 class="fi fi-d1">
+        Quero receber minha<br>análise gratuita.
+      </h2>
+      <p class="cta-sub fi fi-d2">
+        Me envia o nome do seu estabelecimento e os links das suas plataformas.
+        Em 24 horas você recebe o documento. Sem compromisso.
+      </p>
+      <a href="mailto:lucasmachut.visuals@gmail.com" class="btn--regard fi fi-d3">
+        Solicitar análise gratuita
+      </a>
+    </section>
+
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+       ===================================================== -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <h2 class="footer__brand-name">Lucas Machut</h2>
+        <p class="footer__brand-desc">
+          Fotografia, vídeo e auditoria visual para hotelaria e lugares de experiência.
+        </p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Links do rodapé">
+        <h3 class="footer__col-title">Páginas</h3>
+        <ul class="footer__links">
+          <li><a href="portfolio.html">Work</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="regard.html">REGARD</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__contact">
+        <h3 class="footer__col-title">Contato</h3>
+        <ul class="footer__links">
+          <li><a href="https://www.instagram.com/lucasmachut.visuals" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="#" aria-label="WhatsApp">WhatsApp</a></li>
+          <li><a href="mailto:lucasmachut.visuals@gmail.com" aria-label="E-mail">E-mail</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer__bottom">© 2026 Lucas Machut Visuals. Brasil.</p>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
