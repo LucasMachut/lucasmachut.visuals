@@ -387,6 +387,13 @@ h1, h2, h3, h4 {
   object-fit: cover;
 }
 
+.hero__video--mobile { display: none; }
+
+@media (max-width: 680px) {
+  .hero__video--desktop { display: none; }
+  .hero__video--mobile  { display: block; }
+}
+
 .hero__video-overlay {
   position: absolute;
   inset: 0;
