@@ -594,6 +594,21 @@ h1, h2, h3, h4 {
 
 .s-regard .label { margin-bottom: var(--s4); }
 
+.s-regard__mobile-img {
+  display: none;
+}
+
+@media (max-width: 680px) {
+  .s-regard__mobile-img {
+    display: block;
+    width: 100%;
+    height: 60vw;
+    object-fit: cover;
+    object-position: top;
+    margin-bottom: var(--s6);
+  }
+}
+
 .s-regard__h2 {
   font-size: clamp(2rem, 3.8vw, 3.6rem);
   font-style: italic;
