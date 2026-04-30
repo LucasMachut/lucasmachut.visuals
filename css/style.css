@@ -385,6 +385,7 @@ h1, h2, h3, h4 {
   height: 100%;
   border: none;
   object-fit: cover;
+  z-index: 0;
 }
 
 .hero__video--mobile { display: none; }
@@ -594,8 +595,15 @@ h1, h2, h3, h4 {
 
 .s-regard .label { margin-bottom: var(--s4); }
 
-.s-regard__mobile-img {
-  display: none;
+@media (max-width: 680px) {
+  .s-regard {
+    background-image: url('../photos/lucas.png');
+    background-size: cover;
+    background-position: center top;
+  }
+  .s-regard::before {
+    background: rgba(14, 8, 2, 0.62);
+  }
 }
 
 @media (max-width: 680px) {

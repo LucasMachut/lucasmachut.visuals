@@ -16,7 +16,10 @@
       "Bash(dir \"C:\\\\Users\\\\Lucas\\\\Desktop\\\\lucasmachut.visuals\\\\Site\" /b)",
       "Bash(dir \"C:\\\\Users\\\\Lucas\\\\Downloads\" /b /ad)",
       "Bash(dir \"C:\\\\Users\\\\Lucas\\\\Desktop\\\\lucasmachut.visuals\\\\Site\\\\page regard\" /b)",
-      "Bash(dir \"C:\\\\Users\\\\Lucas\\\\Desktop\\\\lucasmachut.visuals\\\\Site\\\\page regard\\\\export\\\\src\" /b /s)"
+      "Bash(dir \"C:\\\\Users\\\\Lucas\\\\Desktop\\\\lucasmachut.visuals\\\\Site\\\\page regard\\\\export\\\\src\" /b /s)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)"
     ]
   }
 }
