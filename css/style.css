@@ -695,7 +695,38 @@ h1, h2, h3, h4 {
    HOME — PROCESSO
    ============================================================ */
 
-.s-processo { padding: var(--s16) 0; }
+.s-processo {
+  padding: var(--s16) 0;
+  position: relative;
+}
+
+.s-processo__mobile-bg {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  z-index: 0;
+}
+
+@media (max-width: 680px) {
+  .s-processo__mobile-bg {
+    display: block;
+  }
+  .s-processo .wrap {
+    position: relative;
+    z-index: 1;
+  }
+  .s-processo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(250, 247, 243, 0.72);
+    z-index: 0;
+  }
+}
 
 .s-processo__intro {
   font-size: 1rem;
