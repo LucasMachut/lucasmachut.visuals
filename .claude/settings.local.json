@@ -19,7 +19,9 @@
       "Bash(dir \"C:\\\\Users\\\\Lucas\\\\Desktop\\\\lucasmachut.visuals\\\\Site\\\\page regard\\\\export\\\\src\" /b /s)",
       "Bash(git add *)",
       "Bash(git commit *)",
-      "Bash(git push *)"
+      "Bash(git push *)",
+      "Bash(grep -E \"\\\\.html$|services\")",
+      "Bash(git checkout *)"
     ]
   }
 }
