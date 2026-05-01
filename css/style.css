@@ -1029,7 +1029,7 @@ h1, h2, h3, h4 {
 .s-valor {
   position: relative;
   background-color: var(--bg-dark);
-  background-image: url('../photos/leti1.jpg');
+  background-image: url('../photos/leti.png');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
