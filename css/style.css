@@ -278,6 +278,8 @@ h1, h2, h3, h4 {
 .nav__toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav__toggle.open span:nth-child(2) { opacity: 0; }
 .nav__toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* Quand le menu est ouvert, le X doit rester visible (fond crème) */
+.nav__toggle.open span { background: var(--text); }
 
 /* Mobile menu overlay */
 .nav__mobile {
