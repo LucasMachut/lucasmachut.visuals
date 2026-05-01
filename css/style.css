@@ -304,6 +304,13 @@ h1, h2, h3, h4 {
 }
 .nav__mobile-link:hover { color: var(--accent); }
 
+.nav__mobile-link--regard {
+  border: 1px solid var(--accent);
+  padding: 0.3rem 1rem;
+  color: var(--accent);
+  align-self: flex-start;
+}
+
 .nav__mobile-cta {
   margin-top: var(--s4);
   font-family: var(--font-sans);
