@@ -723,7 +723,10 @@ h1, h2, h3, h4 {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(14, 8, 2, 0.78);
+    background: linear-gradient(to bottom,
+      rgba(14, 8, 2, 0.90) 0%,
+      rgba(14, 8, 2, 0.90) 45%,
+      rgba(14, 8, 2, 0.70) 100%);
     z-index: 0;
   }
   .s-processo * {
