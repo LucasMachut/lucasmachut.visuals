@@ -366,12 +366,14 @@ h1, h2, h3, h4 {
 
 /* Vidéo pleine hauteur collée au haut — la nav passe par dessus */
 .hero__video-wrap {
+  position: relative;
   width: 100%;
   height: 100svh;
 }
 
 .hero__video-container {
-  position: relative;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   background: var(--bg-dark);
