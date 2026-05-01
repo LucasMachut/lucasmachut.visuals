@@ -1341,6 +1341,12 @@ h1, h2, h3, h4 {
     grid-template-columns: 1fr;
     padding: var(--s5) var(--s4) var(--s6);
   }
+  .btn {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+
   .hero__text-img {
     max-height: none;
     margin-left: calc(-1 * var(--s4));
