@@ -1026,7 +1026,24 @@ h1, h2, h3, h4 {
    HOME — PERCEPÇÃO DE VALOR
    ============================================================ */
 
-.s-valor { background: var(--bg-alt); padding: var(--s16) 0; }
+.s-valor {
+  position: relative;
+  background-color: var(--bg-dark);
+  background-image: url('../photos/leti1.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  color: var(--cream);
+  padding: var(--s16) 0;
+}
+.s-valor::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(14, 8, 2, 0.62);
+  z-index: 1;
+}
+.s-valor .wrap { position: relative; z-index: 2; }
 
 .s-valor__grid {
   display: grid;
@@ -1039,14 +1056,18 @@ h1, h2, h3, h4 {
   font-size: clamp(1.8rem, 3vw, 2.8rem);
   max-width: 480px;
   margin-bottom: var(--s6);
+  color: #F5E6C8;
 }
 
 .s-valor__left p {
   font-size: 1rem;
-  color: var(--text-muted);
+  color: rgba(245, 230, 200, 0.85);
   line-height: 1.82;
   max-width: 460px;
 }
+
+.s-valor .label { color: rgba(245, 230, 200, 0.6); letter-spacing: 0.15em; }
+.s-valor p { color: rgba(245, 230, 200, 0.85) !important; }
 
 .valor-points {
   border-top: 1px solid var(--line);
