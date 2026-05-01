@@ -707,7 +707,7 @@ h1, h2, h3, h4 {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: right top;
+  object-position: left top;
   z-index: 0;
 }
 
@@ -723,8 +723,15 @@ h1, h2, h3, h4 {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(250, 247, 243, 0.84);
+    background: rgba(246, 241, 235, 0.88);
     z-index: 0;
+  }
+  .s-processo .section-header__h2,
+  .s-processo .label,
+  .s-processo__intro,
+  .s-processo .processo-step__title,
+  .s-processo .processo-step__text {
+    color: var(--text);
   }
 }
 
