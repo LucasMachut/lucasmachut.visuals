@@ -723,17 +723,11 @@ h1, h2, h3, h4 {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(14, 8, 2, 0.65);
+    background: rgba(14, 8, 2, 0.78);
     z-index: 0;
   }
-  .s-processo .section-header__h2,
-  .s-processo h2,
-  .s-processo .label,
-  .s-processo__intro,
-  .s-processo p,
-  .s-processo h3,
-  .s-processo span {
-    color: var(--cream);
+  .s-processo * {
+    color: #fff !important;
   }
 }
 
