@@ -858,6 +858,46 @@ h1, h2, h3, h4 {
 }
 
 /* ============================================================
+   HOME — O OLHAR
+   ============================================================ */
+
+.s-olhar { background: var(--cream); padding: var(--s16) 0; }
+
+.s-olhar__grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--s12);
+  align-items: start;
+}
+
+.s-olhar__left h2 {
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--text);
+  margin-bottom: 0;
+}
+
+.s-olhar__body p {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.85;
+  max-width: 560px;
+}
+
+.s-olhar__body p + p { margin-top: var(--s3); }
+
+@media (max-width: 1024px) {
+  .s-olhar__grid { grid-template-columns: 1fr 1.5fr; }
+}
+
+@media (max-width: 680px) {
+  .s-olhar__grid { grid-template-columns: 1fr; gap: var(--s5); }
+  .s-olhar__body p { max-width: none; }
+}
+
+/* ============================================================
    HOME — PARA QUEM
    ============================================================ */
 
