@@ -415,7 +415,7 @@ h1, h2, h3, h4 {
 }
 
 .hero__video-logo img {
-  width: clamp(180px, 28vw, 420px);
+  width: clamp(360px, 56vw, 840px);
   height: auto;
   opacity: 0.92;
 }
