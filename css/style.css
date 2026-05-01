@@ -666,7 +666,7 @@ h1, h2, h3, h4 {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(14, 8, 2, 0.74);
+  background: rgba(14, 8, 2, 0.82);
   z-index: 0;
 }
 
@@ -861,7 +861,30 @@ h1, h2, h3, h4 {
    HOME — O OLHAR
    ============================================================ */
 
-.s-olhar { background: var(--cream); padding: var(--s16) 0; }
+.s-olhar {
+  position: relative;
+  background-color: var(--bg-dark);
+  background-image: url('../photos/lucas_foto.png');
+  background-size: cover;
+  background-position: right center;
+  background-repeat: no-repeat;
+  color: var(--cream);
+  padding: var(--s16) 0;
+}
+
+/* Overlay sombre pour lisibilité du texte */
+.s-olhar::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(14,8,2,0.88) 35%, rgba(14,8,2,0.45) 100%);
+  z-index: 0;
+}
+
+.s-olhar .wrap {
+  position: relative;
+  z-index: 1;
+}
 
 .s-olhar__grid {
   display: grid;
@@ -870,31 +893,55 @@ h1, h2, h3, h4 {
   align-items: start;
 }
 
+.s-olhar__left .label {
+  color: var(--accent);
+  margin-bottom: var(--s4);
+}
+
 .s-olhar__left h2 {
   font-family: var(--font-serif);
   font-size: clamp(2rem, 3.2vw, 3rem);
   font-weight: 300;
   line-height: 1.15;
-  color: var(--text);
+  color: var(--cream);
   margin-bottom: 0;
 }
 
 .s-olhar__body p {
   font-size: 1rem;
-  color: var(--text-muted);
+  color: rgba(250,247,243,0.72);
   line-height: 1.85;
   max-width: 560px;
 }
 
 .s-olhar__body p + p { margin-top: var(--s3); }
 
+/* Mobile: image via <img> tag (même pattern que s-regard) */
+.s-olhar__mobile-bg {
+  display: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right top;
+  z-index: 0;
+}
+
 @media (max-width: 1024px) {
   .s-olhar__grid { grid-template-columns: 1fr 1.5fr; }
 }
 
 @media (max-width: 680px) {
+  .s-olhar {
+    background-image: none;
+  }
+  .s-olhar__mobile-bg { display: block; }
+  .s-olhar::before {
+    background: rgba(14, 8, 2, 0.75);
+  }
   .s-olhar__grid { grid-template-columns: 1fr; gap: var(--s5); }
-  .s-olhar__body p { max-width: none; }
+  .s-olhar__body p { max-width: none; color: rgba(250,247,243,0.8); }
 }
 
 /* ============================================================
