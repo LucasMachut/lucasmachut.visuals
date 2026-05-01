@@ -1341,7 +1341,24 @@ h1, h2, h3, h4 {
     grid-template-columns: 1fr;
     padding: var(--s5) var(--s4) var(--s6);
   }
-  .hero__text-img { max-height: 80vw; }
+  .hero__text-img {
+    max-height: none;
+    margin-left: calc(-1 * var(--s4));
+    margin-right: calc(-1 * var(--s4));
+    width: 100vw;
+  }
+
+  .s-percepcao__img {
+    margin-left: calc(-1 * var(--s4));
+    margin-right: calc(-1 * var(--s4));
+    width: 100vw;
+  }
+
+  .project-item__img {
+    margin-left: calc(-1 * var(--s4));
+    margin-right: calc(-1 * var(--s4));
+    width: 100vw;
+  }
 
   .wrap { padding: 0 var(--s4); }
   .s-cta-final { padding: var(--s16) var(--s4); }
