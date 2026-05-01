@@ -595,11 +595,23 @@ h1, h2, h3, h4 {
 
 .s-regard .label { margin-bottom: var(--s4); }
 
+.s-regard__mobile-bg {
+  display: none;
+}
+
 @media (max-width: 680px) {
   .s-regard {
-    background-image: url('../photos/lucas.png');
-    background-size: cover;
-    background-position: center top;
+    background-image: none;
+  }
+  .s-regard__mobile-bg {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    z-index: 0;
   }
   .s-regard::before {
     background: rgba(14, 8, 2, 0.62);
