@@ -1,72 +1,63 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Contato — Lucas Machut Visuals</title>
-  <meta name="description" content="Fale sobre o seu projeto. Fotografia, vídeo e auditoria visual para hotéis, pousadas e lugares de experiência no Brasil." />
+  <title>Contact — Lucas Machut Visuals</title>
+  <meta name="description" content="Talk about your project. Photography, video and visual audit for hotels, inns and experience venues in Brazil." />
   <meta name="robots" content="index, follow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
 </head>
 <body>
 
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
   <header class="header" role="banner">
-    <nav class="nav" aria-label="Navegação principal">
+    <nav class="nav" aria-label="Main navigation">
       <ul class="nav__links">
-        <li><a href="index.html" class="nav__link">INÍCIO</a></li>
-        <li><a href="portfolio.html" class="nav__link">PORTFÓLIO</a></li>
-        <li><a href="index.html#services" class="nav__link">SERVIÇOS</a></li>
+        <li><a href="index.html" class="nav__link">HOME</a></li>
+        <li><a href="portfolio.html" class="nav__link">PORTFOLIO</a></li>
+        <li><a href="index.html#services" class="nav__link">SERVICES</a></li>
         <li><a href="regard.html" class="nav__link nav__link--regard">REGARD</a></li>
-        <li><a href="contact.html" class="nav__link">CONTATO</a></li>
+        <li><a href="contact.html" class="nav__link">CONTACT</a></li>
       </ul>
       <div class="nav__lang">
-        <a href="contact.html" class="nav__lang-link nav__lang-link--active">PT</a>
-        <a href="en/contact.html" class="nav__lang-link">EN</a>
-        <a href="fr/contact.html" class="nav__lang-link">FR</a>
+        <a href="../contact.html" class="nav__lang-link">PT</a>
+        <a href="contact.html" class="nav__lang-link nav__lang-link--active">EN</a>
+        <a href="../fr/contact.html" class="nav__lang-link">FR</a>
       </div>
-      <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false">
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </nav>
   </header>
 
-  <!-- Mobile menu -->
-  <nav class="nav__mobile" aria-label="Menu mobile">
-    <a href="index.html" class="nav__mobile-link">INÍCIO</a>
-    <a href="portfolio.html" class="nav__mobile-link">PORTFÓLIO</a>
-    <a href="index.html#services" class="nav__mobile-link">SERVIÇOS</a>
+  <nav class="nav__mobile" aria-label="Mobile menu">
+    <a href="index.html" class="nav__mobile-link">HOME</a>
+    <a href="portfolio.html" class="nav__mobile-link">PORTFOLIO</a>
+    <a href="index.html#services" class="nav__mobile-link">SERVICES</a>
     <a href="regard.html" class="nav__mobile-link nav__mobile-link--regard">REGARD</a>
-    <a href="contact.html" class="nav__mobile-link">CONTATO</a>
+    <a href="contact.html" class="nav__mobile-link">CONTACT</a>
     <div class="nav__mobile-lang">
-      <a href="contact.html" class="nav__lang-link nav__lang-link--active">PT</a>
-      <a href="en/contact.html" class="nav__lang-link">EN</a>
-      <a href="fr/contact.html" class="nav__lang-link">FR</a>
+      <a href="../contact.html" class="nav__lang-link">PT</a>
+      <a href="contact.html" class="nav__lang-link nav__lang-link--active">EN</a>
+      <a href="../fr/contact.html" class="nav__lang-link">FR</a>
     </div>
   </nav>
 
   <main>
 
-    <!-- ===================================================
-         CONTACT
-         =================================================== -->
     <section class="s-contact" aria-labelledby="contact-h1">
       <div class="wrap s-contact__grid">
 
-        <!-- Lado esquerdo: apresentação -->
         <div class="contact-aside fi">
-          <h1 id="contact-h1">Vamos falar sobre o seu lugar?</h1>
+          <h1 id="contact-h1">Shall we talk about your place?</h1>
           <p>
-            Conte um pouco sobre o momento atual da sua comunicação, o que você sente que ainda não aparece nas imagens e que tipo de projeto gostaria de construir.
+            Tell me a little about where your communication currently stands, what you feel isn't yet coming through in the images and what kind of project you'd like to build.
           </p>
 
           <div class="contact-links">
-            <!-- Substitua pelo link real do Instagram -->
             <a href="https://www.instagram.com/lucasmachut.visuals"
                target="_blank"
                rel="noopener noreferrer"
@@ -74,12 +65,10 @@
               <span class="contact-link__dash">—</span>
               Instagram · lucasmachut.visuals
             </a>
-            <!-- Substitua pelo número real: https://wa.me/5511999999999 -->
             <a href="#" class="contact-link" aria-label="WhatsApp">
               <span class="contact-link__dash">—</span>
               WhatsApp
             </a>
-            <!-- Substitua pelo e-mail real -->
             <a href="mailto:contato@lucasmachut.com" class="contact-link" aria-label="E-mail">
               <span class="contact-link__dash">—</span>
               E-mail
@@ -87,19 +76,16 @@
           </div>
         </div>
 
-        <!-- Lado direito: formulário -->
         <div class="fi fi-d1">
-          <!-- TODO: Conectar a um serviço de formulário (Formspree, Netlify Forms etc.) -->
-          <!-- Formspree: action="https://formspree.io/f/SEU_ID" method="POST" -->
           <form class="contact-form" novalidate>
 
             <div class="form-row">
               <div class="form-field">
-                <label for="nome">Nome</label>
+                <label for="nome">Name</label>
                 <input type="text" id="nome" name="nome" autocomplete="name" required />
               </div>
               <div class="form-field">
-                <label for="hotel">Hotel ou marca</label>
+                <label for="hotel">Hotel or brand</label>
                 <input type="text" id="hotel" name="hotel" />
               </div>
             </div>
@@ -116,35 +102,35 @@
             </div>
 
             <div class="form-field form-field--full">
-              <label for="online">Site ou Instagram</label>
-              <input type="text" id="online" name="online" placeholder="https:// ou @handle" />
+              <label for="online">Website or Instagram</label>
+              <input type="text" id="online" name="online" placeholder="https:// or @handle" />
             </div>
 
             <div class="form-field form-field--full">
-              <label for="tipo">Tipo de projeto</label>
+              <label for="tipo">Project type</label>
               <select id="tipo" name="tipo">
-                <option value="" disabled selected>Selecionar</option>
-                <option value="fotografia">Fotografia</option>
-                <option value="video">Vídeo</option>
-                <option value="reels">Reels / Redes sociais</option>
-                <option value="producao-completa">Produção completa</option>
-                <option value="auditoria">Auditoria Visual Regard</option>
-                <option value="outro">Outro</option>
+                <option value="" disabled selected>Select</option>
+                <option value="fotografia">Photography</option>
+                <option value="video">Video</option>
+                <option value="reels">Reels / Social media</option>
+                <option value="producao-completa">Full production</option>
+                <option value="auditoria">Regard Visual Audit</option>
+                <option value="outro">Other</option>
               </select>
             </div>
 
             <div class="form-field form-field--full">
-              <label for="mensagem">Mensagem</label>
+              <label for="mensagem">Message</label>
               <textarea id="mensagem" name="mensagem" rows="5"
-                placeholder="Conte um pouco sobre o seu lugar e o que você gostaria de construir."></textarea>
+                placeholder="Tell me a little about your place and what you'd like to build."></textarea>
             </div>
 
             <p class="form-note">
-              Responderei em até 48 horas.
+              I'll reply within 48 hours.
             </p>
 
             <div class="form-submit">
-              <button type="submit" class="btn btn--dark form-submit-btn">Enviar mensagem</button>
+              <button type="submit" class="btn btn--dark form-submit-btn">Send message</button>
             </div>
 
           </form>
@@ -155,20 +141,17 @@
 
   </main>
 
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
   <footer class="footer" role="contentinfo">
     <div class="footer__inner">
       <div class="footer__brand">
         <h2 class="footer__brand-name">Lucas Machut</h2>
         <p class="footer__brand-desc">
-          Fotografia, vídeo e auditoria visual para hotelaria e lugares de experiência.
+          Photography, video and visual audit for hospitality and experience venues.
         </p>
       </div>
 
-      <nav class="footer__nav" aria-label="Links do rodapé">
-        <h3 class="footer__col-title">Páginas</h3>
+      <nav class="footer__nav" aria-label="Footer links">
+        <h3 class="footer__col-title">Pages</h3>
         <ul class="footer__links">
           <li><a href="portfolio.html">Work</a></li>
           <li><a href="index.html#services">Services</a></li>
@@ -178,7 +161,7 @@
       </nav>
 
       <div class="footer__contact">
-        <h3 class="footer__col-title">Contato</h3>
+        <h3 class="footer__col-title">Contact</h3>
         <ul class="footer__links">
           <li><a href="https://www.instagram.com/lucasmachut.visuals" target="_blank" rel="noopener noreferrer">Instagram</a></li>
           <li><a href="#" aria-label="WhatsApp">WhatsApp</a></li>
@@ -186,9 +169,9 @@
         </ul>
       </div>
     </div>
-    <p class="footer__bottom">© 2026 Lucas Machut Visuals. Brasil.</p>
+    <p class="footer__bottom">© 2026 Lucas Machut Visuals. Brazil.</p>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="../js/main.js"></script>
 </body>
 </html>

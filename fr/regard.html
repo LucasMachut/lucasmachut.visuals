@@ -1,20 +1,19 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="fr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Auditoria Visual — Lucas Machut Visuals</title>
-  <meta name="description" content="O Método Regard: uma análise profissional da sua comunicação visual para hotéis, pousadas e lugares de experiência. Instagram, Booking e site — em 48 horas." />
+  <title>Audit Visuel — Lucas Machut Visuals</title>
+  <meta name="description" content="La Méthode Regard : une analyse professionnelle de votre communication visuelle pour hôtels, pousadas et lieux d'expérience. Instagram, Booking et site — en 48 heures." />
   <meta name="robots" content="index, follow" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="css/style.css?v=3" />
+  <link rel="stylesheet" href="../css/style.css?v=3" />
 
   <style>
     /* ── PAGE-SPECIFIC: REGARD ── */
 
-    /* Hero escuro com tipografia grande */
     .rg-hero {
       background: var(--bg-dark);
       color: var(--cream);
@@ -68,7 +67,6 @@
       color: var(--text-muted);
     }
 
-    /* Linha separadora */
     .rg-rule {
       border: none;
       border-top: 1px solid var(--line);
@@ -79,14 +77,12 @@
       border-color: rgba(250,247,243,0.08);
     }
 
-    /* Container padrão */
     .rg-wrap {
       max-width: var(--max);
       margin: 0 auto;
       padding: 0 var(--s8);
     }
 
-    /* Labels de seção */
     .rg-label {
       font-size: 11px;
       font-weight: 500;
@@ -96,7 +92,6 @@
       margin-bottom: var(--s6);
     }
 
-    /* ── INTRO ── */
     .rg-intro {
       background: var(--cream);
       padding: var(--s16) 0;
@@ -129,7 +124,6 @@
       line-height: 1.7;
     }
 
-    /* ── PARA QUEM ── */
     .rg-paraquem {
       background: var(--bg-dark);
       color: var(--cream);
@@ -180,7 +174,6 @@
       margin-top: var(--s4);
     }
 
-    /* ── MÉTODO REGARD ── */
     .rg-metodo {
       background: var(--bg);
       padding: var(--s16) 0;
@@ -219,7 +212,6 @@
       margin-bottom: var(--s3);
     }
 
-    /* ── DIFERENCIAL ── */
     .rg-diferencial {
       background: var(--cream);
       padding: var(--s16) 0;
@@ -255,7 +247,6 @@
       font-weight: 400;
     }
 
-    /* ── O QUE VOCÊ RECEBE ── */
     .rg-recebe {
       background: var(--bg-dark);
       padding: var(--s16) 0;
@@ -394,7 +385,6 @@
       border-color: rgba(28,20,9,0.15);
     }
 
-    /* ── COMO FUNCIONA ── */
     .rg-como {
       background: var(--bg-dark);
       padding: var(--s16) 0;
@@ -437,7 +427,6 @@
       color: rgba(250,247,243,0.6);
     }
 
-    /* ── SOBRE ── */
     .rg-sobre {
       background: var(--bg-dark);
       padding: var(--s16) 0;
@@ -499,7 +488,6 @@
     }
     .rg-sobre .sobre-contacts a:hover { opacity: 0.7; }
 
-    /* ── CTA FINAL ── */
     .rg-cta {
       background: var(--accent);
       color: var(--bg-dark);
@@ -550,7 +538,6 @@
     }
     .btn--regard:hover { opacity: 0.8; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 1024px) {
       .rg-wrap { padding: 0 var(--s5); }
       .rg-hero .wrap { padding: 0 var(--s5); }
@@ -573,143 +560,138 @@
 </head>
 <body>
 
-  <!-- =====================================================
-       HEADER
-       ===================================================== -->
   <header class="header" role="banner">
-    <nav class="nav" aria-label="Navegação principal">
+    <nav class="nav" aria-label="Navigation principale">
       <ul class="nav__links">
-        <li><a href="index.html" class="nav__link">INÍCIO</a></li>
-        <li><a href="portfolio.html" class="nav__link">PORTFÓLIO</a></li>
-        <li><a href="index.html#services" class="nav__link">SERVIÇOS</a></li>
+        <li><a href="index.html" class="nav__link">ACCUEIL</a></li>
+        <li><a href="portfolio.html" class="nav__link">PORTFOLIO</a></li>
+        <li><a href="index.html#services" class="nav__link">SERVICES</a></li>
         <li><a href="regard.html" class="nav__link nav__link--regard">REGARD</a></li>
-        <li><a href="contact.html" class="nav__link">CONTATO</a></li>
+        <li><a href="contact.html" class="nav__link">CONTACT</a></li>
       </ul>
       <div class="nav__lang">
-        <a href="regard.html" class="nav__lang-link nav__lang-link--active">PT</a>
-        <a href="en/regard.html" class="nav__lang-link">EN</a>
-        <a href="fr/regard.html" class="nav__lang-link">FR</a>
+        <a href="../regard.html" class="nav__lang-link">PT</a>
+        <a href="../en/regard.html" class="nav__lang-link">EN</a>
+        <a href="regard.html" class="nav__lang-link nav__lang-link--active">FR</a>
       </div>
-      <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false">
+      <button class="nav__toggle" aria-label="Ouvrir le menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </nav>
   </header>
 
-  <!-- Mobile menu -->
   <nav class="nav__mobile" aria-label="Menu mobile">
-    <a href="index.html" class="nav__mobile-link">INÍCIO</a>
-    <a href="portfolio.html" class="nav__mobile-link">PORTFÓLIO</a>
-    <a href="index.html#services" class="nav__mobile-link">SERVIÇOS</a>
+    <a href="index.html" class="nav__mobile-link">ACCUEIL</a>
+    <a href="portfolio.html" class="nav__mobile-link">PORTFOLIO</a>
+    <a href="index.html#services" class="nav__mobile-link">SERVICES</a>
     <a href="regard.html" class="nav__mobile-link nav__mobile-link--regard">REGARD</a>
-    <a href="contact.html" class="nav__mobile-link">CONTATO</a>
+    <a href="contact.html" class="nav__mobile-link">CONTACT</a>
     <div class="nav__mobile-lang">
-      <a href="regard.html" class="nav__lang-link nav__lang-link--active">PT</a>
-      <a href="en/regard.html" class="nav__lang-link">EN</a>
-      <a href="fr/regard.html" class="nav__lang-link">FR</a>
+      <a href="../regard.html" class="nav__lang-link">PT</a>
+      <a href="../en/regard.html" class="nav__lang-link">EN</a>
+      <a href="regard.html" class="nav__lang-link nav__lang-link--active">FR</a>
     </div>
   </nav>
 
   <main>
 
-    <!-- ── HERO ── -->
+    <!-- HERO -->
     <section class="rg-hero">
       <div class="wrap">
-        <p class="rg-eyebrow fi">Auditoria Visual — Lucas Machut</p>
+        <p class="rg-eyebrow fi">Audit Visuel — Lucas Machut</p>
         <h1 class="fi fi-d1">
-          Você sabe que o seu hotel<br>
-          é melhor do que as suas<br>
-          fotos mostram.
+          Vous savez que votre hôtel<br>
+          est meilleur que vos<br>
+          photos ne le montrent.
         </h1>
-        <p class="rg-sub fi fi-d2">E isso está custando reservas.</p>
+        <p class="rg-sub fi fi-d2">Et ça vous coûte des réservations.</p>
         <div class="rg-cta-row fi fi-d3">
-          <a href="#cta-final" class="btn btn--dark">Quero minha análise gratuita</a>
-          <span class="rg-scroll">Entender o serviço ↓</span>
+          <a href="#cta-final" class="btn btn--dark">Je veux mon analyse gratuite</a>
+          <span class="rg-scroll">Comprendre le service ↓</span>
         </div>
       </div>
     </section>
 
     <hr class="rg-rule" />
 
-    <!-- ── O QUE É ── -->
+    <!-- CE QUE C'EST -->
     <section class="rg-intro">
       <div class="rg-wrap">
-        <p class="rg-label fi">O que é</p>
+        <p class="rg-label fi">Ce que c'est</p>
         <p class="intro-body fi fi-d1">
-          A Auditoria Visual é uma análise profissional da sua comunicação visual —
-          Instagram, Booking e site — feita com o olhar de <em>um viajante europeu
-          que ainda não te conhece</em> e está decidindo onde reservar.
+          L'Audit Visuel est une analyse professionnelle de votre communication visuelle —
+          Instagram, Booking et site — réalisée avec le regard <em>d'un voyageur européen
+          qui ne vous connaît pas encore</em> et décide où réserver.
           <br><br>
-          Não é uma crítica. É um diagnóstico.
+          Ce n'est pas une critique. C'est un diagnostic.
         </p>
         <p class="intro-tagline fi fi-d2">
-          Em menos de 48 horas, você recebe um documento claro com o que está funcionando,
-          o que está faltando e o que está fazendo seus hóspedes escolherem outro lugar.
+          En moins de 48 heures, vous recevez un document clair avec ce qui fonctionne,
+          ce qui manque et ce qui pousse vos hôtes à choisir un autre établissement.
         </p>
       </div>
     </section>
 
     <hr class="rg-rule" />
 
-    <!-- ── PARA QUEM ── -->
+    <!-- POUR QUI -->
     <section class="rg-paraquem">
       <div class="rg-wrap" style="position:relative;">
         <div class="deco-num" aria-hidden="true">01</div>
-        <p class="rg-label fi">Para quem é</p>
+        <p class="rg-label fi">Pour qui</p>
         <p class="pq-lead fi fi-d1">
-          Você investe no seu estabelecimento. Cuida dos detalhes, treina a equipe, pensa na experiência do hóspede.
-          Mas na hora de mostrar tudo isso online — algo não fecha.
+          Vous investissez dans votre établissement. Vous soignez les détails, formez l'équipe, pensez à l'expérience de l'hôte. Mais au moment de montrer tout ça en ligne — quelque chose ne fonctionne pas.
         </p>
         <p class="pq-body fi fi-d2">
-          As reservas não chegam na proporção que você esperava. Os comentários são bons, mas o perfil não cresce. Você já trocou de fotógrafo, já postou mais, já tentou alguns reels — e ainda sente que o que aparece na tela não faz jus ao que as pessoas encontram quando chegam.
+          Les réservations n'arrivent pas dans les proportions attendues. Les avis sont bons, mais le profil ne grandit pas. Vous avez changé de photographe, posté davantage, essayé quelques reels — et vous sentez encore que ce qui apparaît à l'écran ne rend pas justice à ce que les gens trouvent en arrivant.
         </p>
         <p class="pq-body fi fi-d2">
-          O problema raramente está onde você está procurando. Na maioria dos casos, não é a qualidade das fotos. Não é a frequência das postagens. É uma combinação de sinais visuais que, juntos, impedem o hóspede certo de se sentir chamado pelo seu lugar — antes mesmo de ler uma linha de texto.
+          Le problème est rarement là où vous le cherchez. Dans la plupart des cas, ce n'est pas la qualité des photos. Ce n'est pas la fréquence des publications. C'est une combinaison de signaux visuels qui, ensemble, empêchent le bon hôte de se sentir appelé par votre lieu — avant même d'avoir lu une seule ligne de texte.
         </p>
         <p class="pq-highlight fi fi-d3">
-          É exatamente isso que o Método Regard analisa.
+          C'est exactement ce qu'analyse la Méthode Regard.
         </p>
       </div>
     </section>
 
     <hr class="rg-rule rg-rule--dark" />
 
-    <!-- ── O MÉTODO REGARD ── -->
+    <!-- LA MÉTHODE REGARD -->
     <section class="rg-metodo">
       <div class="rg-wrap">
-        <p class="rg-label fi">O método</p>
-        <h2 class="fi fi-d1">O Método Regard</h2>
+        <p class="rg-label fi">La méthode</p>
+        <h2 class="fi fi-d1">La Méthode Regard</h2>
         <p class="metodo-lead fi fi-d2">
-          Uma análise desenvolvida para responder a uma única pergunta: <em>o que está impedindo o hóspede certo de escolher o seu estabelecimento?</em>
+          Une analyse développée pour répondre à une seule question : <em>qu'est-ce qui empêche le bon hôte de choisir votre établissement ?</em>
         </p>
         <p class="metodo-body fi fi-d3">
-          Em 48 horas, você recebe um diagnóstico completo da sua comunicação visual — o que está funcionando, o que está faltando, e onde estão as oportunidades que ainda não foram exploradas.
+          En 48 heures, vous recevez un diagnostic complet de votre communication visuelle — ce qui fonctionne, ce qui manque, et où se trouvent les opportunités encore inexploitées.
         </p>
         <p class="metodo-body fi fi-d3">
-          O resultado não é uma lista de problemas. É clareza sobre o que fazer primeiro, com exemplos visuais concretos do que seria possível para o seu lugar.
+          Le résultat n'est pas une liste de problèmes. C'est une clarté sur ce qu'il faut faire en premier, avec des exemples visuels concrets de ce qui serait possible pour votre lieu.
         </p>
       </div>
     </section>
 
     <hr class="rg-rule" />
 
-    <!-- ── POR QUE É DIFERENTE ── -->
+    <!-- POURQUOI C'EST DIFFÉRENT -->
     <section class="rg-diferencial">
       <div class="rg-wrap">
-        <p class="rg-label fi">Por que isso é diferente</p>
+        <p class="rg-label fi">Pourquoi c'est différent</p>
         <div class="diff-grid">
           <div class="diff-quote fi fi-d1">
-            Sou francês, vivo no Brasil, e trabalho especificamente com hospitalidade.
+            Je suis français, je vis au Brésil, et je travaille spécifiquement avec l'hôtellerie.
           </div>
           <div class="diff-text fi fi-d2">
             <p>
-              Isso significa que analiso o seu estabelecimento com dois olhares ao mesmo tempo: o do viajante europeu que ainda não te conhece e está comparando opções no Booking, e o do profissional que entende o mercado brasileiro e sabe o que faz um hóspede de alto padrão reservar sem precisar perguntar o preço.
+              Cela signifie que j'analyse votre établissement avec deux regards simultanés : celui du voyageur européen qui ne vous connaît pas encore et compare des options sur Booking, et celui du professionnel qui comprend le marché brésilien et sait ce qui pousse un hôte haut de gamme à réserver sans demander le prix.
             </p>
             <p>
-              A maioria dos fotógrafos chega com a câmera. Eu chego com perguntas. O que falta mostrar? O que o hóspede sente quando chega às 20h e não existe nenhum conteúdo noturno? O que a ausência de pessoas nas fotos comunica, mesmo sem querer?
+              La plupart des photographes arrivent avec un appareil. J'arrive avec des questions. Qu'est-ce qui manque à montrer ? Que ressent l'hôte qui arrive à 20h et ne trouve aucun contenu nocturne ? Que communique l'absence de personnes dans les photos, même sans le vouloir ?
             </p>
             <p>
-              <strong>Essa combinação — olhar externo, vivência local, método estruturado — é o que torna o Método Regard diferente de qualquer análise genérica ou checklist de redes sociais.</strong>
+              <strong>Cette combinaison — regard extérieur, vécu local, méthode structurée — est ce qui rend la Méthode Regard différente de toute analyse générique ou checklist de réseaux sociaux.</strong>
             </p>
           </div>
         </div>
@@ -718,51 +700,51 @@
 
     <hr class="rg-rule" />
 
-    <!-- ── O QUE VOCÊ RECEBE ── -->
+    <!-- CE QUE VOUS RECEVEZ -->
     <section class="rg-recebe">
       <div class="rg-wrap" style="position:relative;">
         <div class="deco-num" aria-hidden="true">02</div>
-        <p class="rg-label fi">O que você recebe</p>
-        <h2 class="fi fi-d1">Dois formatos.<br>Uma decisão clara.</h2>
+        <p class="rg-label fi">Ce que vous recevez</p>
+        <h2 class="fi fi-d1">Deux formats.<br>Une décision claire.</h2>
       </div>
       <div class="rg-wrap">
         <div class="offer-grid fi fi-d2">
 
           <div class="offer-card offer-card--free">
-            <p class="offer-tag">Gratuita</p>
-            <h3 class="offer-name">Análise Rápida</h3>
+            <p class="offer-tag">Gratuite</p>
+            <h3 class="offer-name">Analyse Rapide</h3>
             <ul>
-              <li>As 3 principais oportunidades do seu perfil</li>
-              <li>O impacto direto de cada uma nas suas reservas</li>
-              <li>Um exemplo visual do que seria possível</li>
-              <li>Uma proposta de conversa de 20 minutos</li>
+              <li>Les 3 principales opportunités de votre profil</li>
+              <li>L'impact direct de chacune sur vos réservations</li>
+              <li>Un exemple visuel de ce qui serait possible</li>
+              <li>Une proposition de conversation de 20 minutes</li>
             </ul>
             <div class="offer-meta">
-              <span class="offer-prazo">Prazo de entrega</span>
-              <span class="offer-valor">24 horas</span>
+              <span class="offer-prazo">Délai de livraison</span>
+              <span class="offer-valor">24 heures</span>
             </div>
             <p class="offer-note">
-              "Essa análise é o ponto de partida. É uma forma de você ver, de forma concreta, o que está faltando — antes de decidir qualquer coisa."
+              "Cette analyse est le point de départ. C'est une façon de voir, concrètement, ce qui manque — avant de prendre une quelconque décision."
             </p>
           </div>
 
           <div class="offer-card offer-card--paid">
-            <p class="offer-tag">Diagnóstico Profissional</p>
-            <h3 class="offer-name">Auditoria Completa</h3>
+            <p class="offer-tag">Diagnostic Professionnel</p>
+            <h3 class="offer-name">Audit Complet</h3>
             <ul>
-              <li>Análise quantificada das três plataformas</li>
-              <li>Diagnóstico das 5 falhas com capturas anotadas do seu próprio perfil</li>
-              <li>Análise do hóspede ideal vs. o que seu conteúdo comunica hoje</li>
-              <li>3 prioridades de ação por impacto e esforço</li>
-              <li>Referências visuais do que seria possível</li>
-              <li>Proposta personalizada de produção de conteúdo</li>
+              <li>Analyse quantifiée des trois plateformes</li>
+              <li>Diagnostic des 5 failles avec captures annotées de votre propre profil</li>
+              <li>Analyse de l'hôte idéal vs. ce que votre contenu communique aujourd'hui</li>
+              <li>3 priorités d'action par impact et effort</li>
+              <li>Références visuelles de ce qui serait possible</li>
+              <li>Proposition personnalisée de production de contenu</li>
             </ul>
             <div class="offer-meta">
-              <span class="offer-prazo">Investimento</span>
+              <span class="offer-prazo">Investissement</span>
               <span class="offer-valor">R$ 400</span>
             </div>
             <p class="offer-note">
-              "Se contratar a produção, o valor da auditoria é descontado integralmente do projeto."
+              "Si vous engagez la production, la valeur de l'audit est intégralement déduite du projet."
             </p>
           </div>
 
@@ -772,27 +754,27 @@
 
     <hr class="rg-rule rg-rule--dark" />
 
-    <!-- ── COMO FUNCIONA ── -->
+    <!-- COMMENT ÇA MARCHE -->
     <section class="rg-como">
       <div class="rg-wrap">
-        <p class="rg-label fi">Como funciona</p>
-        <h2 class="fi fi-d1">Simples.<br>Sem reuniões longas.</h2>
+        <p class="rg-label fi">Comment ça marche</p>
+        <h2 class="fi fi-d1">Simple.<br>Sans longues réunions.</h2>
         <div class="steps-grid fi fi-d2">
           <div class="step-card">
             <div class="step-num">1</div>
-            <p class="step-text">Você me envia o nome do estabelecimento e os links do Instagram, Booking e site</p>
+            <p class="step-text">Vous m'envoyez le nom de l'établissement et les liens Instagram, Booking et site</p>
           </div>
           <div class="step-card">
             <div class="step-num">2</div>
-            <p class="step-text">Eu faço a análise com base em uma metodologia própria de 30 critérios visuais</p>
+            <p class="step-text">Je réalise l'analyse sur la base d'une méthodologie propre de 30 critères visuels</p>
           </div>
           <div class="step-card">
             <div class="step-num">3</div>
-            <p class="step-text">Você recebe o documento em até 48 horas, direto no WhatsApp ou e-mail</p>
+            <p class="step-text">Vous recevez le document en 48 heures, directement par WhatsApp ou e-mail</p>
           </div>
           <div class="step-card">
             <div class="step-num">4</div>
-            <p class="step-text">Se quiser avançar, agendamos uma conversa de 20 minutos para apresentar os resultados</p>
+            <p class="step-text">Si vous souhaitez aller plus loin, nous planifions un appel de 20 minutes pour présenter les résultats</p>
           </div>
         </div>
       </div>
@@ -800,23 +782,23 @@
 
     <hr class="rg-rule rg-rule--dark" />
 
-    <!-- ── SOBRE ── -->
+    <!-- À PROPOS -->
     <section class="rg-sobre">
       <div class="rg-wrap">
         <div class="sobre-grid">
           <div>
-            <p class="sobre-label fi">Sobre</p>
+            <p class="sobre-label fi">À propos</p>
             <h2 class="sobre-name fi fi-d1">Lucas<br>Machut</h2>
           </div>
           <div class="sobre-body fi fi-d2">
             <p>
-              Filmmaker e fotógrafo francês radicado no Brasil. Trabalho com hotéis boutique, pousadas premium, villas e restaurantes de experiência — com foco em traduzir atmosfera, identidade e experiência dos hóspedes em <strong>conteúdo visual que gera desejo e confiança antes mesmo da reserva</strong>.
+              Réalisateur et photographe français installé au Brésil. Je travaille avec des hôtels boutique, des pousadas premium, des villas et des restaurants d'expérience — avec pour objectif de traduire l'atmosphère, l'identité et l'expérience des hôtes en <strong>contenu visuel qui génère du désir et de la confiance avant même la réservation</strong>.
             </p>
             <p>
-              Utilizo câmera profissional <strong>Canon R6 Mark II</strong>, gimbal estabilizado, <strong>drone FPV DJI Avata 2</strong>, iluminação e captação de áudio profissional.
+              J'utilise un appareil professionnel <strong>Canon R6 Mark II</strong>, un gimbal stabilisé, un <strong>drone FPV DJI Avata 2</strong>, un éclairage et une capture audio professionnels.
             </p>
             <p>
-              Falo português, francês e inglês — o que me permite criar conteúdo pensado para o hóspede brasileiro e para o viajante internacional ao mesmo tempo.
+              Je parle portugais, français et anglais — ce qui me permet de créer du contenu pensé à la fois pour l'hôte brésilien et pour le voyageur international.
             </p>
             <div class="sobre-contacts">
               <a href="https://www.instagram.com/lucasmachut.visuals" target="_blank" rel="noopener noreferrer">@lucasmachut.visuals</a>
@@ -827,39 +809,36 @@
       </div>
     </section>
 
-    <!-- ── CTA FINAL ── -->
+    <!-- CTA FINAL -->
     <section class="rg-cta" id="cta-final">
-      <p class="cta-eyebrow fi">Ponto de partida</p>
+      <p class="cta-eyebrow fi">Point de départ</p>
       <h2 class="fi fi-d1">
-        Quero receber minha<br>análise gratuita.
+        Je veux recevoir<br>mon analyse gratuite.
       </h2>
       <p class="cta-sub fi fi-d2">
-        Me envia o nome do seu estabelecimento e os links das suas plataformas.
-        Em 24 horas você recebe o documento. Sem compromisso.
+        Envoyez-moi le nom de votre établissement et les liens de vos plateformes.
+        Vous recevrez le document en 24 heures. Sans engagement.
       </p>
       <a href="mailto:lucasmachut.visuals@gmail.com" class="btn--regard fi fi-d3">
-        Solicitar análise gratuita
+        Demander l'analyse gratuite
       </a>
     </section>
 
   </main>
 
-  <!-- =====================================================
-       FOOTER
-       ===================================================== -->
   <footer class="footer" role="contentinfo">
     <div class="footer__inner">
       <div class="footer__brand">
         <h2 class="footer__brand-name">Lucas Machut</h2>
         <p class="footer__brand-desc">
-          Fotografia, vídeo e auditoria visual para hotelaria e lugares de experiência.
+          Photographie, vidéo et audit visuel pour l'hôtellerie et les lieux d'expérience.
         </p>
       </div>
 
-      <nav class="footer__nav" aria-label="Links do rodapé">
-        <h3 class="footer__col-title">Páginas</h3>
+      <nav class="footer__nav" aria-label="Liens du pied de page">
+        <h3 class="footer__col-title">Pages</h3>
         <ul class="footer__links">
-          <li><a href="portfolio.html">Work</a></li>
+          <li><a href="portfolio.html">Travaux</a></li>
           <li><a href="index.html#services">Services</a></li>
           <li><a href="regard.html">REGARD</a></li>
           <li><a href="contact.html">Contact</a></li>
@@ -867,7 +846,7 @@
       </nav>
 
       <div class="footer__contact">
-        <h3 class="footer__col-title">Contato</h3>
+        <h3 class="footer__col-title">Contact</h3>
         <ul class="footer__links">
           <li><a href="https://www.instagram.com/lucasmachut.visuals" target="_blank" rel="noopener noreferrer">Instagram</a></li>
           <li><a href="#" aria-label="WhatsApp">WhatsApp</a></li>
@@ -875,9 +854,9 @@
         </ul>
       </div>
     </div>
-    <p class="footer__bottom">© 2026 Lucas Machut Visuals. Brasil.</p>
+    <p class="footer__bottom">© 2026 Lucas Machut Visuals. Brésil.</p>
   </footer>
 
-  <script src="js/main.js"></script>
+  <script src="../js/main.js"></script>
 </body>
 </html>
