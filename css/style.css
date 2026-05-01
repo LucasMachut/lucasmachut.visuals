@@ -667,13 +667,13 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: 0;
   background: rgba(14, 8, 2, 0.82);
-  z-index: 0;
+  z-index: 1;
 }
 
 /* Tout le contenu passe au-dessus de l'overlay */
 .s-regard .wrap {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .s-regard .label { margin-bottom: var(--s4); }
@@ -878,12 +878,12 @@ h1, h2, h3, h4 {
   position: absolute;
   inset: 0;
   background: linear-gradient(to right, rgba(14,8,2,0.88) 35%, rgba(14,8,2,0.45) 100%);
-  z-index: 0;
+  z-index: 1;
 }
 
 .s-olhar .wrap {
   position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .s-olhar__grid {
