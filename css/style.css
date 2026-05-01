@@ -1389,6 +1389,11 @@ h1, h2, h3, h4 {
     margin-left: calc(-1 * var(--s4));
     margin-right: calc(-1 * var(--s4));
     width: 100vw;
+    order: 2;
+  }
+
+  .s-percepcao__body {
+    order: 1;
   }
 
   .project-item__img {
