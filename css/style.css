@@ -877,7 +877,7 @@ h1, h2, h3, h4 {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(to right, rgba(14,8,2,0.88) 35%, rgba(14,8,2,0.45) 100%);
+  background: linear-gradient(to right, rgba(14,8,2,0.70) 30%, rgba(14,8,2,0.28) 100%);
   z-index: 1;
 }
 
@@ -903,13 +903,13 @@ h1, h2, h3, h4 {
   font-size: clamp(2rem, 3.2vw, 3rem);
   font-weight: 300;
   line-height: 1.15;
-  color: var(--cream);
+  color: #F5E6C8;
   margin-bottom: 0;
 }
 
 .s-olhar__body p {
   font-size: 1rem;
-  color: rgba(250,247,243,0.72);
+  color: rgba(245, 230, 200, 0.85);
   line-height: 1.85;
   max-width: 560px;
 }
@@ -938,10 +938,10 @@ h1, h2, h3, h4 {
   }
   .s-olhar__mobile-bg { display: block; }
   .s-olhar::before {
-    background: rgba(14, 8, 2, 0.75);
+    background: rgba(14, 8, 2, 0.62);
   }
   .s-olhar__grid { grid-template-columns: 1fr; gap: var(--s5); }
-  .s-olhar__body p { max-width: none; color: rgba(250,247,243,0.8); }
+  .s-olhar__body p { max-width: none; color: rgba(245,230,200,0.88); }
 }
 
 /* ============================================================
