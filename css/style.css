@@ -674,12 +674,12 @@ h1, h2, h3, h4 {
   padding: var(--s16) 0;
 }
 
-/* Overlay sombre pour garantir la lisibilité */
+/* Overlay léger pour conserver la lisibilité tout en laissant l'image respirer */
 .s-regard::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(14, 8, 2, 0.82);
+  background: linear-gradient(to bottom, rgba(14, 8, 2, 0.55) 0%, rgba(14, 8, 2, 0.40) 50%, rgba(14, 8, 2, 0.55) 100%);
   z-index: 1;
 }
 
@@ -710,7 +710,7 @@ h1, h2, h3, h4 {
     display: block;
   }
   .s-regard::before {
-    background: rgba(14, 8, 2, 0.62);
+    background: linear-gradient(to bottom, rgba(14, 8, 2, 0.55) 0%, rgba(14, 8, 2, 0.35) 50%, rgba(14, 8, 2, 0.55) 100%);
   }
 }
 
