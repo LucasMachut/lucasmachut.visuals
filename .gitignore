@@ -1,0 +1,19 @@
+# Original photos — heavy (~1+ GB). Kept locally as archive.
+# Compressed web versions live in Projets-web/ and ARE tracked.
+/Projets/
+
+# Claude Code internals (worktrees, local launch/settings)
+/.claude/worktrees/
+/.claude/settings.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
