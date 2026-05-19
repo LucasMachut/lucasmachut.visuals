@@ -1630,9 +1630,11 @@ h1, h2, h3, h4 {
 
 .project-info__desc p + p { margin-top: var(--s3); }
 
-/* Project film — breaks out of .wrap to take ~full viewport width */
+/* Project film — full-bleed dark band, the film is the centerpiece */
 .project-film {
-  padding: var(--s10) var(--s3) var(--s4);
+  background: var(--bg-dark);
+  color: var(--cream);
+  padding: var(--s12) var(--s3);
 }
 
 .project-film .wrap {
@@ -1642,6 +1644,8 @@ h1, h2, h3, h4 {
 
 .project-film__label {
   text-align: center;
+  color: rgba(250,247,243,0.6);
+  letter-spacing: 0.28em;
   margin-bottom: var(--s5);
 }
 
@@ -1833,19 +1837,15 @@ h1, h2, h3, h4 {
   .project-hero__content { padding: 0 var(--s4) var(--s8); }
   .project-info { padding: var(--s10) 0 var(--s8); }
 
-  /* Mobile: film section becomes a cinematic dark band — the centerpiece */
+  /* Mobile: tighter side padding so the player reaches ~95vw,
+     and a touch of margin to breathe between info and gallery. */
   .project-film {
-    background: var(--bg-dark);
-    color: var(--cream);
-    padding: var(--s10) 2.5vw var(--s10);
+    padding: var(--s10) 2.5vw;
     margin-top: var(--s5);
     margin-bottom: var(--s5);
   }
   .project-film__label {
-    color: rgba(250,247,243,0.6);
     font-size: 0.7rem;
-    letter-spacing: 0.28em;
-    margin-bottom: var(--s5);
   }
 
   .project-gallery { padding: var(--s8) 0 var(--s12); }
