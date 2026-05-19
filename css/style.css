@@ -1630,9 +1630,14 @@ h1, h2, h3, h4 {
 
 .project-info__desc p + p { margin-top: var(--s3); }
 
-/* Project film */
+/* Project film — breaks out of .wrap to take ~full viewport width */
 .project-film {
-  padding: var(--s10) 0 var(--s4);
+  padding: var(--s10) var(--s3) var(--s4);
+}
+
+.project-film .wrap {
+  max-width: none;
+  padding: 0;
 }
 
 .project-film__label {
@@ -1641,7 +1646,7 @@ h1, h2, h3, h4 {
 }
 
 .project-film__embed {
-  max-width: 1320px;
+  max-width: none;
   margin: 0 auto;
 }
 
@@ -1827,6 +1832,7 @@ h1, h2, h3, h4 {
   .project-hero { height: 82vh; min-height: 520px; }
   .project-hero__content { padding: 0 var(--s4) var(--s8); }
   .project-info { padding: var(--s10) 0 var(--s8); }
+  .project-film { padding-left: var(--s2); padding-right: var(--s2); }
   .project-gallery { padding: var(--s8) 0 var(--s12); }
   .project-gallery__inner { column-count: 1; column-gap: 0; }
   .project-gallery__item { margin-bottom: var(--s2); }
