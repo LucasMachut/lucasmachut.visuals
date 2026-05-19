@@ -1832,7 +1832,22 @@ h1, h2, h3, h4 {
   .project-hero { height: 82vh; min-height: 520px; }
   .project-hero__content { padding: 0 var(--s4) var(--s8); }
   .project-info { padding: var(--s10) 0 var(--s8); }
-  .project-film { padding-left: var(--s2); padding-right: var(--s2); }
+
+  /* Mobile: film section becomes a cinematic dark band — the centerpiece */
+  .project-film {
+    background: var(--bg-dark);
+    color: var(--cream);
+    padding: var(--s10) 2.5vw var(--s10);
+    margin-top: var(--s5);
+    margin-bottom: var(--s5);
+  }
+  .project-film__label {
+    color: rgba(250,247,243,0.6);
+    font-size: 0.7rem;
+    letter-spacing: 0.28em;
+    margin-bottom: var(--s5);
+  }
+
   .project-gallery { padding: var(--s8) 0 var(--s12); }
   .project-gallery__inner { column-count: 1; column-gap: 0; }
   .project-gallery__item { margin-bottom: var(--s2); }
