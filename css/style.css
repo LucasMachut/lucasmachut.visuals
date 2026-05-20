@@ -1629,9 +1629,15 @@ h1, h2, h3, h4 {
 }
 
 /* Project info without a description — meta stays in a sane column,
-   not stretched across the whole wrap. */
-.project-info--solo .project-info__meta {
+   not stretched across the whole wrap, and the grid collapses so
+   there's no empty 1.6fr gap on the right. */
+.project-info--solo .project-info__meta,
+.project-info__grid > .project-info__meta:only-child {
   max-width: 420px;
+}
+
+.project-info__grid:has(> .project-info__meta:only-child) {
+  grid-template-columns: 1fr;
 }
 
 .project-info__desc p + p { margin-top: var(--s3); }
