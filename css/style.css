@@ -1628,6 +1628,12 @@ h1, h2, h3, h4 {
   max-width: 620px;
 }
 
+/* Project info without a description — meta stays in a sane column,
+   not stretched across the whole wrap. */
+.project-info--solo .project-info__meta {
+  max-width: 420px;
+}
+
 .project-info__desc p + p { margin-top: var(--s3); }
 
 /* Project film — full-bleed dark band, the film is the centerpiece */
