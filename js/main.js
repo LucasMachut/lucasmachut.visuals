@@ -5,6 +5,29 @@
 (function () {
   'use strict';
 
+  /* --- YouTube facade: swap poster for iframe on click --- */
+  /* Heavy YT iframe (~500 KB JS + assets) loads only when the
+     user clicks the cleaned-up thumbnail. */
+  document.querySelectorAll('.video-facade').forEach(el => {
+    const activate = () => {
+      const id = el.dataset.video;
+      if (!id) return;
+      const title = el.dataset.title || '';
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube-nocookie.com/embed/' + id +
+                   '?autoplay=1&rel=0&vq=hd1080&modestbranding=1&playsinline=1';
+      iframe.title = title;
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.setAttribute('allowfullscreen', '');
+      iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:none;';
+      el.replaceWith(iframe);
+    };
+    el.addEventListener('click', activate);
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
+  });
+
   /* --- Hero video autoplay safety net -------------------- */
   /* autoplay+muted is honored by most browsers, but some block it
      until the user interacts (Safari/iOS, brave with strict
