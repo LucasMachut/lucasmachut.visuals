@@ -910,6 +910,12 @@ em {
   align-items: start;
 }
 
+/* Title block (right column) centered vertically — avoids landing
+   on the face which sits at the top of the cropped portrait. */
+.s-olhar__grid .s-olhar__left {
+  align-self: center;
+}
+
 .s-olhar__left .label {
   color: var(--accent);
   margin-bottom: var(--s4);
