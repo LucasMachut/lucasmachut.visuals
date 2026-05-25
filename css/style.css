@@ -881,10 +881,6 @@ em {
 .s-olhar {
   position: relative;
   background-color: var(--bg-dark);
-  background-image: url('../photos/lucas_foto.jpg');
-  background-size: cover;
-  background-position: right 60%;
-  background-repeat: no-repeat;
   color: var(--cream);
   padding: var(--s16) 0;
 }
@@ -940,8 +936,9 @@ em {
 .s-olhar__body p + p { margin-top: var(--s3); }
 
 /* Mobile: image via <img> tag (même pattern que s-regard) */
+/* Background photo as <img> (not CSS bg-image) so it can be
+   lazy-loaded. Positioned absolute to fill the section. */
 .s-olhar__mobile-bg {
-  display: none;
   position: absolute;
   inset: 0;
   width: 100%;
@@ -956,10 +953,6 @@ em {
 }
 
 @media (max-width: 680px) {
-  .s-olhar {
-    background-image: none;
-  }
-  .s-olhar__mobile-bg { display: block; }
   .s-olhar::before {
     background: rgba(15, 11, 7, 0.62);
   }
@@ -1054,10 +1047,6 @@ em {
 .s-valor {
   position: relative;
   background-color: var(--bg-dark);
-  background-image: url('../photos/leti.jpg');
-  background-size: cover;
-  background-position: left 70%;
-  background-repeat: no-repeat;
   color: var(--cream);
   padding: var(--s16) 0;
 }
@@ -1078,8 +1067,9 @@ em {
 }
 .s-valor .wrap { position: relative; z-index: 2; }
 
+/* Background photo as <img> (not CSS bg-image) so it can be
+   lazy-loaded. Positioned absolute to fill the section. */
 .s-valor__mobile-bg {
-  display: none;
   position: absolute;
   inset: 0;
   width: 100%;
@@ -1920,9 +1910,6 @@ em {
   .s-percepcao__grid,
   .s-paraquem__grid,
   .s-valor__grid { grid-template-columns: 1fr; }
-
-  .s-valor { background-image: none; }
-  .s-valor__mobile-bg { display: block; }
 
   .crio-grid { grid-template-columns: 1fr; }
   .processo-steps { grid-template-columns: 1fr; }
