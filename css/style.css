@@ -1061,6 +1061,14 @@ em {
   color: var(--cream);
   padding: var(--s16) 0;
 }
+
+/* Desktop: give the section more vertical breathing so more of the
+   portrait photo is visible behind the text. */
+@media (min-width: 681px) {
+  .s-valor {
+    padding: var(--s24) 0;
+  }
+}
 .s-valor::before {
   content: '';
   position: absolute;
