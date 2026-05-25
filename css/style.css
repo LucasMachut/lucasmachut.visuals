@@ -604,7 +604,7 @@ em {
 }
 
 .s-percepcao__h2 {
-  font-size: clamp(1.8rem, 2.8vw, 2.8rem);
+  font-size: clamp(2rem, 3.2vw, 3rem);
   margin-bottom: var(--s6);
   max-width: 620px;
 }
@@ -628,7 +628,7 @@ em {
 .section-header .label { margin-bottom: var(--s3); }
 
 .section-header__h2 {
-  font-size: clamp(1.8rem, 3.2vw, 3rem);
+  font-size: clamp(2rem, 3.2vw, 3rem);
   margin-bottom: var(--s4);
 }
 
@@ -731,7 +731,7 @@ em {
 }
 
 .s-regard__h2 {
-  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-size: clamp(2rem, 3.2vw, 3rem);
   max-width: 660px;
   margin-bottom: var(--s8);
   color: var(--cream);
@@ -964,6 +964,9 @@ em {
     background: rgba(15, 11, 7, 0.62);
   }
   .s-olhar__grid { grid-template-columns: 1fr; gap: var(--s5); }
+  /* On mobile, title goes above body (DOM has body first for desktop layout) */
+  .s-olhar__grid .s-olhar__left { order: 1; align-self: start; }
+  .s-olhar__grid .s-olhar__body { order: 2; }
   .s-olhar__body p { max-width: none; color: rgba(250, 246, 236,0.88); }
 }
 
@@ -981,7 +984,7 @@ em {
 }
 
 .s-paraquem__body h2 {
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-size: clamp(2rem, 3.2vw, 3rem);
   max-width: 480px;
   margin-bottom: var(--s6);
 }
@@ -1086,7 +1089,7 @@ em {
 }
 
 .s-valor__left h2 {
-  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-size: clamp(2rem, 3.2vw, 3rem);
   max-width: 480px;
   margin-bottom: var(--s6);
   color: #FAF6EC;
