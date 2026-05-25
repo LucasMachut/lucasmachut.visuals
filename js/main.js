@@ -5,6 +5,22 @@
 (function () {
   'use strict';
 
+  /* --- Hero video autoplay safety net -------------------- */
+  /* autoplay+muted is honored by most browsers, but some block it
+     until the user interacts (Safari/iOS, brave with strict
+     settings, Chromium when tabs run in background, etc.).
+     Forcing .play() after metadata is loaded recovers from those
+     cases; the promise rejection is swallowed silently. */
+  document.querySelectorAll('video[autoplay]').forEach(v => {
+    const tryPlay = () => { v.play().catch(() => {}); };
+    if (v.readyState >= 2) {
+      tryPlay();
+    } else {
+      v.addEventListener('loadedmetadata', tryPlay, { once: true });
+      v.addEventListener('canplay', tryPlay, { once: true });
+    }
+  });
+
   /* --- Header scroll behavior ---------------------------- */
   const header = document.querySelector('.header');
   if (header) {
