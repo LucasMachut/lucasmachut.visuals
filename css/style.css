@@ -881,7 +881,7 @@ em {
 .s-olhar {
   position: relative;
   background-color: var(--bg-dark);
-  background-image: url('../photos/lucas_foto.png');
+  background-image: url('../photos/lucas_foto.jpg');
   background-size: cover;
   background-position: right 60%;
   background-repeat: no-repeat;
@@ -1054,7 +1054,7 @@ em {
 .s-valor {
   position: relative;
   background-color: var(--bg-dark);
-  background-image: url('../photos/leti.png');
+  background-image: url('../photos/leti.jpg');
   background-size: cover;
   background-position: left 70%;
   background-repeat: no-repeat;
