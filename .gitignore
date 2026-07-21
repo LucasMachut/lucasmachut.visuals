@@ -1,6 +1,7 @@
 # Original photos — heavy (~1+ GB). Kept locally as archive.
 # Compressed web versions live in Projets-web/ and ARE tracked.
 /Projets/
+/Projets-web/Portfolio Fotos/
 
 # Claude Code internals (worktrees, local launch/settings)
 /.claude/worktrees/

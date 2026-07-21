@@ -1794,6 +1794,14 @@ em {
 
 .project-gallery__item:hover img { transform: scale(1.025); }
 
+/* Fotos page — series sections */
+.fotos-series { padding: var(--s10) 0 var(--s4); }
+.fotos-series__title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  margin: var(--s2) 0 var(--s6);
+}
+.fotos-series:last-of-type { padding-bottom: var(--s16); }
+
 /* Back link */
 .project-back { padding: calc(var(--nav-h) + var(--s6)) 0 0; }
 
