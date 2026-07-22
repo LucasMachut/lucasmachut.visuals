@@ -1978,6 +1978,9 @@ em {
   .project-gallery { padding: var(--s8) 0 var(--s12); }
   .project-gallery__inner { column-count: 1; column-gap: 0; }
   .project-gallery__item { margin-bottom: var(--s2); }
+  /* Fotos page: 2 columns on mobile so long series aren't an endless scroll */
+  .fotos-series .project-gallery__inner { column-count: 2; column-gap: var(--s1); }
+  .fotos-series .project-gallery__item { margin-bottom: var(--s1); }
   .project-back { padding-top: calc(var(--nav-h) + var(--s4)); }
 
   .wrap { padding: 0 var(--s4); }
