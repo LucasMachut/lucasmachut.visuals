@@ -1,0 +1,56 @@
+backend:
+  name: github
+  repo: LucasMachut/lucasmachut.visuals
+  branch: master
+  # Login via a GitHub Personal Access Token pasted into the CMS
+  # ("Sign In Using Access Token"). No server-side OAuth needed.
+
+# Where uploaded photos are written / linked from.
+media_folder: "Projets-web/Fotos"
+public_folder: "Projets-web/Fotos"
+
+# CMS interface language
+locale: fr
+
+# Commit message shown in the Git history when you publish
+site_url: https://lucasmachut.com/fotos.html
+display_url: https://lucasmachut.com/fotos.html
+
+collections:
+  - name: galerie
+    label: "Galerie — Fotos"
+    delete: false
+    files:
+      - name: fotos
+        label: "Séries de photos"
+        file: "data/fotos.json"
+        description: "Ajoute, supprime ou réordonne les photos. Clique « Publier » pour mettre le site à jour (~3 min)."
+        fields:
+          - label: "Séries"
+            name: series
+            widget: list
+            label_singular: "Série"
+            collapsed: true
+            summary: "{{fields.title_pt}} — {{fields.photos.length}} photos"
+            fields:
+              - label: "Identifiant technique"
+                name: slug
+                widget: string
+                hint: "Ne pas modifier (sert de dossier interne)."
+              - label: "Titre — Portugais"
+                name: title_pt
+                widget: string
+              - label: "Titre — Anglais"
+                name: title_en
+                widget: string
+              - label: "Titre — Français"
+                name: title_fr
+                widget: string
+              - label: "Photos"
+                name: photos
+                widget: list
+                label_singular: "Photo"
+                field:
+                  label: "Image"
+                  name: image
+                  widget: image
