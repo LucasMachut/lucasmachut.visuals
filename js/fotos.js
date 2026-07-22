@@ -81,8 +81,9 @@
     reveal(mount.querySelectorAll('.fi'));
   }
 
-  /* Tap/click a photo to view it full-screen. Delegated on the mount so
-     it also covers the images injected after fetch. */
+  /* Tap/click a photo to view it full-screen, then swipe or use the arrows
+     to move through the same series — Instagram-style. Delegated on the
+     mount so it also covers the images injected after fetch. */
   function setupLightbox() {
     const box = document.createElement('div');
     box.className = 'fotos-lightbox';
@@ -91,13 +92,30 @@
     box.setAttribute('aria-hidden', 'true');
     box.innerHTML =
       '<button class="fotos-lightbox__close" aria-label="Fermer" type="button">&times;</button>' +
-      '<img class="fotos-lightbox__img" alt="" />';
+      '<button class="fotos-lightbox__nav fotos-lightbox__nav--prev" aria-label="Précédente" type="button">&#8249;</button>' +
+      '<img class="fotos-lightbox__img" alt="" />' +
+      '<button class="fotos-lightbox__nav fotos-lightbox__nav--next" aria-label="Suivante" type="button">&#8250;</button>' +
+      '<span class="fotos-lightbox__count" aria-hidden="true"></span>';
     document.body.appendChild(box);
 
     const boxImg = box.querySelector('.fotos-lightbox__img');
+    const count = box.querySelector('.fotos-lightbox__count');
+    const btnPrev = box.querySelector('.fotos-lightbox__nav--prev');
+    const btnNext = box.querySelector('.fotos-lightbox__nav--next');
 
-    const open = src => {
-      boxImg.src = src;
+    let list = [];      // photo srcs of the current series
+    let index = 0;
+
+    const show = i => {
+      index = (i + list.length) % list.length;   // wrap around
+      boxImg.src = list[index];
+      count.textContent = (index + 1) + ' / ' + list.length;
+      const solo = list.length < 2;
+      btnPrev.hidden = btnNext.hidden = solo;
+    };
+    const open = (srcs, i) => {
+      list = srcs;
+      show(i);
       box.classList.add('open');
       box.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -108,15 +126,51 @@
       document.body.style.overflow = '';
       boxImg.removeAttribute('src');
     };
+    const next = () => show(index + 1);
+    const prev = () => show(index - 1);
 
+    // Open: collect the srcs of the series (section) the photo belongs to
     mount.addEventListener('click', e => {
       const img = e.target.closest('.project-gallery__item img');
-      if (img) open(img.currentSrc || img.src);
+      if (!img) return;
+      const section = img.closest('.fotos-series');
+      const imgs = [...section.querySelectorAll('.project-gallery__item img')];
+      open(imgs.map(im => im.currentSrc || im.src), imgs.indexOf(img));
     });
-    box.addEventListener('click', close);          // tap anywhere (or ×) closes
+
+    btnPrev.addEventListener('click', e => { e.stopPropagation(); prev(); });
+    btnNext.addEventListener('click', e => { e.stopPropagation(); next(); });
+
+    // Tap the dark area (not the image or a button) closes.
+    box.addEventListener('click', e => {
+      if (e.target === box || e.target === boxImg) close();
+    });
+    box.querySelector('.fotos-lightbox__close')
+       .addEventListener('click', e => { e.stopPropagation(); close(); });
+
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape' && box.classList.contains('open')) close();
+      if (!box.classList.contains('open')) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowRight') next();
+      else if (e.key === 'ArrowLeft') prev();
     });
+
+    // Touch swipe: horizontal drag navigates; a still tap on the image closes.
+    let sx = 0, sy = 0, moved = false;
+    box.addEventListener('touchstart', e => {
+      const t = e.changedTouches[0];
+      sx = t.clientX; sy = t.clientY; moved = false;
+    }, { passive: true });
+    box.addEventListener('touchend', e => {
+      const t = e.changedTouches[0];
+      const dx = t.clientX - sx, dy = t.clientY - sy;
+      if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy)) {
+        moved = true;
+        dx < 0 ? next() : prev();
+      }
+    }, { passive: true });
+    // Swallow the click that follows a swipe so it doesn't close the box.
+    box.addEventListener('click', e => { if (moved) { e.stopPropagation(); moved = false; } }, true);
   }
 
   /* Re-run the same fade-in used site-wide on the injected elements
