@@ -1795,6 +1795,46 @@ em {
 .project-gallery__item:hover img { transform: scale(1.025); }
 
 /* Fotos page — series sections */
+.fotos-series .project-gallery__item img { cursor: zoom-in; }
+
+/* Tap-to-enlarge lightbox */
+.fotos-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--s3);
+  background: rgba(15, 12, 8, 0.94);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  cursor: zoom-out;
+}
+.fotos-lightbox.open { opacity: 1; visibility: visible; }
+.fotos-lightbox__img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+.fotos-lightbox__close {
+  position: absolute;
+  top: var(--s3);
+  right: var(--s4);
+  width: 44px;
+  height: 44px;
+  font-size: 2rem;
+  line-height: 1;
+  color: var(--bg, #faf6ec);
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.fotos-lightbox__close:hover { opacity: 1; }
+
 .fotos-series { padding: var(--s10) 0 var(--s4); }
 .fotos-series__title {
   font-size: clamp(1.8rem, 3vw, 2.6rem);

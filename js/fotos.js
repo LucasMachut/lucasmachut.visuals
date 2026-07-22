@@ -15,6 +15,8 @@
   const lang = mount.dataset.lang || 'pt';      // 'pt' | 'en' | 'fr'
   const serieLabel = mount.dataset.serieLabel || 'SÉRIE';
 
+  setupLightbox();
+
   fetch(base + 'data/fotos.json', { cache: 'no-cache' })
     .then(r => {
       if (!r.ok) throw new Error('HTTP ' + r.status);
@@ -77,6 +79,44 @@
 
     mount.appendChild(frag);
     reveal(mount.querySelectorAll('.fi'));
+  }
+
+  /* Tap/click a photo to view it full-screen. Delegated on the mount so
+     it also covers the images injected after fetch. */
+  function setupLightbox() {
+    const box = document.createElement('div');
+    box.className = 'fotos-lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.setAttribute('aria-hidden', 'true');
+    box.innerHTML =
+      '<button class="fotos-lightbox__close" aria-label="Fermer" type="button">&times;</button>' +
+      '<img class="fotos-lightbox__img" alt="" />';
+    document.body.appendChild(box);
+
+    const boxImg = box.querySelector('.fotos-lightbox__img');
+
+    const open = src => {
+      boxImg.src = src;
+      box.classList.add('open');
+      box.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    };
+    const close = () => {
+      box.classList.remove('open');
+      box.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      boxImg.removeAttribute('src');
+    };
+
+    mount.addEventListener('click', e => {
+      const img = e.target.closest('.project-gallery__item img');
+      if (img) open(img.currentSrc || img.src);
+    });
+    box.addEventListener('click', close);          // tap anywhere (or ×) closes
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && box.classList.contains('open')) close();
+    });
   }
 
   /* Re-run the same fade-in used site-wide on the injected elements
