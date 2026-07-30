@@ -153,6 +153,10 @@ body.home{
 .w-ml .words__in{align-items:center;justify-content:flex-start}
 .w-mr .words__in{align-items:center;justify-content:flex-end}
 .w-c  .words__in{align-items:center;justify-content:center;text-align:center}
+/* Remonte un bloc centré au-dessus du sujet. Le rembourrage réduit la
+   boîte par le bas : le centrage se recalcule dedans et le texte monte,
+   sans le décrocher du centre optique. */
+.words.up .words__in{padding-bottom:11vh}
 .words__col{max-width:34rem}
 .w-c .words__col{max-width:38rem}
 .w-br .words__col,.w-mr .words__col{text-align:right}

@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/home.css?v=7">
+<link rel="stylesheet" href="css/home.css?v=9">
 </head>
 <body class="home">
 
@@ -78,7 +78,32 @@
   </div>
 </section>
 
-<!-- ═══ 3 · TRABALHOS ═══
+<!-- ═══ 3 · A MEMÓRIA ═══
+     abraco-pb : le visage de la dame tient le centre du cadre, son bras
+     et l'épaule de l'homme laissent une masse noire vide en bas à
+     gauche. Le texte s'y pose, il ne recouvre personne. -->
+<section class="band band--2">
+  <figure class="tile">
+    <picture>
+      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-crianca-rua.jpg">
+      <img src="photos/le-regard/abraco-pb.jpg" alt="Abraço, preto e branco"
+           style="--dpos:58% 42%;--mpos:45% 50%">
+    </picture>
+  </figure>
+  <figure class="tile tile--alt"><img src="photos/le-regard/casal-deitado.jpg" alt="Casal deitado, um beijo na testa" loading="lazy" style="object-position:50% 50%"></figure>
+  <div class="veil veil--corner-bl"></div>
+  <!-- mobile : l'enfant est en bas à gauche, le mur clair en haut —
+       le texte monte pour ne pas lui passer dessus -->
+  <div class="words w-bl m-top">
+    <div class="words__in">
+      <div class="words__col fi">
+        <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. É aí que eu entro: guardar um fragmento de vida antes que o tempo o transforme, transformar histórias em algo que atravessa o tempo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4 · CADA PESSOA ═══
      dois-olhares : luminance très plate (35→53), aucune zone franche.
      D'où un voile latéral franc plutôt qu'un dégradé timide. -->
 <section class="panel panel--88" id="trabalhos">
@@ -100,7 +125,7 @@
   </div>
 </section>
 
-<!-- ═══ 4 · SÉRIE I — O CORPO ═══ -->
+<!-- ═══ 5 · O OLHAR ALÉM DA TÉCNICA ═══ -->
 <section class="band band--4">
   <figure class="tile">
     <picture>
@@ -124,7 +149,7 @@
   </div>
 </section>
 
-<!-- ═══ 5 · SÉRIE II — AS MÃOS ═══
+<!-- ═══ 6 · O INSTANTE ═══
      areia-maos et anel-cama montent à 85 de luminance : aucun texte
      dessus. Le titre se pose sur maos-agua, seule tuile à bas sombre. -->
 <section class="band band--3">
@@ -138,9 +163,11 @@
   <figure class="tile tile--alt"><img src="photos/le-regard/areia-maos.jpg" alt="Areia escorrendo entre as mãos" loading="lazy" style="object-position:58% 50%"></figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/anel-cama.jpg" alt="Mão adormecida sobre o lençol, anel" loading="lazy" style="object-position:42% 50%"></figure>
   <div class="veil veil--scrim"></div>
-  <!-- mobile : l'homme est assis au milieu du cadre, la canopée du haut
+  <!-- centré, mais remonté : les mains occupent la moitié basse de la
+       tuile du milieu, la phrase se pose juste au-dessus d'elles.
+       mobile : l'homme est assis au milieu du cadre, la canopée du haut
        est libre — et une phrase courte y tient -->
-  <div class="words w-c m-top">
+  <div class="words w-c up m-top">
     <div class="words__in">
       <div class="words__col fi">
         <h2>O instante em que a pessoa e o lugar <em>viram uma coisa só</em></h2>
@@ -149,29 +176,7 @@
   </div>
 </section>
 
-<!-- ═══ 6 · SÉRIE III — OS ROSTOS ═══ -->
-<section class="band band--2">
-  <figure class="tile">
-    <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-crianca-rua.jpg">
-      <img src="photos/le-regard/abraco-pb.jpg" alt="Abraço, preto e branco"
-           style="--dpos:58% 42%;--mpos:45% 50%">
-    </picture>
-  </figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/casal-deitado.jpg" alt="Casal deitado, um beijo na testa" loading="lazy" style="object-position:50% 50%"></figure>
-  <div class="veil veil--right"></div>
-  <!-- mobile : l'enfant est en bas à gauche, le mur clair en haut —
-       le texte monte pour ne pas lui passer dessus -->
-  <div class="words w-mr m-top">
-    <div class="words__in">
-      <div class="words__col fi">
-        <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. É aí que eu entro: guardar um fragmento de vida antes que o tempo o transforme, transformar histórias em algo que atravessa o tempo.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 7 · SÉRIE IV — A LUZ ═══
+<!-- ═══ 7 · QUEM A GENTE É ═══
      Bas gauche clair (bandeira, 64), bas droit sombre (lampada, 14) :
      le titre passe à droite. -->
 <section class="band band--3">
@@ -234,7 +239,7 @@
   </div>
 </section>
 
-<!-- ═══ 11 · HOTÉIS ═══
+<!-- ═══ 10 · HOTÉIS ═══
      chave-porta : haut gauche à 7, colonne gauche sombre. Une main sur
      la clé — la présence humaine que le texte revendique, justement.
      La porte n'est pas esthétique (le corps absent) mais commerciale :
@@ -261,7 +266,7 @@
   </div>
 </section>
 
-<!-- ═══ 12 · CONTATO ═══
+<!-- ═══ 11 · CONTATO ═══
      Le corps est tout en bas du cadre : panneau pleine hauteur et
      cadrage calé sur le bas pour qu'elle reste entière. -->
 <section class="panel" id="contato">
