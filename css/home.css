@@ -45,6 +45,14 @@ body.home{
   letter-spacing:.26em;text-transform:uppercase;color:rgba(250,246,236,.62);
   display:block;margin-bottom:1.4rem}
 .lede{font-size:1.02rem;color:rgba(250,246,236,.82);max-width:40ch}
+/* Lien dans le corps du texte. Même geste que l'emphase des titres —
+   un soulignement fin — pour qu'il se voie sans rompre la ligne.
+   Qualifié .home parce que .home a{color:inherit} l'emporterait. */
+.home .lede a,.home .mf a{color:var(--cream);
+  text-decoration:underline;text-decoration-thickness:1px;
+  text-underline-offset:.2em;text-decoration-color:rgba(250,246,236,.5);
+  transition:text-decoration-color .3s ease}
+.home .lede a:hover,.home .mf a:hover{text-decoration-color:var(--cream)}
 
 /* .home a{color:inherit} l'emporte sur .btn (spécificité) : sans le
    préfixe .home ici, le bouton plein héritait du crème sur fond crème
@@ -264,4 +272,12 @@ body.home{
   .words__col{text-align:left;max-width:none}
   .actions{justify-content:flex-start}
   .veil--scrim{background:none}
+
+  /* Le bloc hôtels porte plus de texte que sa photo n'a de place : le
+     visage tient le haut du cadre, la main à la bague le milieu, et il
+     ne reste pas 400px d'un seul tenant. Le texte déborde donc sous la
+     section, sur le haut de l'image suivante, en emportant son voile
+     avec lui — la bague reste dégagée. */
+  #hoteis{overflow:visible;z-index:2}
+  #hoteis .words{bottom:-160px}
 }

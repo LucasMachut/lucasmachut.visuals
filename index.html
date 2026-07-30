@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/home.css?v=10">
+<link rel="stylesheet" href="css/home.css?v=12">
 </head>
 <body class="home">
 
@@ -231,7 +231,6 @@
   <div class="words w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi" style="max-width:26rem">
-        <span class="label">De onde vem</span>
         <h2 class="h2--sm">Um olhar <em>de fora</em>, dentro da cena</h2>
         <p class="lede" style="margin-top:1.2rem">
           Sou francês e vivo no Brasil. Vejo de fora o que, de tanto ver, quem está dentro já nem nota. Antes da imagem, meu ofício era interpretar: anos observando gestos e o que as pessoas dizem sem falar.
@@ -249,20 +248,24 @@
      ici le client est le lieu. Seul endroit du site où « Regard »
      apparaît, comme nom de service. -->
 <section class="panel panel--96" id="hoteis">
-  <img src="photos/le-regard/chave-porta.jpg" alt="Uma mão girando a chave na porta" style="object-position:52% 50%">
+  <picture>
+    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-cama-anel.jpg">
+    <img src="photos/le-regard/chave-porta.jpg" alt="Uma presença num quarto de hotel"
+         style="--dpos:52% 50%;--mpos:50% 50%">
+  </picture>
   <div class="veil veil--left"></div>
-  <div class="words w-ml m-mid">
+  <!-- mobile : le visage tient le haut du cadre, la main à la bague le
+       milieu — le texte se pose sous elle, sur le drap -->
+  <div class="words w-ml m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <span class="label">Hotéis · Pousadas · Retiros</span>
         <h2>Com hotéis e pousadas, <em>o cliente é o lugar</em></h2>
         <p class="lede" style="margin-top:1.6rem">
           Mesmo ali eu procuro vida: uma presença, um movimento, alguém que faz o espaço respirar.
         </p>
-        <p class="lede">Pra isso existe um método à parte, o Método Regard.</p>
+        <p class="lede">Pra isso existe um método à parte, o <a href="regard.html">Método Regard</a>.</p>
         <div class="actions">
-          <a href="regard.html" class="btn btn--solid">Conhecer o Método Regard</a>
-          <a href="hoteis.html" class="btn">Ver o trabalho para hotéis</a>
+          <a href="hoteis.html" class="btn btn--solid">Ver o trabalho para hotéis</a>
         </div>
       </div>
     </div>
@@ -284,7 +287,6 @@
   <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <span class="label">Contato</span>
         <h2>Tudo começa com <em>uma conversa</em>.</h2>
         <div class="actions">
           <a href="contact.html" class="btn btn--solid">Falar comigo</a>
