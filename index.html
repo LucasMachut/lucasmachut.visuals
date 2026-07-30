@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/home.css?v=9">
+<link rel="stylesheet" href="css/home.css?v=10">
 </head>
 <body class="home">
 
@@ -40,11 +40,14 @@
 
 <!-- ═══ 1 · VÍDEO ═══ -->
 <section class="hero">
-  <video class="hero__v hero__v--desktop" autoplay muted loop playsinline preload="auto">
+  <!-- Un seul film, pour tous les écrans. Les deux <video> précédents se
+       téléchargeaient l'un ET l'autre — 58 Mo — parce que display:none
+       n'empêche pas le chargement d'une vidéo.
+       poster : si iOS refuse la lecture (mode économie d'énergie), le
+       cadre montre une image au lieu d'un rectangle noir. -->
+  <video class="hero__v" autoplay muted loop playsinline webkit-playsinline
+         preload="auto" poster="photos/hero-poster.jpg">
     <source src="videos/header_min.mp4" type="video/mp4">
-  </video>
-  <video class="hero__v hero__v--mobile" autoplay muted loop playsinline preload="auto">
-    <source src="videos/AusWakeUp.mp4" type="video/mp4">
   </video>
   <div class="veil veil--soft"></div>
   <div class="hero__logo"><img src="photos/Logo%20blanc%20casse.png" alt="Lucas Machut"></div>
@@ -299,6 +302,6 @@
   </div>
 </footer>
 
-<script src="js/home.js?v=5"></script>
+<script src="js/home.js?v=6"></script>
 </body>
 </html>

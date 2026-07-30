@@ -2,6 +2,48 @@
 (function () {
   'use strict';
 
+  /* ─── film d'ouverture ───
+     Safari iOS n'autorise l'autoplay que si la vidéo est muette et
+     playsinline — et le REFUSE quoi qu'il arrive en mode économie
+     d'énergie. C'est un choix d'Apple : aucun code ne le contourne.
+     On fait donc trois choses : on force la propriété muted en JS (le
+     seul attribut HTML ne suffit pas partout), on tente la lecture et
+     on écoute le refus, puis on relance au premier geste de
+     l'utilisateur. Le poster occupe le cadre entre-temps. */
+  var film = document.querySelector('.hero__v');
+  if (film) {
+    var events = ['touchstart', 'pointerdown', 'click', 'keydown', 'scroll'];
+    var armed = false;
+
+    var onGesture = function () {
+      film.play().catch(function () {});
+      if (!film.paused) {
+        events.forEach(function (e) { window.removeEventListener(e, onGesture); });
+        armed = false;
+      }
+    };
+
+    var arm = function () {
+      if (armed) return;
+      armed = true;
+      events.forEach(function (e) {
+        window.addEventListener(e, onGesture, { passive: true });
+      });
+    };
+
+    var attempt = function () {
+      film.muted = true;
+      var p = film.play();
+      if (p && typeof p.catch === 'function') { p.catch(arm); }
+    };
+
+    attempt();
+    /* au retour d'onglet, iOS laisse parfois la vidéo en pause */
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden && film.paused) { attempt(); }
+    });
+  }
+
   /* apparition au défilement */
   var els = document.querySelectorAll('.fi:not(.in)');
   if (!('IntersectionObserver' in window)) {
