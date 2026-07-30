@@ -13,8 +13,8 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/home.css?v=6">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/home.css?v=7">
 </head>
 <body class="home">
 
@@ -59,12 +59,14 @@
      Texte en haut, la danseuse reste lisible en bas à droite. -->
 <section class="panel">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-homem-mata.jpg">
+    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-retrato-pedra.jpg">
     <img src="photos/le-regard/veu-preto-praia.jpg" alt="Véu preto ao vento, na areia"
-         style="--dpos:72% 58%;--mpos:62% 52%">
+         style="--dpos:72% 58%;--mpos:50% 50%">
   </picture>
   <div class="veil veil--top"></div>
-  <div class="words w-tl">
+  <!-- mobile : le visage occupe le haut, la chemise noire le bas
+       (bandes plates à 26-38 de luminance) — le texte va en bas -->
+  <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
         <h2>Me chamo Lucas Machut, <em>francês vivendo no Rio</em>.</h2>
@@ -81,12 +83,14 @@
      D'où un voile latéral franc plutôt qu'un dégradé timide. -->
 <section class="panel panel--88" id="trabalhos">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-rosto-agua.jpg">
+    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-chapeu-encontro.jpg">
     <img src="photos/le-regard/dois-olhares.jpg" alt="Dois rostos lado a lado, muito perto"
-         style="--dpos:56% 46%;--mpos:52% 42%">
+         style="--dpos:56% 46%;--mpos:58% 50%">
   </picture>
   <div class="veil veil--left"></div>
-  <div class="words w-ml">
+  <!-- mobile : c'est le plus long texte de la page, il lui faut la plus
+       grande zone plate — les quatre bandes basses de cette photo -->
+  <div class="words w-ml m-bot">
     <div class="words__in">
       <div class="words__col fi">
         <p class="mf">Cada pessoa carrega o seu próprio mundo, a sua maneira de enxergar a vida. Quando filmo ou fotografo, não estou só fazendo imagens: tento transmitir esse mundo, o que se passa dentro da pessoa naquele instante.</p>
@@ -109,7 +113,9 @@
   <figure class="tile tile--alt"><img src="photos/le-regard/bracos-palmeiras.jpg" alt="Braços abertos sob as palmeiras" loading="lazy" style="object-position:64% 48%"></figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/rosto-agua.jpg" alt="Rosto na superfície da água" loading="lazy" style="object-position:50% 44%"></figure>
   <div class="veil veil--bottom"></div>
-  <div class="words w-bl">
+  <!-- mobile : silhouette et pétales occupent le milieu, les rochers du
+       bas sont sombres et plats -->
+  <div class="words w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi">
         <p class="mf">O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás da alma de cada momento, do que ele carrega de verdade. A beleza não está na pose perfeita, está na verdade de cada expressão, nos corpos em movimento, nos estados reais.</p>
@@ -124,15 +130,17 @@
 <section class="band band--3">
   <figure class="tile">
     <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-flores-mar.jpg">
+      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-homem-mata.jpg">
       <img src="photos/le-regard/maos-agua.jpg" alt="Mãos tocando a água no crepúsculo"
-           style="--dpos:46% 56%;--mpos:44% 50%">
+           style="--dpos:46% 56%;--mpos:60% 50%">
     </picture>
   </figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/areia-maos.jpg" alt="Areia escorrendo entre as mãos" loading="lazy" style="object-position:58% 50%"></figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/anel-cama.jpg" alt="Mão adormecida sobre o lençol, anel" loading="lazy" style="object-position:42% 50%"></figure>
   <div class="veil veil--scrim"></div>
-  <div class="words w-c">
+  <!-- mobile : l'homme est assis au milieu du cadre, la canopée du haut
+       est libre — et une phrase courte y tient -->
+  <div class="words w-c m-top">
     <div class="words__in">
       <div class="words__col fi">
         <h2>O instante em que a pessoa e o lugar <em>viram uma coisa só</em></h2>
@@ -147,12 +155,14 @@
     <picture>
       <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-crianca-rua.jpg">
       <img src="photos/le-regard/abraco-pb.jpg" alt="Abraço, preto e branco"
-           style="--dpos:58% 42%;--mpos:46% 56%">
+           style="--dpos:58% 42%;--mpos:45% 50%">
     </picture>
   </figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/casal-deitado.jpg" alt="Casal deitado, um beijo na testa" loading="lazy" style="object-position:50% 50%"></figure>
   <div class="veil veil--right"></div>
-  <div class="words w-mr">
+  <!-- mobile : l'enfant est en bas à gauche, le mur clair en haut —
+       le texte monte pour ne pas lui passer dessus -->
+  <div class="words w-mr m-top">
     <div class="words__in">
       <div class="words__col fi">
         <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. É aí que eu entro: guardar um fragmento de vida antes que o tempo o transforme, transformar histórias em algo que atravessa o tempo.</p>
@@ -167,15 +177,18 @@
 <section class="band band--3">
   <figure class="tile">
     <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-retrato-pedra.jpg">
+      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-rosto-agua.jpg">
       <img src="photos/le-regard/bandeira-riso.jpg" alt="Riso sob a bandeira ao sol"
-           style="--dpos:50% 40%;--mpos:50% 44%">
+           style="--dpos:50% 40%;--mpos:52% 50%">
     </picture>
   </figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/chapeu-verde.jpg" alt="Chapéu de palha e folhagem" loading="lazy" style="object-position:60% 40%"></figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/lampada-bar.jpg" alt="Copo e abajur, fim de noite" loading="lazy" style="object-position:56% 50%"></figure>
   <div class="veil veil--corner-br"></div>
-  <div class="words w-br">
+  <!-- mobile : le visage flotte en haut du cadre, les cheveux dans
+       l'eau occupent le bas — photo claire partout, le voile fait le
+       travail -->
+  <div class="words w-br m-bot">
     <div class="words__in">
       <div class="words__col fi">
         <h2 class="h2--sm">No fundo, nunca foi sobre como a gente aparece, <em>e sim sobre quem a gente é</em>.</h2>
@@ -205,7 +218,9 @@
     <div class="veil veil--bottom"></div>
   </figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/janela-montanha.jpg" alt="De costas na janela, a montanha atrás do vidro" loading="lazy" style="object-position:54% 50%"></figure>
-  <div class="words w-bl">
+  <!-- mobile : la fenêtre et la montagne tiennent le centre du cadre,
+       le bas reste sombre -->
+  <div class="words w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi" style="max-width:26rem">
         <span class="label">De onde vem</span>
@@ -228,7 +243,7 @@
 <section class="panel panel--96" id="hoteis">
   <img src="photos/le-regard/chave-porta.jpg" alt="Uma mão girando a chave na porta" style="object-position:52% 50%">
   <div class="veil veil--left"></div>
-  <div class="words w-ml">
+  <div class="words w-ml m-mid">
     <div class="words__in">
       <div class="words__col fi">
         <span class="label">Hotéis · Pousadas · Retiros</span>
@@ -251,12 +266,14 @@
      cadrage calé sur le bas pour qu'elle reste entière. -->
 <section class="panel" id="contato">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-chapeu-encontro.jpg">
+    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-flores-mar.jpg">
     <img src="photos/le-regard/hero-corpo-mar.jpg" alt="Um corpo deitado na espuma, ao pé da falésia"
-         style="--dpos:55% 90%;--mpos:60% 46%">
+         style="--dpos:55% 90%;--mpos:44% 50%">
   </picture>
   <div class="veil veil--top"></div>
-  <div class="words w-tl">
+  <!-- mobile : la femme et les fleurs tiennent la gauche et le centre,
+       l'eau du bas est libre -->
+  <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
         <span class="label">Contato</span>
