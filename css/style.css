@@ -359,6 +359,54 @@ em {
 }
 .header:not(.scrolled) .nav__lang-link + .nav__lang-link { border-color: rgba(176, 141, 78, 0.5); }
 
+/* ------------------------------------------------------------
+   Barre de navigation sur les pages qui ouvrent en clair
+
+   Tout ce qui précède habille la barre pour un haut de page
+   sombre : une vidéo hero, une photo de projet. Le texte y passe
+   en crème sur fond transparent.
+
+   Mais le portfólio, les fotos, le contact et regard ouvrent sur
+   le fond crème. Du crème sur du crème : la barre était invisible
+   au chargement, puis apparaissait d'un coup au premier défilement,
+   quand .scrolled reprenait la main. Le site semblait cassé.
+
+   Ces pages portent donc leur barre pleine dès le premier pixel —
+   l'état .scrolled, sans attendre le défilement. Le repère est la
+   présence (ou non) d'un hero sombre : rien à marquer dans le HTML,
+   une page ajoutée demain tombe du bon côté toute seule.
+   ------------------------------------------------------------ */
+body:not(:has(.hero, .project-hero)) .header {
+  background: rgba(250, 246, 236, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-color: var(--line);
+}
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .logo,
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__link {
+  color: var(--text);
+}
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__link::after,
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__toggle span {
+  background: var(--text);
+}
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__link--regard {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__link--regard:hover {
+  background: var(--accent);
+  color: var(--cream);
+}
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang { border-color: var(--accent); }
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link { color: var(--accent); }
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link:hover { background: rgba(176, 141, 78, 0.15); }
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link--active {
+  background: var(--accent);
+  color: var(--cream);
+}
+body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .nav__lang-link { border-color: var(--accent); }
+
 /* Language switcher in mobile menu */
 .nav__mobile-lang {
   display: flex;
@@ -1306,6 +1354,139 @@ em {
 }
 
 /* ============================================================
+   PORTFOLIO — PROJETS DÉROULÉS SUR LA PAGE
+   Un projet ne se réduit plus à une vignette qu'il faut cliquer
+   pour voir : il déroule ses images sur la page même. Huit
+   photos au plus — assez pour donner le ton, trop peu pour
+   épuiser le projet. Le bouton du bas mène au reste.
+   ============================================================ */
+
+.project-feature {
+  padding: var(--s12) 0;
+  border-bottom: 1px solid var(--line);
+}
+.project-feature:first-of-type {
+  border-top: 1px solid var(--line);
+  margin-top: var(--s10);
+}
+
+/* Le titre à gauche, le lieu et le type à droite : la ligne se
+   lit d'un coup, et la galerie commence juste dessous. */
+.project-feature__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s3) var(--s6);
+  flex-wrap: wrap;
+  margin-bottom: var(--s6);
+}
+
+.project-feature__title {
+  font-size: clamp(1.9rem, 3.4vw, 3rem);
+  line-height: 1.06;
+}
+
+.project-feature__index {
+  font-family: var(--font-serif);
+  font-size: 0.78rem;
+  font-style: italic;
+  color: var(--text-muted);
+  opacity: 0.65;
+  margin-bottom: var(--s1);
+}
+
+.project-feature__aside {
+  text-align: right;
+  padding-bottom: 0.3rem;
+}
+.project-feature__type {
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.project-feature__loc {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: var(--s1);
+}
+
+/* La galerie reprend la maçonnerie des pages projet, sans son
+   rembourrage : ici elle est enchâssée, pas seule sur sa page. */
+.project-gallery--inline { padding: 0; }
+
+.project-feature__more {
+  margin-top: var(--s6);
+  display: flex;
+  justify-content: center;
+}
+
+/* ============================================================
+   PORTFOLIO — L'EMBRANCHEMENT HÔTELS
+   Les lieux d'hospitalité ne se regardent pas comme le reste du
+   travail : ils ont leur propre liste. Ce bloc y mène, en pleine
+   largeur, pour qu'on ne le prenne pas pour un projet de plus.
+   ============================================================ */
+
+.portfolio-branch {
+  position: relative;
+  min-height: 62vh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--bg-dark);
+}
+
+.portfolio-branch__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.62;
+}
+
+.portfolio-branch__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(31, 24, 18, 0.92) 0%, rgba(31, 24, 18, 0.66) 38%,
+    rgba(31, 24, 18, 0.18) 72%, rgba(31, 24, 18, 0) 100%);
+}
+
+.portfolio-branch__in {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: var(--s10) var(--s6);
+}
+
+.portfolio-branch__in .label { color: rgba(250, 246, 236, 0.62); }
+
+.portfolio-branch h2 {
+  color: var(--cream);
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  margin: var(--s3) 0 var(--s3);
+  max-width: 18em;
+}
+
+.portfolio-branch p {
+  color: rgba(250, 246, 236, 0.78);
+  max-width: 46ch;
+  margin-bottom: var(--s5);
+}
+
+@media (max-width: 900px) {
+  .project-feature { padding: var(--s10) 0; }
+  .project-feature__head { flex-direction: column; }
+  .project-feature__aside { text-align: left; }
+  .portfolio-branch { min-height: 70vh; }
+  .portfolio-branch__in { padding: var(--s8) var(--s4); }
+}
+
+/* ============================================================
    SERVICES PAGE
    ============================================================ */
 
@@ -1882,7 +2063,9 @@ em {
   .fotos-lightbox__nav--next { right: 0; }
 }
 
-.fotos-series { padding: var(--s10) 0 var(--s4); }
+/* Le portfólio renvoie ici par ancre (fotos.html#forro) : sans marge de
+   défilement, le titre de la série passerait sous la barre fixe. */
+.fotos-series { padding: var(--s10) 0 var(--s4); scroll-margin-top: var(--nav-h); }
 .fotos-series__title {
   font-size: clamp(1.8rem, 3vw, 2.6rem);
   margin: var(--s2) 0 var(--s6);

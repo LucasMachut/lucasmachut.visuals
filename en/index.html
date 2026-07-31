@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../css/home.css?v=10">
+<link rel="stylesheet" href="../css/home.css?v=13">
 </head>
 <body class="home">
 
@@ -22,7 +22,7 @@
   <nav class="hd__nav" aria-label="Main navigation">
     <ul class="hd__links">
       <li><a href="index.html" class="hd__link is-active">Home</a></li>
-      <li><a href="portfolio.html" class="hd__link">Portfolio</a></li>
+      <li><a href="portfolio.html" class="hd__link">Work</a></li>
       <li><a href="hoteis.html" class="hd__link">Hotels</a></li>
       <li><a href="regard.html" class="hd__link hd__link--regard">Regard</a></li>
       <li><a href="contact.html" class="hd__link">Contact</a></li>
@@ -38,181 +38,224 @@
   </nav>
 </header>
 
+<!-- ═══ 1 · FILM ═══ -->
 <section class="hero">
+  <!-- Un seul film, pour tous les écrans. poster : si iOS refuse la
+       lecture, le cadre montre une image au lieu d'un rectangle noir. -->
   <video class="hero__v" autoplay muted loop playsinline webkit-playsinline
          preload="auto" poster="../photos/hero-poster.jpg">
     <source src="../videos/header_min.mp4" type="video/mp4">
   </video>
   <div class="veil veil--soft"></div>
   <div class="hero__logo"><img src="../photos/Logo%20blanc%20casse.png" alt="Lucas Machut"></div>
+  <!-- Le film est laissé nu : ni titre ni boutons dessus. -->
   <h1 class="sr-only">Weddings, retreats, hotels. The same eye.</h1>
   <span class="hero__scroll">Scroll</span>
 </section>
 
+<!-- ═══ 2 · THE NAME ═══ -->
 <section class="panel">
-  <img src="../photos/le-regard/veu-preto-praia.jpg" alt="A black veil in the wind, on the sand" style="object-position:72% 58%">
+  <picture>
+    <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-01.jpg">
+    <img src="../photos/le-regard/veu-preto-praia.jpg" alt="A black veil in the wind, on the sand"
+         style="--dpos:72% 58%;--mpos:50% 50%">
+  </picture>
   <div class="veil veil--top"></div>
-  <div class="words w-tl">
+  <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <span class="label">What I look for</span>
-        <h2>The moment a person and a place <em>become one</em></h2>
+        <h2>My name is Lucas Machut. I'm a French photographer and filmmaker, <em>living in Rio</em>.</h2>
         <p class="lede" style="margin-top:1.6rem">
-          A wedding, a retreat, a gathering. Never just the place, never just the person.
+          I work with weddings, retreats, experiences and hotels.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="panel panel--88" id="trabalhos">
-  <img src="../photos/le-regard/dois-olhares.jpg" alt="Two faces side by side, very close" style="object-position:56% 46%">
-  <div class="veil veil--left"></div>
-  <div class="words w-ml">
-    <div class="words__in">
-      <div class="words__col fi">
-        <span class="label">Work</span>
-        <h2>I don't sort the work <em>by occasion</em></h2>
-        <p class="lede" style="margin-top:1.6rem">
-          What changes between a wedding and a retreat is the reason people gathered. The light I look for, the distance I keep and the moment I press the shutter stay the same.
-        </p>
-        <p class="lede">Four series, held together by what repeats from one image to the next.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band band--4">
-  <figure class="tile"><img src="../photos/le-regard/flor-branca.jpg" alt="A white flower against the mouth" style="object-position:58% 42%"></figure>
-  <figure class="tile"><img src="../photos/le-regard/silhueta-flores.jpg" alt="A silhouette from behind, red flowers" style="object-position:54% 46%"></figure>
-  <figure class="tile"><img src="../photos/le-regard/bracos-palmeiras.jpg" alt="Open arms beneath the palms" style="object-position:64% 48%"></figure>
-  <figure class="tile"><img src="../photos/le-regard/rosto-agua.jpg" alt="A face at the surface of the water" style="object-position:50% 44%"></figure>
-  <div class="veil veil--bottom"></div>
-  <div class="serie fi">
-    <span class="serie__n">I</span>
-    <span class="serie__name">the body
-      <span class="serie__note">the flower, the shade, the palms, the water</span>
-    </span>
-  </div>
-</section>
-
-<section class="band band--3">
-  <figure class="tile"><img src="../photos/le-regard/maos-agua.jpg" alt="Hands touching the water at dusk" style="object-position:46% 56%">
-    <div class="veil veil--corner-bl"></div>
-  </figure>
-  <figure class="tile"><img src="../photos/le-regard/areia-maos.jpg" alt="Sand running through the hands" style="object-position:58% 50%"></figure>
-  <figure class="tile"><img src="../photos/le-regard/anel-cama.jpg" alt="A sleeping hand on the sheet, a ring" style="object-position:42% 50%"></figure>
-  <div class="serie fi">
-    <span class="serie__n">II</span>
-    <span class="serie__name">the hands
-      <span class="serie__note">the water, the sand, the sheet</span>
-    </span>
-  </div>
-</section>
-
+<!-- ═══ 3 · MEMORY ═══ -->
 <section class="band band--2">
-  <figure class="tile"><img src="../photos/le-regard/abraco-pb.jpg" alt="An embrace, black and white" style="object-position:58% 42%"></figure>
-  <figure class="tile"><img src="../photos/le-regard/casal-deitado.jpg" alt="A couple lying down, a kiss on the forehead" style="object-position:50% 50%"></figure>
-  <div class="serie fi">
-    <span class="serie__n">III</span>
-    <span class="serie__name">the faces
-      <span class="serie__note">what two people do to one another</span>
-    </span>
-  </div>
-</section>
-
-<section class="band band--3">
-  <figure class="tile"><img src="../photos/le-regard/bandeira-riso.jpg" alt="Laughter under the flag, in full sun" style="object-position:50% 40%"></figure>
-  <figure class="tile"><img src="../photos/le-regard/chapeu-verde.jpg" alt="A straw hat and foliage" style="object-position:60% 40%"></figure>
-  <figure class="tile"><img src="../photos/le-regard/lampada-bar.jpg" alt="A glass and a lampshade, late at night" style="object-position:56% 50%">
-    <div class="veil veil--corner-br"></div>
+  <figure class="tile">
+    <picture>
+      <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-02.jpg">
+      <img src="../photos/le-regard/abraco-pb.jpg" alt="An embrace, black and white"
+           style="--dpos:58% 42%;--mpos:50% 50%">
+    </picture>
   </figure>
-  <div class="serie serie--right fi">
-    <span class="serie__n">IV</span>
-    <span class="serie__name">the light
-      <span class="serie__note">from midday to the lampshade</span>
-    </span>
-  </div>
-</section>
-
-<section class="panel panel--96">
-  <img src="../photos/le-regard/riso-pedras.jpg" alt="Laughter, arms open among the rocks" style="object-position:44% 44%">
+  <figure class="tile tile--alt"><img src="../photos/le-regard/casal-deitado.jpg" alt="A couple lying down, a kiss on the forehead" loading="lazy" style="object-position:50% 50%"></figure>
   <div class="veil veil--corner-bl"></div>
-  <div class="words w-bl">
+  <div class="words w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <span class="label">How I work</span>
-        <h2>I don't direct from a distance: <em>I step into the scene</em></h2>
-        <p class="lede" style="margin-top:1.6rem">
-          I step into the scene, let people settle, and wait. What remains actually happened.
-        </p>
+        <p class="mf">Memory will fail. What we remember is always a slightly false reconstruction of a moment already gone. That's where I come in: to hold on to a fragment of life before time alters it, and turn stories into something that lasts.</p>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ═══ 4 · EACH PERSON ═══ -->
+<section class="panel panel--88" id="trabalhos">
+  <picture>
+    <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-03.jpg">
+    <img src="../photos/le-regard/dois-olhares.jpg" alt="Two faces side by side, very close"
+         style="--dpos:56% 46%;--mpos:55% 50%">
+  </picture>
+  <div class="veil veil--left"></div>
+  <!-- desktop : centré, le texte tombait en plein sur l'œil de gauche.
+       Il descend donc dans le bas du cadre, décollé du bord. -->
+  <div class="words w-bl up m-bot">
+    <div class="words__in">
+      <div class="words__col fi">
+        <p class="mf">Every person carries their own world, their own way of seeing life. When I film or photograph, I'm not just making images: I try to convey that world, what is going on inside the person at that very instant.</p>
+        <p class="mf">Knowing that we never fully enter someone else's world. The image is an attempt at a bridge between our worlds.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5 · BEYOND TECHNIQUE ═══ -->
+<section class="band band--4">
+  <figure class="tile">
+    <picture>
+      <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-04.jpg">
+      <img src="../photos/le-regard/flor-branca.jpg" alt="A white flower against the mouth"
+           style="--dpos:58% 42%;--mpos:50% 50%">
+    </picture>
+  </figure>
+  <figure class="tile tile--alt"><img src="../photos/le-regard/silhueta-flores.jpg" alt="A silhouette from behind, red flowers" loading="lazy" style="object-position:54% 46%"></figure>
+  <figure class="tile tile--alt"><img src="../photos/le-regard/bracos-palmeiras.jpg" alt="Open arms beneath the palms" loading="lazy" style="object-position:64% 48%"></figure>
+  <figure class="tile tile--alt"><img src="../photos/le-regard/rosto-agua.jpg" alt="A face at the surface of the water" loading="lazy" style="object-position:50% 44%"></figure>
+  <div class="veil veil--bottom"></div>
+  <!-- mobile : le recadrage vertical est le couple, visages sur toute la
+       hauteur — on n'écrit rien dessus. Ce paragraphe passe à la section
+       suivante sur téléphone. -->
+  <div class="words words--d w-bl m-bot">
+    <div class="words__in">
+      <div class="words__col fi">
+        <p class="mf">My eye goes beyond technique. I film and photograph with intention, after what each moment truly carries. Beauty shows up in spontaneous expressions, in bodies in movement, in real states.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6 · THE EYE, CONTINUED ═══
+     Sur grand écran les trois tuiles se suffisent : aucun mot dessus.
+     Sur téléphone, le recadrage vertical porte le paragraphe du regard,
+     qui ne peut pas rester sur la photo du couple. -->
+<section class="band band--3">
+  <figure class="tile">
+    <picture>
+      <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-05.jpg">
+      <img src="../photos/le-regard/maos-agua.jpg" alt="Hands touching the water at dusk"
+           style="--dpos:46% 56%;--mpos:50% 50%">
+    </picture>
+  </figure>
+  <figure class="tile tile--alt"><img src="../photos/le-regard/areia-maos.jpg" alt="Sand running through the hands" loading="lazy" style="object-position:58% 50%"></figure>
+  <figure class="tile tile--alt"><img src="../photos/le-regard/anel-cama.jpg" alt="A sleeping hand on the sheet, a ring" loading="lazy" style="object-position:42% 50%"></figure>
+  <div class="words words--m w-bl m-bot">
+    <div class="words__in">
+      <div class="words__col fi">
+        <p class="mf">My eye goes beyond technique. I film and photograph with intention, after what each moment truly carries. Beauty shows up in spontaneous expressions, in bodies in movement, in real states.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 7 · WHO WE ARE ═══ -->
+<section class="band band--3">
+  <figure class="tile">
+    <picture>
+      <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-06.jpg">
+      <img src="../photos/le-regard/bandeira-riso.jpg" alt="Laughter under the flag, in full sun"
+           style="--dpos:50% 40%;--mpos:52% 50%">
+    </picture>
+  </figure>
+  <figure class="tile tile--alt"><img src="../photos/le-regard/chapeu-verde.jpg" alt="A straw hat and foliage" loading="lazy" style="object-position:60% 40%"></figure>
+  <figure class="tile tile--alt"><img src="../photos/le-regard/lampada-bar.jpg" alt="A glass and a lampshade, late at night" loading="lazy" style="object-position:56% 50%"></figure>
+  <div class="veil veil--corner-br"></div>
+  <div class="words w-br m-bot">
+    <div class="words__in">
+      <div class="words__col fi">
+        <h2 class="h2--sm">In the end it was never about how we look, <em>but about who we are</em>.</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 8 · A BREATH ═══
+     Aucune parole ici : après quatre fragments, l'image reste seule. -->
+<section class="panel panel--96">
+  <picture>
+    <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-07.jpg">
+    <img src="../photos/le-regard/riso-pedras.jpg" alt="Laughter, arms open among the rocks"
+         style="--dpos:44% 44%;--mpos:56% 50%">
+  </picture>
+</section>
+
+<!-- ═══ 9 · WHERE THE EYE COMES FROM ═══ -->
 <section class="band band--2">
-  <figure class="tile"><img src="../photos/le-regard/autorretrato.jpg" alt="Self-portrait in the mirror, camera in hand" style="object-position:50% 44%">
+  <figure class="tile">
+    <picture>
+      <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-08.jpg">
+      <img src="../photos/le-regard/autorretrato.jpg" alt="Self-portrait in the mirror, camera in hand"
+           style="--dpos:50% 44%;--mpos:50% 50%">
+    </picture>
     <div class="veil veil--bottom"></div>
   </figure>
-  <figure class="tile"><img src="../photos/le-regard/janela-montanha.jpg" alt="From behind at the window, the mountain beyond the glass" style="object-position:54% 50%"></figure>
-  <div class="words w-bl">
+  <figure class="tile tile--alt"><img src="../photos/le-regard/janela-montanha.jpg" alt="From behind at the window, the mountain beyond the glass" loading="lazy" style="object-position:54% 50%"></figure>
+  <div class="words w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi" style="max-width:26rem">
-        <span class="label">Where it comes from</span>
-        <h2 class="h2--sm">An outside eye, <em>inside the scene</em></h2>
+        <h2 class="h2--sm">An <em>outside</em> eye, inside the scene</h2>
         <p class="lede" style="margin-top:1.2rem">
-          I'm French and I live in Brazil. I see from outside what the people inside have stopped noticing. Before images, my trade was interpreting: years spent watching gestures and what people say without speaking.
+          I've always liked watching what isn't noticed at first. Before images, my trade was interpreting in sign language: building a bridge between people, catching what is implied, what we say without speaking.
         </p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="panel" id="olhar">
-  <img src="../photos/le-regard/bougainville-difuso.jpg" alt="A face almost lost among the bougainvillea" style="object-position:34% 50%">
-  <div class="veil veil--face"></div>
-  <div class="words w-ml">
-    <div class="words__in">
-      <div class="words__col quote fi">
-        <span class="label">The eye</span>
-        <p>Each of us builds their own world.</p>
-        <p>Maybe that's what fascinates me most about photography. An image holds an instant, but we never really know what that instant meant to the person in it. How important, or how ordinary, it was for them.</p>
-        <p>We each start from a different view of the world. With a photograph you can try to build a bridge, but everyone will see what they want to see and what they are able to see.</p>
-        <p>A humility I like to keep close.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
+<!-- ═══ 10 · HOTELS ═══
+     Seul endroit du site où « Regard » apparaît, comme nom de service. -->
 <section class="panel panel--96" id="hoteis">
-  <img src="../photos/le-regard/chave-porta.jpg" alt="A key turning in the door" style="object-position:52% 50%">
+  <picture>
+    <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-09-hoteis.jpg">
+    <img src="../photos/le-regard/chave-porta.jpg" alt="A presence in a hotel room"
+         style="--dpos:52% 50%;--mpos:50% 50%">
+  </picture>
   <div class="veil veil--left"></div>
-  <div class="words w-ml">
+  <!-- mobile : le visage tient le haut du cadre, la main à la bague le
+       milieu — le texte se pose sous elle, sur le drap -->
+  <div class="words w-ml m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <span class="label">Hotels · Guesthouses · Retreats</span>
-        <h2>Some places are felt even <em>with no one there</em></h2>
+        <h2>With hotels and guesthouses, <em>the client is the place</em></h2>
         <p class="lede" style="margin-top:1.6rem">
-          In the rest of my work, the person is what makes the place exist. In a hotel the challenge is the opposite: the place has to be felt on its own, before any guest arrives.
+          Even there I look for life: a presence, a movement, someone who makes the space breathe.
         </p>
-        <p class="lede">For hotels, guesthouses and retreats, there is separate work.</p>
+        <p class="lede">For that there is a method of its own, the <a href="regard.html">Regard Method</a>.</p>
         <div class="actions">
           <a href="hoteis.html" class="btn btn--solid">See the work for hotels</a>
-          <a href="regard.html" class="btn">Regard Method</a>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ═══ 11 · CONTACT ═══ -->
 <section class="panel" id="contato">
-  <img src="../photos/le-regard/hero-corpo-mar.jpg" alt="A body lying in the surf, at the foot of the cliff" style="object-position:55% 90%">
+  <picture>
+    <source media="(max-width:860px)" srcset="../photos/le-regard/mobile/m-10-contato.jpg">
+    <img src="../photos/le-regard/hero-corpo-mar.jpg" alt="A body lying in the surf, at the foot of the cliff"
+         style="--dpos:55% 90%;--mpos:48% 50%">
+  </picture>
   <div class="veil veil--top"></div>
-  <div class="words w-tl">
+  <!-- mobile : le haut du cadre est déjà pris — le bloc hôtels déborde
+       dessus pour dégager la bague. Le texte descend donc sur le tissu du
+       bas, sous le bras et les fleurs, qui restent entiers. -->
+  <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <span class="label">Contact</span>
         <h2>Everything starts with <em>a conversation</em>.</h2>
         <div class="actions">
           <a href="contact.html" class="btn btn--solid">Get in touch</a>

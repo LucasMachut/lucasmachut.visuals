@@ -161,12 +161,19 @@ body.home{
 .w-ml .words__in{align-items:center;justify-content:flex-start}
 .w-mr .words__in{align-items:center;justify-content:flex-end}
 .w-c  .words__in{align-items:center;justify-content:center;text-align:center}
-/* Remonte un bloc centré au-dessus du sujet. Le rembourrage réduit la
-   boîte par le bas : le centrage se recalcule dedans et le texte monte,
-   sans le décrocher du centre optique. */
+/* Décroche un bloc de son ancrage, sans changer d'ancrage. Le
+   rembourrage réduit la boîte par le bas : le texte remonte d'autant s'il
+   est calé en bas, de la moitié s'il est centré. Réglage de grand écran
+   uniquement — sur téléphone c'est m-top/m-mid/m-bot qui décide, et le
+   voile suit. */
 .words.up .words__in{padding-bottom:11vh}
 .words__col{max-width:34rem}
 .w-c .words__col{max-width:38rem}
+/* Un même texte ne tombe pas au même endroit sur une photo horizontale
+   et sur son recadrage vertical : un bloc de mots peut donc n'exister
+   que sur un des deux formats, et changer de photo en passant sur
+   téléphone. */
+.words--m{display:none}
 .w-br .words__col,.w-mr .words__col{text-align:right}
 .w-br .actions,.w-mr .actions{justify-content:flex-end}
 
@@ -240,6 +247,9 @@ body.home{
   .tile--alt{display:none}
   .panel > picture > img,.tile > picture > img{
     object-position:var(--mpos,var(--dpos,50% 50%))}
+  .words--d{display:none}
+  .words--m{display:flex}
+  .words.up .words__in{padding-bottom:0}
   .words{padding:calc(var(--hd) + 1.2rem) var(--pad) 2.4rem}
   .w-c .words__in{text-align:left;justify-content:flex-start}
   .w-br .words__col,.w-mr .words__col{text-align:left}

@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/home.css?v=12">
+<link rel="stylesheet" href="css/home.css?v=13">
 </head>
 <body class="home">
 
@@ -72,9 +72,9 @@
   <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <h2>Me chamo Lucas Machut, <em>francês vivendo no Rio</em>.</h2>
+        <h2>Me chamo Lucas Machut. Sou fotógrafo e filmmaker francês, <em>vivendo no Rio</em>.</h2>
         <p class="lede" style="margin-top:1.6rem">
-          Um casamento, um retiro, um encontro. Nunca é só o lugar, nem só a pessoa.
+          Trabalho com casamentos, retiros, experiências e hotéis.
         </p>
       </div>
     </div>
@@ -100,7 +100,7 @@
   <div class="words w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. É aí que eu entro: guardar um fragmento de vida antes que o tempo o transforme, transformar histórias em algo que atravessa o tempo.</p>
+        <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. É aí que eu entro: guardar um fragmento de vida antes que o tempo o modifique, e transformar histórias em algo que dura.</p>
       </div>
     </div>
   </div>
@@ -116,13 +116,16 @@
          style="--dpos:56% 46%;--mpos:55% 50%">
   </picture>
   <div class="veil veil--left"></div>
-  <!-- mobile : c'est le plus long texte de la page, il lui faut la plus
+  <!-- desktop : centré, le texte tombait en plein sur l'œil de gauche.
+       Il descend donc dans le bas du cadre, décollé du bord — sous les
+       regards, sur la joue en pénombre.
+       mobile : c'est le plus long texte de la page, il lui faut la plus
        grande zone plate — les quatre bandes basses de cette photo -->
-  <div class="words w-ml m-bot">
+  <div class="words w-bl up m-bot">
     <div class="words__in">
       <div class="words__col fi">
         <p class="mf">Cada pessoa carrega o seu próprio mundo, a sua maneira de enxergar a vida. Quando filmo ou fotografo, não estou só fazendo imagens: tento transmitir esse mundo, o que se passa dentro da pessoa naquele instante.</p>
-        <p class="mf">Sei que é sempre uma tentativa. A gente nunca entra por completo no mundo do outro. A imagem é uma ponte, e cada um vai enxergar o que quiser e o que conseguir. Gosto de manter essa humildade por perto.</p>
+        <p class="mf">Sabendo que a gente nunca entra por completo no mundo do outro. A imagem é uma tentativa de ponte entre nossos mundos.</p>
       </div>
     </div>
   </div>
@@ -141,20 +144,22 @@
   <figure class="tile tile--alt"><img src="photos/le-regard/bracos-palmeiras.jpg" alt="Braços abertos sob as palmeiras" loading="lazy" style="object-position:64% 48%"></figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/rosto-agua.jpg" alt="Rosto na superfície da água" loading="lazy" style="object-position:50% 44%"></figure>
   <div class="veil veil--bottom"></div>
-  <!-- mobile : silhouette et pétales occupent le milieu, les rochers du
-       bas sont sombres et plats -->
-  <div class="words w-bl m-bot">
+  <!-- mobile : le recadrage vertical est le couple, visages sur toute la
+       hauteur — on n'écrit rien dessus. Ce paragraphe passe à la section
+       suivante sur téléphone. -->
+  <div class="words words--d w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <p class="mf">O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás da alma de cada momento, do que ele carrega de verdade. A beleza não está na pose perfeita, está na verdade de cada expressão, nos corpos em movimento, nos estados reais.</p>
+        <p class="mf">O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade. A beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ 6 · O INSTANTE ═══
-     areia-maos et anel-cama montent à 85 de luminance : aucun texte
-     dessus. Le titre se pose sur maos-agua, seule tuile à bas sombre. -->
+<!-- ═══ 6 · LE REGARD, SUITE ═══
+     Sur grand écran les trois tuiles se suffisent : aucun mot dessus.
+     Sur téléphone, le recadrage vertical porte le paragraphe du regard,
+     qui ne peut pas rester sur la photo du couple. -->
 <section class="band band--3">
   <figure class="tile">
     <picture>
@@ -165,15 +170,14 @@
   </figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/areia-maos.jpg" alt="Areia escorrendo entre as mãos" loading="lazy" style="object-position:58% 50%"></figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/anel-cama.jpg" alt="Mão adormecida sobre o lençol, anel" loading="lazy" style="object-position:42% 50%"></figure>
-  <div class="veil veil--scrim"></div>
-  <!-- centré, mais remonté : les mains occupent la moitié basse de la
-       tuile du milieu, la phrase se pose juste au-dessus d'elles.
-       mobile : l'homme est assis au milieu du cadre, la canopée du haut
-       est libre — et une phrase courte y tient -->
-  <div class="words w-c up m-bot">
+  <!-- desktop : rien ici, les trois tuiles restent nues.
+       mobile : le paragraphe du regard vient se poser ici, sur le bas de
+       la photo — le visage tient le milieu du cadre, le sable du bas est
+       plat et le voile fait le reste. -->
+  <div class="words words--m w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <h2>O instante em que a pessoa e o lugar <em>viram uma coisa só</em></h2>
+        <p class="mf">O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade. A beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.</p>
       </div>
     </div>
   </div>
@@ -233,9 +237,8 @@
       <div class="words__col fi" style="max-width:26rem">
         <h2 class="h2--sm">Um olhar <em>de fora</em>, dentro da cena</h2>
         <p class="lede" style="margin-top:1.2rem">
-          Sou francês e vivo no Brasil. Vejo de fora o que, de tanto ver, quem está dentro já nem nota. Antes da imagem, meu ofício era interpretar: anos observando gestos e o que as pessoas dizem sem falar.
+          Desde sempre gosto de observar o que não se percebe de primeira. Antes da imagem, meu ofício era interpretar em língua de sinais: criar uma ponte entre as pessoas, perceber os implícitos, o que a gente diz sem falar.
         </p>
-        <p class="mf mf--close">Do Rio para o mundo.</p>
       </div>
     </div>
   </div>
@@ -282,9 +285,10 @@
          style="--dpos:55% 90%;--mpos:48% 50%">
   </picture>
   <div class="veil veil--top"></div>
-  <!-- mobile : le corps est tout en bas du cadre, la falaise et la mer
-       occupent le haut — le texte y monte pour le laisser entier -->
-  <div class="words w-tl m-top">
+  <!-- mobile : le haut du cadre est déjà pris — le bloc hôtels déborde
+       dessus pour dégager la bague. Le texte descend donc sur le tissu du
+       bas, sous le bras et les fleurs, qui restent entiers. -->
+  <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
         <h2>Tudo começa com <em>uma conversa</em>.</h2>

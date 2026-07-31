@@ -43,6 +43,9 @@
       const section = document.createElement('section');
       section.className = 'project-gallery fotos-series';
       section.setAttribute('aria-label', name);
+      // Ancre de série : le portfólio n'en montre que huit photos et
+      // renvoie ici, sur la série entière (fotos.html#forro).
+      if (serie.slug) section.id = serie.slug;
 
       const wrap = document.createElement('div');
       wrap.className = 'wrap';
