@@ -14,6 +14,14 @@
   const base = mount.dataset.base || '';        // '' on PT, '../' on en/fr
   const lang = mount.dataset.lang || 'pt';      // 'pt' | 'en' | 'fr'
   const serieLabel = mount.dataset.serieLabel || 'SÉRIE';
+  const backLabel = mount.dataset.back || '';
+  const backHref = mount.dataset.backHref || 'portfolio.html';
+
+  /* fotos.html?serie=forro n'ouvre que cette série. Le portfólio y
+     renvoie ainsi projet par projet : on vient voir un travail précis,
+     pas la pile de tout ce qui existe. Sans paramètre, la page reste
+     ce qu'elle était — la sélection entière. */
+  const solo = (new URLSearchParams(location.search).get('serie') || '').trim();
 
   setupLightbox();
 
@@ -24,14 +32,34 @@
     })
     .then(data => render(data.series || []))
     .catch(err => {
-      console.error('Fotos gallery failed to load:', err);
+      // Même secours que sur le portfólio : une page ouverte depuis le
+      // disque n'a pas de fetch, et la galerie restait vide.
+      console.warn('Fotos: fetch indisponible, on retombe sur la copie de la page.', err);
+      const inline = document.getElementById('fotos-series-data');
+      if (!inline) return;
+      try {
+        render((JSON.parse(inline.textContent) || {}).series || []);
+      } catch (e) {
+        console.error('Fotos: copie de secours illisible.', e);
+      }
     });
 
   function render(series) {
     const frag = document.createDocumentFragment();
     let idx = 0;
 
-    series.forEach(serie => {
+    let list = series;
+    let alone = false;
+    if (solo) {
+      const found = series.filter(s => s.slug === solo && (s.photos || []).length);
+      if (found.length) {
+        list = found;
+        alone = true;
+        soloHeader(found[0]);
+      }
+    }
+
+    list.forEach(serie => {
       const photos = serie.photos || [];
       if (!photos.length) return;
       idx += 1;
@@ -73,8 +101,12 @@
         inner.appendChild(fig);
       });
 
-      wrap.appendChild(label);
-      wrap.appendChild(title);
+      /* Sur une série seule, le titre de la page porte déjà le nom :
+         le redoubler ici ferait deux fois le même mot. */
+      if (!alone) {
+        wrap.appendChild(label);
+        wrap.appendChild(title);
+      }
       wrap.appendChild(inner);
       section.appendChild(wrap);
       frag.appendChild(section);
@@ -82,6 +114,26 @@
 
     mount.appendChild(frag);
     reveal(mount.querySelectorAll('.fi'));
+  }
+
+  /* Une série seule prend le haut de la page : son nom devient le titre,
+     et le chapô laisse place au chemin de retour vers le portfólio. */
+  function soloHeader(serie) {
+    const name = serie['title_' + lang] || serie.title_pt || serie.slug || '';
+    document.title = name + ' — Lucas Machut Visuals';
+    const hero = document.querySelector('.page-hero');
+    if (!hero) return;
+    const h1 = hero.querySelector('h1');
+    if (h1) h1.textContent = name;
+    const lede = hero.querySelector('p');
+    if (!lede) return;
+    if (!backLabel) { lede.remove(); return; }
+    lede.textContent = '';
+    const a = document.createElement('a');
+    a.href = backHref;
+    a.className = 'project-back__link';
+    a.textContent = backLabel;
+    lede.appendChild(a);
   }
 
   /* Tap/click a photo to view it full-screen, then swipe or use the arrows

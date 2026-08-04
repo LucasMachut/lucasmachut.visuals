@@ -1,6 +1,51 @@
 {
   "series": [
     {
+      "slug": "arpoador",
+      "title_pt": "Arpoador",
+      "title_en": "Arpoador",
+      "title_fr": "Arpoador",
+      "type_pt": "Conteudo social",
+      "type_en": "Social content",
+      "type_fr": "Contenu social",
+      "location": "Rio de Janeiro, RJ",
+      "page": "arpoador.html",
+      "videos": [
+        {
+          "id": "r-ExJ6PiLuw",
+          "title": "Arpoador"
+        }
+      ],
+      "photos": [
+        "Projets-web/Fotos/arpoador/arpoador-02.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-03.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-04.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-07.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-08.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-12.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-14.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-16.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-17.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-19.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-20.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-23.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-24.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-27.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-28.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-31.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-32.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-36.jpg",
+        "Projets-web/Fotos/arpoador/arpoador-37.jpg"
+      ],
+      "destaque": [
+        "Projets-web/Fotos/arpoador/destaque/arpoador-08.jpg",
+        "Projets-web/Fotos/arpoador/destaque/arpoador-20.jpg",
+        "Projets-web/Fotos/arpoador/destaque/arpoador-23.jpg",
+        "Projets-web/Fotos/arpoador/destaque/arpoador-28.jpg",
+        "Projets-web/Fotos/arpoador/destaque/arpoador-32.jpg"
+      ]
+    },
+    {
       "slug": "forro",
       "title_pt": "Forró",
       "title_en": "Forró",
@@ -24,6 +69,13 @@
         "Projets-web/Fotos/forro/forro-34.jpg",
         "Projets-web/Fotos/forro/forro-35.jpg",
         "Projets-web/Fotos/forro/forro-38.jpg"
+      ],
+      "destaque": [
+        "Projets-web/Fotos/forro/destaque/forro-18.jpg",
+        "Projets-web/Fotos/forro/destaque/forro-21.jpg",
+        "Projets-web/Fotos/forro/destaque/forro-24.jpg",
+        "Projets-web/Fotos/forro/destaque/forro-34.jpg",
+        "Projets-web/Fotos/forro/destaque/forro-36.jpg"
       ]
     },
     {
@@ -49,6 +101,13 @@
         "Projets-web/Fotos/tango/tango-61.jpg",
         "Projets-web/Fotos/tango/tango-62.jpg",
         "Projets-web/Fotos/tango/tango-64.jpg"
+      ],
+      "destaque": [
+        "Projets-web/Fotos/tango/destaque/tango-01.jpg",
+        "Projets-web/Fotos/tango/destaque/tango-03.jpg",
+        "Projets-web/Fotos/tango/destaque/tango-10.jpg",
+        "Projets-web/Fotos/tango/destaque/tango-13.jpg",
+        "Projets-web/Fotos/tango/destaque/tango-53.jpg"
       ]
     },
     {
@@ -73,6 +132,14 @@
         "Projets-web/Fotos/dunas-itaunas/dunas-itaunas-31.jpg",
         "Projets-web/Fotos/dunas-itaunas/dunas-itaunas-34.jpg",
         "Projets-web/Fotos/dunas-itaunas/dunas-itaunas-36.jpg"
+      ],
+      "destaque": [
+        "Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-08.jpg",
+        "Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-11.jpg",
+        "Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-22.jpg",
+        "Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-24.jpg",
+        "Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-28.jpg",
+        "Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-31.jpg"
       ]
     },
     {
@@ -101,6 +168,13 @@
         "Projets-web/Fotos/mujer-selvaje/mujer-selvaje-27.jpg",
         "Projets-web/Fotos/mujer-selvaje/mujer-selvaje-28.jpg",
         "Projets-web/Fotos/mujer-selvaje/mujer-selvaje-29.jpg"
+      ],
+      "destaque": [
+        "Projets-web/Fotos/mujer-selvaje/destaque/mujer-selvaje-11.jpg",
+        "Projets-web/Fotos/mujer-selvaje/destaque/mujer-selvaje-14.jpg",
+        "Projets-web/Fotos/mujer-selvaje/destaque/mujer-selvaje-20.jpg",
+        "Projets-web/Fotos/mujer-selvaje/destaque/mujer-selvaje-23.jpg",
+        "Projets-web/Fotos/mujer-selvaje/destaque/mujer-selvaje-24.jpg"
       ]
     },
     {
@@ -119,6 +193,13 @@
         "Projets-web/Fotos/pipa/pipa-08.jpg",
         "Projets-web/Fotos/pipa/pipa-09.jpg",
         "Projets-web/Fotos/pipa/pipa-10.jpg"
+      ],
+      "destaque": [
+        "Projets-web/Fotos/pipa/destaque/pipa-01.jpg",
+        "Projets-web/Fotos/pipa/destaque/pipa-02.jpg",
+        "Projets-web/Fotos/pipa/destaque/pipa-03.jpg",
+        "Projets-web/Fotos/pipa/destaque/pipa-04.jpg",
+        "Projets-web/Fotos/pipa/destaque/pipa-05.jpg"
       ]
     },
     {
@@ -158,6 +239,13 @@
         "Projets-web/Fotos/hoteis/hoteis-43.jpg",
         "Projets-web/Fotos/hoteis/hoteis-44.jpg",
         "Projets-web/Fotos/hoteis/hoteis-45.jpg"
+      ],
+      "destaque": [
+        "Projets-web/Fotos/hoteis/destaque/hoteis-01.jpg",
+        "Projets-web/Fotos/hoteis/destaque/hoteis-02.jpg",
+        "Projets-web/Fotos/hoteis/destaque/hoteis-03.jpg",
+        "Projets-web/Fotos/hoteis/destaque/hoteis-05.jpg",
+        "Projets-web/Fotos/hoteis/destaque/hoteis-07.jpg"
       ]
     }
   ]

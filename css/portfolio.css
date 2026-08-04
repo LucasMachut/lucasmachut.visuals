@@ -1,0 +1,593 @@
+/* ═══════════════════════════════════════════════════════════
+   PORTFÓLIO — identité veralem
+   ═══════════════════════════════════════════════════════════
+
+   Le site porte deux identités qui ne se mélangent pas :
+
+     · veralem  — accueil et portfólio. Le travail d'auteur :
+                  casamentos, ensaios, retiros, experiências.
+                  Registre brut, sensible, un peu analogique.
+                  Lin et brun terre, terracotta, machine à écrire.
+
+     · Ivoire & Bronze — toute la branche hôtellerie. Premium,
+                  sobre, éditorial. Elle vit dans css/style.css
+                  et n'est pas touchée ici.
+
+   Cette feuille est autonome : la page ne charge plus style.css,
+   sans quoi les deux palettes se marcheraient dessus. Elle reprend
+   en revanche les mêmes noms de classes, pour que js/main.js et
+   js/portfolio.js continuent de fonctionner sans une ligne de
+   changement — les séries injectées après le fetch tombent donc
+   habillées.
+
+   Un seul endroit déroge : le bloc .portfolio-branch, qui mène aux
+   hôtels. Il bascule volontairement dans l'Ivoire & Bronze — c'est
+   le seuil entre les deux mondes, et on doit le voir.
+   ═══════════════════════════════════════════════════════════ */
+
+/* Deux polices pour veralem : la machine à écrire pour les titres,
+   les labels et les tampons ; la serif douce pour tout ce qui se
+   lit. Inter Tight n'est là que pour le bloc hôtels — la bascule de
+   police est justement ce qui signale le passage. */
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=Special+Elite&family=Inter+Tight:wght@300;500&display=swap');
+
+/* ─────────── jetons ─────────── */
+:root{
+  /* principales — toujours présentes */
+  --paper:      #F0E8DC;   /* lin, papier chaud */
+  --ink:        #2E2620;   /* brun terre profond */
+  --terra:      #B5623C;   /* terracotta brûlée */
+
+  /* secondaires */
+  --sand:       #D3B78E;   /* sable doré, dune */
+  --sand-wash:  #E6D8C2;   /* le sable lavé de lin, pour un bandeau */
+  --rose:       #C98E7A;   /* rose poussière — la peau, le couchant */
+  --sage:       #7E836A;   /* vert sauge fané */
+  --night:      #33474B;   /* bleu nuit, mer profonde */
+
+  /* dérivés de service */
+  --ink-soft:   #6B5A4A;   /* texte long et secondaire, 5.4:1 sur lin */
+  --terra-deep: #8F4A2C;   /* terracotta assez foncée pour porter du lin */
+  --line:       rgba(126,131,106,.34);  /* filets teintés sauge */
+
+  --font-title: 'Special Elite','Courier New',Courier,monospace;
+  --font-body:  'Newsreader',Georgia,serif;
+  --font-hotel: 'Inter Tight',system-ui,-apple-system,sans-serif;
+
+
+  --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem; --s5:2.5rem;
+  --s6:3rem;  --s8:4rem; --s10:5rem; --s12:6rem; --s16:8rem;
+
+  --max:1180px;          /* la colonne de texte */
+  --max-img:1520px;      /* les photos débordent la colonne */
+  --nav-h:5rem;
+}
+
+/* ─────────── base ─────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-optical-sizing:auto;
+  font-weight:300;
+  font-size:1.02rem;
+  line-height:1.72;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{display:block;max-width:100%;height:auto}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+button{font-family:inherit}
+
+::selection{background:var(--night);color:var(--paper)}
+:focus-visible{outline:2px solid var(--night);outline-offset:3px}
+
+
+/* ─────────── typographie ─────────── */
+/* Une frappe de machine à écrire est chasse fixe et encrée : à corps
+   égal elle occupe plus de place qu'une serif. D'où des corps plus
+   sages, une interligne ouverte, et un interlettrage légèrement
+   positif — l'inverse du serrage qui va au Newsreader. */
+h1,h2,h3{
+  font-family:var(--font-title);font-weight:400;
+  line-height:1.18;letter-spacing:.012em;
+}
+
+/* Special Elite n'a qu'un seul style, et une machine à écrire n'a
+   jamais eu d'italique : l'emphase d'un titre se fait au
+   soulignement, comme sur le papier. */
+h1 em,h2 em,h3 em{
+  font-style:normal;
+  text-decoration:underline;
+  text-decoration-thickness:1px;
+  text-underline-offset:.22em;
+  text-decoration-color:rgba(181,98,60,.55);
+}
+
+/* Dans le corps du texte en revanche, on est en Newsreader : là
+   l'italique existe, et c'est lui qui porte le mot-clé. Terracotta
+   sur lin — le rose poussière ne tient pas le contraste ici, il est
+   réservé aux fonds sombres. */
+p em,li em{font-style:italic;color:var(--terra)}
+
+.label{
+  font-family:var(--font-title);font-size:.66rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:var(--ink-soft);display:block;
+}
+
+/* ─────────── boutons ─────────── */
+/* Terracotta ne tient que 3.6:1 sur le lin : elle dessine le trait,
+   jamais le texte. Au survol c'est donc le brun terre qui remplit. */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--font-title);font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:.9rem 2.1rem;line-height:1;cursor:pointer;
+  background:transparent;color:var(--ink);
+  border:1px solid var(--terra);
+  transition:background .35s ease,color .35s ease,border-color .35s ease;
+}
+.btn:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+.btn--outline{color:var(--ink);border-color:var(--terra)}
+
+.btn--dark{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.btn--dark:hover{background:var(--terra-deep);border-color:var(--terra-deep);color:var(--paper)}
+
+.btn--outline-light{color:#FAF6EC;border-color:rgba(250,246,236,.5)}
+.btn--outline-light:hover{background:#FAF6EC;color:#1F1812;border-color:#FAF6EC}
+
+/* ─────────── mise en page ─────────── */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 clamp(1.4rem,5vw,4rem)}
+
+/* ─────────── barre de navigation ─────────── */
+/* La page ouvre en clair : la barre est pleine dès le premier pixel,
+   sans attendre le défilement. .scrolled ne fait plus qu'ajouter le
+   filet et resserrer la hauteur. */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.5rem clamp(1.4rem,5vw,4rem);
+  background:rgba(240,232,220,.94);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid transparent;
+  transition:padding .4s ease,border-color .45s ease;
+}
+.header.scrolled{padding:1rem clamp(1.4rem,5vw,4rem);border-bottom-color:var(--line)}
+
+.nav{display:flex;align-items:center;gap:var(--s5)}
+.nav__links{display:flex;align-items:center;gap:var(--s5)}
+
+.nav__link{
+  font-family:var(--font-title);font-size:.68rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink);position:relative;transition:color .3s ease;
+}
+.nav__link::after{
+  content:'';position:absolute;bottom:-4px;left:0;
+  width:0;height:1px;background:var(--terra);transition:width .3s ease;
+}
+.nav__link:hover::after,.nav__link.active::after{width:100%}
+
+/* Regard appartient à la branche hôtelière : il garde le bronze de
+   l'autre identité. C'est un lien vers ailleurs, il doit le dire. */
+.nav__link--regard{
+  border:1px solid #B08D4E;color:#B08D4E;
+  padding:.34rem .74rem;
+  transition:background .3s ease,color .3s ease;
+}
+.nav__link--regard::after{display:none}
+.nav__link--regard:hover{background:#B08D4E;color:#FAF6EC}
+
+.nav__lang{
+  display:flex;align-items:stretch;margin-left:var(--s2);
+  border:1px solid var(--terra);overflow:hidden;
+}
+.nav__lang-link{
+  font-family:var(--font-title);font-size:.62rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  color:var(--terra-deep);padding:.3rem .55rem;line-height:1.3;
+  transition:background .2s ease,color .2s ease;
+}
+.nav__lang-link:hover{background:rgba(181,98,60,.14)}
+.nav__lang-link--active{background:var(--terra-deep);color:var(--paper)}
+.nav__lang-link+.nav__lang-link{border-left:1px solid var(--terra)}
+
+.nav__toggle{
+  display:none;background:none;border:none;cursor:pointer;
+  padding:.3rem;flex-direction:column;gap:6px;
+}
+.nav__toggle span{display:block;width:26px;height:1px;background:var(--ink);transition:all .3s ease}
+.nav__toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav__toggle.open span:nth-child(2){opacity:0}
+.nav__toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.nav__mobile{
+  display:none;position:fixed;inset:0;z-index:199;
+  background:var(--paper);
+  flex-direction:column;align-items:flex-start;justify-content:center;
+  gap:var(--s3);padding:var(--s8) clamp(1.4rem,7vw,4rem);
+}
+.nav__mobile.open{display:flex}
+.nav__mobile-link{
+  font-family:var(--font-title);font-size:clamp(1.5rem,5.5vw,2.2rem);
+  color:var(--ink);letter-spacing:.01em;transition:color .3s ease;
+}
+.nav__mobile-link:hover{color:var(--terra)}
+.nav__mobile-link--regard{border:1px solid #B08D4E;color:#B08D4E;padding:.2rem .8rem;font-size:clamp(1.2rem,4.5vw,1.7rem)}
+.nav__mobile-lang{
+  display:flex;margin-top:var(--s4);
+  border:1px solid var(--terra);overflow:hidden;align-self:flex-start;
+}
+.nav__mobile-lang .nav__lang-link{font-size:.8rem;padding:.4rem .9rem}
+
+/* ─────────── ouverture de page ─────────── */
+.page-hero{
+  padding:calc(var(--nav-h) + var(--s10)) 0 var(--s8);
+}
+.page-hero h1{
+  font-size:clamp(2.6rem,7vw,5rem);
+  line-height:1.08;margin-bottom:var(--s4);max-width:16ch;
+}
+.page-hero p{
+  font-size:1.15rem;color:var(--ink-soft);
+  max-width:46ch;line-height:1.78;
+}
+
+/* Le fil de catégories : une ligne tapée à la machine, posée sous le
+   titre comme une légende de contact-sheet. Sélecteur doublé pour
+   passer devant .page-hero p, qui est plus spécifique qu'une classe
+   seule et lui rendrait sinon son corps de paragraphe. */
+.page-hero .page-hero__strip{
+  margin-top:var(--s5);padding-top:var(--s3);
+  border-top:1px solid var(--line);
+  font-family:var(--font-title);font-size:.68rem;line-height:1.6;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--terra-deep);
+  max-width:none;
+}
+
+/* ═══════════ UNE SÉRIE ═══════════ */
+.project-feature{padding:var(--s12) 0 var(--s10)}
+.project-feature+.project-feature,
+.project-feature:first-of-type{border-top:1px solid var(--line)}
+
+.project-feature__head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:var(--s3) var(--s6);flex-wrap:wrap;margin-bottom:var(--s6);
+}
+
+.project-feature__title{
+  font-size:clamp(1.9rem,4vw,3.1rem);line-height:1.1;margin-top:var(--s2);
+}
+
+/* Le tampon dateur : un numéro frappé à la machine, encadré et
+   posé de travers, comme une marque d'archive au dos d'un tirage.
+   La légère rotation est volontaire — rien ici n'est au cordeau. */
+.project-feature__index{
+  font-family:var(--font-title);font-size:.7rem;
+  letter-spacing:.2em;color:var(--terra-deep);
+  border:1px solid rgba(181,98,60,.55);
+  padding:.2rem .6rem .12rem;display:inline-block;line-height:1.4;
+  transform:rotate(-1.6deg);transform-origin:left center;
+}
+
+.project-feature__aside{text-align:right;padding-bottom:.35rem}
+.project-feature__type{
+  font-family:var(--font-title);font-size:.64rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink-soft);
+}
+.project-feature__loc{
+  font-family:var(--font-body);font-style:italic;
+  font-size:1rem;color:var(--ink-soft);margin-top:.2rem;
+}
+
+/* ─────────── les photos ─────────── */
+/* La photo prime : la galerie sort de la colonne de texte et va
+   chercher les bords. Deux colonnes seulement sur grand écran —
+   une image doit avoir de la place pour porter, une vignette n'a
+   aucune force. */
+.project-gallery{padding:0}
+.project-gallery--inline{
+  margin-inline:calc(50% - 50vw);
+  width:100vw;
+  padding-inline:clamp(.8rem,3vw,2.4rem);
+}
+/* 100vw compte la barre de défilement, pas la zone visible : la
+   galerie dépassait de sa largeur (huit pixels) et se retrouvait
+   décentrée d'autant. L'unité de conteneur, elle, mesure la largeur
+   réelle de <main>. Là où elle manque, on retombe sur les vw
+   ci-dessus — le décalage se voit à peine, et body coupe le débord. */
+@supports (width:100cqw){
+  main{container-type:inline-size}
+  .project-gallery--inline{margin-inline:calc(50% - 50cqw);width:100cqw}
+}
+/* Deux colonnes en maçonnerie, pas une grille. Une grille aligne les
+   images rangée par rangée : dès que les formats se mélangent, une
+   verticale à côté d'une horizontale ouvre un trou de plusieurs
+   centaines de pixels sous la plus courte. Les colonnes, elles,
+   tassent — chaque image monte se coller sous la précédente. */
+.project-gallery__inner{
+  max-width:var(--max-img);margin:0 auto;
+  column-count:2;column-gap:clamp(.8rem,1.6vw,1.5rem);
+}
+.project-gallery__item{
+  position:relative;break-inside:avoid;overflow:hidden;
+  margin-bottom:clamp(.8rem,1.6vw,1.5rem);
+  background:var(--sand-wash);
+}
+/* Rien ne s'aligne au cordeau : une image sur trois respire plus haut,
+   et les deux colonnes cessent de se répondre ligne à ligne. En
+   maçonnerie une marge ne creuse pas de vide, elle décale simplement
+   la suite de la colonne. */
+.project-gallery__item:nth-child(3n){margin-top:clamp(1rem,3vw,3.2rem)}
+
+/* Une série en nombre impair laissait sa dernière photo seule dans une
+   colonne, avec un grand vide à côté — l'accident se voyait plus que
+   l'image. Elle traverse donc les deux colonnes, un peu plus large que
+   les autres et centrée : la série se ferme sur elle au lieu de
+   s'arrêter de travers. */
+.project-gallery__item:last-child:nth-child(odd){
+  column-span:all;
+  width:min(100%,62%);
+  margin:clamp(1.5rem,4vw,4rem) auto 0;
+}
+.project-gallery__item img{
+  width:100%;height:auto;display:block;
+  transition:transform .8s ease;
+}
+.project-gallery__item:hover img{transform:scale(1.02)}
+
+
+.project-feature__more{margin-top:var(--s6);display:flex;justify-content:center}
+
+/* ═══════════ LA PAGE FOTOS ═══════════
+   Même feuille, parce que c'est le même monde : le portfólio y renvoie
+   projet par projet, et passer du lin à l'ivoire en un clic donnerait
+   l'impression de changer de site.
+   Mais pas la même mise en page. Le portfólio montre cinq images
+   choisies, Fotos déroule la série entière — dix-sept, trente et une.
+   Trois colonnes serrées, comme une planche contact, et pas d'image de
+   clôture pleine largeur : sur dix-sept photos elle tomberait au
+   hasard, sans rien fermer du tout. */
+.fotos-series{padding:var(--s10) 0 var(--s4);scroll-margin-top:var(--nav-h)}
+.fotos-series:last-of-type{padding-bottom:var(--s16)}
+.fotos-series .project-gallery__inner{column-count:3}
+.fotos-series .project-gallery__item:last-child:nth-child(odd){
+  column-span:none;width:auto;
+  margin:0 0 clamp(.8rem,1.6vw,1.5rem);
+}
+.fotos-series .project-gallery__item img{cursor:zoom-in}
+
+.fotos-series__title{
+  font-size:clamp(1.6rem,2.8vw,2.4rem);
+  margin:var(--s2) 0 var(--s5);
+}
+.fotos-series .label{margin-bottom:var(--s1)}
+
+/* le chemin de retour, quand la page n'ouvre qu'une série */
+.project-back__link{
+  display:inline-flex;align-items:center;
+  font-family:var(--font-title);font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--terra-deep);transition:color .3s ease;
+}
+.project-back__link::before{content:"←";margin-right:.7rem;font-size:1rem}
+.project-back__link:hover{color:var(--ink)}
+
+/* ─────────── la photo agrandie ───────────
+   Fond brun terre presque opaque plutôt qu'un noir de visionneuse :
+   on reste dans la chambre noire de veralem, pas dans un lecteur. */
+.fotos-lightbox{
+  position:fixed;inset:0;z-index:2000;
+  display:flex;align-items:center;justify-content:center;
+  padding:var(--s3);background:rgba(28,22,17,.95);
+  opacity:0;visibility:hidden;cursor:zoom-out;
+  transition:opacity .25s ease,visibility .25s ease;
+}
+.fotos-lightbox.open{opacity:1;visibility:visible}
+.fotos-lightbox__img{max-width:100%;max-height:100%;object-fit:contain}
+.fotos-lightbox__close{
+  position:absolute;top:var(--s3);right:var(--s4);
+  width:44px;height:44px;font-size:2rem;line-height:1;
+  color:var(--paper);background:none;border:none;cursor:pointer;opacity:.8;
+}
+.fotos-lightbox__close:hover{opacity:1}
+.fotos-lightbox__nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:52px;height:52px;display:flex;align-items:center;justify-content:center;
+  font-size:2.4rem;line-height:1;color:var(--paper);
+  background:rgba(28,22,17,.35);border:none;border-radius:50%;
+  cursor:pointer;opacity:.75;transition:opacity .2s ease,background .2s ease;z-index:1;
+}
+.fotos-lightbox__nav:hover{opacity:1;background:rgba(181,98,60,.5)}
+.fotos-lightbox__nav--prev{left:var(--s3)}
+.fotos-lightbox__nav--next{right:var(--s3)}
+.fotos-lightbox__nav[hidden]{display:none}
+.fotos-lightbox__count{
+  position:absolute;bottom:var(--s3);left:50%;transform:translateX(-50%);
+  font-family:var(--font-title);font-size:.7rem;letter-spacing:.14em;
+  color:rgba(240,232,220,.75);
+}
+
+/* ═══════════ LE SEUIL — VERS LES HÔTELS ═══════════ */
+/* Ici on quitte veralem. Le bloc reprend l'Ivoire & Bronze de la
+   branche hôtelière, jusqu'à la police : Newsreader pour le titre,
+   Inter Tight pour le reste, italique bronze sur le mot-clé. Le
+   changement de typographie est le panneau indicateur — on doit
+   sentir qu'on passe une porte avant même d'avoir lu. */
+.portfolio-branch{
+  --h-ivory:#FAF6EC; --h-ink:#1F1812; --h-bronze:#B08D4E;
+  position:relative;min-height:64vh;
+  display:flex;align-items:flex-end;overflow:hidden;
+  background:var(--h-ink);
+}
+.portfolio-branch__img{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:.62;
+}
+.portfolio-branch__veil{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,
+    rgba(31,24,18,.93) 0%,rgba(31,24,18,.68) 38%,
+    rgba(31,24,18,.18) 72%,rgba(31,24,18,0) 100%);
+}
+.portfolio-branch__in{
+  position:relative;z-index:2;width:100%;
+  max-width:var(--max);margin:0 auto;
+  padding:var(--s10) clamp(1.4rem,5vw,4rem);
+}
+.portfolio-branch .label{
+  font-family:var(--font-hotel);font-weight:500;font-size:.625rem;
+  letter-spacing:.22em;color:rgba(250,246,236,.62);
+}
+.portfolio-branch h2{
+  font-family:var(--font-body);font-weight:400;
+  letter-spacing:-.015em;line-height:1.12;
+  color:var(--h-ivory);font-size:clamp(1.9rem,3.8vw,3.2rem);
+  margin:var(--s3) 0;max-width:18em;
+}
+/* règle d'or de l'autre identité : italique bronze sur le mot-clé,
+   et surtout pas le soulignement de la machine à écrire */
+.portfolio-branch h2 em{
+  font-style:italic;color:var(--h-bronze);text-decoration:none;
+}
+.portfolio-branch p{
+  font-family:var(--font-hotel);font-weight:300;font-size:.95rem;
+  line-height:1.75;color:rgba(250,246,236,.78);
+  max-width:46ch;margin-bottom:var(--s5);
+}
+.portfolio-branch .btn{
+  font-family:var(--font-hotel);font-weight:400;
+  font-size:.72rem;letter-spacing:.14em;
+}
+
+/* ═══════════ DERNIER MOT ═══════════ */
+.s-cta-final{
+  background:var(--sand-wash);
+  padding:var(--s16) clamp(1.4rem,5vw,4rem);
+  text-align:center;
+}
+.s-cta-final__inner{max-width:640px;margin:0 auto}
+.s-cta-final h2{
+  font-size:clamp(1.8rem,3.6vw,2.9rem);line-height:1.2;margin-bottom:var(--s5);
+}
+.s-cta-final p{
+  font-size:1.1rem;color:var(--ink-soft);
+  line-height:1.78;margin-bottom:var(--s6);
+}
+
+/* ═══════════ PIED ═══════════ */
+/* Le bloc d'encre au bas du papier. C'est le seul fond sombre de la
+   page qui appartienne encore à veralem — et le seul endroit où le
+   rose poussière tient son contraste, donc le seul où on le voit. */
+.footer{
+  background:var(--ink);color:var(--paper);
+  padding:var(--s12) 0 var(--s6);
+}
+.footer__inner{
+  max-width:var(--max);margin:0 auto;
+  padding:0 clamp(1.4rem,5vw,4rem) var(--s8);
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:var(--s8);
+  border-bottom:1px solid rgba(240,232,220,.12);
+}
+.footer__brand-name{
+  font-family:var(--font-title);font-size:1.2rem;
+  letter-spacing:.02em;margin-bottom:var(--s3);
+}
+.footer__brand-desc{
+  font-size:.95rem;line-height:1.72;
+  color:rgba(240,232,220,.55);max-width:30ch;
+}
+.footer__col-title{
+  font-family:var(--font-title);font-size:.62rem;
+  letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(240,232,220,.4);margin-bottom:var(--s3);
+}
+.footer__links{display:flex;flex-direction:column;gap:var(--s1)}
+.footer__links a{
+  font-size:.95rem;color:rgba(240,232,220,.7);transition:color .3s ease;
+}
+.footer__links a:hover{color:var(--rose)}
+.footer__bottom{
+  max-width:var(--max);margin:var(--s4) auto 0;
+  padding:0 clamp(1.4rem,5vw,4rem);
+  font-family:var(--font-title);font-size:.62rem;
+  letter-spacing:.14em;color:rgba(240,232,220,.3);
+}
+
+/* ─────────── apparition ─────────── */
+.fi{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+.fi.on{opacity:1;transform:none}
+.fi-d1{transition-delay:.1s}
+.fi-d2{transition-delay:.22s}
+
+/* Les photos, elles, ne passent pas par le fondu.
+   Une image en chargement différé n'a ni largeur ni hauteur tant
+   qu'elle n'est pas arrivée : son aire est nulle, et un
+   IntersectionObserver réglé sur un seuil de 0.1 ne se déclenche
+   jamais sur une aire nulle. La photo attendait donc une hauteur
+   qui attendait le fondu, et la série entière restait invisible —
+   seul Arpoador, chargé avec la page, s'en sortait.
+   Le texte garde son apparition ; la photo se montre, simplement. */
+.project-gallery__item.fi{opacity:1;transform:none;transition:none}
+@media(prefers-reduced-motion:reduce){
+  .fi{opacity:1;transform:none;transition:none}
+  .project-gallery__item:hover img{transform:none}
+}
+
+/* ─────────── tablette ─────────── */
+@media(max-width:1024px){
+  :root{--s16:5.5rem;--s12:4rem;--s10:4rem;--s8:3rem}
+  .project-feature__head{flex-direction:column;align-items:flex-start}
+  .project-feature__aside{text-align:left}
+  .footer__inner{grid-template-columns:1fr 1fr}
+}
+
+/* ─────────── téléphone ─────────── */
+@media(max-width:680px){
+  :root{--s16:4rem;--s12:3rem;--s10:2.8rem;--s8:2.4rem;--s6:2rem}
+
+  .header{padding:1.1rem clamp(1.2rem,5vw,2rem)}
+  .header.scrolled{padding:.85rem clamp(1.2rem,5vw,2rem)}
+  .nav__links{display:none}
+  .nav__lang{display:none}
+  .nav__toggle{display:flex}
+
+  .page-hero{padding-top:calc(var(--nav-h) + var(--s6))}
+  .page-hero p{font-size:1.05rem}
+
+  /* Une colonne, bord à bord. Sur 375px de large une grille de
+     vignettes n'a aucune force : chaque photo prend le cadre. */
+  .project-gallery--inline{padding-inline:0}
+  .project-gallery__inner{column-count:1;column-gap:0}
+  .project-gallery__item{margin-bottom:.5rem}
+  /* sur 375px il n'y a plus de colonne à décaler ni d'orpheline
+     possible : tout revient à la file, pleine largeur */
+  .project-gallery__item:nth-child(3n),
+  .project-gallery__item:last-child:nth-child(odd){
+    column-span:none;width:auto;margin:0 0 .5rem;
+  }
+
+  /* Fotos garde deux colonnes sur téléphone : une série de trente
+     photos à la file serait un défilement sans fin. */
+  .fotos-series .project-gallery__inner{column-count:2;column-gap:var(--s1)}
+  .fotos-series .project-gallery__item{margin-bottom:var(--s1)}
+  .fotos-series .project-gallery--inline{padding-inline:0}
+  .fotos-lightbox__nav{width:40px;height:40px;font-size:1.8rem;background:none}
+  .fotos-lightbox__nav--prev{left:0}
+  .fotos-lightbox__nav--next{right:0}
+
+  .btn{width:100%}
+  .project-feature__more .btn{width:auto}
+
+  .portfolio-branch{min-height:72vh}
+  .portfolio-branch__in{padding:var(--s8) clamp(1.2rem,5vw,2rem)}
+
+  .footer__inner{grid-template-columns:1fr;gap:var(--s5)}
+}

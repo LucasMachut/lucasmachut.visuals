@@ -5,8 +5,15 @@
    photo (luminance par tiers) avant d'écrire ce fichier.
    Feuille autonome : n'utilise pas css/style.css.
    ═══════════════════════════════════════════════════════════ */
+/* Palette veralem — le compte d'auteur, pas l'hôtellerie.
+   Le lin remplace l'ivoire (plus chaud, moins blanc), le brun terre
+   remplace le noir froid, et l'accent passe du bronze au rose
+   poussière : la couleur de la peau et du couchant, celle qui
+   n'existe pas dans la palette hôtels. Le bronze survit à un seul
+   endroit, le lien Regard — il mène à l'autre monde, il doit le
+   dire. */
 :root{
-  --dark:#100C09; --cream:#FAF6EC; --accent:#B08D4E;
+  --dark:#2E2620; --cream:#F0E8DC; --accent:#C98E7A; --bronze:#B08D4E;
   --font-serif:'Newsreader',Georgia,serif;
   --font-sans:'Inter Tight',system-ui,-apple-system,sans-serif;
   --font-title:'Special Elite','Courier New',Courier,monospace;
@@ -34,25 +41,33 @@ body.home{
 .home .h2--sm{font-size:clamp(1.25rem,1.9vw,1.75rem)}
 /* Special Elite n'a qu'un seul style : pas d'italique — et une machine
    à écrire n'en a jamais eu non plus. L'emphase se fait comme sur le
-   papier, au soulignement, fin et décollé pour rester discret. */
+   papier, au soulignement, fin et décollé pour rester discret.
+   Le trait passe au rose poussière : c'est là, sur le mot qui porte,
+   que l'accent veralem se voit le mieux — et le seul endroit du site
+   où cette couleur apparaisse. */
 .home h1 em,.home h2 em{font-style:normal;
   text-decoration:underline;text-decoration-thickness:1px;
-  text-underline-offset:.24em;text-decoration-color:rgba(250,246,236,.4)}
+  text-underline-offset:.24em;text-decoration-color:rgba(201,142,122,.85)}
 .home p{margin:0 0 1.1rem}
 .home p:last-child{margin-bottom:0}
 
 .label{font-family:var(--font-sans);font-size:.6rem;font-weight:500;
-  letter-spacing:.26em;text-transform:uppercase;color:rgba(250,246,236,.62);
+  letter-spacing:.26em;text-transform:uppercase;color:rgba(240,232,220,.62);
   display:block;margin-bottom:1.4rem}
-.lede{font-size:1.02rem;color:rgba(250,246,236,.82);max-width:40ch}
+.lede{font-size:1.02rem;color:rgba(240,232,220,.82);max-width:40ch}
+/* La phrase qui suit le nom reprend la machine à écrire du titre : les
+   deux lignes se lisent d'un seul geste. Special Elite tient plus de
+   place à corps égal — le corps descend, l'interligne s'ouvre. */
+.home .lede--title{font-family:var(--font-title);font-size:.92rem;
+  letter-spacing:.01em;line-height:1.75}
 /* Lien dans le corps du texte. Même geste que l'emphase des titres —
    un soulignement fin — pour qu'il se voie sans rompre la ligne.
    Qualifié .home parce que .home a{color:inherit} l'emporterait. */
 .home .lede a,.home .mf a{color:var(--cream);
   text-decoration:underline;text-decoration-thickness:1px;
-  text-underline-offset:.2em;text-decoration-color:rgba(250,246,236,.5);
+  text-underline-offset:.2em;text-decoration-color:rgba(201,142,122,.7);
   transition:text-decoration-color .3s ease}
-.home .lede a:hover,.home .mf a:hover{text-decoration-color:var(--cream)}
+.home .lede a:hover,.home .mf a:hover{text-decoration-color:var(--accent)}
 
 /* .home a{color:inherit} l'emporte sur .btn (spécificité) : sans le
    préfixe .home ici, le bouton plein héritait du crème sur fond crème
@@ -60,21 +75,54 @@ body.home{
    qualifiées. */
 .home .btn{display:inline-flex;align-items:center;font-family:var(--font-sans);
   font-size:.7rem;font-weight:400;letter-spacing:.16em;text-transform:uppercase;
-  padding:.86rem 2.1rem;border:1px solid rgba(250,246,236,.65);color:var(--cream);
+  padding:.86rem 2.1rem;border:1px solid rgba(240,232,220,.65);color:var(--cream);
   background:transparent;line-height:1;text-decoration:none;text-shadow:none;
   transition:background .35s ease,color .35s ease,border-color .35s ease}
 .home .btn:hover{background:var(--cream);color:var(--dark);border-color:var(--cream)}
 .home .btn--solid{background:var(--cream);color:var(--dark);border-color:var(--cream)}
-.home .btn--solid:hover{background:transparent;color:var(--cream);border-color:rgba(250,246,236,.65)}
+.home .btn--solid:hover{background:transparent;color:var(--cream);border-color:rgba(240,232,220,.65)}
 .actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.2rem}
+
+/* Ce pour quoi je travaille, frappé comme la légende d'une planche
+   contact : cinq mots séparés d'un point médian se lisent d'un coup,
+   là où une phrase se traverse sans rien retenir. Le filet rose
+   poussière au-dessus la décroche du titre. */
+.home .metier{
+  font-family:var(--font-title);font-size:.78rem;
+  letter-spacing:.15em;text-transform:uppercase;line-height:2;
+  color:rgba(240,232,220,.92);
+  margin-top:1.6rem;padding-top:1.3rem;
+  border-top:1px solid rgba(201,142,122,.45);
+}
+
+/* Appel vers le portfólio. Pas un bouton : un mot frappé à la machine,
+   souligné d'un trait rose poussière, avec une flèche qui s'écarte au
+   survol. Il revient à trois endroits de la page sans jamais peser —
+   l'image reste au premier plan, c'est elle qu'on vient voir.
+   Qualifié .home comme le bouton plus haut : sans ça
+   .home a{color:inherit} l'emporterait sur la couleur. */
+.home .cta{
+  display:inline-flex;align-items:baseline;gap:.6rem;
+  font-family:var(--font-title);font-size:.74rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cream);text-decoration:none;
+  padding-bottom:.4rem;
+  border-bottom:1px solid rgba(201,142,122,.6);
+  transition:border-color .35s ease;
+}
+.home .cta:hover{border-color:var(--accent)}
+.home .cta i{font-style:normal;font-family:var(--font-sans);
+  transition:transform .35s ease}
+.home .cta:hover i{transform:translateX(.3rem)}
+.cta-row{margin-top:1.9rem}
 
 /* ─────────── navigation ─────────── */
 .hd{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--hd);
   display:flex;align-items:center;transition:background .5s ease}
 .hd::before{content:"";position:absolute;inset:0;z-index:-1;
-  background:linear-gradient(to bottom,rgba(8,6,4,.55),rgba(8,6,4,0));
+  background:linear-gradient(to bottom,rgba(20,16,12,.55),rgba(20,16,12,0));
   transition:opacity .5s ease}
-.hd.is-scrolled{background:rgba(16,12,9,.88);backdrop-filter:blur(10px)}
+.hd.is-scrolled{background:rgba(38,31,25,.88);backdrop-filter:blur(10px)}
 .hd.is-scrolled::before{opacity:0}
 .hd__nav{width:100%;display:flex;align-items:center;justify-content:space-between;
   gap:2rem;padding:0 var(--pad)}
@@ -82,7 +130,14 @@ body.home{
 .hd__link{font-size:.6rem;letter-spacing:.24em;text-transform:uppercase;
   text-decoration:none;color:var(--cream);opacity:.78;transition:opacity .3s}
 .hd__link:hover,.hd__link.is-active{opacity:1}
-.hd__link--regard{color:var(--accent);opacity:.95}
+/* Regard appartient à la branche hôtelière : il garde le bronze de
+   l'autre identité, seul survivant de l'Ivoire & Bronze sur cette
+   page. C'est un lien vers ailleurs.
+   Qualifié .home pour la même raison que le bouton plus haut :
+   .home a{color:inherit} est plus spécifique qu'une classe seule et
+   l'emportait — le lien héritait du crème du corps de page et le
+   bronze n'était jamais visible. */
+.home .hd__link--regard{color:var(--bronze);opacity:.95}
 .hd__lang{display:flex;gap:.8rem;font-size:.6rem;letter-spacing:.2em}
 .hd__lang a{text-decoration:none;opacity:.5;color:var(--cream)}
 .hd__lang a.is-active{opacity:1}
@@ -100,10 +155,10 @@ body.home{
 @media(max-width:860px){
   .hd__toggle{display:block;order:3}
   .hd__links{position:fixed;inset:var(--hd) 0 auto 0;flex-direction:column;gap:1.4rem;
-    background:rgba(16,12,9,.97);padding:2.4rem var(--pad) 2.8rem;
+    background:rgba(38,31,25,.97);padding:2.4rem var(--pad) 2.8rem;
     transform:translateY(-120%);transition:transform .45s ease}
   .hd.is-open .hd__links{transform:none}
-  .hd.is-open{background:rgba(16,12,9,.97)}
+  .hd.is-open{background:rgba(38,31,25,.97)}
   .hd__link{font-size:.72rem}
 }
 
@@ -131,24 +186,29 @@ body.home{
 
 /* voiles — orientés selon la zone sombre réelle de chaque photo */
 .veil{position:absolute;inset:0;pointer-events:none}
-.veil--top{background:linear-gradient(to bottom,rgba(10,7,5,.80) 0%,rgba(10,7,5,.42) 34%,rgba(10,7,5,0) 62%)}
-.veil--bottom{background:linear-gradient(to top,rgba(10,7,5,.84) 0%,rgba(10,7,5,.40) 32%,rgba(10,7,5,0) 62%)}
-.veil--left{background:linear-gradient(to right,rgba(10,7,5,.86) 0%,rgba(10,7,5,.48) 36%,rgba(10,7,5,0) 68%)}
-.veil--right{background:linear-gradient(to left,rgba(10,7,5,.86) 0%,rgba(10,7,5,.48) 36%,rgba(10,7,5,0) 68%)}
-.veil--corner-bl{background:linear-gradient(20deg,rgba(10,7,5,.86) 0%,rgba(10,7,5,.30) 40%,rgba(10,7,5,0) 66%)}
-.veil--corner-br{background:linear-gradient(340deg,rgba(10,7,5,.86) 0%,rgba(10,7,5,.30) 40%,rgba(10,7,5,0) 66%)}
-.veil--soft{background:rgba(10,7,5,.28)}
+.veil--top{background:linear-gradient(to bottom,rgba(20,16,12,.80) 0%,rgba(20,16,12,.42) 34%,rgba(20,16,12,0) 62%)}
+.veil--bottom{background:linear-gradient(to top,rgba(20,16,12,.84) 0%,rgba(20,16,12,.40) 32%,rgba(20,16,12,0) 62%)}
+.veil--left{background:linear-gradient(to right,rgba(20,16,12,.86) 0%,rgba(20,16,12,.48) 36%,rgba(20,16,12,0) 68%)}
+.veil--right{background:linear-gradient(to left,rgba(20,16,12,.86) 0%,rgba(20,16,12,.48) 36%,rgba(20,16,12,0) 68%)}
+.veil--corner-bl{background:linear-gradient(20deg,rgba(20,16,12,.86) 0%,rgba(20,16,12,.30) 40%,rgba(20,16,12,0) 66%)}
+.veil--corner-br{background:linear-gradient(340deg,rgba(20,16,12,.86) 0%,rgba(20,16,12,.30) 40%,rgba(20,16,12,0) 66%)}
+.veil--soft{background:rgba(20,16,12,.28)}
 /* voile plein, pour une phrase posée au milieu d'une bande d'images :
    les mains montent à 85 de luminance, aucun dégradé de bord ne les
    rattrape. L'image passe en atmosphère, la phrase porte. */
 .veil--scrim{background:radial-gradient(118% 78% at 50% 52%,
-  rgba(10,7,5,.88) 0%,rgba(10,7,5,.72) 38%,
-  rgba(10,7,5,.44) 70%,rgba(10,7,5,.26) 100%)}
+  rgba(20,16,12,.88) 0%,rgba(20,16,12,.72) 38%,
+  rgba(20,16,12,.44) 70%,rgba(20,16,12,.26) 100%)}
+/* le voile suit le texte, jamais l'inverse : quand le bloc monte en
+   w-tc, le foyer du voile monte avec lui */
+.veil--scrim.veil--hi{background:radial-gradient(120% 64% at 50% 26%,
+  rgba(20,16,12,.88) 0%,rgba(20,16,12,.70) 40%,
+  rgba(20,16,12,.40) 72%,rgba(20,16,12,.18) 100%)}
 /* taillé pour les buganvílias : franc à gauche, il libère la droite
    du cadre, là où le visage se devine */
 .veil--face{background:linear-gradient(to right,
-  rgba(10,7,5,.90) 0%,rgba(10,7,5,.72) 26%,rgba(10,7,5,.34) 46%,
-  rgba(10,7,5,.08) 62%,rgba(10,7,5,0) 74%)}
+  rgba(20,16,12,.90) 0%,rgba(20,16,12,.72) 26%,rgba(20,16,12,.34) 46%,
+  rgba(20,16,12,.08) 62%,rgba(20,16,12,0) 74%)}
 
 /* texte posé dans le panneau */
 .words{position:absolute;inset:0;z-index:3;display:flex;
@@ -161,6 +221,16 @@ body.home{
 .w-ml .words__in{align-items:center;justify-content:flex-start}
 .w-mr .words__in{align-items:center;justify-content:flex-end}
 .w-c  .words__in{align-items:center;justify-content:center;text-align:center}
+/* Ancrage haut-centre — le seul de la page. La bande des laços porte
+   ses trois sujets au milieu du cadre : les mains dans l'eau, les
+   mains pleines de sable, la bague. Un texte centré tombe droit
+   dessus. Il se pose donc au-dessus, dans la mer et le sable plats du
+   haut (les mains commencent à 48 % de la photo du milieu). Le
+   rembourrage haut se resserre pour gagner cette marge sans venir
+   toucher la barre de navigation. */
+.w-tc .words__in{align-items:flex-start;justify-content:center;text-align:center}
+.w-tc .words__col{max-width:38rem}
+.words.w-tc{padding-top:calc(var(--hd) + 2rem)}
 /* Décroche un bloc de son ancrage, sans changer d'ancrage. Le
    rembourrage réduit la boîte par le bas : le texte remonte d'autant s'il
    est calé en bas, de la moitié s'il est centré. Réglage de grand écran
@@ -186,11 +256,11 @@ body.home{
 .serie__name{font-family:var(--font-serif);font-style:italic;
   font-size:clamp(1.4rem,2.4vw,2.1rem);line-height:1;color:var(--cream)}
 .serie__note{display:block;font-family:var(--font-sans);font-style:normal;
-  font-size:.74rem;letter-spacing:.02em;color:rgba(250,246,236,.6);margin-top:.5rem}
+  font-size:.74rem;letter-spacing:.02em;color:rgba(240,232,220,.6);margin-top:.5rem}
 
 /* citation */
 .quote p{font-family:var(--font-serif);font-size:clamp(1rem,1.45vw,1.2rem);
-  line-height:1.66;color:rgba(250,246,236,.88)}
+  line-height:1.66;color:rgba(240,232,220,.88)}
 .quote p:first-of-type{font-size:clamp(1.5rem,2.7vw,2.25rem);line-height:1.24;
   color:var(--cream);margin-bottom:1.6rem}
 
@@ -204,8 +274,6 @@ body.home{
    le film d'ouverture reste nu */
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;
   overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
-.hero__scroll{position:absolute;left:50%;bottom:1.6rem;transform:translateX(-50%);z-index:4;
-  font-size:.54rem;letter-spacing:.32em;text-transform:uppercase;color:rgba(250,246,236,.6)}
 
 /* ─────────── fragments du manifeste ───────────
    Le manifeste ne fait jamais bloc : il se dépose morceau par morceau
@@ -215,19 +283,19 @@ body.home{
    ne suffit pas. */
 .mf{font-family:var(--font-serif);font-weight:300;
   font-size:clamp(1.06rem,1.5vw,1.34rem);line-height:1.58;
-  color:rgba(250,246,236,.92);max-width:36rem;margin-bottom:1.3rem;
-  text-shadow:0 1px 26px rgba(10,7,5,.6)}
+  color:rgba(240,232,220,.92);max-width:36rem;margin-bottom:1.3rem;
+  text-shadow:0 1px 26px rgba(20,16,12,.6)}
 .mf--close{font-style:italic;color:var(--accent);margin-top:1.5rem;
   font-size:clamp(1rem,1.35vw,1.2rem)}
 /* le texte posé sur une bande n'a pas de grand aplat sombre sous lui :
    il lui faut son propre poids */
-.band .words__col{text-shadow:0 1px 26px rgba(10,7,5,.6)}
+.band .words__col{text-shadow:0 1px 26px rgba(20,16,12,.6)}
 
 /* ─────────── pied ─────────── */
 .ft{padding:3.2rem var(--pad) 3.6rem;background:var(--dark)}
 .ft__in{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;
   justify-content:space-between;gap:1rem;font-size:.6rem;letter-spacing:.2em;
-  text-transform:uppercase;color:rgba(250,246,236,.45)}
+  text-transform:uppercase;color:rgba(240,232,220,.45)}
 .ft a{text-decoration:none}
 .ft a:hover{color:var(--cream)}
 
@@ -265,23 +333,43 @@ body.home{
      un visage, on n'y écrit pas. Le voile suit l'ancrage, jamais
      l'inverse. */
   .words::before{content:"";position:absolute;inset:0;
-    background:linear-gradient(to top,rgba(10,7,5,.95) 0%,rgba(10,7,5,.80) 32%,
-      rgba(10,7,5,.32) 64%,rgba(10,7,5,0) 90%)}
+    background:linear-gradient(to top,rgba(20,16,12,.95) 0%,rgba(20,16,12,.80) 32%,
+      rgba(20,16,12,.32) 64%,rgba(20,16,12,0) 90%)}
   .words.m-top .words__in{align-items:flex-start}
   .words.m-mid .words__in{align-items:center}
   .words.m-bot .words__in{align-items:flex-end}
-  .words.m-top::before{background:linear-gradient(to bottom,rgba(10,7,5,.95) 0%,
-    rgba(10,7,5,.80) 30%,rgba(10,7,5,.32) 62%,rgba(10,7,5,0) 88%)}
-  .words.m-mid::before{background:linear-gradient(to bottom,rgba(10,7,5,0) 0%,
-    rgba(10,7,5,.32) 12%,rgba(10,7,5,.88) 30%,rgba(10,7,5,.88) 70%,
-    rgba(10,7,5,.32) 88%,rgba(10,7,5,0) 100%)}
-  .words.m-bot::before{background:linear-gradient(to top,rgba(10,7,5,.95) 0%,
-    rgba(10,7,5,.80) 32%,rgba(10,7,5,.32) 64%,rgba(10,7,5,0) 90%)}
+  .words.m-top::before{background:linear-gradient(to bottom,rgba(20,16,12,.95) 0%,
+    rgba(20,16,12,.80) 30%,rgba(20,16,12,.32) 62%,rgba(20,16,12,0) 88%)}
+  .words.m-mid::before{background:linear-gradient(to bottom,rgba(20,16,12,0) 0%,
+    rgba(20,16,12,.32) 12%,rgba(20,16,12,.88) 30%,rgba(20,16,12,.88) 70%,
+    rgba(20,16,12,.32) 88%,rgba(20,16,12,0) 100%)}
+  .words.m-bot::before{background:linear-gradient(to top,rgba(20,16,12,.95) 0%,
+    rgba(20,16,12,.80) 32%,rgba(20,16,12,.32) 64%,rgba(20,16,12,0) 90%)}
+  /* Deux paragraphes sur une seule photo, en haut et en bas.
+     Sur téléphone la bande des laços se réduit à m-05, et deux
+     sections desktop (la technique, les laços) doivent y tenir : la
+     photo précédente est un baiser en gros plan, on n'écrit pas
+     dessus. m-05 a justement deux zones plates — le feuillage sombre
+     du haut, le sable du bas — et le visage entre les deux.
+     Les voiles pleine hauteur se recouvriraient et noieraient la
+     photo : ceux-ci meurent avant la mi-hauteur, le visage reste
+     dégagé et encadré par les deux blocs. */
+  .words--half.m-top::before{background:linear-gradient(to bottom,
+    rgba(20,16,12,.95) 0%,rgba(20,16,12,.80) 20%,
+    rgba(20,16,12,.28) 38%,rgba(20,16,12,0) 50%)}
+  .words--half.m-bot::before{background:linear-gradient(to top,
+    rgba(20,16,12,.95) 0%,rgba(20,16,12,.80) 20%,
+    rgba(20,16,12,.28) 38%,rgba(20,16,12,0) 50%)}
+  /* le bloc du haut ne doit pas intercepter ce qui se passe en bas */
+  .words--half{pointer-events:none}
+
   /* sur 375px tout revient à gauche, quel que soit l'ancrage desktop */
   .words__in{justify-content:flex-start;text-align:left}
   .words__col{text-align:left;max-width:none}
   .actions{justify-content:flex-start}
-  .veil--scrim{background:none}
+  /* la variante haute doit être neutralisée nommément : deux classes
+     l'emportent sur une, elle repasserait devant */
+  .veil--scrim,.veil--scrim.veil--hi{background:none}
 
   /* Le bloc hôtels porte plus de texte que sa photo n'a de place : le
      visage tient le haut du cadre, la main à la bague le milieu, et il

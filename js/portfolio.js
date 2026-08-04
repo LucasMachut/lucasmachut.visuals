@@ -20,6 +20,7 @@
   const base = mount.dataset.base || '';          // '' en PT, '../' en en/fr
   const lang = mount.dataset.lang || 'pt';        // 'pt' | 'en' | 'fr'
   const moreLabel = mount.dataset.more || 'Ver a série completa';
+  const pageLabel = mount.dataset.project || '';   // projets qui ont leur propre page
   const limit = parseInt(mount.dataset.limit, 10) || 8;
 
   // Le portfólio général écarte les hôtels, la sous-page hôtellerie
@@ -34,7 +35,21 @@
     })
     .then(data => render(data.series || []))
     .catch(err => {
-      console.error('Portfolio series failed to load:', err);
+      // Un fetch n'existe pas quand la page est ouverte depuis le
+      // disque : file:// le bloque, sans recours. La page se réduisait
+      // alors au seul projet écrit en dur dans le HTML, en silence.
+      // Chaque page porte donc une copie des séries, dont on ne se sert
+      // que là. Sur le site en ligne le fetch passe et c'est le CMS qui
+      // décide ; la copie se resynchronise avec
+      // tools/sync_portfolio_fallback.py.
+      console.warn('Portfolio series: fetch indisponible, on retombe sur la copie de la page.', err);
+      const inline = document.getElementById('portfolio-series-data');
+      if (!inline) return;
+      try {
+        render((JSON.parse(inline.textContent) || {}).series || []);
+      } catch (e) {
+        console.error('Portfolio series: copie de secours illisible.', e);
+      }
     });
 
   function splitList(v) {
@@ -103,13 +118,26 @@
         head.appendChild(aside);
       }
 
-      /* — la galerie, coupée à huit — */
+      /* Pas de film ici. Certains projets en ont un — la clé `videos`
+         de fotos.json le note — mais il reste sur la page du projet :
+         le portfólio est une suite d'images qu'on parcourt d'un trait,
+         et un lecteur vidéo au milieu arrête la lecture. */
+
+      /* — la galerie, la vitrine du projet — */
       const gallery = document.createElement('div');
       gallery.className = 'project-gallery project-gallery--inline';
       const inner = document.createElement('div');
       inner.className = 'project-gallery__inner';
 
-      serie.photos.slice(0, limit).forEach(src => {
+      /* La vitrine d'un projet, c'est son dossier `destaque` : on montre
+         ce qu'il contient, dans l'ordre. Sans ce dossier on retombe sur
+         les premières photos de la série, comme avant. La liste est
+         inscrite dans fotos.json par tools/sync_portfolio.py. */
+      const shots = (serie.destaque && serie.destaque.length)
+        ? serie.destaque
+        : serie.photos.slice(0, limit);
+
+      shots.forEach(src => {
         const fig = document.createElement('figure');
         fig.className = 'project-gallery__item fi';
         const img = document.createElement('img');
@@ -122,17 +150,23 @@
       });
       gallery.appendChild(inner);
 
-      /* — le bouton ne s'affiche que s'il reste des photos à voir — */
       section.appendChild(head);
       section.appendChild(gallery);
 
-      if (serie.photos.length > limit) {
+      /* — le bouton ne s'affiche que s'il reste quelque chose à voir —
+         Un projet qui a sa propre page y mène (fotos.json, clé `page`) ;
+         les autres renvoient à leur série sur la page Fotos. */
+      const own = serie.page;
+      if (own || serie.photos.length > shots.length) {
         const more = document.createElement('div');
         more.className = 'project-feature__more fi';
         const a = document.createElement('a');
         a.className = 'btn btn--outline';
-        a.href = 'fotos.html#' + serie.slug;
-        a.textContent = moreLabel;
+        /* ?serie= et non #ancre : l'ancre ouvrait la page entière et
+           faisait défiler jusqu'au bon endroit — on venait voir un
+           projet, on tombait sur la pile de tous les autres. */
+        a.href = own || ('fotos.html?serie=' + encodeURIComponent(serie.slug));
+        a.textContent = own && pageLabel ? pageLabel : moreLabel;
         more.appendChild(a);
         section.appendChild(more);
       }

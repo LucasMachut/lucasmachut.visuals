@@ -14,7 +14,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/home.css?v=13">
+<link rel="stylesheet" href="css/home.css?v=17">
 </head>
 <body class="home">
 
@@ -54,7 +54,6 @@
   <!-- Le film est laissé nu : ni titre ni boutons dessus.
        Le h1 reste dans le document pour la structure, sans être affiché. -->
   <h1 class="sr-only">Casamentos, retiros, hotéis. O mesmo olhar.</h1>
-  <span class="hero__scroll">Role</span>
 </section>
 
 <!-- ═══ 2 · O NOME ═══
@@ -72,10 +71,11 @@
   <div class="words w-tl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <h2>Me chamo Lucas Machut. Sou fotógrafo e filmmaker francês, <em>vivendo no Rio</em>.</h2>
-        <p class="lede" style="margin-top:1.6rem">
-          Trabalho com casamentos, retiros, experiências e hotéis.
-        </p>
+        <h2>Me chamo Lucas Machut. Sou fotógrafo e filmmaker.</h2>
+        <p class="metier">Casamentos · Retiros · Ensaios · Experiências · Hotéis</p>
+        <div class="cta-row">
+          <a href="portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -100,7 +100,7 @@
   <div class="words w-bl m-bot">
     <div class="words__in">
       <div class="words__col fi">
-        <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. É aí que eu entro: guardar um fragmento de vida antes que o tempo o modifique, e transformar histórias em algo que dura.</p>
+        <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. Uma imagem guarda um fragmento de vida antes que o tempo o modifique.</p>
       </div>
     </div>
   </div>
@@ -156,10 +156,14 @@
   </div>
 </section>
 
-<!-- ═══ 6 · LE REGARD, SUITE ═══
-     Sur grand écran les trois tuiles se suffisent : aucun mot dessus.
-     Sur téléphone, le recadrage vertical porte le paragraphe du regard,
-     qui ne peut pas rester sur la photo du couple. -->
+<!-- ═══ 6 · OS LAÇOS ═══
+     Trois gestes : des mains dans l'eau, du sable qui coule, une main
+     endormie près d'une bague. La phrase des liens se pose au milieu
+     de la bande — c'est d'elle qu'elle parle.
+     La photo est claire de bout en bout : les mains montent à 85 de
+     luminance et aucun dégradé de bord ne les rattrape. D'où le voile
+     plein, qui fait passer l'image en atmosphère pour que la phrase
+     porte. -->
 <section class="band band--3">
   <figure class="tile">
     <picture>
@@ -170,14 +174,30 @@
   </figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/areia-maos.jpg" alt="Areia escorrendo entre as mãos" loading="lazy" style="object-position:58% 50%"></figure>
   <figure class="tile tile--alt"><img src="photos/le-regard/anel-cama.jpg" alt="Mão adormecida sobre o lençol, anel" loading="lazy" style="object-position:42% 50%"></figure>
-  <!-- desktop : rien ici, les trois tuiles restent nues.
-       mobile : le paragraphe du regard vient se poser ici, sur le bas de
-       la photo — le visage tient le milieu du cadre, le sable du bas est
-       plat et le voile fait le reste. -->
-  <div class="words words--m w-bl m-bot">
+  <div class="veil veil--scrim veil--hi"></div>
+  <div class="words words--d w-tc">
+    <div class="words__in">
+      <div class="words__col fi">
+        <p class="mf">Os laços são o que eu mais gosto de fotografar. Fico perto e espero o que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.</p>
+      </div>
+    </div>
+  </div>
+  <!-- mobile : m-05 porte les deux paragraphes. La section précédente
+       se recadre en un baiser en gros plan, on n'écrit pas dessus —
+       son texte descend donc ici. m-05 a deux zones plates, le
+       feuillage sombre du haut et le sable du bas, avec le visage
+       entre les deux : un bloc de chaque côté, le visage dégagé. -->
+  <div class="words words--m words--half w-tl m-top">
     <div class="words__in">
       <div class="words__col fi">
         <p class="mf">O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade. A beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.</p>
+      </div>
+    </div>
+  </div>
+  <div class="words words--m words--half w-bl m-bot">
+    <div class="words__in">
+      <div class="words__col fi">
+        <p class="mf">Os laços são o que eu mais gosto de fotografar. Fico perto e espero o que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.</p>
       </div>
     </div>
   </div>
@@ -204,6 +224,9 @@
     <div class="words__in">
       <div class="words__col fi">
         <h2 class="h2--sm">No fundo, nunca foi sobre como a gente aparece, <em>e sim sobre quem a gente é</em>.</h2>
+        <div class="cta-row">
+          <a href="portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -239,6 +262,9 @@
         <p class="lede" style="margin-top:1.2rem">
           Desde sempre gosto de observar o que não se percebe de primeira. Antes da imagem, meu ofício era interpretar em língua de sinais: criar uma ponte entre as pessoas, perceber os implícitos, o que a gente diz sem falar.
         </p>
+        <div class="cta-row">
+          <a href="portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
+        </div>
       </div>
     </div>
   </div>
@@ -303,7 +329,7 @@
 <footer class="ft">
   <div class="ft__in">
     <span>Le Regard — Lucas Machut</span>
-    <span><a href="https://www.instagram.com/lucasmachut.visuals" target="_blank" rel="noopener">@lucasmachut.visuals</a></span>
+    <span><a href="https://www.instagram.com/veralem.lucas" target="_blank" rel="noopener">@veralem.lucas</a></span>
     <span>Rio de Janeiro · Brasil</span>
   </div>
 </footer>
