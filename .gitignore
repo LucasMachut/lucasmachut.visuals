@@ -3,6 +3,10 @@
 /Projets/
 /Projets-web/Portfolio Fotos/
 
+# Lightroom catalogue used to prepare those web versions — working file,
+# not a deliverable, and its previews alone run to ~150 MB.
+/Fotos site/
+
 # Claude Code internals (worktrees, local launch/settings)
 /.claude/worktrees/
 /.claude/settings.local.json
