@@ -22,3 +22,7 @@ Thumbs.db
 desktop.ini
 .vscode/
 .idea/
+
+# Rushes des films du site — la version compressée servie au visiteur
+# (videos/*_min.mp4) est suivie, l'export de montage reste local.
+/videos/piscine.mp4
