@@ -14,10 +14,25 @@ RewriteRule ^ / [R=301,L]
 RewriteCond %{THE_REQUEST} \s/+([^?\s]+?)\.html[\s?] [NC]
 RewriteRule ^ /%1 [R=301,L]
 
-# 2b. La page Fotos a été supprimée — le portfólio la remplace.
-#     Les liens déjà partagés (et l'aperçu du CMS) tombaient sinon en 404.
+# 2b. Anciennes adresses. Elles sont dans les propostas PDF, la bio
+#     Instagram et les mails de prospection déjà envoyés : on redirige,
+#     on ne déplace pas en silence.
+#     La page Fotos a été supprimée, le portfólio la remplace.
 RewriteRule ^fotos/?$ /portfolio [R=301,L]
 RewriteRule ^(en|fr)/fotos/?$ /$1/portfolio [R=301,L]
+
+#     La branche hôtelière est descendue dans /lugares/.
+RewriteRule ^hoteis/?$              /lugares/ [R=301,L]
+RewriteRule ^portfolio-hoteis/?$    /lugares/portfolio [R=301,L]
+RewriteRule ^regard/?$              /lugares/regard [R=301,L]
+RewriteRule ^villa-egeu/?$          /lugares/villa-egeu [R=301,L]
+RewriteRule ^sempre-vivo/?$         /lugares/sempre-vivo [R=301,L]
+RewriteRule ^villa-balthazar/?$     /lugares/villa-balthazar [R=301,L]
+#     contact était la page B2B : elle devient le contato de lugares,
+#     tandis que /contato sert désormais le B2C.
+RewriteRule ^contact/?$             /lugares/contato [R=301,L]
+#     Parador est retiré du portfólio.
+RewriteRule ^parador/?$             /lugares/portfolio [R=301,L]
 
 # 3. Internally serve the .html file when a clean URL is requested
 RewriteCond %{REQUEST_FILENAME} !-d

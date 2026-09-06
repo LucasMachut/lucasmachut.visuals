@@ -103,10 +103,20 @@
   }
 
   /* --- Active nav link ----------------------------------- */
-  const page = window.location.pathname.split('/').pop() || 'index.html';
+  /* Les liens sont absolus depuis que la branche lugares vit dans son
+     dossier. On compare donc des chemins entiers, pas des noms de
+     fichiers : /portfolio.html et /lugares/portfolio.html portent le
+     même nom sans désigner la même page. Un dossier et son index.html
+     sont ramenés à la même forme, sans quoi /lugares/ ne reconnaîtrait
+     jamais son propre lien. */
+  const normalise = chemin => {
+    const sansAncre = (chemin || '').split('#')[0].split('?')[0];
+    const absolu = new URL(sansAncre, window.location.origin + window.location.pathname).pathname;
+    return absolu.replace(/index\.html$/, '').replace(/\/$/, '') || '/';
+  };
+  const page = normalise(window.location.pathname);
   document.querySelectorAll('.nav__link').forEach(link => {
-    const href = (link.getAttribute('href') || '').split('#')[0].split('/').pop();
-    if (href === page || (page === '' && href === 'index.html')) {
+    if (normalise(link.getAttribute('href')) === page) {
       link.classList.add('active');
     }
   });
