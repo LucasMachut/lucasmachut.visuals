@@ -54,7 +54,6 @@
   --font-body:  'Newsreader',Georgia,serif;
   --font-hotel: 'Inter Tight',system-ui,-apple-system,sans-serif;
 
-
   --s1:.5rem; --s2:1rem; --s3:1.5rem; --s4:2rem; --s5:2.5rem;
   --s6:3rem;  --s8:4rem; --s10:5rem; --s12:6rem; --s16:8rem;
 
@@ -86,7 +85,6 @@ button{font-family:inherit}
 
 ::selection{background:var(--night);color:var(--paper)}
 :focus-visible{outline:2px solid var(--night);outline-offset:3px}
-
 
 /* ─────────── typographie ─────────── */
 /* Une frappe de machine à écrire est chasse fixe et encrée : à corps
@@ -343,34 +341,10 @@ p em,li em{font-style:italic;color:var(--terra)}
 }
 .project-gallery__item:hover img{transform:scale(1.02)}
 
-
 .project-feature__more{margin-top:var(--s6);display:flex;justify-content:center}
 
-/* ═══════════ LA PAGE FOTOS ═══════════
-   Même feuille, parce que c'est le même monde : le portfólio y renvoie
-   projet par projet, et passer du lin à l'ivoire en un clic donnerait
-   l'impression de changer de site.
-   Mais pas la même mise en page. Le portfólio montre cinq images
-   choisies, Fotos déroule la série entière — dix-sept, trente et une.
-   Trois colonnes serrées, comme une planche contact, et pas d'image de
-   clôture pleine largeur : sur dix-sept photos elle tomberait au
-   hasard, sans rien fermer du tout. */
-.fotos-series{padding:var(--s10) 0 var(--s4);scroll-margin-top:var(--nav-h)}
-.fotos-series:last-of-type{padding-bottom:var(--s16)}
-.fotos-series .project-gallery__inner{column-count:3}
-.fotos-series .project-gallery__item:last-child:nth-child(odd){
-  column-span:none;width:auto;
-  margin:0 0 clamp(.8rem,1.6vw,1.5rem);
-}
-.fotos-series .project-gallery__item img{cursor:zoom-in}
-
-.fotos-series__title{
-  font-size:clamp(1.6rem,2.8vw,2.4rem);
-  margin:var(--s2) 0 var(--s5);
-}
-.fotos-series .label{margin-bottom:var(--s1)}
-
-/* le chemin de retour, quand la page n'ouvre qu'une série */
+/* ═══════════ LE CHEMIN DE RETOUR ═══════════ */
+/* En haut d'une page de projet, la flèche qui ramène à la liste. */
 .project-back__link{
   display:inline-flex;align-items:center;
   font-family:var(--font-title);font-size:.72rem;
@@ -379,41 +353,6 @@ p em,li em{font-style:italic;color:var(--terra)}
 }
 .project-back__link::before{content:"←";margin-right:.7rem;font-size:1rem}
 .project-back__link:hover{color:var(--ink)}
-
-/* ─────────── la photo agrandie ───────────
-   Fond brun terre presque opaque plutôt qu'un noir de visionneuse :
-   on reste dans la chambre noire de veralem, pas dans un lecteur. */
-.fotos-lightbox{
-  position:fixed;inset:0;z-index:2000;
-  display:flex;align-items:center;justify-content:center;
-  padding:var(--s3);background:rgba(28,22,17,.95);
-  opacity:0;visibility:hidden;cursor:zoom-out;
-  transition:opacity .25s ease,visibility .25s ease;
-}
-.fotos-lightbox.open{opacity:1;visibility:visible}
-.fotos-lightbox__img{max-width:100%;max-height:100%;object-fit:contain}
-.fotos-lightbox__close{
-  position:absolute;top:var(--s3);right:var(--s4);
-  width:44px;height:44px;font-size:2rem;line-height:1;
-  color:var(--paper);background:none;border:none;cursor:pointer;opacity:.8;
-}
-.fotos-lightbox__close:hover{opacity:1}
-.fotos-lightbox__nav{
-  position:absolute;top:50%;transform:translateY(-50%);
-  width:52px;height:52px;display:flex;align-items:center;justify-content:center;
-  font-size:2.4rem;line-height:1;color:var(--paper);
-  background:rgba(28,22,17,.35);border:none;border-radius:50%;
-  cursor:pointer;opacity:.75;transition:opacity .2s ease,background .2s ease;z-index:1;
-}
-.fotos-lightbox__nav:hover{opacity:1;background:rgba(181,98,60,.5)}
-.fotos-lightbox__nav--prev{left:var(--s3)}
-.fotos-lightbox__nav--next{right:var(--s3)}
-.fotos-lightbox__nav[hidden]{display:none}
-.fotos-lightbox__count{
-  position:absolute;bottom:var(--s3);left:50%;transform:translateX(-50%);
-  font-family:var(--font-title);font-size:.7rem;letter-spacing:.14em;
-  color:rgba(240,232,220,.75);
-}
 
 /* ═══════════ LE SEUIL — VERS LES HÔTELS ═══════════ */
 /* Ici on quitte veralem. Le bloc reprend l'Ivoire & Bronze de la
@@ -482,6 +421,85 @@ p em,li em{font-style:italic;color:var(--terra)}
   line-height:1.78;margin-bottom:var(--s6);
 }
 
+/* ═══════════ CONTATO ═══════════ */
+/* La page contato de la branche pessoas. Elle reprend les noms de
+   classes de css/style.css — .contact-form, .form-field, .form-note —
+   pour que le gestionnaire d'envoi de js/main.js marche sans une
+   ligne de changement. Seule la peau diffère : du lin, de la
+   terracotta, et des champs qui ne sont qu'un trait sous le texte. */
+.s-contact{padding:var(--s6) 0 var(--s16)}
+.s-contact__grid{
+  display:grid;grid-template-columns:1fr 1.15fr;gap:var(--s10);
+  align-items:start;
+}
+
+.contact-aside h2{
+  font-size:clamp(1.7rem,3.4vw,2.6rem);line-height:1.18;
+  margin-bottom:var(--s4);max-width:14ch;
+}
+.contact-aside p{
+  font-size:1.05rem;color:var(--ink-soft);
+  line-height:1.8;max-width:40ch;
+}
+.contact-aside p+p{margin-top:var(--s3)}
+
+.contact-links{
+  display:flex;flex-direction:column;gap:var(--s2);
+  margin-top:var(--s6);padding-top:var(--s5);
+  border-top:1px solid var(--line);
+}
+.contact-link{
+  display:flex;align-items:baseline;gap:var(--s2);
+  font-family:var(--font-title);font-size:.72rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--terra-deep);transition:color .3s ease;
+}
+.contact-link:hover{color:var(--ink)}
+.contact-link__dash{color:var(--sand)}
+
+/* Le formulaire : pas de boîtes, des lignes. La feuille de papier
+   reste visible dessous, et le champ n'est qu'un trait qui se fonce
+   quand on écrit dedans. */
+.contact-form{
+  display:grid;gap:var(--s5);
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+.form-field{display:flex;flex-direction:column;gap:var(--s1)}
+.form-field label{
+  font-family:var(--font-title);font-size:.62rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--terra-deep);
+}
+.form-field input,
+.form-field select,
+.form-field textarea{
+  font-family:var(--font-body);font-size:1rem;color:var(--ink);
+  background:transparent;border:none;
+  border-bottom:1px solid var(--line);
+  padding:.55rem 0;transition:border-color .3s ease;
+}
+.form-field input::placeholder,
+.form-field textarea::placeholder{color:rgba(107,90,74,.45)}
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus{
+  outline:none;border-bottom-color:var(--terra);
+}
+.form-field select{
+  appearance:none;cursor:pointer;border-radius:0;
+  /* la flèche est dessinée à la main : un chevron en brun terre */
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%238F4A2C' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right .2rem center;
+  background-size:11px;padding-right:1.6rem;
+}
+.form-field textarea{resize:vertical;min-height:7rem;line-height:1.7}
+.form-field--full{grid-column:1 / -1}
+
+.form-note{
+  font-family:var(--font-title);font-size:.62rem;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);
+}
+.form-submit-btn:disabled{cursor:default}
+
 /* ═══════════ PIED ═══════════ */
 /* Le bloc d'encre au bas du papier. C'est le seul fond sombre de la
    page qui appartienne encore à veralem — et le seul endroit où le
@@ -547,6 +565,7 @@ p em,li em{font-style:italic;color:var(--terra)}
   .project-feature__head{flex-direction:column;align-items:flex-start}
   .project-feature__aside{text-align:left}
   .footer__inner{grid-template-columns:1fr 1fr}
+  .s-contact__grid{grid-template-columns:1fr;gap:var(--s8)}
 }
 
 /* ─────────── téléphone ─────────── */
@@ -576,18 +595,15 @@ p em,li em{font-style:italic;color:var(--terra)}
 
   /* Fotos garde deux colonnes sur téléphone : une série de trente
      photos à la file serait un défilement sans fin. */
-  .fotos-series .project-gallery__inner{column-count:2;column-gap:var(--s1)}
-  .fotos-series .project-gallery__item{margin-bottom:var(--s1)}
-  .fotos-series .project-gallery--inline{padding-inline:0}
-  .fotos-lightbox__nav{width:40px;height:40px;font-size:1.8rem;background:none}
-  .fotos-lightbox__nav--prev{left:0}
-  .fotos-lightbox__nav--next{right:0}
 
   .btn{width:100%}
   .project-feature__more .btn{width:auto}
 
   .portfolio-branch{min-height:72vh}
   .portfolio-branch__in{padding:var(--s8) clamp(1.2rem,5vw,2rem)}
+
+  .contact-aside h2{max-width:100%}
+  .form-row{grid-template-columns:1fr}
 
   .footer__inner{grid-template-columns:1fr;gap:var(--s5)}
 }

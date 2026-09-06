@@ -1,0 +1,3 @@
+# Les partials sont des morceaux de page, injectés par tools/build_partials.py.
+# Ils ne doivent jamais être servis comme des pages.
+Require all denied

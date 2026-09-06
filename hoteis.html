@@ -9,19 +9,19 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="css/style.css?v=31" />
+  <link rel="stylesheet" href="css/style.css?v=39" />
 </head>
 <body>
 
   <!-- =====================================================
        HEADER
        ===================================================== -->
+  <!-- partial:nav-lugares -->
   <header class="header" role="banner">
     <nav class="nav" aria-label="Navegação principal">
       <ul class="nav__links">
-        <li><a href="index.html" class="nav__link">INÍCIO</a></li>
-        <li><a href="portfolio.html" class="nav__link">PORTFÓLIO</a></li>
-        <li><a href="hoteis.html" class="nav__link">HOTÉIS</a></li>
+        <li><a href="hoteis.html" class="nav__link">INÍCIO</a></li>
+        <li><a href="portfolio-hoteis.html" class="nav__link">PORTFÓLIO</a></li>
         <li><a href="regard.html" class="nav__link nav__link--regard">REGARD</a></li>
         <li><a href="contact.html" class="nav__link">CONTATO</a></li>
       </ul>
@@ -36,46 +36,46 @@
     </nav>
   </header>
 
-  <!-- Mobile menu -->
+  <!-- Menu mobile -->
   <nav class="nav__mobile" aria-label="Menu mobile">
-    <a href="index.html" class="nav__mobile-link">INÍCIO</a>
-    <a href="portfolio.html" class="nav__mobile-link">PORTFÓLIO</a>
-    <a href="hoteis.html" class="nav__mobile-link">HOTÉIS</a>
+    <a href="hoteis.html" class="nav__mobile-link">INÍCIO</a>
+    <a href="portfolio-hoteis.html" class="nav__mobile-link">PORTFÓLIO</a>
     <a href="regard.html" class="nav__mobile-link nav__mobile-link--regard">REGARD</a>
     <a href="contact.html" class="nav__mobile-link">CONTATO</a>
     <div class="nav__mobile-lang">
-      <a href="index.html" class="nav__lang-link nav__lang-link--active">PT</a>
-      <a href="en/index.html" class="nav__lang-link">EN</a>
-      <a href="fr/index.html" class="nav__lang-link">FR</a>
+      <a href="hoteis.html" class="nav__lang-link nav__lang-link--active">PT</a>
+      <a href="en/hoteis.html" class="nav__lang-link">EN</a>
+      <a href="fr/hoteis.html" class="nav__lang-link">FR</a>
     </div>
   </nav>
+  <!-- /partial:nav-lugares -->
 
   <main>
 
     <!-- ===================================================
-         SEÇÃO 1 — HERO
+         ABERTURA — o filme, sem uma palavra
          =================================================== -->
-    <section class="hero" aria-labelledby="hero-headline">
-
+    <section class="hero" aria-label="Abertura">
       <div class="hero__video-wrap fi">
+        <!-- Un seul film, pour tous les écrans. Les deux <video>
+             précédents se téléchargeaient l'un ET l'autre —
+             display:none n'empêche pas le chargement d'une vidéo —
+             et le téléphone payait les deux. Même arbitrage que sur
+             la page d'accueil.
+             poster : si iOS refuse la lecture (mode économie
+             d'énergie), le cadre montre une image au lieu d'un
+             rectangle noir. -->
         <div class="hero__video-container">
           <video
-            class="hero__video-frame hero__video--desktop"
+            class="hero__video-frame"
             autoplay
             muted
             loop
             playsinline
-            preload="auto">
-            <source src="videos/header_min.mp4" type="video/mp4" />
-          </video>
-          <video
-            class="hero__video-frame hero__video--mobile"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="auto">
-            <source src="videos/AusWakeUp.mp4" type="video/mp4" />
+            webkit-playsinline
+            preload="auto"
+            poster="photos/hero-piscine.jpg">
+            <source src="videos/piscine_min.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="hero__video-overlay"></div>
@@ -83,244 +83,169 @@
           <img src="photos/Logo%20blanc%20casse.png" alt="Lucas Machut Visuals" decoding="async" />
         </div>
       </div>
-
-      <div class="hero__text-block">
-        <div class="hero__text-content">
-          <span class="label hero__label fi fi-d1">Fotografia · Vídeo · Hotelaria</span>
-          <h1 class="hero__h1 fi fi-d2" id="hero-headline">
-            Imagens que fazem um lugar ser <em>sentido antes da chegada</em>.
-          </h1>
-          <p class="hero__p fi fi-d3">
-            Fotografia e vídeo para hotéis, pousadas e lugares de experiência que precisam mostrar não só seus espaços, mas a <em>atmosfera</em> que faz alguém escolher ficar.
-          </p>
-          <div class="hero__actions fi fi-d4">
-            <a href="portfolio-hoteis.html" class="btn btn--dark">Ver trabalhos</a>
-            <a href="contact.html" class="btn btn--outline">Falar sobre um projeto</a>
-          </div>
-        </div>
-        <div class="hero__text-img fi fi-d2">
-          <img src="photos/richard_endormi.jpg"
-            alt="Lucas Machut Visuals — fotografia de hotelaria"
-            loading="lazy" decoding="async" />
-        </div>
-      </div>
-
     </section>
 
     <!-- ===================================================
-         SEÇÃO 2 — PERCEPÇÃO
+         1 — A PROMESSA
+         Le film a déjà donné l'image : ce bloc ne fait que poser
+         la phrase, à gauche, sans sur-titre et sans photo d'appoint.
          =================================================== -->
-    <section class="s-percepcao section" aria-labelledby="percepcao-h2">
-      <div class="wrap s-percepcao__grid">
-        <div class="s-percepcao__img fi">
-          <img src="photos/richard_miroir.jpg"
-            alt="Lucas Machut Visuals — fotografia de hotelaria"
-            loading="lazy" decoding="async" />
-        </div>
-        <div class="s-percepcao__body">
-          <span class="label s-percepcao__label fi">PERCEPÇÃO</span>
-          <h2 class="s-percepcao__h2 fi fi-d1" id="percepcao-h2">
-            Antes da reserva, o hóspede <em>já sente algo</em>
-          </h2>
-          <div class="fi fi-d2">
-            <p>
-              Antes de escolher um hotel, o hóspede já começa a imaginar a experiência.
-            </p>
-            <p>
-              Ele observa a luz, os espaços, o ritmo, os detalhes e a forma como tudo aparece conectado. Quando essa <em>percepção é clara</em>, a imagem deixa de ser apenas uma apresentação do lugar e passa a participar da decisão.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         SEÇÃO 3 — O QUE EU CRIO
-         =================================================== -->
-    <section class="s-crio section section--alt" id="services" aria-labelledby="crio-h2">
-      <div class="wrap">
-        <header class="section-header fi">
-          <span class="label">O QUE EU CRIO</span>
-          <h2 class="section-header__h2" id="crio-h2">Conteúdo visual para hotéis e lugares de experiência</h2>
-          <p class="section-header__text">
-            Crio fotos e vídeos pensados para comunicar a atmosfera, a identidade e o valor de um lugar nos principais pontos de contato com o hóspede: site, Instagram, Booking e materiais de apresentação.
-          </p>
-        </header>
-
-        <ul class="crio-grid">
-          <li class="crio-item fi fi-d1">
-            <h3>Foto e vídeo institucional</h3>
-            <p>Imagens para apresentar o lugar com clareza, beleza e coerência.</p>
-          </li>
-          <li class="crio-item fi fi-d2">
-            <h3>Reels e conteúdo para redes sociais</h3>
-            <p>Vídeos curtos com ritmo, intenção e continuidade visual.</p>
-          </li>
-          <li class="crio-item fi fi-d3">
-            <h3>Conteúdo para site e plataformas de reserva</h3>
-            <p>Imagens pensadas para reforçar percepção de valor e facilitar a escolha.</p>
-          </li>
-          <li class="crio-item fi fi-d1">
-            <h3>Direção visual e narrativa</h3>
-            <p>Uma leitura do lugar antes da produção, para evitar conteúdos soltos ou genéricos.</p>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         SEÇÃO 4 — O OLHAR
-         =================================================== -->
-    <section class="s-olhar section" aria-labelledby="olhar-h2">
-      <img src="photos/lucas_foto.jpg" alt="" class="s-olhar__mobile-bg" aria-hidden="true" loading="lazy" decoding="async" />
-      <div class="wrap">
-        <div class="s-olhar__grid">
-          <div class="s-olhar__body fi">
-            <p>
-              Sou Lucas Machut, fotógrafo e filmmaker francês, hoje baseado no Brasil.
-            </p>
-            <p>
-              Antes de trabalhar com imagem, minha experiência passou pela interpretação: observar, compreender o que não aparece imediatamente e traduzir uma intenção com precisão.
-            </p>
-            <p>
-              Essa forma de olhar influencia diretamente meu trabalho com hotéis e lugares de experiência. Antes de filmar, procuro entender o que o lugar transmite, o que ainda não está claro e quais imagens podem fazer o hóspede sentir algo antes da chegada.
-            </p>
-            <p>
-              Meu olhar combina uma atenção europeia à sobriedade, à luz e à composição, com uma relação viva com os espaços, os gestos e os ritmos do Brasil.
-            </p>
-            <p>
-              Não se trata apenas de produzir fotos e vídeos bonitos. Trata-se de <em>traduzir visualmente</em> aquilo que faz um lugar ser escolhido.
-            </p>
-          </div>
-          <div class="s-olhar__left fi fi-d1">
-            <span class="label" style="margin-bottom: var(--s4);">O OLHAR</span>
-            <h2 id="olhar-h2">O <em>olhar</em> por trás das imagens</h2>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         SEÇÃO 5 — REGARD
-         =================================================== -->
-    <section class="s-regard section section--dark" id="regard" aria-labelledby="regard-h2">
-      <img src="photos/lucas.jpg" alt="" class="s-regard__mobile-bg" aria-hidden="true" loading="lazy" decoding="async" />
-      <div class="wrap">
-        <span class="label label--light fi">REGARD</span>
-        <h2 class="s-regard__h2 fi fi-d1" id="regard-h2">Uma <em>leitura visual</em> antes da produção</h2>
-
-        <div class="s-regard__text fi fi-d2">
-          <p>
-            REGARD é minha forma de analisar como um hotel aparece antes de produzir novas imagens.
-          </p>
-          <p>
-            A partir do site, Instagram, Booking e outros canais, observo o que já funciona, o que está pouco claro e quais imagens poderiam tornar a experiência mais coerente, desejável e fácil de entender.
-          </p>
-          <p>
-            O objetivo não é apontar defeitos de forma genérica, mas identificar onde a comunicação visual pode ganhar clareza, continuidade e força.
-          </p>
-          <p>
-            Essa leitura ajuda a definir uma direção mais precisa para fotos, vídeos, reels, conteúdos de site ou materiais de apresentação.
-          </p>
-        </div>
-
-        <div class="fi fi-d3">
-          <a href="regard.html" class="btn btn--outline-light">Conhecer o REGARD</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         SEÇÃO 6 — TRABALHOS SELECIONADOS
-         =================================================== -->
-    <section class="s-portfolio section" aria-labelledby="portfolio-h2">
-      <div class="wrap">
-        <header class="section-header fi">
-          <span class="label">TRABALHOS SELECIONADOS</span>
-          <h2 class="section-header__h2" id="portfolio-h2">Alguns lugares, algumas <em>atmosferas</em></h2>
-          <p class="section-header__text">
-            Uma seleção de imagens e vídeos criados para comunicar experiências, ritmos e sensações de forma mais sensível.
-          </p>
-        </header>
-
-        <div class="video-grid fi fi-d1">
-          <div class="video-embed">
-            <button class="video-facade" data-video="luJG2Lw5t7o" data-title="Villa Egeu — filme por Lucas Machut Visuals" aria-label="Lire la vidéo : Villa Egeu — filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/luJG2Lw5t7o/maxresdefault.jpg" alt="Villa Egeu — filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
-          </div>
-          <div class="video-embed">
-            <button class="video-facade" data-video="WREX4fxGm6w" data-title="Villa Egeu — segundo filme por Lucas Machut Visuals" aria-label="Lire la vidéo : Villa Egeu — segundo filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/WREX4fxGm6w/maxresdefault.jpg" alt="Villa Egeu — segundo filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
-          </div>
-        </div>
-
-        <div class="s-portfolio__cta fi">
-          <a href="portfolio-hoteis.html" class="btn btn--outline">Ver todos os trabalhos</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         SEÇÃO 7 — PARA QUEM
-         =================================================== -->
-    <section class="s-paraquem section section--alt" aria-labelledby="paraquem-h2">
-      <div class="wrap s-paraquem__grid">
-        <div class="s-paraquem__body fi">
-          <span class="label" style="margin-bottom: var(--s4);">PARA QUEM</span>
-          <h2 id="paraquem-h2">
-            Para hotéis, pousadas e lugares com <em>atmosfera própria</em>
-          </h2>
-        </div>
-
-        <div class="fi fi-d1">
-          <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.85; max-width: 520px;">
-            Este trabalho é pensado para lugares que não querem comunicar apenas estrutura, quartos ou serviços, mas uma <em>experiência</em>.
-          </p>
-          <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.85; max-width: 520px; margin-top: var(--s3);">
-            Hotéis boutique, pousadas, casas de temporada, restaurantes, retiros e projetos de hospitalidade que precisam de imagens mais coerentes com aquilo que oferecem.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         SEÇÃO 8 — PERCEPÇÃO DE VALOR
-         =================================================== -->
-    <section class="s-valor section" aria-labelledby="valor-h2">
-      <img src="photos/leti.jpg" alt="" class="s-valor__mobile-bg" aria-hidden="true" loading="lazy" decoding="async" />
-      <div class="wrap s-valor__grid">
-        <div class="s-valor__left fi">
-          <span class="label" style="margin-bottom: var(--s4);">PERCEPÇÃO DE VALOR</span>
-          <h2 id="valor-h2">
-            A imagem também <em>constrói valor</em>
-          </h2>
-        </div>
-
-        <div class="fi fi-d1">
-          <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.85; max-width: 520px;">
-            A forma como um lugar aparece muda a forma como ele é <em>escolhido</em>.
-          </p>
-          <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.85; max-width: 520px; margin-top: var(--s3);">
-            Quando Instagram, site e Booking mostram versões diferentes da experiência, o hóspede pode não perceber todo o valor do lugar.
-          </p>
-          <p style="font-size: 1rem; color: var(--text-muted); line-height: 1.85; max-width: 520px; margin-top: var(--s3);">
-            Imagens bem pensadas tornam essa escolha mais clara, mais sensível e mais natural.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================================================
-         SEÇÃO 9 — CTA FINAL
-         =================================================== -->
-    <section class="s-cta-final" aria-labelledby="cta-h2">
-      <div class="s-cta-final__inner fi">
-        <h2 id="cta-h2">
-          Seu lugar já tem uma <em>atmosfera</em>.<br>
-          Talvez ela só ainda não esteja aparecendo como deveria.
-        </h2>
-        <p>
-          Se você sente que a experiência do seu hotel poderia ser comunicada com mais clareza, sensibilidade e coerência, podemos conversar.
+    <section class="lg-promessa" aria-labelledby="promessa-h1">
+      <div class="lg-promessa__in">
+        <h1 class="fi" id="promessa-h1">
+          Imagens que fazem um lugar ser sentido antes da chegada.
+        </h1>
+        <p class="fi fi-d1">
+          Fotografia e vídeo para hotéis, pousadas e imóveis, no Brasil.
         </p>
-        <a href="contact.html" class="btn btn--dark">Vamos conversar</a>
+        <div class="lg-promessa__acoes fi fi-d2">
+          <a href="portfolio-hoteis.html" class="btn btn--dark">Ver trabalhos</a>
+          <a href="contact.html" class="btn btn--outline">Falar sobre um projeto</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         2 — A PERCEPÇÃO
+         Texte en bas à gauche : le voile est orienté vers le bas.
+         =================================================== -->
+    <section class="lg-bloc lg-bloc--bas" aria-labelledby="percepcao-h2">
+      <img class="lg-bloc__img" src="photos/lugares/salao.jpg"
+           alt="Salão aberto sob a cobertura de palha, no fim da tarde"
+           loading="lazy" decoding="async" />
+      <div class="lg-bloc__dire">
+        <div class="lg-bloc__in fi">
+          <h2 id="percepcao-h2">Antes da reserva, o hóspede já sente algo.</h2>
+          <p>
+            Ele observa a luz, os espaços, o ritmo, os detalhes e a forma como tudo aparece conectado.
+          </p>
+          <p>
+            A forma como um lugar aparece muda a forma como ele é <em>escolhido</em>. Quando o site, o Instagram e o Booking mostram versões diferentes da experiência, quem escolhe não percebe todo o valor do lugar.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         3 — O QUE EU FAÇO
+         Trois lieux, en lignes séparées d'un filet. Pas de cartes :
+         une grille de vignettes h3 + une phrase est le second
+         marqueur de gabarit, après les sur-titres.
+         =================================================== -->
+    <section class="lg-offre" id="services" aria-labelledby="offre-h2">
+      <div class="lg-offre__tete fi">
+        <h2 id="offre-h2">Três tipos de lugar, três formas de mostrar.</h2>
+      </div>
+
+      <div class="lg-offre__liste">
+        <div class="lg-ligne fi">
+          <div class="lg-ligne__lieu">Hotéis</div>
+          <div class="lg-ligne__corpo">
+            <p class="lg-ligne__dit">
+              A experiência inteira, do quarto à mesa: a luz de cada hora, o ritmo do dia, as áreas comuns quando elas estão vivas.
+            </p>
+            <p class="lg-ligne__pour">
+              Site · Booking · Instagram · materiais de apresentação
+            </p>
+          </div>
+        </div>
+
+        <div class="lg-ligne fi fi-d1">
+          <div class="lg-ligne__lieu">Pousadas e casas de temporada</div>
+          <div class="lg-ligne__corpo">
+            <p class="lg-ligne__dit">
+              O caráter do lugar e de quem recebe. O que faz alguém voltar, e contar para outra pessoa.
+            </p>
+            <p class="lg-ligne__pour">
+              Redes sociais · reservas diretas · plataformas
+            </p>
+          </div>
+        </div>
+
+        <div class="lg-ligne fi fi-d2">
+          <div class="lg-ligne__lieu">Imóveis</div>
+          <div class="lg-ligne__corpo">
+            <p class="lg-ligne__dit">
+              O espaço lido de uma vez: luz, volumes, circulação. Quem visita precisa entender a planta antes de entrar.
+            </p>
+            <p class="lg-ligne__pour">
+              Anúncio · visita · venda e locação
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="lg-offre__note fi">
+        Em todos os casos, uma leitura do lugar antes da produção — para não terminar com um conjunto de imagens soltas.
+      </p>
+    </section>
+
+    <!-- ===================================================
+         RESPIRAÇÃO — a imagem sozinha
+         =================================================== -->
+    <section class="lg-respire" aria-hidden="true">
+      <picture>
+        <source media="(max-width:860px)" srcset="photos/lugares/m-piscina.jpg">
+        <img src="photos/lugares/piscina.jpg" alt="" loading="lazy" decoding="async" />
+      </picture>
+    </section>
+
+    <!-- ===================================================
+         4 — O OLHAR E O MÉTODO
+         Deux anciennes sections fondues en une. Texte en haut à
+         droite : la mesure est plus courte qu'au mouvement 2, et
+         c'est ce décalage qui casse la régularité.
+         =================================================== -->
+    <section class="lg-bloc lg-bloc--haut" id="regard" aria-labelledby="olhar-h2">
+      <img class="lg-bloc__img" src="photos/le-regard/chave-porta.jpg"
+           alt="Uma mão levando a chave à fechadura de uma porta antiga"
+           loading="lazy" decoding="async" />
+      <div class="lg-bloc__dire">
+        <div class="lg-bloc__in fi">
+          <h2 id="olhar-h2">Primeiro, eu leio o lugar.</h2>
+          <p>
+            Sou Lucas Machut, fotógrafo e filmmaker francês, baseado no Rio. Antes da imagem, minha formação passou pela interpretação: observar, entender o que não aparece de imediato, traduzir uma intenção com precisão.
+          </p>
+          <p>
+            Essa leitura tem um nome e um método. Chamo de <em>REGARD</em>: o que já funciona, o que ainda está pouco claro, e quais imagens fariam alguém sentir algo antes de chegar.
+          </p>
+          <a href="regard.html" class="btn btn--outline-light">Conhecer o método</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         5 — OS LUGARES
+         =================================================== -->
+    <section class="lg-lieux" aria-labelledby="lugares-h2">
+      <div class="lg-lieux__tete fi">
+        <h2 id="lugares-h2">Alguns lugares, já filmados.</h2>
+      </div>
+
+      <div class="video-grid fi fi-d1">
+        <div class="video-embed">
+          <button class="video-facade" data-video="luJG2Lw5t7o" data-title="Villa Egeu — filme por Lucas Machut Visuals" aria-label="Ver o vídeo: Villa Egeu — filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/luJG2Lw5t7o/maxresdefault.jpg" alt="Villa Egeu — filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
+        </div>
+        <div class="video-embed">
+          <button class="video-facade" data-video="WREX4fxGm6w" data-title="Villa Egeu — segundo filme por Lucas Machut Visuals" aria-label="Ver o vídeo: Villa Egeu — segundo filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/WREX4fxGm6w/maxresdefault.jpg" alt="Villa Egeu — segundo filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
+        </div>
+      </div>
+
+      <div class="lg-lieux__suite fi">
+        <a href="portfolio-hoteis.html" class="btn btn--outline">Ver todos os trabalhos</a>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         CLÔTURE — à gauche, pas au centre
+         =================================================== -->
+    <section class="lg-fin" aria-labelledby="fin-h2">
+      <div class="lg-fin__in fi">
+        <h2 id="fin-h2">Seu lugar já tem uma <em>atmosfera</em>.</h2>
+        <p>
+          Talvez ela ainda não esteja aparecendo como deveria — no site, nas plataformas, nas redes.
+        </p>
+        <a href="contact.html" class="btn btn--light">Vamos conversar</a>
       </div>
     </section>
 
@@ -329,6 +254,7 @@
   <!-- =====================================================
        FOOTER
        ===================================================== -->
+  <!-- partial:footer-lugares -->
   <footer class="footer" role="contentinfo">
     <div class="footer__inner">
       <div class="footer__brand">
@@ -341,27 +267,30 @@
       <nav class="footer__nav" aria-label="Links do rodapé">
         <h3 class="footer__col-title">Páginas</h3>
         <ul class="footer__links">
-          <li><a href="portfolio.html">Work</a></li>
-          <li><a href="#services">Services</a></li>
+          <li><a href="portfolio-hoteis.html">Portfólio</a></li>
           <li><a href="regard.html">REGARD</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Contato</a></li>
         </ul>
       </nav>
 
       <div class="footer__contact">
         <h3 class="footer__col-title">Contato</h3>
         <ul class="footer__links">
-          <!-- Substitua o href pelo link real do Instagram -->
-          <li><a href="https://www.instagram.com/lucasmachut.visuals" target="_blank" rel="noopener noreferrer">Instagram</a></li>
-          <!-- Substitua pelo número real: https://wa.me/5511999999999 -->
+          <li><a href="https://www.instagram.com/lucasmachut__" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <!-- Substituir pelo número real : https://wa.me/55… -->
           <li><a href="#" aria-label="WhatsApp">WhatsApp</a></li>
-          <!-- Substitua pelo e-mail real -->
           <li><a href="mailto:contato@lucasmachut.com" aria-label="E-mail">E-mail</a></li>
         </ul>
       </div>
     </div>
-    <p class="footer__bottom">© 2026 Lucas Machut Visuals. Brasil.</p>
+    <!-- Un des deux seuls passages entre les deux branches du site.
+         L'autre est le bloc .portfolio-branch en bas de portfolio.html. -->
+    <p class="footer__bottom">
+      © 2026 Lucas Machut Visuals. Brasil.
+      <a href="portfolio.html" style="color:inherit">Trabalho autoral</a>
+    </p>
   </footer>
+  <!-- /partial:footer-lugares -->
 
   <script src="js/main.js?v=3"></script>
 </body>

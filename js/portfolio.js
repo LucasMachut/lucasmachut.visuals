@@ -153,20 +153,20 @@
       section.appendChild(head);
       section.appendChild(gallery);
 
-      /* — le bouton ne s'affiche que s'il reste quelque chose à voir —
-         Un projet qui a sa propre page y mène (fotos.json, clé `page`) ;
-         les autres renvoient à leur série sur la page Fotos. */
+      /* — le bouton n'existe que s'il y a où aller —
+         Seul un projet qui a sa propre page (fotos.json, clé `page`) en
+         reçoit un. Les autres s'arrêtent à leur vitrine : la page Fotos,
+         qui montrait la série entière, n'existe plus — le portfólio l'a
+         remplacée. Pour montrer davantage d'une série, on remplit son
+         dossier `destaque`, on lève data-limit, ou on lui écrit une page. */
       const own = serie.page;
-      if (own || serie.photos.length > shots.length) {
+      if (own) {
         const more = document.createElement('div');
         more.className = 'project-feature__more fi';
         const a = document.createElement('a');
         a.className = 'btn btn--outline';
-        /* ?serie= et non #ancre : l'ancre ouvrait la page entière et
-           faisait défiler jusqu'au bon endroit — on venait voir un
-           projet, on tombait sur la pile de tous les autres. */
-        a.href = own || ('fotos.html?serie=' + encodeURIComponent(serie.slug));
-        a.textContent = own && pageLabel ? pageLabel : moreLabel;
+        a.href = own;
+        a.textContent = pageLabel || moreLabel;
         more.appendChild(a);
         section.appendChild(more);
       }

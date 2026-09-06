@@ -9,7 +9,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="../css/style.css?v=31" />
+  <link rel="stylesheet" href="../css/style.css?v=39" />
 </head>
 <body>
 
@@ -51,12 +51,12 @@
     <!-- HERO -->
     <section class="hero" aria-labelledby="hero-headline">
       <div class="hero__video-wrap fi">
+        <!-- Un seul film, pour tous les écrans — même arbitrage que sur
+             la version portugaise. Voir hoteis.html à la racine. -->
         <div class="hero__video-container">
-          <video class="hero__video-frame hero__video--desktop" autoplay muted loop playsinline preload="auto">
-            <source src="../videos/header_min.mp4" type="video/mp4" />
-          </video>
-          <video class="hero__video-frame hero__video--mobile" autoplay muted loop playsinline preload="auto">
-            <source src="../videos/AusWakeUp.mp4" type="video/mp4" />
+          <video class="hero__video-frame" autoplay muted loop playsinline
+                 webkit-playsinline preload="auto" poster="../photos/hero-piscine.jpg">
+            <source src="../videos/piscine_min.mp4" type="video/mp4" />
           </video>
         </div>
         <div class="hero__video-overlay"></div>
@@ -172,7 +172,7 @@
 
     <!-- REGARD -->
     <section class="s-regard section section--dark" id="regard" aria-labelledby="regard-h2">
-      <img src="../photos/lucas.jpg" alt="" class="s-regard__mobile-bg" aria-hidden="true" loading="lazy" decoding="async" />
+      <img src="../photos/le-regard/chave-porta.jpg" alt="" class="s-regard__mobile-bg" aria-hidden="true" loading="lazy" decoding="async" />
       <div class="wrap">
         <span class="label label--light fi">REGARD</span>
         <h2 class="s-regard__h2 fi fi-d1" id="regard-h2">A <em>visual reading</em> before production</h2>

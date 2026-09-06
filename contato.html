@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contato — Lucas Machut</title>
+  <meta name="description" content="Casamentos, ensaios e eventos no Rio de Janeiro e onde a história acontecer. Me conte a data, o lugar e as pessoas." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://lucasmachut.com/contato.html" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Identité veralem : cette page ne charge pas css/style.css.
+       Voir l'en-tête de css/portfolio.css. -->
+  <link rel="stylesheet" href="css/portfolio.css?v=7" />
+</head>
+<body>
+
+  <!-- partial:nav-pessoas -->
+  <header class="header" role="banner">
+    <nav class="nav" aria-label="Navegação principal">
+      <ul class="nav__links">
+        <li><a href="index.html" class="nav__link">INÍCIO</a></li>
+        <li><a href="portfolio.html" class="nav__link">TRABALHOS</a></li>
+        <li><a href="contato.html" class="nav__link">CONTATO</a></li>
+      </ul>
+      <button class="nav__toggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </header>
+
+  <!-- Menu mobile -->
+  <nav class="nav__mobile" aria-label="Menu mobile">
+    <a href="index.html" class="nav__mobile-link">INÍCIO</a>
+    <a href="portfolio.html" class="nav__mobile-link">TRABALHOS</a>
+    <a href="contato.html" class="nav__mobile-link">CONTATO</a>
+  </nav>
+  <!-- /partial:nav-pessoas -->
+
+  <main>
+
+    <!-- ===================================================
+         PAGE HERO
+         =================================================== -->
+    <section class="page-hero">
+      <div class="wrap">
+        <h1 class="fi">Me conta o que vai acontecer</h1>
+        <p class="page-hero__strip fi fi-d1">Casamentos · Ensaios · Eventos</p>
+      </div>
+    </section>
+
+    <!-- ===================================================
+         CONTATO
+         =================================================== -->
+    <section class="s-contact" aria-labelledby="contato-h2">
+      <div class="wrap s-contact__grid">
+
+        <!-- À gauche : la voix. À droite : le formulaire. -->
+        <div class="contact-aside fi">
+          <h2 id="contato-h2">A data, o lugar, <em>as pessoas</em></h2>
+          <p>
+            Quanto mais cedo a gente conversa, mais tempo eu tenho para entender quem
+            vai estar ali e o que está em jogo naquele dia.
+          </p>
+          <p>
+            Se você prefere falar direto, o WhatsApp é o caminho mais rápido.
+          </p>
+
+          <div class="contact-links">
+            <a href="https://www.instagram.com/veralem.lucas"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="contact-link">
+              <span class="contact-link__dash">—</span>
+              Instagram · veralem.lucas
+            </a>
+            <!-- Substituir pelo número real : https://wa.me/55… -->
+            <a href="#" class="contact-link" aria-label="WhatsApp">
+              <span class="contact-link__dash">—</span>
+              WhatsApp
+            </a>
+            <a href="mailto:contato@lucasmachut.com" class="contact-link" aria-label="E-mail">
+              <span class="contact-link__dash">—</span>
+              E-mail
+            </a>
+          </div>
+        </div>
+
+        <div class="fi fi-d1">
+          <!-- TODO : conectar a um serviço de formulário (Formspree, Netlify Forms…).
+               Formspree : action="https://formspree.io/f/SEU_ID" method="POST" -->
+          <form class="contact-form" novalidate>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" name="nome" autocomplete="name" required />
+              </div>
+              <div class="form-field">
+                <label for="tipo">O que é</label>
+                <select id="tipo" name="tipo">
+                  <option value="" disabled selected>Selecionar</option>
+                  <option value="casamento">Casamento</option>
+                  <option value="ensaio">Ensaio</option>
+                  <option value="evento">Evento</option>
+                  <option value="outro">Outro</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="data">Data ou período</label>
+                <input type="text" id="data" name="data" placeholder="março de 2027, ainda aberto…" />
+              </div>
+              <div class="form-field">
+                <label for="lugar">Lugar</label>
+                <input type="text" id="lugar" name="lugar" placeholder="cidade, praia, sítio…" />
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" autocomplete="email" required />
+              </div>
+              <div class="form-field">
+                <label for="whatsapp">WhatsApp</label>
+                <input type="tel" id="whatsapp" name="whatsapp" autocomplete="tel" placeholder="+55" />
+              </div>
+            </div>
+
+            <div class="form-field form-field--full">
+              <label for="mensagem">Mensagem</label>
+              <textarea id="mensagem" name="mensagem" rows="5"
+                placeholder="Quem vai estar lá, como vocês se conheceram, o que não pode faltar."></textarea>
+            </div>
+
+            <p class="form-note">
+              Respondo em até 48 horas.
+            </p>
+
+            <div class="form-submit">
+              <button type="submit" class="btn btn--dark form-submit-btn">Enviar mensagem</button>
+            </div>
+
+          </form>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- partial:footer-pessoas -->
+  <footer class="footer" role="contentinfo">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <h2 class="footer__brand-name">Lucas Machut</h2>
+        <p class="footer__brand-desc">
+          Fotografia e vídeo de casamentos, ensaios e eventos. Rio de Janeiro, Brasil.
+        </p>
+      </div>
+
+      <nav class="footer__nav" aria-label="Links do rodapé">
+        <h3 class="footer__col-title">Páginas</h3>
+        <ul class="footer__links">
+          <li><a href="portfolio.html">Trabalhos</a></li>
+          <li><a href="contato.html">Contato</a></li>
+        </ul>
+      </nav>
+
+      <div class="footer__contact">
+        <h3 class="footer__col-title">Contato</h3>
+        <ul class="footer__links">
+          <li><a href="https://www.instagram.com/veralem.lucas" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+          <li><a href="#" aria-label="WhatsApp">WhatsApp</a></li>
+          <li><a href="mailto:contato@lucasmachut.com" aria-label="E-mail">E-mail</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="footer__bottom">© 2026 Lucas Machut. Brasil.</p>
+  </footer>
+  <!-- /partial:footer-pessoas -->
+
+  <script src="js/main.js?v=4"></script>
+</body>
+</html>

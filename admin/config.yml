@@ -13,8 +13,8 @@ public_folder: "Projets-web/Fotos"
 locale: fr
 
 # Commit message shown in the Git history when you publish
-site_url: https://lucasmachut.com/fotos.html
-display_url: https://lucasmachut.com/fotos.html
+site_url: https://lucasmachut.com/portfolio.html
+display_url: https://lucasmachut.com/portfolio.html
 
 collections:
   - name: galerie

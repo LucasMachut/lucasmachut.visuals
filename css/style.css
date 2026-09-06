@@ -18,6 +18,33 @@
   --font-serif: 'Newsreader', Georgia, serif;
   --font-sans:  'Inter Tight', system-ui, -apple-system, sans-serif;
 
+  /* ---- Echelle typographique -------------------------------
+     Sept tailles, pas une de plus. Chaque titre et chaque
+     paragraphe prend le jeton de son role : c'est ce qui fait
+     qu'une page se lit comme un seul document et non comme une
+     suite de sections dessinees separement.
+
+       --fs-title     le titre qui EST la page
+       --fs-headline  la phrase qui porte une section entiere
+       --fs-section   les h2 ordinaires
+       --fs-sub       les titres de projet en grille
+       --fs-card      les h3 de cartes et d'etapes
+       --fs-lead      le chapeau sous un titre
+       --fs-body      le corps de texte
+       --fs-meta      legendes, mentions, valeurs de fiche      */
+  --fs-title:    clamp(3rem, 6vw, 5.8rem);
+  --fs-headline: clamp(2.5rem, 4.2vw, 4.4rem);
+  --fs-section:  clamp(2rem, 3.2vw, 3rem);
+  --fs-sub:      clamp(1.6rem, 2.5vw, 2.4rem);
+  --fs-card:     1.25rem;
+  --fs-lead:     1.15rem;
+  --fs-body:     1rem;
+  --fs-meta:     0.9rem;
+
+  --lh-title: 1.12;
+  --lh-lead:  1.62;
+  --lh-body:  1.75;
+
   --s1:  0.5rem;
   --s2:  1rem;
   --s3:  1.5rem;
@@ -445,6 +472,286 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .nav__mobile-cta:hover { background: var(--text); color: var(--cream); }
 
 /* ============================================================
+   MOUVEMENTS — la page d'entree lugares
+   ============================================================
+
+   L'ancienne page empilait neuf sections de meme forme :
+   un sur-titre en petites capitales, un h2 serif avec un mot en
+   italique bronze, un paragraphe gris. Repete huit fois, ce
+   rythme se reconnait de loin — c'est le gabarit de n'importe
+   quelle landing page generee.
+
+   Meme arbitrage que sur la page d'accueil : on retire les
+   sur-titres, on retire les cartes, et on laisse la photographie
+   porter. Le texte se pose dessus, a une place differente selon
+   la scene, dans une colonne etroite. La mesure change d'un
+   mouvement a l'autre — c'est ce qui casse la regularite.
+   ============================================================ */
+
+/* --- la promesse : le film a donne l'image, le texte se pose seul --- */
+.lg-promessa { padding: var(--s16) 0 var(--s12); }
+.lg-promessa__in {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+}
+.lg-promessa h1 {
+  font-size: var(--fs-headline);
+  line-height: var(--lh-title);
+  max-width: 24ch;
+}
+.lg-promessa p {
+  margin-top: var(--s5);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-lead);
+  color: var(--text-muted);
+  max-width: 44ch;
+}
+.lg-promessa__acoes {
+  margin-top: var(--s8);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+}
+
+/* Le bouton plein sur fond sombre : creme sur noir chaud. */
+.btn--light {
+  background: var(--cream);
+  color: var(--text);
+  border-color: var(--cream);
+}
+.btn--light:hover { background: var(--accent); border-color: var(--accent); color: var(--cream); }
+
+/* --- un bloc : la photo, et ce qu'on dit dessus ---------------
+   Deux mises en page pour un seul balisage.
+
+   Sur telephone, la photo reste entiere dans son format et le texte
+   descend dans un panneau sombre : un cadre portrait recadrait la
+   photo au point qu'il ne restait plus le sujet.
+
+   Sur ordinateur, la photo redevient le fond et le texte se pose
+   dessus. Ou exactement, ce n'est pas au juge : la luminance de
+   chaque image a ete relevee case par case.
+     salao.jpg      sombre partout, sauf une trouee centrale a 139 ;
+                    le bas-gauche est a 0-27  -> texte en bas a gauche
+     chave-porta    la cle occupe le centre, de 119 a 173, et c'est le
+                    sujet ; le haut-gauche est a 0 -> texte en haut a
+                    gauche, et le voile s'efface avant la cle
+   ------------------------------------------------------------- */
+.lg-bloc { background: var(--bg-dark); }
+.lg-bloc__img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.lg-bloc__dire {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: var(--s12) clamp(1.4rem, 5vw, 4rem);
+  color: var(--cream);
+}
+.lg-bloc__in { max-width: 46rem; }
+.lg-bloc--haut .lg-bloc__in { max-width: 34rem; }
+
+.lg-bloc__dire h2 {
+  font-size: var(--fs-headline);
+  line-height: var(--lh-title);
+  margin-bottom: var(--s5);
+}
+.lg-bloc__dire p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(250, 246, 236, 0.86);
+  max-width: 48ch;
+}
+.lg-bloc__dire p + p { margin-top: var(--s3); }
+.lg-bloc__dire .btn { margin-top: var(--s6); }
+
+/* --- a partir de la tablette : la photo passe en fond ---------
+   Le voile est un degrade radial ancre sur le coin ou le texte se
+   pose, double d'une bande dans le meme sens. Il assombrit la zone
+   ecrite et tombe a zero avant le sujet.
+
+   Valeurs verifiees, pas estimees : contraste WCAG calcule sur la
+   luminance reelle de chaque photo, dans la geometrie exacte des
+   colonnes.
+     salao        titre 3.5:1 (seuil 3), paragraphe 7.6:1 (seuil 4.5)
+     chave-porta  titre 7.9:1,           paragraphe 7.7:1
+   Cout pour le sujet : 7 % de luminosite en moins sur la trouee du
+   salao comme sur la cle. */
+@media (min-width: 861px) {
+  .lg-bloc {
+    position: relative;
+    min-height: 88svh;
+    display: flex;
+    overflow: hidden;
+  }
+  .lg-bloc__img {
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    object-fit: cover;
+  }
+  /* Le voile, en pseudo-element : rien a ajouter dans le balisage. */
+  .lg-bloc::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+  .lg-bloc__dire {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    display: flex;
+  }
+  /* La colonne se resserre : le titre allait sinon chercher la zone
+     claire de la photo, ou le contraste tombait a 1.6:1. */
+  .lg-bloc__in { max-width: 38rem; }
+  .lg-bloc--haut .lg-bloc__in { max-width: 32rem; }
+  .lg-bloc__dire h2 {
+    font-size: var(--fs-section);
+    text-shadow: 0 1px 30px rgba(31, 24, 18, 0.5);
+  }
+  .lg-bloc__dire p {
+    max-width: 42ch;
+    text-shadow: 0 1px 20px rgba(31, 24, 18, 0.55);
+  }
+
+  /* salao : texte en bas a gauche. */
+  .lg-bloc--bas .lg-bloc__dire { align-items: flex-end; }
+  .lg-bloc--bas::after {
+    background:
+      radial-gradient(105% 95% at 0% 100%,
+        rgba(31, 24, 18, 0.92) 0%, rgba(31, 24, 18, 0.78) 34%,
+        rgba(31, 24, 18, 0.32) 62%, rgba(31, 24, 18, 0) 80%),
+      linear-gradient(to bottom,
+        rgba(31, 24, 18, 0) 50%, rgba(31, 24, 18, 0.22) 74%,
+        rgba(31, 24, 18, 0.40) 100%);
+  }
+
+  /* chave-porta : texte en haut a gauche, la cle reste au clair. */
+  .lg-bloc--haut .lg-bloc__dire { align-items: flex-start; }
+  .lg-bloc--haut::after {
+    background:
+      radial-gradient(95% 105% at 0% 0%,
+        rgba(31, 24, 18, 0.90) 0%, rgba(31, 24, 18, 0.74) 34%,
+        rgba(31, 24, 18, 0.28) 60%, rgba(31, 24, 18, 0) 80%),
+      linear-gradient(to right,
+        rgba(31, 24, 18, 0.62) 0%, rgba(31, 24, 18, 0.52) 24%,
+        rgba(31, 24, 18, 0.22) 38%, rgba(31, 24, 18, 0) 50%);
+  }
+}
+
+/* --- l'offre : trois lieux, en lignes, sans cartes --- */
+.lg-offre { padding: var(--s16) 0; }
+.lg-offre__tete {
+  max-width: var(--max);
+  margin: 0 auto var(--s10);
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+}
+.lg-offre__tete h2 {
+  font-size: var(--fs-section);
+  line-height: var(--lh-title);
+  max-width: 22ch;
+}
+.lg-offre__liste {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+}
+.lg-ligne {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.75fr);
+  gap: clamp(1.5rem, 5vw, 5rem);
+  padding: var(--s8) 0;
+  border-top: 1px solid var(--line);
+  align-items: start;
+}
+.lg-ligne:last-child { border-bottom: 1px solid var(--line); }
+.lg-ligne__lieu {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: var(--fs-sub);
+  line-height: var(--lh-title);
+  letter-spacing: -0.015em;
+}
+.lg-ligne__dit {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 54ch;
+}
+.lg-ligne__pour {
+  margin-top: var(--s3);
+  font-size: var(--fs-meta);
+  line-height: 1.7;
+  color: var(--text-muted);
+  opacity: 0.8;
+}
+.lg-offre__note {
+  max-width: var(--max);
+  margin: var(--s8) auto 0;
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 60ch;
+}
+
+/* --- une respiration : l'image seule, sans un mot --- */
+.lg-respire { height: 76svh; overflow: hidden; background: var(--bg-dark); }
+.lg-respire img { width: 100%; height: 100%; object-fit: cover; }
+
+/* --- les lieux deja filmes --- */
+.lg-lieux { padding: var(--s16) 0; }
+.lg-lieux__tete {
+  max-width: var(--max);
+  margin: 0 auto var(--s8);
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+}
+.lg-lieux__tete h2 {
+  font-size: var(--fs-section);
+  line-height: var(--lh-title);
+  max-width: 20ch;
+}
+.lg-lieux__suite {
+  max-width: var(--max);
+  margin: var(--s8) auto 0;
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+}
+
+/* --- la cloture : a gauche, pas au centre --- */
+.lg-fin {
+  background: var(--bg-dark);
+  color: var(--cream);
+  padding: var(--s16) 0;
+}
+.lg-fin__in {
+  max-width: var(--max);
+  margin: 0 auto;
+  padding: 0 clamp(1.4rem, 5vw, 4rem);
+}
+.lg-fin h2 {
+  font-size: var(--fs-headline);
+  line-height: var(--lh-title);
+  max-width: 18ch;
+}
+.lg-fin p {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(250, 246, 236, 0.78);
+  max-width: 48ch;
+  margin: var(--s5) 0 var(--s8);
+}
+
+@media (max-width: 1024px) {
+  .lg-ligne { grid-template-columns: 1fr; gap: var(--s3); padding: var(--s6) 0; }
+}
+
+@media (max-width: 680px) {
+  .lg-bloc__dire { padding: var(--s8) clamp(1.2rem, 5vw, 2rem); }
+  .lg-bloc__in, .lg-bloc--haut .lg-bloc__in { max-width: 100%; }
+  .lg-respire { height: 62svh; }
+  .lg-offre, .lg-lieux, .lg-fin { padding: var(--s12) 0; }
+}
+
+/* ============================================================
    FOOTER
    ============================================================ */
 
@@ -538,13 +845,6 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
   z-index: 0;
 }
 
-.hero__video--mobile { display: none; }
-
-@media (max-width: 680px) {
-  .hero__video--desktop { display: none; }
-  .hero__video--mobile  { display: block; }
-}
-
 .hero__video-overlay {
   position: absolute;
   inset: 0;
@@ -598,7 +898,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .hero__label { margin-bottom: var(--s5); }
 
 .hero__h1 {
-  font-size: clamp(2.5rem, 4.2vw, 4.4rem);
+  font-size: var(--fs-headline);
   font-family: var(--font-serif);
   font-weight: 300;
   line-height: 1.08;
@@ -608,7 +908,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .hero__p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   max-width: 480px;
   line-height: 1.8;
@@ -652,13 +952,13 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .s-percepcao__h2 {
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: var(--fs-section);
   margin-bottom: var(--s6);
   max-width: 620px;
 }
 
 .s-percepcao__body p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.85;
   max-width: 540px;
@@ -676,12 +976,12 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .section-header .label { margin-bottom: var(--s3); }
 
 .section-header__h2 {
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: var(--fs-section);
   margin-bottom: var(--s4);
 }
 
 .section-header__text {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   max-width: 520px;
   line-height: 1.78;
@@ -701,7 +1001,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .crio-item h3 {
   font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: var(--fs-card);
   font-weight: 400;
   margin-bottom: var(--s2);
 }
@@ -719,7 +1019,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .s-regard {
   position: relative;
   background-color: #1F1812;
-  background-image: url('../photos/regard.jpg');
+  background-image: url('../photos/le-regard/chave-porta.jpg');
   background-size: 70% auto;
   background-position: center;
   background-repeat: no-repeat;
@@ -779,14 +1079,14 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .s-regard__h2 {
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: var(--fs-section);
   max-width: 660px;
   margin-bottom: var(--s8);
   color: var(--cream);
 }
 
 .s-regard__lead {
-  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  font-size: var(--fs-lead);
   color: rgba(250, 246, 236,0.8);
   max-width: 600px;
   line-height: 1.82;
@@ -825,7 +1125,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .regard-block h3 {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: var(--fs-card);
   font-weight: 400;
   color: var(--cream);
   margin-bottom: var(--s2);
@@ -884,7 +1184,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .s-processo__intro {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   max-width: 560px;
   line-height: 1.8;
@@ -911,7 +1211,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .pstep h3 {
   font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: var(--fs-card);
   font-weight: 400;
   margin-bottom: var(--s2);
 }
@@ -967,7 +1267,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .s-olhar__left h2 {
   font-family: var(--font-serif);
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: var(--fs-section);
   font-weight: 300;
   line-height: 1.15;
   color: #FAF6EC;
@@ -975,7 +1275,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .s-olhar__body p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: rgba(250, 246, 236, 0.85);
   line-height: 1.85;
   max-width: 560px;
@@ -1025,13 +1325,13 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .s-paraquem__body h2 {
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: var(--fs-section);
   max-width: 480px;
   margin-bottom: var(--s6);
 }
 
 .s-paraquem__body p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.8;
   max-width: 460px;
@@ -1043,7 +1343,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .paraquem-list li {
   font-family: var(--font-serif);
-  font-size: 1.25rem;
+  font-size: var(--fs-card);
   font-weight: 400;
   padding: var(--s3) 0;
   border-bottom: 1px solid var(--line);
@@ -1204,14 +1504,14 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .s-valor__left h2 {
-  font-size: clamp(2rem, 3.2vw, 3rem);
+  font-size: var(--fs-section);
   max-width: 480px;
   margin-bottom: var(--s6);
   color: #FAF6EC;
 }
 
 .s-valor__left p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: rgba(250, 246, 236, 0.85);
   line-height: 1.82;
   max-width: 460px;
@@ -1258,13 +1558,13 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .s-cta-final__inner { max-width: 700px; margin: 0 auto; }
 
 .s-cta-final h2 {
-  font-size: clamp(2rem, 4vw, 3.6rem);
+  font-size: var(--fs-headline);
   line-height: 1.15;
   margin-bottom: var(--s6);
 }
 
 .s-cta-final p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   margin-bottom: var(--s8);
   line-height: 1.8;
@@ -1280,14 +1580,14 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .page-hero h1 {
-  font-size: clamp(3rem, 6vw, 5.8rem);
+  font-size: var(--fs-title);
   letter-spacing: -0.025em;
   margin-bottom: var(--s4);
   max-width: 800px;
 }
 
 .page-hero p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   max-width: 520px;
   line-height: 1.8;
@@ -1337,7 +1637,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .project-item h2 {
-  font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+  font-size: var(--fs-sub);
   margin-bottom: var(--s1);
 }
 
@@ -1382,7 +1682,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .project-feature__title {
-  font-size: clamp(1.9rem, 3.4vw, 3rem);
+  font-size: var(--fs-section);
   line-height: 1.06;
 }
 
@@ -1467,7 +1767,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .portfolio-branch h2 {
   color: var(--cream);
-  font-size: clamp(2rem, 4vw, 3.4rem);
+  font-size: var(--fs-headline);
   margin: var(--s3) 0 var(--s3);
   max-width: 18em;
 }
@@ -1493,7 +1793,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .s-servicos { padding: var(--s12) 0 var(--s16); }
 
 .s-servicos__h2 {
-  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-size: var(--fs-section);
   margin-bottom: var(--s10);
 }
 
@@ -1512,7 +1812,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .svc-row h3 {
   font-family: var(--font-serif);
-  font-size: 1.3rem;
+  font-size: var(--fs-card);
   font-weight: 400;
 }
 
@@ -1533,14 +1833,14 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .s-auditoria .label { margin-bottom: var(--s4); }
 
 .s-auditoria__h2 {
-  font-size: clamp(2rem, 3.8vw, 3.6rem);
+  font-size: var(--fs-headline);
   max-width: 700px;
   margin-bottom: var(--s8);
   color: var(--cream);
 }
 
 .s-auditoria__intro {
-  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  font-size: var(--fs-lead);
   color: rgba(250, 246, 236,0.8);
   max-width: 600px;
   line-height: 1.82;
@@ -1570,7 +1870,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .audit-ch h3 {
   font-family: var(--font-serif);
-  font-size: 1.2rem;
+  font-size: var(--fs-card);
   font-weight: 400;
   color: var(--cream);
   margin-bottom: var(--s2);
@@ -1599,7 +1899,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .s-packages { padding: var(--s16) 0; }
 
 .s-packages__intro {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   max-width: 520px;
   line-height: 1.8;
@@ -1622,7 +1922,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .pkg__name {
   font-family: var(--font-serif);
-  font-size: 1.8rem;
+  font-size: var(--fs-sub);
   font-weight: 400;
   margin-bottom: var(--s3);
 }
@@ -1672,14 +1972,14 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .contact-aside h1 {
-  font-size: clamp(2rem, 3.5vw, 3.2rem);
+  font-size: var(--fs-section);
   margin-bottom: var(--s6);
   max-width: 420px;
   line-height: 1.1;
 }
 
 .contact-aside p {
-  font-size: 1rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.82;
   max-width: 400px;
@@ -1823,7 +2123,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .project-hero__title {
-  font-size: clamp(3rem, 7vw, 6.8rem);
+  font-size: var(--fs-title);
   letter-spacing: -0.025em;
   margin-bottom: var(--s2);
 }
@@ -1831,7 +2131,7 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 .project-hero__loc {
   font-family: var(--font-serif);
   font-style: italic;
-  font-size: 1.15rem;
+  font-size: var(--fs-lead);
   color: rgba(250, 246, 236,0.78);
 }
 
@@ -1873,12 +2173,12 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 
 .project-info__value {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: var(--fs-lead);
   font-weight: 400;
 }
 
 .project-info__desc {
-  font-size: 1.05rem;
+  font-size: var(--fs-body);
   color: var(--text-muted);
   line-height: 1.85;
   max-width: 620px;

@@ -4,7 +4,7 @@
 Chaque projet garde toutes ses photos dans son dossier, et les cinq qui
 doivent paraître sur la page portfólio dans un sous-dossier `destaque` :
 
-    Projets-web/Fotos/forro/            ← la série entière (page Fotos)
+    Projets-web/Fotos/forro/            ← la série entière, en réserve
     Projets-web/Fotos/forro/destaque/   ← ce qu'on voit du portfólio
 
 Pour changer la vitrine d'un projet, on remplace les fichiers du dossier
@@ -29,19 +29,15 @@ import os
 import re
 import sys
 
-# La copie de secours va dans toute page qui lit fotos.json par fetch :
-# le portfólio, et la page Fotos vers laquelle il renvoie.
+# La copie de secours va dans la seule page qui lit fotos.json par
+# fetch : le portfólio.
 PAGES = {
     'portfolio.html': 'portfolio-series-data',
     'en/portfolio.html': 'portfolio-series-data',
     'fr/portfolio.html': 'portfolio-series-data',
-    'fotos.html': 'fotos-series-data',
-    'en/fotos.html': 'fotos-series-data',
-    'fr/fotos.html': 'fotos-series-data',
 }
 ANCHORS = {
     'portfolio-series-data': r'[ \t]*<div id="portfolio-series"[^>]*></div>\n',
-    'fotos-series-data': r'[ \t]*<div id="fotos-gallery"[^>]*></div>\n',
 }
 
 EXT = ('.jpg', '.jpeg', '.png', '.webp', '.avif')
