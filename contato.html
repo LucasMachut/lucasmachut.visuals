@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- Identité veralem : cette page ne charge pas css/style.css.
        Voir l'en-tête de css/portfolio.css. -->
-  <link rel="stylesheet" href="css/portfolio.css?v=7" />
+  <link rel="stylesheet" href="css/portfolio.css?v=8" />
 </head>
 <body>
 
@@ -63,6 +63,7 @@
             Quanto mais cedo a gente conversa, mais tempo eu tenho para entender quem
             vai estar ali e o que está em jogo naquele dia.
           </p>
+          <p class="lede">Respondo em até 48 horas, sempre eu mesmo.</p>
           <p>
             Se você prefere falar direto, o WhatsApp é o caminho mais rápido.
           </p>
@@ -120,6 +121,34 @@
               </div>
             </div>
 
+            <!-- Rien d'obligatoire ici : deux repères qui évitent un
+                 aller-retour de messages avant de savoir de quoi on
+                 parle. Le champ vide reste une réponse valable. -->
+            <div class="form-row">
+              <div class="form-field">
+                <label for="duracao">Duração prevista</label>
+                <select id="duracao" name="duracao">
+                  <option value="">Selecionar</option>
+                  <option>Algumas horas</option>
+                  <option>Meio dia</option>
+                  <option>O dia inteiro</option>
+                  <option>Mais de um dia</option>
+                </select>
+              </div>
+              <div class="form-field">
+                <label for="pessoas">Quantas pessoas</label>
+                <select id="pessoas" name="pessoas">
+                  <option value="">Selecionar</option>
+                  <option>Só eu</option>
+                  <option>Nós dois</option>
+                  <option>Até 20</option>
+                  <option>Até 50</option>
+                  <option>Até 120</option>
+                  <option>Mais de 120</option>
+                </select>
+              </div>
+            </div>
+
             <div class="form-row">
               <div class="form-field">
                 <label for="email">E-mail</label>
@@ -137,9 +166,18 @@
                 placeholder="Quem vai estar lá, como vocês se conheceram, o que não pode faltar."></textarea>
             </div>
 
-            <p class="form-note">
-              Respondo em até 48 horas.
-            </p>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="origem">Como você chegou até mim</label>
+                <select id="origem" name="origem">
+                  <option value="">Selecionar</option>
+                  <option>Instagram</option>
+                  <option>Indicação de alguém</option>
+                  <option>Google</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+            </div>
 
             <div class="form-submit">
               <button type="submit" class="btn btn--dark form-submit-btn">Enviar mensagem</button>

@@ -863,7 +863,12 @@ body:not(:has(.hero, .project-hero)) .header:not(.scrolled) .nav__lang-link + .n
 }
 
 .hero__video-logo img {
-  width: clamp(360px, 56vw, 840px);
+  /* Le PNG du logo a été recadré sur son contenu : il portait 1536×1024
+     pour une signature de 735×189, soit 9 % de pixels utiles. La
+     largeur désigne maintenant la signature et non plus la marge, donc
+     les valeurs sont multipliées par 0,478 pour que cette page garde
+     exactement le logo qu'elle avait. */
+  width: clamp(172px, 27vw, 402px);
   height: auto;
   opacity: 0.92;
 }

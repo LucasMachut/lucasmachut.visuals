@@ -250,6 +250,16 @@ p em,li em{font-style:italic;color:var(--terra)}
   max-width:none;
 }
 
+/* ═══════════ UNE PHRASE QUI OUVRE ═══════════ */
+/* .lede vit ailleurs dans le site, dans home.css, et cette feuille est
+   autonome : on la redessine ici en peau veralem plutôt que d'importer
+   une autre identité pour une règle. Un seul emploi pour l'instant, le
+   délai de réponse en haut de contato. */
+.lede{
+  font-family:var(--font-body);font-size:1.12rem;
+  line-height:1.8;color:var(--ink-soft);max-width:54ch;
+}
+
 /* ═══════════ UNE SÉRIE ═══════════ */
 .project-feature{padding:var(--s12) 0 var(--s10)}
 .project-feature+.project-feature,
@@ -442,6 +452,11 @@ p em,li em{font-style:italic;color:var(--terra)}
   line-height:1.8;max-width:40ch;
 }
 .contact-aside p+p{margin-top:var(--s3)}
+/* La promesse de réponse, dans la colonne de gauche et non plus au
+   bas du formulaire : elle se lit avant d'écrire, pas après. Même
+   corps que le reste de la colonne, mais en brun plein — c'est la
+   ligne qu'on retient. */
+.contact-aside .lede{color:var(--ink)}
 
 .contact-links{
   display:flex;flex-direction:column;gap:var(--s2);

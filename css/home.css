@@ -114,7 +114,13 @@ body.home{
 .home .cta i{font-style:normal;font-family:var(--font-sans);
   transition:transform .35s ease}
 .home .cta:hover i{transform:translateX(.3rem)}
-.cta-row{margin-top:1.9rem}
+/* Depuis qu'il y a deux appels sur le premier écran, la rangée doit
+   les écarter : deux mots soulignés collés l'un à l'autre se lisent
+   comme une seule phrase. Le fond de rangée suit l'ancrage du bloc,
+   comme .actions plus haut — sans quoi l'appel de la section « quem a
+   gente é », calé à droite, repasserait à gauche. */
+.cta-row{display:flex;flex-wrap:wrap;gap:1.1rem 2.2rem;margin-top:1.9rem}
+.w-br .cta-row,.w-mr .cta-row{justify-content:flex-end}
 
 /* ─────────── navigation ─────────── */
 .hd{position:fixed;top:0;left:0;right:0;z-index:60;height:var(--hd);
@@ -143,6 +149,11 @@ body.home{
 .hd__lang a.is-active{opacity:1}
 .hd__toggle{display:none;background:none;border:0;cursor:pointer;
   width:26px;height:18px;position:relative;padding:0}
+/* Les trois barres gardent leurs 26×18 — c'est le dessin. Ce carré
+   invisible étend la zone où le pouce est accepté jusqu'à 44, sans
+   écarter les barres les unes des autres. */
+.hd__toggle::after{content:"";position:absolute;top:50%;left:50%;
+  width:44px;height:44px;transform:translate(-50%,-50%)}
 .hd__toggle span{position:absolute;left:0;right:0;height:1px;background:var(--cream);
   transition:transform .3s ease,opacity .3s ease}
 .hd__toggle span:nth-child(1){top:0}
@@ -154,12 +165,29 @@ body.home{
 
 @media(max-width:860px){
   .hd__toggle{display:block;order:3}
-  .hd__links{position:fixed;inset:var(--hd) 0 auto 0;flex-direction:column;gap:1.4rem;
-    background:rgba(38,31,25,.97);padding:2.4rem var(--pad) 2.8rem;
+  .hd__links{position:fixed;inset:var(--hd) 0 auto 0;flex-direction:column;gap:.3rem;
+    background:rgba(38,31,25,.97);padding:1.8rem var(--pad) 2.2rem;
     transform:translateY(-120%);transition:transform .45s ease}
   .hd.is-open .hd__links{transform:none}
   .hd.is-open{background:rgba(38,31,25,.97)}
-  .hd__link{font-size:.72rem}
+  /* 11,5 px dans une boîte de 14 px de haut, dans un panneau qui en
+     faisait 209 : l'autre branche du site affiche son menu mobile entre
+     24 et 35 px. On s'aligne dessus, et le rembourrage porte chaque
+     lien au-dessus des 44 px où le pouce vise juste. */
+  .hd__link{font-size:1.35rem;letter-spacing:.1em;opacity:.92;
+    display:block;padding:.55rem 0}
+
+  /* Les deux appels du premier écran ne faisaient que 29 px de haut. Le
+     rembourrage haut est invisible — le souligné reste collé au mot —
+     mais il donne au doigt la surface qui lui manquait. La rangée
+     remonte d'autant pour ne rien décaler. */
+  .home .cta{padding-top:1.1rem}
+  .cta-row{margin-top:.8rem}
+
+  /* Cinq mots en capitales espacées tenaient sur trois lignes. On serre
+     l'interlettrage : il en reste deux, et ça se lit d'un coup, ce qui
+     est tout ce qu'on lui demande. */
+  .home .metier{letter-spacing:.09em}
 }
 
 /* ═══════════ PANNEAUX ET BANDES ═══════════ */
@@ -267,9 +295,18 @@ body.home{
 /* ─────────── vidéo d'ouverture ─────────── */
 .hero{position:relative;height:100svh;min-height:560px;overflow:hidden;background:var(--dark)}
 .hero__v{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
-.hero__logo{position:absolute;left:0;right:0;top:34%;z-index:3;
+/* Le fichier du logo mesurait 1536×1024 pour une signature de
+   735×189 : 9 % de pixels utiles, le reste était de la marge vide.
+   À 280 px de large, la signature visible n'en faisait que 134 — d'où
+   l'impression de timbre-poste. Le PNG est recadré sur son contenu, et
+   la largeur ci-dessous désigne maintenant la signature elle-même.
+   Le centrage passe par translateY : le point de 42 % vise le milieu
+   optique quelle que soit la taille, une prochaine retouche ne
+   déplacera plus le logo. */
+.hero__logo{position:absolute;left:0;right:0;top:42%;z-index:3;
+  transform:translateY(-50%);
   display:flex;justify-content:center;pointer-events:none}
-.hero__logo img{width:min(280px,40vw);height:auto}
+.hero__logo img{width:min(400px,62vw);height:auto}
 /* titre lu par les moteurs et les lecteurs d'écran, jamais affiché :
    le film d'ouverture reste nu */
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;
@@ -291,12 +328,72 @@ body.home{
    il lui faut son propre poids */
 .band .words__col{text-shadow:0 1px 26px rgba(20,16,12,.6)}
 
+/* ─────────── o que eu faço ───────────
+   La seule section de la page où l'on s'arrête pour lire. Toutes les
+   autres sont une image avec quelques mots posés dessus ; celle-ci a
+   trois prestations, un déroulé et un bouton, et il lui faut du calme
+   sous le texte. D'où le fond nu de .panel, sans photo.
+
+   .panel tient 100svh et coupe ce qui dépasse : parfait pour un cadre
+   photographique, fatal pour un bloc de lecture. Les trois règles
+   d'ouverture lui rendent la hauteur de son contenu. Elles passent
+   par l'identifiant, qui l'emporte aussi sur la hauteur de téléphone
+   posée plus bas. scroll-margin décale l'arrivée de l'ancre, sans quoi
+   la barre fixe mangerait le premier titre. */
+#o-que-eu-faco{
+  height:auto;min-height:0;overflow:visible;
+  padding:clamp(5rem,13vh,9rem) var(--pad);
+  scroll-margin-top:var(--hd);
+}
+/* une largeur de lecture, pas la largeur de la page */
+.prestacoes{max-width:38rem;margin:0 auto}
+.prestacao{
+  border-top:1px solid rgba(240,232,220,.2);
+  padding-top:1.5rem;margin-top:2.8rem;
+}
+.prestacao:first-child{margin-top:0}
+.prestacao .lede{margin-top:1rem;max-width:none}
+/* la ligne de service : ce qu'on reçoit, en combien de temps, à partir
+   de combien. Pas de petites capitales — ce sont des phrases, pas des
+   étiquettes. Elle se distingue par le corps et le gris.
+   Qualifié .home, comme le bouton et l'appel plus haut : .home p pose
+   déjà les marges de tous les paragraphes, et une classe seule ne
+   l'emporte pas dessus — la ligne se collerait au paragraphe. */
+/* Le bouton ferme le mouvement entier, pas la troisième ligne : il
+   prend le même écart que celui qui sépare deux prestations, sinon il
+   se lit comme un appendice du dernier bloc. */
+.prestacoes .cta-row{margin-top:3rem}
+
+/* ─────────── depoimentos ───────────
+   Une parole qui n'est pas la mienne : même serif que le manifeste,
+   un cran plus bas, et la signature frappée à la machine comme au dos
+   d'un tirage. Pas de guillemets dessinés, pas de photo de profil —
+   le nom, l'année et le type de projet suffisent.
+   L'attribut hidden ne peut rien contre un display posé par une
+   classe : .band est une grille, elle resterait affichée. D'où la
+   première règle, qui rend à hidden son travail. */
+.home [hidden]{display:none}
+.depo{max-width:34rem;margin-bottom:1.7rem}
+.depo:last-child{margin-bottom:0}
+.depo p{font-family:var(--font-serif);font-weight:300;
+  font-size:clamp(1rem,1.35vw,1.2rem);line-height:1.62;
+  color:rgba(240,232,220,.92)}
+.depo cite{display:block;margin-top:.7rem;font-style:normal;
+  font-family:var(--font-title);font-size:.64rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(240,232,220,.6)}
+
 /* ─────────── pied ─────────── */
 .ft{padding:3.2rem var(--pad) 3.6rem;background:var(--dark)}
+/* 9,6 px à 45 % d'opacité donnaient un contraste de 3,7 : le seul
+   endroit de la page qui échouait à la norme, et il échouait deux fois,
+   trop petit et trop pâle. 11,5 px à 62 % montent à 5,6 sans changer le
+   registre — ça reste la ligne ténue du bas de page. */
 .ft__in{max-width:var(--max);margin:0 auto;display:flex;flex-wrap:wrap;
-  justify-content:space-between;gap:1rem;font-size:.6rem;letter-spacing:.2em;
-  text-transform:uppercase;color:rgba(240,232,220,.45)}
-.ft a{text-decoration:none}
+  justify-content:space-between;gap:1rem;font-size:.72rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(240,232,220,.62)}
+/* le lien Instagram faisait 12 px de haut : on lui donne de quoi être
+   visé au pouce sans rien déplacer autour */
+.ft a{text-decoration:none;display:inline-block;padding:.5rem 0}
 .ft a:hover{color:var(--cream)}
 
 /* ─────────── apparition ─────────── */
@@ -321,7 +418,8 @@ body.home{
   .words{padding:calc(var(--hd) + 1.2rem) var(--pad) 2.4rem}
   .w-c .words__in{text-align:left;justify-content:flex-start}
   .w-br .words__col,.w-mr .words__col{text-align:left}
-  .w-br .actions,.w-mr .actions{justify-content:flex-start}
+  .w-br .actions,.w-mr .actions,
+  .w-br .cta-row,.w-mr .cta-row{justify-content:flex-start}
   .serie,.serie--right{left:var(--pad);right:auto;bottom:1.4rem;text-align:left}
 
   /* ─── Ancrage du texte, photo par photo ───

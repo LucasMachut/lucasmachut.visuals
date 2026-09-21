@@ -45,9 +45,12 @@ RewriteRule ^(.+?)/?$ $1.html [L]
 # must revalidate instead of showing a stale cached copy).
 # ============================================================
 <IfModule mod_headers.c>
-  # Pages, gallery data and images: always revalidate with the server.
-  # Unchanged files return a cheap 304; changed ones are re-fetched.
-  <FilesMatch "\.(html|json|jpe?g|png|webp|gif)$">
+  # Pages, gallery data, images and films: always revalidate with the
+  # server. Unchanged files return a cheap 304; changed ones are
+  # re-fetched. Le film d'ouverture est dans la liste pour la même
+  # raison que les photos : on le remplace sous le même nom, et un
+  # visiteur déjà venu resterait sinon sur l'ancien.
+  <FilesMatch "\.(html|json|jpe?g|png|webp|gif|mp4)$">
     Header set Cache-Control "no-cache, must-revalidate"
   </FilesMatch>
 
