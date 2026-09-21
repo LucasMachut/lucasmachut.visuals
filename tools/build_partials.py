@@ -46,12 +46,12 @@ LANGS = (('en', 'EN'), ('fr', 'FR'))
 # Le bloc à écrire là où le partial pose {{LANG}} (barre) ou
 # {{LANG_MOBILE}} (menu déroulant) : l'enveloppe est comprise, pour
 # qu'une page sans traduction n'en laisse pas une vide derrière elle.
-LANG_SELF = '<a href="/%s" class="nav__lang-link nav__lang-link--active">PT</a>'
+LANG_SELF = '<a href="%s" class="nav__lang-link nav__lang-link--active">%s</a>'
 LANG_OTHER = '<a href="%s" class="nav__lang-link">%s</a>'
 LANG_WRAP = {'LANG': 'nav__lang', 'LANG_MOBILE': 'nav__mobile-lang'}
 
 BLOCK = re.compile(
-    r'(?P<open>[ \t]*<!-- partial:(?P<name>[a-z0-9-]+)'
+    r'(?P<open>[ \t]*<!-- partial:(?P<name>[a-z0-9/-]+)'
     r'(?P<attrs>(?:\s+[a-z]+="[^"]*")*)\s*-->[ \t]*\n)'
     r'.*?'
     r'(?P<close>[ \t]*<!-- /partial:(?P=name) -->)',
@@ -64,36 +64,60 @@ PLACEHOLDER = re.compile(
 
 
 def pages():
-    """Les pages portugaises : la racine, et la branche lugares."""
-    trouvees = [n for n in os.listdir('.')
-                if n.endswith('.html') and os.path.isfile(n)]
-    if os.path.isdir('lugares'):
-        trouvees += ['lugares/' + n for n in os.listdir('lugares')
-                     if n.endswith('.html')]
+    """Toutes les pages du site : les trois langues, les deux branches."""
+    trouvees = []
+    for dossier in ('.', 'lugares', 'en', 'en/lugares', 'fr', 'fr/lugares'):
+        if not os.path.isdir(dossier):
+            continue
+        prefixe = '' if dossier == '.' else dossier + '/'
+        trouvees += [prefixe + n for n in os.listdir(dossier)
+                     if n.endswith('.html')
+                     and os.path.isfile(os.path.join(dossier, n))]
     return sorted(trouvees)
+
+
+def logique(page):
+    """La page débarrassée de son préfixe de langue, et la langue.
+
+    `en/lugares/regard.html` -> ('en', 'lugares/regard.html')
+    """
+    for folder, _ in LANGS:
+        if page.startswith(folder + '/'):
+            return folder, page[len(folder) + 1:]
+    return 'pt', page
 
 
 def lang_block(page, pad, slot, forces=None):
     """Le sélecteur de langue d'une page, indenté comme le placeholder.
 
-    Rien du tout si la page n'existe qu'en portugais. Une adresse passée
-    dans la balise (en="…", fr="…") l'emporte sur celle qu'on déduit.
+    Les trois langues montrent la même page : on part du chemin sans
+    préfixe et on regarde, pour chaque langue, si le fichier existe.
+    Rien du tout s'il n'y a qu'une langue — un bouton seul ne veut rien
+    dire. Une adresse passée dans la balise (en="…") l'emporte.
     """
     forces = forces or {}
-    others = []
+    langue, chemin = logique(page)
+
+    versions = [('pt', 'PT', '/' + chemin, chemin)]
     for folder, label in LANGS:
-        impose = forces.get(folder)
+        versions.append((folder, label,
+                         '/%s/%s' % (folder, chemin),
+                         '%s/%s' % (folder, chemin)))
+
+    dispo = []
+    for code, label, url, fichier in versions:
+        impose = forces.get(code)
         if impose:
-            others.append((impose, label))
-            continue
-        cible = '%s/%s' % (folder, page)
-        if os.path.isfile(cible):
-            others.append(('/' + cible, label))
-    if not others:
+            dispo.append((code, label, impose))
+        elif os.path.isfile(fichier):
+            dispo.append((code, label, url))
+    if len(dispo) < 2:
         return ''
 
-    lines = ['<div class="%s">' % LANG_WRAP[slot], '  ' + LANG_SELF % page]
-    lines += ['  ' + LANG_OTHER % pair for pair in others]
+    lines = ['<div class="%s">' % LANG_WRAP[slot]]
+    for code, label, url in dispo:
+        gabarit = LANG_SELF if code == langue else LANG_OTHER
+        lines.append('  ' + gabarit % (url, label))
     lines.append('</div>')
     return '\n'.join(pad + line for line in lines) + '\n'
 
