@@ -1,0 +1,515 @@
+/* ============================================================
+   MAQUETTE « ERA » — /lugares/index-era.html
+   Page de test, pas encore branchée. Ivoire & Bronze, mêmes
+   jetons et mêmes polices que style.css.
+
+   Système, tenu sur toute la page :
+   - UN AXE : chaque section pose sa tête au centre (label, titre,
+     phrase) ; seules les lignes d'offre et la double page du
+     regard sortent de l'axe, et elles tombent sur la grille de
+     12 colonnes.
+   - TROIS TAILLES, pas une de plus :
+       --t-display  titres courts et noms (Newsreader)
+       --t-lead     toute phrase, toute légende de texte (Inter)
+       --t-label    labels en capitales espacées
+   - TITRES COURTS en très grand (2 à 4 mots), les phrases en
+     petit dessous. Aucun titre-phrase.
+   - UN ESPACEMENT de section, un espacement de tête.
+   - Le bronze ne colore que les labels et les numéros.
+   ============================================================ */
+
+.era {
+  --gut:  clamp(1.25rem, 4vw, 3.5rem);
+  --sec:  clamp(6rem, 12vw, 11rem);
+  --head-gap: clamp(3.5rem, 7vw, 6rem);
+  --max:  1360px;
+
+  --t-display: clamp(2.9rem, 7.2vw, 7.4rem);
+  --t-lead:    clamp(1.08rem, 1.3vw, 1.28rem);
+  --t-label:   0.7rem;
+
+  --line-dark: rgba(250, 246, 236, 0.18);
+}
+
+/* ---- Grille et axe ------------------------------------------ */
+.era-grid {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--gut);
+}
+.era-head {
+  width: 100%;
+  max-width: 60rem;
+  margin-inline: auto;
+  padding-inline: var(--gut);
+  text-align: center;
+}
+.era-head .era-lead { max-width: 36rem; margin-inline: auto; }
+
+/* ---- Les trois tailles -------------------------------------- */
+.era-display {
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-variation-settings: 'opsz' 72;
+  font-size: var(--t-display);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+}
+.era-lead {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--t-lead);
+  line-height: 1.6;
+  letter-spacing: -0.005em;
+  text-wrap: pretty;
+}
+.era-label {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--t-label);
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* ---- Rythme d'une tête -------------------------------------- */
+.era-label + .era-display { margin-top: 1.4rem; }
+.era-display + .era-lead  { margin-top: 1.6rem; }
+.era-lead + .era-acoes,
+.era-olhar__texte + .era-acoes { margin-top: 2.5rem; }
+.era-acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+/* ---- Images animées ----------------------------------------- */
+[data-img] { overflow: hidden; }
+[data-img] > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.era-anim [data-img] > img { height: 116%; margin-top: -8%; }
+
+/* ============================================================
+   1 — ABERTURA
+   ============================================================ */
+.era-hero {
+  position: relative;
+  height: 440svh;
+  background: var(--bg);
+}
+.era-hero__sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.era-hero__frame {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: var(--bg-dark);
+  clip-path: inset(0% 0% 0% 0% round 0vw 0vw 0vw 0vw);
+  will-change: clip-path;
+}
+.era-hero__frame video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.era-hero__veil {
+  position: absolute;
+  inset: 0;
+  background: rgba(31, 24, 18, 0.3);
+}
+.era-hero__logo {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  pointer-events: none;
+}
+.era-hero__logo img { width: min(360px, 62vw); height: auto; }
+
+.era-hero__texte {
+  position: absolute;
+  z-index: 3;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  color: var(--cream);
+  pointer-events: none;
+}
+.era-hero__texte .era-label { color: rgba(250, 246, 236, 0.85); }
+.era-hero__texte .era-lead { color: rgba(250, 246, 236, 0.9); }
+.era-anim .era-hero__texte { opacity: 0; }
+
+.era-hero__tag {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  top: 13svh;
+  text-align: center;
+  color: var(--text-muted);
+  opacity: 0;
+}
+.era-hero__cue {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 0;
+  width: 1px;
+  height: 4.5rem;
+  overflow: hidden;
+}
+.era-hero__cue i {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: rgba(250, 246, 236, 0.7);
+  animation: era-cue 2.6s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+@keyframes era-cue {
+  0%   { transform: translateY(-100%); }
+  60%  { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+/* ============================================================
+   2 — ENTRÉE
+   ============================================================ */
+.era-promessa {
+  background: var(--bg);
+  padding: clamp(3rem, 6vw, 5rem) 0 var(--sec);
+}
+.era-promessa .era-lead { color: var(--text); }
+
+/* ============================================================
+   3 — A PERCEPÇÃO
+   ============================================================ */
+.era-percep {
+  position: relative;
+  background: var(--bg-dark);
+  color: var(--cream);
+}
+.era-percep__media {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+.era-percep__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.era-percep__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(31, 24, 18, 0.45);
+}
+.era-percep__panels {
+  position: relative;
+  z-index: 2;
+  margin-top: -100svh;
+}
+.era-percep__panel {
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+}
+.era-percep .era-label { color: rgba(250, 246, 236, 0.8); }
+.era-percep .era-lead { color: rgba(250, 246, 236, 0.9); }
+
+/* ============================================================
+   4 — TRÊS LUGARES
+   ============================================================ */
+.era-offre {
+  background: var(--bg);
+  padding: var(--sec) 0;
+}
+.era-offre .era-lead { color: var(--text); }
+.era-rows {
+  display: grid;
+  gap: clamp(4.5rem, 9vw, 8rem);
+  margin-top: var(--head-gap);
+}
+
+/* 12 colonnes : texte sur 6, image sur 5, une colonne d'air */
+.era-row {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1rem, 2vw, 2rem);
+  align-items: center;
+}
+.era-row__texte { grid-column: 1 / span 6; }
+.era-row__media { grid-column: 8 / span 5; aspect-ratio: 4 / 5; background: var(--bg-alt); }
+.era-row--inv .era-row__texte { grid-column: 7 / span 6; grid-row: 1; }
+.era-row--inv .era-row__media { grid-column: 1 / span 5; grid-row: 1; }
+
+.era-row__word {
+  margin-top: 1.1rem;
+  font-family: var(--font-serif);
+  font-weight: 300;
+  font-variation-settings: 'opsz' 72;
+  font-size: var(--t-display);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.era-row__word + .era-lead { margin-top: 1.6rem; max-width: 30rem; }
+.era-row__pour { margin-top: 1.25rem; color: var(--text-muted); }
+
+/* ============================================================
+   5 — O OLHAR
+   ============================================================ */
+.era-olhar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100svh;
+  background: var(--bg-dark);
+  color: var(--cream);
+}
+.era-olhar__img { position: relative; min-height: 100svh; }
+.era-olhar__img > img { position: absolute; inset: 0; }
+.era-anim .era-olhar__img > img { top: -8%; height: 116%; margin-top: 0; }
+.era-olhar__corps {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--sec) var(--gut) var(--sec) clamp(2.5rem, 6vw, 6.5rem);
+}
+.era-olhar .era-label { color: rgba(250, 246, 236, 0.8); }
+.era-olhar__texte {
+  display: grid;
+  gap: 1.1rem;
+  max-width: 32rem;
+  margin-top: 1.6rem;
+}
+.era-olhar__texte .era-lead { color: rgba(250, 246, 236, 0.88); }
+.era-olhar .era-acoes { justify-content: flex-start; }
+
+/* ============================================================
+   6 — LUGARES FILMADOS
+   ============================================================ */
+.era-lieux {
+  background: var(--bg);
+  padding: var(--sec) 0;
+}
+.era-lieux .video-grid { margin-top: var(--head-gap); }
+.era-lieux .era-grid + .era-head { margin-top: clamp(2.5rem, 5vw, 4rem); }
+
+/* ============================================================
+   7 — CLÔTURE
+   ============================================================ */
+.era-fin {
+  background: var(--bg-dark);
+  color: var(--cream);
+  padding: var(--sec) 0;
+}
+.era-fin .era-label { color: rgba(250, 246, 236, 0.8); }
+.era-fin .era-lead { color: rgba(250, 246, 236, 0.88); }
+
+/* ---- Barre de progression, bord droit ---------------------- */
+.era-progress {
+  position: fixed;
+  z-index: 50;
+  right: 1.25rem;
+  top: 50%;
+  width: 1px;
+  height: 22vh;
+  transform: translateY(-50%);
+  background: rgba(176, 141, 78, 0.25);
+  pointer-events: none;
+}
+.era-progress i {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top;
+}
+
+/* Lenis. style.css met html en scroll-behavior: smooth ; avec
+   Lenis et ScrollTrigger il faut un scroll instantané, sinon
+   ScrollTrigger mesure ses scènes pendant un défilement animé et
+   les décale. */
+html.lenis, html.lenis body { height: auto; }
+html.era-anim,
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+
+/* ============================================================
+   EN-TÊTE — propre à la maquette
+   Une signature à gauche, la nav à droite. Tant que le film est
+   plein écran (classe era-film posée par era-test.js), l'en-tête
+   reste transparent, en crème ; ensuite il redevient la barre
+   ivoire de style.css.
+   ============================================================ */
+.era-mark {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--text);
+  white-space: nowrap;
+  transition: color 0.4s ease;
+}
+body.era-film .header,
+body.era-film .header.scrolled {
+  background: transparent;
+  border-color: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+body.era-film .era-mark,
+body.era-film .header .nav__link { color: var(--cream); }
+body.era-film .header .nav__toggle:not(.open) span { background: var(--cream); }
+body.era-film .header .nav__lang-link { color: rgba(250, 246, 236, 0.9); }
+body.era-film .header .nav__lang-link--active { color: var(--cream); }
+/* Menu ouvert : fond ivoire, la signature repasse en sombre */
+.header:has(.nav__toggle.open) .era-mark { color: var(--text); }
+
+/* ---- Bouton de contact flottant (mobile) -------------------- */
+.era-cta { display: none; }
+
+/* ============================================================
+   MOBILE — pensé pour le pouce et l'écran vertical
+   - l'en-tête se réduit à la signature et au menu ; les langues
+     passent dans le menu ;
+   - le film dure moins longtemps (le pouce scrolle plus vite
+     qu'une molette) et se referme sur une arche plus étroite ;
+   - tout reste sur l'axe central, lignes d'offre comprises ;
+   - les photos prennent toute la largeur, en vertical (4:5),
+     puisque l'écran est vertical ;
+   - boutons pleine largeur, 52 px de haut ;
+   - un bouton de contact flotte en bas une fois le film passé,
+     et s'efface quand on arrive au contact.
+   ============================================================ */
+@media (max-width: 860px) {
+  body.era-page .header,
+  body.era-page .header.scrolled { padding: 0.95rem 1.25rem; }
+  body.era-page .header .nav__lang { display: none; }
+  .era-mark { font-size: 1.05rem; }
+
+  .era {
+    --gut: 1.25rem;
+    --sec: 5.5rem;
+    --head-gap: 3rem;
+    --t-display: clamp(2.7rem, 12.5vw, 3.6rem);
+    --t-lead: 1.06rem;
+  }
+  .era-head { padding-inline: calc(var(--gut) + 0.25rem); }
+
+  /* Ouverture */
+  .era-hero { height: 360svh; }
+  .era-hero__tag { top: 12svh; padding-inline: var(--gut); line-height: 1.8; }
+  .era-hero__texte .era-lead { max-width: 20rem; }
+
+  /* Boutons */
+  .era .era-acoes { flex-direction: column; align-items: center; }
+  .era .era-acoes .btn {
+    width: 100%;
+    max-width: 21rem;
+    min-height: 52px;
+    justify-content: center;
+  }
+  .era-promessa { padding-top: 2.5rem; }
+
+  /* Percepção : un temps par écran, texte bien au centre */
+  .era-percep__media::after { background: rgba(31, 24, 18, 0.5); }
+
+  /* Offre : une colonne, sur l'axe, photo pleine largeur */
+  .era-rows { gap: 4.5rem; }
+  .era-row { grid-template-columns: 1fr; row-gap: 2rem; text-align: center; }
+  .era-row__texte,
+  .era-row__media,
+  .era-row--inv .era-row__texte,
+  .era-row--inv .era-row__media { grid-column: 1; grid-row: auto; }
+  .era-row__media {
+    order: -1;
+    aspect-ratio: 4 / 5;
+    margin-inline: calc(-1 * var(--gut));
+  }
+  .era-row__word + .era-lead { margin-inline: auto; max-width: 22rem; }
+
+  /* Regard : photo verticale pleine largeur, texte sur l'axe */
+  .era-olhar { grid-template-columns: 1fr; min-height: 0; }
+  .era-olhar__img { min-height: 0; aspect-ratio: 4 / 5; }
+  .era-olhar__corps {
+    padding: 3.5rem calc(var(--gut) + 0.25rem) var(--sec);
+    text-align: center;
+    align-items: center;
+  }
+  .era-olhar__texte { margin-inline: auto; }
+  .era-olhar .era-acoes { justify-content: center; width: 100%; }
+
+  /* Films : pleine largeur */
+  .era-lieux .era-grid { padding-inline: 0; }
+  .era-lieux .video-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+
+  /* Clôture : laisser la place au bouton flottant */
+  .era-fin { padding-bottom: calc(var(--sec) + 1rem); }
+
+  /* Pied de page : sur l'axe lui aussi */
+  body.era-page .footer__inner { text-align: center; }
+  body.era-page .footer__brand-desc { max-width: 20rem; margin-inline: auto; }
+  body.era-page .footer__links {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.4rem 1.5rem;
+  }
+  body.era-page .footer__bottom { text-align: center; }
+
+  /* Bouton de contact flottant */
+  .era-cta {
+    position: fixed;
+    z-index: 150;
+    left: 50%;
+    bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-radius: 999px;
+    background: var(--text);
+    color: var(--cream);
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgba(31, 24, 18, 0.25);
+    transform: translate(-50%, calc(100% + 2rem));
+    transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .era-cta svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.4; }
+  .era-cta.is-on { transform: translate(-50%, 0); }
+
+  .era-progress { display: none; }
+}
+
+/* ============================================================
+   SANS ANIMATION (reduced motion, ou GSAP absent)
+   ============================================================ */
+.era-static .era-hero { height: 100svh; }
+.era-static .era-hero__logo,
+.era-static .era-hero__cue,
+.era-static .era-progress { display: none; }
+.era-static .era-hero__tag { opacity: 1; top: 12svh; color: var(--cream); }
+.era-static .era-cta { transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) {
+  .era-hero__cue i { animation: none; }
+}
