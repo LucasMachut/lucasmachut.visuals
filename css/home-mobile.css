@@ -1,0 +1,280 @@
+/* ═══════════════════════════════════════════════════════════
+   Accueil — version téléphone (860 px et moins)
+   Pensée pour le pouce, pas adaptée du grand écran. Validée le
+   24.09.2026 (prototype mobile-proto.html).
+   Chaque chapitre est un écran collé : la photo arrive seule, nue,
+   puis le texte monte sur elle avec son voile. Séries au pouce,
+   album au doigt, navigation en bas.
+   Tout est rangé sous .mv, et les classes qui existent aussi dans
+   home.css sont préfixées (mbtn, mcta, mtx, mmet, mserie, mft) :
+   les deux versions vivent dans la même page sans rien se prêter.
+   ═══════════════════════════════════════════════════════════ */
+
+/* une seule version à la fois */
+@media(max-width:860px){.dv{display:none}}
+@media(min-width:861px){.mv{display:none}}
+
+.mv{
+  --dark:#2E2620; --ink:#14100C; --cream:#F0E8DC; --rose:#C98E7A; --terra:#B5623C;
+  --serif:'Newsreader',Georgia,serif;
+  --sans:'Inter Tight',system-ui,-apple-system,sans-serif;
+  --type:'Special Elite','Courier New',Courier,monospace;
+    --g:22px;                                   /* gouttière */
+  --bar:58px;
+  --safe:env(safe-area-inset-bottom,0px);
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.mv{background:var(--dark);color:var(--cream);
+  font-family:var(--sans);font-weight:300;font-size:16px;line-height:1.6;
+  -webkit-tap-highlight-color:transparent}
+.mv a{color:inherit}
+.mv img{display:block}
+.mv figure{margin:0}
+/* chaque photo est dans un <picture> (voir le commentaire en tête
+   d'index.html) : il prend la place que prenait l'image */
+.mv picture{display:block;width:100%;height:100%}
+.mv p{margin:0}
+
+.grain,.top,.bar,.sheet{left:0;right:0}
+
+/* ─────────── le grain ───────────
+   La texture signature, sur toute la page. Il ne bouge que par à-coups
+   (steps), comme une pellicule qui défile — pas un bruit vidéo lisse. */
+.grain{position:fixed;top:0;bottom:0;z-index:90;pointer-events:none;overflow:hidden}
+.grain::before{content:"";position:absolute;inset:-50%;background-image:var(--noise);
+  background-size:180px;opacity:.13;mix-blend-mode:overlay;
+  animation:grain 1s steps(5) infinite}
+@keyframes grain{
+  0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}
+  40%{transform:translate(3%,-5%)}60%{transform:translate(-6%,-2%)}
+  80%{transform:translate(5%,4%)}100%{transform:translate(0,0)}}
+
+/* ─────────── la tête ───────────
+   Seulement le nom et la langue. Elle s'efface après l'ouverture :
+   la navigation vit en bas. */
+.top{position:fixed;top:0;z-index:70;display:flex;align-items:center;justify-content:flex-end;
+  padding:calc(env(safe-area-inset-top,0px) + 14px) var(--g) 14px;
+  transition:opacity .5s ease,transform .5s ease}
+.top.is-hidden{opacity:0;transform:translateY(-100%);pointer-events:none}
+.top__logo img{height:26px;width:auto}
+.top__lang{display:flex;gap:.9rem;font-size:.66rem;letter-spacing:.2em}
+.top__lang a{text-decoration:none;opacity:.5;padding:.6rem 0}
+.top__lang a.is-active{opacity:1}
+
+/* ─────────── 00 · ouverture en viseur ─────────── */
+.open{position:relative;height:175svh;--p:0;--ix:7%;--iy:12%}
+.open__stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--dark)}
+.open__frame{position:absolute;inset:0;
+  clip-path:inset(calc(var(--iy) * (1 - var(--p))) calc(var(--ix) * (1 - var(--p))))}
+.open__v{width:100%;height:100%;object-fit:cover;transform:scale(calc(1.08 - .08 * var(--p)))}
+.open__frame::after{content:"";position:absolute;inset:0;background:rgba(20,16,12,.25)}
+.open__edge{position:absolute;pointer-events:none;
+  inset:calc(var(--iy) * (1 - var(--p))) calc(var(--ix) * (1 - var(--p)));
+  opacity:calc(1 - var(--p) * 1.8)}
+.open__edge i,.ch__af i{position:absolute;width:16px;height:16px;border:0 solid var(--cream)}
+.open__edge i:nth-child(1),.ch__af i:nth-child(1){top:0;left:0;border-top-width:1.5px;border-left-width:1.5px}
+.open__edge i:nth-child(2),.ch__af i:nth-child(2){top:0;right:0;border-top-width:1.5px;border-right-width:1.5px}
+.open__edge i:nth-child(3),.ch__af i:nth-child(3){bottom:0;left:0;border-bottom-width:1.5px;border-left-width:1.5px}
+.open__edge i:nth-child(4),.ch__af i:nth-child(4){bottom:0;right:0;border-bottom-width:1.5px;border-right-width:1.5px}
+/* le logo s'écrit de gauche à droite, comme la main qui signe */
+.open__logo{position:absolute;left:0;right:0;top:44%;transform:translateY(-50%);
+  display:flex;justify-content:center;pointer-events:none}
+.open__logo img{width:66%;height:auto;clip-path:inset(0 100% 0 0);
+  animation:sign 2.4s cubic-bezier(.55,.1,.3,1) .5s forwards}
+@keyframes sign{to{clip-path:inset(0 0 0 0)}}
+.open__line{position:absolute;left:0;right:0;bottom:calc(var(--iy) * (1 - var(--p)) + 1.4rem);
+  text-align:center;font-family:var(--type);font-size:.72rem;letter-spacing:.16em;
+  color:rgba(240,232,220,.85);min-height:1em}
+/* l'invitation à descendre : un trait qui coule, rien d'autre */
+.open__cue{position:absolute;left:50%;bottom:calc(var(--iy) * (1 - var(--p)) - 2.6rem);
+  width:1px;height:28px;background:var(--rose);transform-origin:top;
+  animation:cue 2.2s ease-in-out infinite;opacity:calc(1 - var(--p) * 3)}
+@keyframes cue{0%{transform:scaleY(0)}50%{transform:scaleY(1);transform-origin:top}
+  51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* ─────────── les chapitres ───────────
+   Une section haute, un écran collé dedans. Tant qu'on descend, la
+   photo reste : d'abord seule, puis le texte monte sur elle. La section
+   d'après vient ensuite la recouvrir, comme on pose un tirage sur un
+   autre. --beats = nombre de temps de texte. */
+.ch{position:relative;height:calc(170svh + var(--beats,1) * 75svh)}
+.ch__stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--ink)}
+.ch__photos{position:absolute;inset:0}
+.ch__photos img{width:100%;height:100%;object-fit:cover;
+  transform:scale(var(--z,1.06));transform-origin:50% 40%}
+/* une série : on la fait glisser au pouce, une photo par cran */
+.mserie{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.mserie::-webkit-scrollbar{display:none}
+.mserie > picture{flex:0 0 100%;scroll-snap-align:center;scroll-snap-stop:always}
+.ch__count{position:absolute;top:calc(env(safe-area-inset-top,0px) + 18px);right:var(--g);z-index:4;
+  font-family:var(--type);font-size:.72rem;letter-spacing:.18em;color:rgba(240,232,220,.75);
+  text-shadow:0 1px 10px rgba(0,0,0,.6);pointer-events:none}
+.ch__count span{color:var(--cream)}
+
+/* le viseur qui fait la mise au point à l'arrivée de la photo : les
+   coins se resserrent sur le sujet, clignent deux fois, virent au rose
+   (la confirmation), puis s'effacent. Le vocabulaire du métier, une
+   seule fois par photo. */
+.ch__af{position:absolute;inset:4%;z-index:3;pointer-events:none;opacity:0}
+.ch.is-in .ch__af{animation:af 1.9s cubic-bezier(.3,.7,.2,1) .15s both}
+.ch.is-in .ch__af i{animation:af-c 1.9s linear .15s both}
+@keyframes af{
+  0%{inset:4%;opacity:0}
+  12%{opacity:1}
+  48%{inset:var(--af)}
+  56%{opacity:.15}62%{opacity:1}68%{opacity:.15}74%{opacity:1}
+  90%{inset:var(--af);opacity:1}
+  100%{inset:var(--af);opacity:0}}
+@keyframes af-c{0%,55%{border-color:var(--cream)}62%,100%{border-color:var(--rose)}}
+
+/* la fuite de lumière : une chaleur qui traverse l'image à son
+   arrivée, comme le bout d'une pellicule voilée */
+.ch__leak{position:absolute;inset:-30% -60%;z-index:2;pointer-events:none;opacity:0;
+  mix-blend-mode:screen;
+  background:
+    radial-gradient(28% 38% at 38% 42%,rgba(232,140,88,.55),rgba(232,140,88,0) 70%),
+    radial-gradient(22% 30% at 58% 60%,rgba(201,142,122,.5),rgba(201,142,122,0) 70%)}
+.ch.is-in .ch__leak{animation:leak 2.8s ease-out both}
+@keyframes leak{0%{opacity:0;transform:translateX(-35%)}30%{opacity:.85}
+  100%{opacity:0;transform:translateX(35%)}}
+
+/* le voile ne vient qu'avec le texte : la photo a d'abord été vue nue */
+.ch__veil{position:absolute;inset:0;z-index:3;pointer-events:none;opacity:var(--v,0);
+  background:linear-gradient(to top,rgba(20,16,12,.94) 0%,rgba(20,16,12,.82) 28%,
+    rgba(20,16,12,.4) 55%,rgba(20,16,12,0) 78%)}
+.ch__text{position:absolute;left:var(--g);right:var(--g);z-index:4;
+  bottom:calc(var(--bar) + var(--safe) + 26px);display:grid;pointer-events:none}
+/* les temps de texte se superposent : le premier s'en va quand le
+   suivant arrive */
+.beat{grid-area:1/1;align-self:end}
+.beat a{pointer-events:auto}
+.rv{opacity:0;will-change:transform,opacity}
+.beat > * + *{margin-top:1rem}
+
+.ch__n,.folha__n{font-family:var(--type);font-size:.72rem;letter-spacing:.18em;
+  color:var(--rose);min-height:1.1em}
+/* le chariot de la machine : il clignote tant qu'on tape */
+.caret{display:inline-block;width:.55em;height:1px;margin-left:.15em;background:currentColor;
+  vertical-align:baseline;animation:caret .8s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+
+.mv h2{font-family:var(--type);font-weight:400;font-size:1.5rem;line-height:1.32;
+  letter-spacing:.01em;margin:0;text-shadow:0 1px 20px rgba(20,16,12,.55)}
+/* le mot qui porte : souligné à la main, qui se trace quand il arrive */
+.mv h2 em{font-style:normal;text-decoration:none;padding-bottom:.18em;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5.5 C 30 2.5, 60 6.5, 95 4 S 160 2, 199 4.5' fill='none' stroke='%23C98E7A' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E")
+    0 100% / var(--u,0%) .45em no-repeat;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone}
+.mtx{font-family:var(--serif);font-weight:300;font-size:1.17rem;line-height:1.5;
+  color:rgba(240,232,220,.95);text-shadow:0 1px 18px rgba(20,16,12,.6)}
+.mtx--em{font-style:italic;color:var(--rose)}
+.mmet{font-family:var(--type);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;
+  line-height:1.9;padding-top:.9rem;border-top:1px solid rgba(201,142,122,.5)}
+.mcta{display:inline-flex;gap:.6rem;align-items:baseline;font-family:var(--type);font-size:.74rem;
+  letter-spacing:.14em;text-transform:uppercase;text-decoration:none;
+  padding:.9rem 0 .4rem;border-bottom:1px solid rgba(201,142,122,.7)}
+.mcta i{font-style:normal;font-family:var(--sans)}
+/* qualifié .mv : sinon .mv a{color:inherit} l'emporte et le texte du
+   bouton prend la couleur de son fond */
+.mv .mbtn{display:flex;justify-content:center;align-items:center;min-height:52px;padding:0 1.4rem;
+  font-family:var(--sans);font-size:.72rem;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;background:var(--dark);color:var(--cream);border:1px solid var(--dark)}
+.mv .mbtn--cream{background:var(--cream);color:var(--dark);border-color:var(--cream);display:inline-flex;margin-top:.6rem}
+
+/* ─────────── l'album ─────────── */
+.album{position:relative;height:100svh;min-height:560px;background:var(--dark);overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center}
+.album__pile{position:relative;height:66svh}
+.tirage{position:absolute;left:50%;top:50%;margin:0;padding:3.2%;background:var(--cream);
+  box-shadow:0 26px 50px -20px rgba(8,6,4,.85),0 2px 5px rgba(8,6,4,.4);
+  touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none;
+  will-change:transform,filter}
+.tirage--h{width:88%;aspect-ratio:3/2;padding:2.4%}
+.tirage--v{width:66%;aspect-ratio:2/3}
+.tirage img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
+.tirage.is-drag{cursor:grabbing}
+.album__n{text-align:center;font-family:var(--type);font-size:.72rem;letter-spacing:.2em;
+  color:rgba(240,232,220,.55);margin-top:2.2rem}
+.album__n span{color:var(--cream)}
+
+/* ─────────── 07 · la page de papier ─────────── */
+.folha{position:relative;z-index:1;background-color:var(--cream);color:var(--dark);
+  background-image:var(--noise);background-size:200px;background-blend-mode:multiply;
+  padding:16svh var(--g) 14svh}
+.folha::before{content:"";position:absolute;inset:0;background:var(--cream);opacity:.86;z-index:-1}
+.folha__n{color:rgba(46,38,32,.6);margin-bottom:2.6rem}
+.prest{border-top:1px solid rgba(46,38,32,.22)}
+.prest:last-of-type{border-bottom:1px solid rgba(46,38,32,.22)}
+.prest summary{list-style:none;display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  min-height:68px;padding:1rem 0;cursor:pointer;
+  font-family:var(--type);font-size:1.12rem;letter-spacing:.01em}
+.prest summary::-webkit-details-marker{display:none}
+/* le plus devient moins : deux traits, l'un pivote */
+.prest summary i{position:relative;width:14px;height:14px;flex:none}
+.prest summary i::before,.prest summary i::after{content:"";position:absolute;left:0;right:0;top:50%;
+  height:1px;background:var(--terra);transition:transform .35s ease}
+.prest summary i::after{transform:rotate(90deg)}
+.prest[open] summary i::after{transform:rotate(0)}
+.prest p{font-family:var(--serif);font-size:1.08rem;line-height:1.55;color:rgba(46,38,32,.86);
+  padding:0 0 1.4rem;animation:unfold .45s ease}
+@keyframes unfold{from{opacity:0;transform:translateY(-6px)}}
+.folha .mbtn{margin-top:2.6rem}
+.folha .rv{opacity:1}
+
+/* ─────────── pied ─────────── */
+.mft{display:flex;flex-direction:column;gap:.4rem;padding:3rem var(--g) calc(var(--bar) + var(--safe) + 2.4rem);
+  font-family:var(--type);font-size:.7rem;letter-spacing:.16em;color:rgba(240,232,220,.6);background:var(--dark)}
+.mft a{text-decoration:none;padding:.4rem 0}
+
+/* ─────────── la barre du pouce ─────────── */
+.bar{position:fixed;bottom:0;z-index:80;display:flex;align-items:center;justify-content:space-between;gap:.8rem;
+  height:calc(var(--bar) + var(--safe));padding:0 var(--g) var(--safe);
+  background:rgba(38,31,25,.9);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  transform:translateY(105%);transition:transform .5s cubic-bezier(.3,.7,.2,1)}
+.bar.is-on{transform:none}
+.bar__line{position:absolute;left:0;right:0;top:0;height:1px;background:var(--rose);
+  transform-origin:0 50%;transform:scaleX(var(--prog,0))}
+.bar__ch{display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0;background:none;border:0;
+  color:var(--cream);font-family:var(--type);font-size:.74rem;letter-spacing:.12em;cursor:pointer}
+.bar__n{color:var(--rose)}
+.bar__ch i{width:7px;height:7px;border-left:1px solid currentColor;border-top:1px solid currentColor;
+  transform:rotate(45deg) translate(2px,2px);opacity:.6;transition:transform .3s ease}
+.bar__ch[aria-expanded="true"] i{transform:rotate(225deg) translate(-2px,-2px)}
+.bar__cta{display:flex;align-items:center;min-height:40px;padding:0 1rem;flex:none;
+  background:var(--cream);color:var(--dark) !important;text-decoration:none;
+  font-size:.64rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase}
+
+/* le sommaire, qui monte de la barre, sur le papier */
+.sheet{position:fixed;bottom:0;top:0;z-index:79;visibility:hidden;
+  background:rgba(14,11,8,0);transition:background .4s ease,visibility 0s .4s}
+.sheet.is-open{visibility:visible;background:rgba(14,11,8,.55);transition:background .4s ease}
+.sheet__in{position:absolute;left:0;right:0;bottom:0;
+  padding:1.8rem var(--g) calc(var(--bar) + var(--safe) + 1.4rem);
+  background:var(--cream);color:var(--dark);
+  transform:translateY(100%);transition:transform .45s cubic-bezier(.3,.7,.2,1)}
+.sheet.is-open .sheet__in{transform:none}
+.sheet__t{font-family:var(--type);font-size:.68rem;letter-spacing:.2em;color:rgba(46,38,32,.55);margin-bottom:.8rem}
+.sheet__list{list-style:none;margin:0;padding:0}
+.sheet__list a{display:flex;gap:1rem;align-items:baseline;min-height:44px;padding:.55rem 0;
+  font-family:var(--type);font-size:1rem;text-decoration:none;border-bottom:1px solid rgba(46,38,32,.12)}
+.sheet__list a span{color:var(--terra);font-size:.72rem;letter-spacing:.14em}
+.sheet__list a.is-cur{color:var(--terra)}
+.sheet__more{display:flex;flex-wrap:wrap;gap:.2rem 1.4rem;margin-top:1.2rem}
+.sheet__more a{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
+  padding:.7rem 0;color:rgba(46,38,32,.75)}
+
+/* ─────────── sans mouvement ─────────── */
+@media(prefers-reduced-motion:reduce){
+  .grain::before,.open__cue{animation:none}
+  .open{height:100svh;--p:1}
+  .open__edge{display:none}
+  .open__logo img{animation:none;clip-path:none}
+  .ch{height:auto}
+  .ch__stage{position:relative}
+  .ch.is-in .ch__af,.ch.is-in .ch__leak{animation:none}
+  .rv{opacity:1 !important;transform:none !important}
+  .ch__veil{opacity:1}
+  /* les temps de texte ne se remplacent plus : ils s'empilent */
+  .beat{grid-area:auto}
+}

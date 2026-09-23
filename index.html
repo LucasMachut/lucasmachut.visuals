@@ -15,8 +15,31 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/home.css?v=23">
+<link rel="stylesheet" href="css/home-mobile.css?v=2">
 </head>
 <body class="home">
+
+<!-- ═══════════════════════════════════════════════════════════
+     DEUX VERSIONS DANS UNE PAGE
+     .dv  — grand écran (au-delà de 860 px) : la page telle qu'elle était.
+     .mv  — téléphone (860 px et moins) : pensée pour le pouce, validée
+            le 24.09.2026. Styles dans css/home-mobile.css, script dans
+            js/home-mobile.js.
+     Une seule des deux s'affiche, et l'autre ne télécharge rien :
+     chaque photo est dans un <picture> dont la <source> donne un pixel
+     vide, encodé dans la page, sur le format de l'autre version
+     (max-width:860px côté .dv, min-width:861px côté .mv). Le navigateur
+     choisit avant de télécharger — display:none seul ne suffisait pas.
+     La vraie image reste dans le src de l'<img> : un src en pixel vide
+     désactive le chargement différé (lazy) dans Chrome.
+     Les films n'ont ni autoplay ni preload : chacun est lancé par
+     son script, sur son format seulement.
+     ⚠ Les textes existent en DEUX exemplaires, un par version :
+     une phrase changée ici se change aussi dans l'autre bloc.
+     build_partials.py ne s'occupe que de la navigation et du pied.
+     ═══════════════════════════════════════════════════════════ -->
+<div class="dv">
+
 
 <!-- partial:nav-home -->
 <header class="hd" role="banner">
@@ -40,13 +63,15 @@
 
 <!-- ═══ 1 · VÍDEO ═══ -->
 <section class="hero">
-  <!-- Un seul film, pour tous les écrans. Les deux <video> précédents se
-       téléchargeaient l'un ET l'autre — 58 Mo — parce que display:none
-       n'empêche pas le chargement d'une vidéo.
+  <!-- Un seul fichier de film pour les deux versions. Les deux <video>
+       d'autrefois se téléchargeaient l'un ET l'autre — 58 Mo — parce que
+       display:none n'empêche pas le chargement d'une vidéo. Celui-ci et
+       celui de la version .mv n'ont donc ni autoplay ni preload : chacun
+       est lancé par son script, sur son format seulement.
        poster : si iOS refuse la lecture (mode économie d'énergie), le
        cadre montre une image au lieu d'un rectangle noir. -->
-  <video class="hero__v" autoplay muted loop playsinline webkit-playsinline
-         preload="auto" poster="photos/hero-poster.jpg">
+  <video class="hero__v" muted loop playsinline webkit-playsinline
+         preload="none" poster="photos/hero-poster.jpg">
     <source src="videos/header_min.mp4" type="video/mp4">
   </video>
   <div class="veil veil--soft"></div>
@@ -61,8 +86,8 @@
      Texte en haut, la danseuse reste lisible en bas à droite. -->
 <section class="panel">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-01.jpg">
-    <img src="photos/le-regard/veu-preto-praia.jpg" alt="Véu preto ao vento, na areia"
+    <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <img loading="lazy" src="photos/le-regard/veu-preto-praia.jpg" alt="Véu preto ao vento, na areia"
          style="--dpos:72% 58%;--mpos:50% 50%">
   </picture>
   <div class="veil veil--top"></div>
@@ -90,12 +115,12 @@
 <section class="band band--2">
   <figure class="tile">
     <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-02.jpg">
-      <img src="photos/le-regard/abraco-pb.jpg" alt="Abraço, preto e branco"
+      <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img loading="lazy" src="photos/le-regard/abraco-pb.jpg" alt="Abraço, preto e branco"
            style="--dpos:58% 42%;--mpos:50% 50%">
     </picture>
   </figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/casal-deitado.jpg" alt="Casal deitado, um beijo na testa" loading="lazy" style="object-position:50% 50%"></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/casal-deitado.jpg" alt="Casal deitado, um beijo na testa" loading="lazy" style="object-position:50% 50%"></picture></figure>
   <div class="veil veil--corner-bl"></div>
   <!-- mobile : recadré à 75%, le visage de la dame tient les deux tiers
        hauts du cadre — le texte se pose sous elle -->
@@ -113,8 +138,8 @@
      D'où un voile latéral franc plutôt qu'un dégradé timide. -->
 <section class="panel panel--88" id="trabalhos">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-03.jpg">
-    <img src="photos/le-regard/dois-olhares.jpg" alt="Dois rostos lado a lado, muito perto"
+    <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <img loading="lazy" src="photos/le-regard/dois-olhares.jpg" alt="Dois rostos lado a lado, muito perto"
          style="--dpos:56% 46%;--mpos:55% 50%">
   </picture>
   <div class="veil veil--left"></div>
@@ -137,14 +162,14 @@
 <section class="band band--4">
   <figure class="tile">
     <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-04.jpg">
-      <img src="photos/le-regard/flor-branca.jpg" alt="Flor branca junto à boca"
+      <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img loading="lazy" src="photos/le-regard/flor-branca.jpg" alt="Flor branca junto à boca"
            style="--dpos:58% 42%;--mpos:50% 50%">
     </picture>
   </figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/silhueta-flores.jpg" alt="Silhueta de costas com flores vermelhas" loading="lazy" style="object-position:54% 46%"></figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/bracos-palmeiras.jpg" alt="Braços abertos sob as palmeiras" loading="lazy" style="object-position:64% 48%"></figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/rosto-agua.jpg" alt="Rosto na superfície da água" loading="lazy" style="object-position:50% 44%"></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/silhueta-flores.jpg" alt="Silhueta de costas com flores vermelhas" loading="lazy" style="object-position:54% 46%"></picture></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/bracos-palmeiras.jpg" alt="Braços abertos sob as palmeiras" loading="lazy" style="object-position:64% 48%"></picture></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/rosto-agua.jpg" alt="Rosto na superfície da água" loading="lazy" style="object-position:50% 44%"></picture></figure>
   <div class="veil veil--bottom"></div>
   <!-- mobile : m-04 est désormais la silhouette aux fleurs, dont le
        tiers bas est plat et sombre (35 à 62 de luminance) et la tête
@@ -170,13 +195,13 @@
 <section class="band band--3">
   <figure class="tile">
     <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-05.jpg">
-      <img src="photos/le-regard/maos-agua.jpg" alt="Mãos tocando a água no crepúsculo"
+      <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img loading="lazy" src="photos/le-regard/maos-agua.jpg" alt="Mãos tocando a água no crepúsculo"
            style="--dpos:46% 56%;--mpos:50% 50%">
     </picture>
   </figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/areia-maos.jpg" alt="Areia escorrendo entre as mãos" loading="lazy" style="object-position:58% 50%"></figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/anel-cama.jpg" alt="Mão adormecida sobre o lençol, anel" loading="lazy" style="object-position:42% 50%"></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/areia-maos.jpg" alt="Areia escorrendo entre as mãos" loading="lazy" style="object-position:58% 50%"></picture></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/anel-cama.jpg" alt="Mão adormecida sobre o lençol, anel" loading="lazy" style="object-position:42% 50%"></picture></figure>
   <div class="veil veil--scrim veil--hi"></div>
   <div class="words words--d w-tc">
     <div class="words__in">
@@ -206,13 +231,13 @@
 <section class="band band--3">
   <figure class="tile">
     <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-06.jpg">
-      <img src="photos/le-regard/bandeira-riso.jpg" alt="Riso sob a bandeira ao sol"
+      <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img loading="lazy" src="photos/le-regard/bandeira-riso.jpg" alt="Riso sob a bandeira ao sol"
            style="--dpos:50% 40%;--mpos:52% 50%">
     </picture>
   </figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/chapeu-verde.jpg" alt="Chapéu de palha e folhagem" loading="lazy" style="object-position:60% 40%"></figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/lampada-bar.jpg" alt="Copo e abajur, fim de noite" loading="lazy" style="object-position:56% 50%"></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/chapeu-verde.jpg" alt="Chapéu de palha e folhagem" loading="lazy" style="object-position:60% 40%"></picture></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/lampada-bar.jpg" alt="Copo e abajur, fim de noite" loading="lazy" style="object-position:56% 50%"></picture></figure>
   <div class="veil veil--corner-br"></div>
   <!-- mobile : le visage flotte en haut du cadre, les cheveux dans
        l'eau occupent le bas — photo claire partout, le voile fait le
@@ -233,8 +258,8 @@
      Aucune parole ici : après quatre fragments, l'image reste seule. -->
 <section class="panel panel--96">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-07.jpg">
-    <img src="photos/le-regard/riso-pedras.jpg" alt="Riso de braços abertos entre as pedras"
+    <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <img loading="lazy" src="photos/le-regard/riso-pedras.jpg" alt="Riso de braços abertos entre as pedras"
          style="--dpos:44% 44%;--mpos:56% 50%">
   </picture>
 </section>
@@ -249,12 +274,12 @@
 <section class="band band--2">
   <figure class="tile">
     <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-08.jpg">
-      <img src="photos/le-regard/autorretrato.jpg" alt="Autorretrato no espelho, câmera na mão"
+      <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img loading="lazy" src="photos/le-regard/autorretrato.jpg" alt="Autorretrato no espelho, câmera na mão"
            style="--dpos:50% 44%;--mpos:50% 50%">
     </picture>
   </figure>
-  <figure class="tile tile--alt"><img src="photos/le-regard/janela-montanha.jpg" alt="De costas na janela, a montanha atrás do vidro" loading="lazy" style="object-position:54% 50%"></figure>
+  <figure class="tile tile--alt"><picture><source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/janela-montanha.jpg" alt="De costas na janela, a montanha atrás do vidro" loading="lazy" style="object-position:54% 50%"></picture></figure>
 </section>
 
 <!-- ═══ 10 · O QUE EU FAÇO ═══
@@ -311,8 +336,8 @@
 <section class="band band--2" id="depoimentos" hidden>
   <figure class="tile">
     <!-- <picture>
-      <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-11-depoimentos.jpg">
-      <img src="photos/le-regard/[à choisir].jpg" alt="" style="--dpos:50% 50%;--mpos:50% 50%">
+      <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+      <img loading="lazy" src="photos/le-regard/[à choisir].jpg" alt="" style="--dpos:50% 50%;--mpos:50% 50%">
     </picture> -->
   </figure>
   <div class="veil veil--corner-bl"></div>
@@ -343,8 +368,8 @@
      apparaît, comme nom de service. -->
 <section class="panel panel--96" id="hoteis">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-09-hoteis.jpg">
-    <img src="photos/le-regard/chave-porta.jpg" alt="Uma presença num quarto de hotel"
+    <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <img loading="lazy" src="photos/le-regard/chave-porta.jpg" alt="Uma presença num quarto de hotel"
          style="--dpos:52% 50%;--mpos:50% 50%">
   </picture>
   <div class="veil veil--left"></div>
@@ -371,8 +396,8 @@
      cadrage calé sur le bas pour qu'elle reste entière. -->
 <section class="panel" id="contato">
   <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-10-contato.jpg">
-    <img src="photos/le-regard/hero-corpo-mar.jpg" alt="Um corpo deitado na espuma, ao pé da falésia"
+    <source media="(max-width:860px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==">
+    <img loading="lazy" src="photos/le-regard/hero-corpo-mar.jpg" alt="Um corpo deitado na espuma, ao pé da falésia"
          style="--dpos:55% 90%;--mpos:48% 50%">
   </picture>
   <div class="veil veil--top"></div>
@@ -401,6 +426,276 @@
 </footer>
 <!-- /partial:footer-home -->
 
-<script src="js/home.js?v=6"></script>
+</div><!-- /.dv -->
+
+<div class="mv">
+
+<!-- grain de pellicule, sur toute la page, qui bouge à peine -->
+<div class="grain" aria-hidden="true"></div>
+
+
+<header class="top">
+  <!-- pas de logo ici : il s'écrit en grand au milieu du film -->
+  <div class="top__lang">
+    <a href="/" class="is-active" aria-current="page">PT</a>
+    <a href="/en/index.html">EN</a>
+    <a href="/fr/index.html">FR</a>
+  </div>
+</header>
+
+<!-- ═══ 00 · ABERTURA ═══
+     Le film dans le viseur. Au pouce, le cadre s'ouvre jusqu'au plein
+     écran. Le logo s'écrit de gauche à droite, comme à la main. -->
+<section class="open">
+  <div class="open__stage">
+    <div class="open__frame">
+      <video class="open__v" muted loop playsinline webkit-playsinline
+             preload="none" poster="photos/hero-poster.jpg">
+        <source src="videos/header_min.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="open__edge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="open__logo"><img src="photos/Logo%20blanc%20casse.png" alt=""></div>
+    <p class="open__line" data-type="fotografia e filme · rio de janeiro"></p>
+    <span class="open__cue" aria-hidden="true"></span>
+    <h1 class="sr-only">Casamentos, retiros, hotéis. O mesmo olhar.</h1>
+  </div>
+</section>
+
+<!-- ═══ 01 · O NOME ═══ l'autoportrait : le nom et le visage ensemble -->
+<section class="ch" data-ch="01" data-name="o nome">
+  <div class="ch__stage">
+    <div class="ch__photos"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img loading="lazy" src="photos/le-regard/mobile/m-01.jpg" alt="Autorretrato no espelho, câmera na mão"></picture></div>
+    <div class="ch__af" aria-hidden="true" style="--af:14% 18% 44% 18%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="01 · o nome"></p>
+        <h2 class="rv">Me chamo Lucas Machut.<br>Sou fotógrafo e filmmaker.</h2>
+        <p class="mtx rv">Fotografo e filmo pessoas em momentos que não voltam. Sou francês, moro no Rio, e se for em outro lugar, eu vou.</p>
+        <p class="mmet rv">Casamentos · Retiros · Ensaios · Experiências · Hotéis</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 02 · A MEMÓRIA ═══ série de deux, au pouce -->
+<section class="ch" data-ch="02" data-name="a memória">
+  <div class="ch__stage">
+    <div class="ch__photos mserie">
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img loading="lazy" src="photos/le-regard/mobile/m-02.jpg" alt="Abraço, preto e branco"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/casal.jpg" alt="Casal deitado, um beijo na testa" loading="lazy"></picture>
+    </div>
+    <p class="ch__count" aria-hidden="true"><span>1</span> / 2</p>
+    <div class="ch__af" aria-hidden="true" style="--af:10% 16% 50% 22%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="02 · a memória"></p>
+        <p class="mtx rv">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou.</p>
+        <p class="mtx rv">Uma imagem guarda um fragmento de vida antes que o tempo o modifique.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 03 · CADA PESSOA ═══ deux temps de texte sur une seule photo :
+     le premier s'efface quand le second monte -->
+<section class="ch" data-ch="03" data-name="cada pessoa" style="--beats:2">
+  <div class="ch__stage">
+    <div class="ch__photos"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/m-03.jpg" alt="Flor branca junto à boca" loading="lazy"></picture></div>
+    <div class="ch__af" aria-hidden="true" style="--af:8% 24% 60% 24%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="03 · cada pessoa"></p>
+        <p class="mtx rv">Cada pessoa carrega o seu próprio mundo, a sua maneira de enxergar a vida.</p>
+        <p class="mtx rv">Quando filmo ou fotografo, não estou só fazendo imagens: tento transmitir esse mundo, o que se passa dentro da pessoa naquele instante.</p>
+      </div>
+      <div class="beat">
+        <p class="mtx rv">Sabendo que a gente nunca entra por completo no mundo do outro.</p>
+        <p class="mtx mtx--em rv">A imagem é uma tentativa de ponte entre nossos mundos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 04 · O OLHAR ═══ -->
+<section class="ch" data-ch="04" data-name="o olhar">
+  <div class="ch__stage">
+    <div class="ch__photos mserie">
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/m-04.jpg" alt="Silhueta de costas com flores vermelhas" loading="lazy"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/m-05.jpg" alt="Véu preto ao vento, na areia" loading="lazy"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/palmeiras.jpg" alt="Braços abertos sob as palmeiras" loading="lazy"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/m-06.jpg" alt="Rosto na superfície da água" loading="lazy"></picture>
+    </div>
+    <p class="ch__count" aria-hidden="true"><span>1</span> / 4</p>
+    <div class="ch__af" aria-hidden="true" style="--af:14% 22% 46% 30%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="04 · o olhar"></p>
+        <p class="mtx rv">O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade.</p>
+        <p class="mtx rv">A beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 05 · OS LAÇOS ═══ -->
+<section class="ch" data-ch="05" data-name="os laços">
+  <div class="ch__stage">
+    <div class="ch__photos mserie">
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/maos-agua.jpg" alt="Mãos tocando a água no crepúsculo" loading="lazy"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/areia.jpg" alt="Areia escorrendo entre as mãos" loading="lazy"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/anel.jpg" alt="Mão adormecida sobre o lençol, anel" loading="lazy"></picture>
+    </div>
+    <p class="ch__count" aria-hidden="true"><span>1</span> / 3</p>
+    <div class="ch__af" aria-hidden="true" style="--af:30% 20% 36% 20%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="05 · os laços"></p>
+        <p class="mtx rv">Os laços são o que eu mais gosto de fotografar.</p>
+        <p class="mtx rv">Fico no meio e fotografo o que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 06 · QUEM A GENTE É ═══ -->
+<section class="ch" data-ch="06" data-name="quem a gente é">
+  <div class="ch__stage">
+    <div class="ch__photos mserie">
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/bandeira.jpg" alt="Riso sob a bandeira ao sol" loading="lazy"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/chapeu.jpg" alt="Chapéu de palha e folhagem" loading="lazy"></picture>
+      <picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/lampada.jpg" alt="Copo e abajur, fim de noite" loading="lazy"></picture>
+    </div>
+    <p class="ch__count" aria-hidden="true"><span>1</span> / 3</p>
+    <div class="ch__af" aria-hidden="true" style="--af:8% 22% 58% 26%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="06 · quem a gente é"></p>
+        <h2 class="rv">No fundo, nunca foi sobre como a gente aparece, <em>e sim sobre quem a gente é</em>.</h2>
+        <p class="rv"><a href="/portfolio.html" class="mcta">Ver o portfólio <i>&#8594;</i></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ O ÁLBUM ═══
+     Respiration, sans chapitre et sans un mot. Une pile de tirages
+     qu'on chasse du doigt, vers la gauche ou la droite : celui du
+     dessus part du côté où on l'a poussé et revient sous la pile.
+     C'est ici que vivent les photos horizontales — sur un téléphone,
+     une photo couchée n'a de place que comme un tirage qu'on tient. -->
+<section class="album" aria-label="Álbum">
+  <div class="album__pile">
+    <figure class="tirage tirage--h" style="--r:-2.4deg"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/t-olhares.jpg" alt="Dois rostos lado a lado, muito perto" loading="lazy"></picture></figure>
+    <figure class="tirage tirage--v" style="--r:1.8deg"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/t-janela.jpg" alt="De costas na janela, a montanha atrás do vidro" loading="lazy"></picture></figure>
+    <figure class="tirage tirage--h" style="--r:-1.2deg"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/t-pedras.jpg" alt="Riso de braços abertos entre as pedras" loading="lazy"></picture></figure>
+    <figure class="tirage tirage--v" style="--r:2.2deg"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/t-homem.jpg" alt="Retrato ao pé das pedras, camisa preta" loading="lazy"></picture></figure>
+    <figure class="tirage tirage--h" style="--r:-.8deg"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/v/t-mar.jpg" alt="Um corpo deitado na espuma, ao pé da falésia" loading="lazy"></picture></figure>
+  </div>
+  <p class="album__n" aria-hidden="true"><span>01</span> / 05</p>
+</section>
+
+<!-- ═══ 07 · O QUE EU FAÇO ═══
+     La page de papier. Trois titres visibles d'un coup ; on touche
+     celui qui nous concerne, il se déplie. -->
+<section class="folha" id="o-que-eu-faco" data-ch="07" data-name="o que eu faço">
+  <p class="folha__n" data-type="07 · o que eu faço"></p>
+
+  <details class="prest rv">
+    <summary><span>Casamentos e elopements</span><i aria-hidden="true"></i></summary>
+    <p>Para quem quer o dia inteiro guardado, com as pessoas do jeito que elas são. Chego na preparação e fico até onde a festa for.</p>
+  </details>
+  <details class="prest rv">
+    <summary><span>Ensaios</span><i aria-hidden="true"></i></summary>
+    <p>Para quem quer imagens suas e não sabe o que fazer na frente de uma câmera. Quase ninguém sabe, e tudo bem. A gente escolhe um lugar e a hora da luz, e o resto acontece andando.</p>
+  </details>
+  <details class="prest rv">
+    <summary><span>Retiros e experiências</span><i aria-hidden="true"></i></summary>
+    <p>Para quem organiza um retiro, uma viagem, um festival ou um encontro, e quer sair de lá com imagens de quem estava dentro. Fico junto o tempo todo.</p>
+  </details>
+
+  <a href="https://wa.me/5571993554883" class="mbtn rv" target="_blank" rel="noopener">Falar comigo</a>
+</section>
+
+<!-- ═══ 08 · HOTÉIS ═══ -->
+<section class="ch" data-ch="08" data-name="hotéis">
+  <div class="ch__stage">
+    <div class="ch__photos"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/m-09-hoteis.jpg" alt="Uma presença num quarto de hotel" loading="lazy"></picture></div>
+    <div class="ch__af" aria-hidden="true" style="--af:44% 30% 28% 22%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="08 · hotéis"></p>
+        <h2 class="rv">Com hotéis e pousadas, <em>o cliente é o lugar</em>.</h2>
+        <p class="mtx rv">Mesmo ali eu procuro vida: uma presença, um movimento, alguém que faz o espaço respirar.</p>
+        <p class="rv"><a href="/lugares/" class="mcta">Ver o trabalho para hotéis <i>&#8594;</i></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 09 · CONTATO ═══ -->
+<section class="ch ch--last" data-ch="09" data-name="contato">
+  <div class="ch__stage">
+    <div class="ch__photos"><picture><source media="(min-width:861px)" srcset="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="><img src="photos/le-regard/mobile/m-10-contato.jpg" alt="Flores na mão, à beira do mar" loading="lazy"></picture></div>
+    <div class="ch__af" aria-hidden="true" style="--af:30% 10% 36% 40%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="ch__veil"></div>
+    <div class="ch__text">
+      <div class="beat">
+        <p class="ch__n" data-type="09 · contato"></p>
+        <h2 class="rv">Tudo começa com <em>uma conversa</em>.</h2>
+        <p class="rv"><a href="https://wa.me/5571993554883" class="mbtn mbtn--cream" target="_blank" rel="noopener">Falar comigo</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="mft">
+  <span>Lucas Machut</span>
+  <a href="https://www.instagram.com/veralem.lucas" target="_blank" rel="noopener">@veralem.lucas</a>
+  <span>Rio de Janeiro · Brasil</span>
+</footer>
+
+
+<!-- ─── la barre du pouce ───
+     À gauche, le chapitre en cours : le toucher ouvre le sommaire.
+     À droite, l'appel : sur un téléphone au Brésil, parler c'est
+     WhatsApp — il s'ouvre directement. Un filet au-dessus dit où on
+     en est. -->
+<nav class="bar" aria-label="Navegação">
+  <span class="bar__line" aria-hidden="true"></span>
+  <button class="bar__ch" aria-expanded="false" aria-controls="sumario"><span class="bar__n">00</span><span class="bar__name">abertura</span><i aria-hidden="true"></i></button>
+  <a href="https://wa.me/5571993554883" class="bar__cta" target="_blank" rel="noopener">Falar comigo</a>
+</nav>
+<div class="sheet" id="sumario" hidden>
+  <div class="sheet__in">
+    <p class="sheet__t">sumário</p>
+    <ol class="sheet__list"></ol>
+    <div class="sheet__more">
+      <a href="/portfolio.html">Trabalhos</a>
+      <a href="/lugares/">Hotéis e pousadas</a>
+      <a href="/contato.html">Contato</a>
+    </div>
+  </div>
+</div>
+
+</div><!-- /.mv -->
+
+<script src="js/home.js?v=7"></script>
+<script src="js/home-mobile.js?v=2"></script>
 </body>
 </html>

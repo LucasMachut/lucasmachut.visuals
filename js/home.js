@@ -10,8 +10,13 @@
      seul attribut HTML ne suffit pas partout), on tente la lecture et
      on écoute le refus, puis on relance au premier geste de
      l'utilisateur. Le poster occupe le cadre entre-temps. */
+  /* Sur téléphone, c'est la version .mv qui s'affiche et son propre
+     film qui joue (js/home-mobile.js) : celui-ci, caché, ne doit ni se
+     télécharger ni tourner. D'où preload="none" et pas d'autoplay dans
+     le HTML — c'est ce script qui le lance, et seulement au-delà de
+     860 px. */
   var film = document.querySelector('.hero__v');
-  if (film) {
+  if (film && !window.matchMedia('(max-width: 860px)').matches) {
     var events = ['touchstart', 'pointerdown', 'click', 'keydown', 'scroll'];
     var armed = false;
 
