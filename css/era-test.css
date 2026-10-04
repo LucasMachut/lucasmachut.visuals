@@ -104,7 +104,7 @@
    ============================================================ */
 .era-hero {
   position: relative;
-  height: 440svh;
+  height: 340svh;
   background: var(--bg);
 }
 .era-hero__sticky {
@@ -428,7 +428,7 @@ body.era-film .header .nav__lang-link--active { color: var(--cream); }
   .era-head { padding-inline: calc(var(--gut) + 0.25rem); }
 
   /* Ouverture */
-  .era-hero { height: 360svh; }
+  .era-hero { height: 300svh; }
   .era-hero__tag { top: 12svh; padding-inline: var(--gut); line-height: 1.8; }
   .era-hero__texte .era-lead { max-width: 20rem; }
 
