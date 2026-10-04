@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="/css/style.css?v=40" />
   <!-- Maquette ERA : page de test, liée nulle part -->
-  <link rel="stylesheet" href="/css/era-test.css?v=11" />
+  <link rel="stylesheet" href="/css/era-test.css?v=12" />
 </head>
 <body class="era-page">
 
@@ -194,15 +194,36 @@
     </section>
 
     <!-- ===================================================
+         RESPIRAÇÃO — Villa Balthazar, o café da manhã
+         Le lait versé, puis la tasse bue. Pleine largeur, sans
+         texte, entre l'offre et le regard. Boucle chargée à
+         l'approche (js/main.js).
+         =================================================== -->
+    <section class="era-respire" aria-hidden="true">
+      <div class="era-respire__media" data-img>
+        <video class="lg-loop" muted loop playsinline webkit-playsinline preload="none"
+               poster="/videos/lugares/manha.jpg"
+               data-src="/videos/lugares/manha.mp4"
+               data-src-m="/videos/lugares/manha-m.mp4"
+               data-poster-m="/videos/lugares/manha-m.jpg"></video>
+      </div>
+    </section>
+
+    <!-- ===================================================
          5 — O OLHAR
          Double page : l'image occupe les six colonnes de gauche,
          pleine hauteur ; le texte tient dans les six autres.
          =================================================== -->
     <section class="era-olhar" id="regard" aria-labelledby="olhar-h2">
       <div class="era-olhar__img" data-img>
-        <img src="/photos/le-regard/chave-porta.jpg"
-             alt="Uma mão levando a chave à fechadura de uma porta antiga"
-             loading="lazy" decoding="async" />
+        <!-- Villa Balthazar : une silhouette qui regarde dehors.
+             Cadrée à 35 % pour garder la fenêtre et la silhouette. -->
+        <video class="lg-loop" muted loop playsinline webkit-playsinline preload="none"
+               poster="/videos/lugares/janela.jpg"
+               data-src="/videos/lugares/janela.mp4"
+               data-src-m="/videos/lugares/janela-m.mp4"
+               data-poster-m="/videos/lugares/janela-m.jpg"
+               aria-label="Silhueta de um hóspede diante da janela aberta sobre as palmeiras"></video>
       </div>
       <div class="era-olhar__corps">
         <span class="era-label" data-rise>O olhar</span>
@@ -311,7 +332,7 @@
   </footer>
   <!-- /partial:footer-lugares -->
 
-  <script src="/js/main.js?v=3"></script>
+  <script src="/js/main.js?v=5"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.21/dist/lenis.min.js"></script>

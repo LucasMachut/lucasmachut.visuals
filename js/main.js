@@ -52,6 +52,39 @@
     }
   });
 
+  /* --- Boucles video (lugares) --------------------------- */
+  /* preload="none" : rien ne se telecharge avant que la boucle
+     approche de l'ecran. Version -m sur telephone. Elle ne tourne
+     que visible. Animations reduites ou economie de donnees : le
+     poster reste seul. */
+  const loops = document.querySelectorAll('video.lg-loop[data-src]');
+  if (loops.length) {
+    /* Lu au moment du chargement, pas au demarrage du script : la
+       largeur est alors definitive. */
+    const isMobile = () => window.matchMedia('(max-width: 860px)').matches;
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      || (navigator.connection && navigator.connection.saveData);
+    if (isMobile()) loops.forEach(v => {
+      if (v.dataset.posterM) v.poster = v.dataset.posterM;
+    });
+    if (!calm && 'IntersectionObserver' in window) {
+      const loopObs = new IntersectionObserver(entries => {
+        entries.forEach(({ target: v, isIntersecting }) => {
+          if (isIntersecting) {
+            if (!v.src) {
+              v.src = (isMobile() && v.dataset.srcM) || v.dataset.src;
+              v.preload = 'auto';
+            }
+            v.play().catch(() => {});
+          } else if (v.src) {
+            v.pause();
+          }
+        });
+      }, { rootMargin: '300px 0px' });
+      loops.forEach(v => loopObs.observe(v));
+    }
+  }
+
   /* --- Header scroll behavior ---------------------------- */
   const header = document.querySelector('.header');
   if (header) {

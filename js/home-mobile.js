@@ -20,12 +20,11 @@
 
     var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     function clamp(x, a, b) { return Math.max(a, Math.min(b, x)); }
-    function ease(x) { return 1 - Math.pow(1 - x, 3); }
 
     /* ─── la frappe ───
-       Un texte tapé lettre à lettre, avec le chariot qui clignote. Soit
-       au temps (la ligne d'ouverture), soit au défilement (les numéros de
-       chapitre) : typeAt(el, 0..1) pose la part de texte déjà frappée. */
+       Un texte tapé lettre à lettre, avec le chariot qui clignote, au
+       temps : typeTimed le lance, typeReset l'efface (un chapitre qu'on
+       quitte par le haut se retapera à la prochaine visite). */
     function prepType(el) {
       el._full = el.getAttribute('data-type') || '';
       el._shown = -1;
@@ -44,15 +43,22 @@
       }
     }
     function typeTimed(el, delay, speed) {
-      prepType(el);
+      if (!el._full) prepType(el);
       if (reduce) { el.textContent = el._full; return; }
+      var gen = el._gen = (el._gen || 0) + 1;
       var i = 0;
       setTimeout(function tick() {
+        if (gen !== el._gen) return;
         i++;
         typeAt(el, i / el._full.length);
         if (i < el._full.length) setTimeout(tick, speed + Math.random() * speed);
-        else setTimeout(function () { el.textContent = el._full; }, 2200);
+        else setTimeout(function () { if (gen === el._gen) el.textContent = el._full; }, 2200);
       }, delay);
+    }
+    function typeReset(el) {
+      el._gen = (el._gen || 0) + 1;
+      el._shown = -1;
+      el.textContent = '';
     }
 
     /* ─── ouverture ─── */
@@ -80,89 +86,83 @@
       });
     }
 
-    /* ─── chapitres ─── */
+    /* ─── chapitres ───
+       Le défilement ne fait que décider du moment ; tout le reste se joue
+       au temps, en CSS. Quand l'écran se colle, la photo reste seule un
+       instant (ou jusqu'au premier quart de la course), puis le premier
+       temps de texte monte. Les temps suivants arrivent à leur part de la
+       course. Revenir au-dessus d'un chapitre le remet à zéro : il se
+       rejoue à la prochaine visite. */
     var chs = Array.prototype.slice.call(mv.querySelectorAll('.ch')).map(function (s) {
-      var beats = Array.prototype.slice.call(s.querySelectorAll('.beat')).map(function (b) {
-        return {
-          el: b,
-          items: Array.prototype.slice.call(b.querySelectorAll('.rv')),
-          ems: Array.prototype.slice.call(b.querySelectorAll('h2 em'))
-        };
-      });
       var n = s.querySelector('.ch__n');
       if (n) { prepType(n); if (reduce) n.textContent = n._full; }
-      var c = {
-        s: s, beats: beats, n: n,
-        stage: s.querySelector('.ch__stage'),
-        veil: s.querySelector('.ch__veil'),
-        imgs: Array.prototype.slice.call(s.querySelectorAll('.ch__photos img')),
-        serie: s.querySelector('.mserie'),
-        count: s.querySelector('.ch__count span'),
-        seen: false, nudged: false
+      return {
+        s: s, n: n,
+        beats: Array.prototype.slice.call(s.querySelectorAll('.beat')),
+        seen: false, shown: -1, timer: null, ready: false
       };
-      /* le compteur de la série suit le pouce */
-      if (c.serie && c.count) {
-        c.serie.addEventListener('scroll', function () {
-          c.count.textContent = Math.round(c.serie.scrollLeft / c.serie.clientWidth) + 1;
-        }, { passive: true });
-      }
-      return c;
     });
 
-    /* Découpage d'un chapitre, en part de sa course collée (q, 0 → 1) :
-       0    → .30  la photo seule, qui se pose (léger recul du zoom)
-       .30  → .92  les temps de texte, chacun sa tranche : le voile monte,
-                   le numéro se tape, les lignes arrivent une à une ; le
-                   temps suivant chasse le précédent
-       .92  → 1    tout reste, puis la section suivante recouvre celle-ci */
-    var T0 = 0.30, T1 = 0.92;
+    function showBeat(c, k) {
+      if (k === c.shown) return;
+      c.beats.forEach(function (b, i) {
+        b.classList.toggle('is-on', i === k);
+        b.classList.toggle('is-out', i < k);
+      });
+      c.s.classList.toggle('is-text', k > -1);
+      if (c.n) {
+        if (k === 0 && c.shown < 0) typeTimed(c.n, 150, 38);
+        else if (k < 0) typeReset(c.n);
+      }
+      c.shown = k;
+    }
+
+    function resetChapter(c) {
+      clearTimeout(c.timer);
+      c.timer = null; c.ready = false; c.seen = false;
+      c.s.classList.remove('is-in');
+      showBeat(c, -1);
+    }
 
     function chapterFrame(c, vh) {
       var r = c.s.getBoundingClientRect();
-      if (r.bottom < -50 || r.top > vh + 50) return;
-      var run = c.s.offsetHeight - vh;
-      var q = clamp(-r.top / run, 0, 1);
+      if (r.top > vh) { if (c.seen) resetChapter(c); return; }
+      if (r.bottom < 0) return;
 
-      /* à l'arrivée à l'écran : mise au point et fuite de lumière, une fois */
+      /* à l'arrivée : mise au point, fuite de lumière, la photo se pose */
       if (!c.seen && r.top < vh * 0.35) {
         c.seen = true;
         c.s.classList.add('is-in');
       }
-      /* une série se présente : elle glisse d'un cran vers la suivante et
-         revient, pour dire qu'on peut la pousser du pouce */
-      if (c.serie && !c.nudged && q > 0.12 && !reduce) {
-        c.nudged = true;
-        c.serie.scrollTo({ left: c.serie.clientWidth * 0.22, behavior: 'smooth' });
-        setTimeout(function () { c.serie.scrollTo({ left: 0, behavior: 'smooth' }); }, 650);
+      if (reduce) { showBeat(c, c.beats.length - 1); return; }
+      if (r.top > 0) return;                     /* pas encore collé */
+
+      /* collé : la photo seule garde l'écran 0,9 s */
+      if (!c.timer && !c.ready) {
+        c.timer = setTimeout(function () {
+          c.ready = true;
+          if (c.shown < 0) showBeat(c, 0);
+        }, 900);
       }
+      var nb = c.beats.length;
+      var q = clamp(-r.top / Math.max(1, c.s.offsetHeight - vh), 0, 1);
+      /* avant la fin du temps de pose, on ne montre le texte que si on
+         a déjà descendu un quart de la course (geste rapide) */
+      if (q < 0.25 && !c.ready && c.shown < 0) return;
+      showBeat(c, Math.min(nb - 1, Math.floor(q * nb)));
+    }
 
-      var z = 1.06 - 0.06 * ease(clamp(q / T0, 0, 1));
-      c.imgs.forEach(function (i) { i.style.setProperty('--z', z.toFixed(4)); });
-
-      if (reduce) return;
-
-      c.veil.style.setProperty('--v', clamp((q - T0 + 0.06) / 0.14, 0, 1).toFixed(3));
-
-      var nb = c.beats.length, L = (T1 - T0) / nb;
-      c.beats.forEach(function (b, k) {
-        var u = (q - T0 - k * L) / L;                      /* 0 → 1 dans sa tranche */
-        var out = k < nb - 1 ? clamp((u - 0.82) / 0.18, 0, 1) : 0;
-        /* le numéro appartient au premier temps : il part avec lui */
-        if (k === 0 && c.n) {
-          typeAt(c.n, clamp(u / 0.28, 0, 1.1));
-          c.n.style.opacity = (1 - out).toFixed(3);
-        }
-        b.items.forEach(function (it, j) {
-          var f = ease(clamp((u - 0.12 - j * 0.13) / 0.3, 0, 1));
-          var o = f * (1 - out);
-          it.style.opacity = o.toFixed(3);
-          it.style.transform = 'translate3d(0,' + ((1 - f) * 34 - out * 24).toFixed(1) + 'px,0)';
+    /* ─── les suites de série : chaque tirage se révèle en entrant ─── */
+    var provas = Array.prototype.slice.call(mv.querySelectorAll('.prova'));
+    if (reduce || !('IntersectionObserver' in window)) {
+      provas.forEach(function (f) { f.classList.add('is-in'); });
+    } else {
+      var pio = new IntersectionObserver(function (en) {
+        en.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('is-in'); pio.unobserve(e.target); }
         });
-        /* le soulignement à la main se trace après l'arrivée du titre */
-        b.ems.forEach(function (em) {
-          em.style.setProperty('--u', (clamp((u - 0.4) / 0.3, 0, 1) * 100).toFixed(1) + '%');
-        });
-      });
+      }, { threshold: 0.22 });
+      provas.forEach(function (f) { pio.observe(f); });
     }
 
     /* ─── la page de papier : le numéro se tape à l'arrivée ─── */
@@ -320,9 +320,9 @@
 
       chs.forEach(function (c) { chapterFrame(c, vh); });
 
-      if (folhaN) {
-        var fr = folhaN.getBoundingClientRect();
-        typeAt(folhaN, reduce ? 1 : clamp((vh * 0.9 - fr.top) / (vh * 0.3), 0, 1.1));
+      if (folhaN && !folhaN._typed && folhaN.getBoundingClientRect().top < vh * 0.85) {
+        folhaN._typed = true;
+        typeTimed(folhaN, 100, 40);
       }
       navFrame(vh, y);
       ticking = false;

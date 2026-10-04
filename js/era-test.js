@@ -51,7 +51,7 @@
 
   /* --- 2. Images ----------------------------------------- */
   gsap.utils.toArray('[data-img]').forEach(box => {
-    const img = box.querySelector(':scope > img');
+    const img = box.querySelector(':scope > img, :scope > video');
     gsap.fromTo(box,
       { clipPath: 'inset(100% 0% 0% 0%)' },
       {

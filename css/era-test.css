@@ -89,12 +89,15 @@
 
 /* ---- Images animées ----------------------------------------- */
 [data-img] { overflow: hidden; }
-[data-img] > img {
+[data-img] > img,
+[data-img] > video {
+  display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.era-anim [data-img] > img { height: 116%; margin-top: -8%; }
+.era-anim [data-img] > img,
+.era-anim [data-img] > video { height: 116%; margin-top: -8%; }
 
 /* ============================================================
    1 — ABERTURA
@@ -271,6 +274,16 @@
 .era-row__pour { margin-top: 1.25rem; color: var(--text-muted); }
 
 /* ============================================================
+   RESPIRAÇÃO — la boucle du matin, pleine largeur
+   ============================================================ */
+.era-respire { background: var(--bg-dark); }
+.era-respire__media { height: 82svh; }
+.era-respire__media > video { background: var(--bg-dark); }
+@media (max-width: 860px) {
+  .era-respire__media { height: auto; aspect-ratio: 3 / 4; }
+}
+
+/* ============================================================
    5 — O OLHAR
    ============================================================ */
 .era-olhar {
@@ -281,8 +294,12 @@
   color: var(--cream);
 }
 .era-olhar__img { position: relative; min-height: 100svh; }
-.era-olhar__img > img { position: absolute; inset: 0; }
-.era-anim .era-olhar__img > img { top: -8%; height: 116%; margin-top: 0; }
+.era-olhar__img > img,
+.era-olhar__img > video { position: absolute; inset: 0; }
+.era-anim .era-olhar__img > img,
+.era-anim .era-olhar__img > video { top: -8%; height: 116%; margin-top: 0; }
+/* janela : la fenetre est a gauche du plan, la moitie droite est noire */
+.era-olhar__img > video { object-position: 35% 50%; background: var(--bg-dark); }
 .era-olhar__corps {
   display: flex;
   flex-direction: column;
