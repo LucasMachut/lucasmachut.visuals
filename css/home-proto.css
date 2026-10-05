@@ -1,0 +1,78 @@
+/* ═══════════════════════════════════════════════════════════
+   PROTOTYPE — deux emprunts à Shopify Editions, dits dans la
+   langue veralem. Se charge APRÈS home.css et ne fait que
+   l'augmenter : retirer ce fichier et home-proto.js rend la
+   page d'origine.
+   1. le seuil : le film s'ouvre d'abord dans un viseur
+   2. le papier : la section de lecture passe sur le lin
+   ═══════════════════════════════════════════════════════════ */
+
+/* ─────────── 1 · le seuil en viseur ───────────
+   La section s'allonge et son contenu reste collé à l'écran : le
+   défilement ne fait plus descendre la page, il ouvre le cadre.
+   --p va de 0 (viseur) à 1 (plein cadre), posé par home-proto.js.
+   Le film n'est jamais redimensionné, seulement découvert : on voit
+   plus de la scène à mesure qu'on avance, comme en reculant d'un pas. */
+.hero--vf{height:185svh;overflow:visible;--p:0;--ix:22%;--iy:15%}
+.hero__stick{position:sticky;top:0;height:100svh;min-height:560px;
+  overflow:hidden;background:var(--dark)}
+.hero__frame{position:absolute;inset:0;
+  clip-path:inset(calc(var(--iy) * (1 - var(--p))) calc(var(--ix) * (1 - var(--p))))}
+.hero__frame .hero__v{transform:scale(calc(1.06 - .06 * var(--p)))}
+/* le filet suit exactement la découpe, et s'efface avant d'arriver au
+   bord — un cadre qui touche le bord de l'écran n'est plus un cadre */
+.hero__edge{position:absolute;z-index:4;pointer-events:none;
+  top:calc(var(--iy) * (1 - var(--p)));bottom:calc(var(--iy) * (1 - var(--p)));
+  left:calc(var(--ix) * (1 - var(--p)));right:calc(var(--ix) * (1 - var(--p)));
+  border:1px solid rgba(240,232,220,.28);
+  opacity:calc(1 - var(--p) * 1.6)}
+/* les coins du viseur, plus francs que le filet */
+.hero__edge i{position:absolute;width:18px;height:18px;
+  border:0 solid rgba(240,232,220,.85)}
+.hero__edge i:nth-child(1){top:-1px;left:-1px;border-top-width:1px;border-left-width:1px}
+.hero__edge i:nth-child(2){top:-1px;right:-1px;border-top-width:1px;border-right-width:1px}
+.hero__edge i:nth-child(3){bottom:-1px;left:-1px;border-bottom-width:1px;border-left-width:1px}
+.hero__edge i:nth-child(4){bottom:-1px;right:-1px;border-bottom-width:1px;border-right-width:1px}
+/* le logo rétrécit avec le cadre, puis reprend sa taille */
+.hero--vf .hero__logo img{width:min(calc(260px + 140px * var(--p)),62vw)}
+
+@media(max-width:860px){
+  .hero--vf{--ix:7%;--iy:13%;height:165svh}
+}
+/* pas de mouvement demandé : le film arrive plein cadre, comme avant */
+@media(prefers-reduced-motion:reduce){
+  .hero--vf{height:100svh;--p:1}
+  .hero__edge{display:none}
+}
+
+/* ─────────── 2 · la respiration papier ───────────
+   Toute la page est image et voile ; ici on s'arrête pour lire. Le
+   fond passe au lin, l'encre au brun terre — on tourne une page. Un
+   grain très léger (SVG, 1 Ko, aucune image à charger) garde la
+   matière : du papier, pas un écran blanc. */
+#o-que-eu-faco{background-color:var(--cream);color:var(--dark);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .18 0 0 0 0 .15 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E")}
+#o-que-eu-faco .lede{color:rgba(46,38,32,.82)}
+#o-que-eu-faco .prestacao{border-top-color:rgba(46,38,32,.22)}
+#o-que-eu-faco .prestacao:first-of-type{border-top:0;padding-top:0}
+/* le bouton s'inverse : brun plein sur le lin */
+.home #o-que-eu-faco .btn--solid{background:var(--dark);color:var(--cream);border-color:var(--dark)}
+.home #o-que-eu-faco .btn--solid:hover{background:transparent;color:var(--dark);border-color:var(--dark)}
+/* l'étiquette tapée en tête de page */
+.home .folha__n{font-family:var(--font-title);font-size:.7rem;letter-spacing:.2em;
+  text-transform:uppercase;color:rgba(46,38,32,.6);margin-bottom:3rem}
+.home .folha__n::after{content:"";display:block;width:14px;height:1px;
+  background:#B5623C;margin-top:1rem}
+
+/* ─────────── 3 · la dérive des photos ───────────
+   La photo défile un peu plus lentement que la page (home-proto.js).
+   Le texte reste fixe dans sa section : il ne glisse plus sur l'image. */
+.panel > picture > img,.tile img{will-change:transform}
+
+/* ─────────── 4 · le renvoi vers lugares ───────────
+   Les hôtels n'ont plus de section sur l'accueil : une ligne sous les
+   trois prestations, du même gris que leur texte, sans bouton. */
+.home .lugares-link{margin-top:3rem;padding-top:1.5rem;
+  border-top:1px solid rgba(46,38,32,.22);
+  font-size:.9rem;color:rgba(46,38,32,.7)}
+.home .lugares-link a{color:var(--dark)}
