@@ -169,30 +169,21 @@
     var folhaN = mv.querySelector('.folha__n');
     if (folhaN) prepType(folhaN);
 
-    /* ─── la barre du pouce et le sommaire ─── */
+    /* ─── la barre du pouce et le menu ─── */
     var bar = mv.querySelector('.bar');
-    var barN = bar.querySelector('.bar__n');
-    var barName = bar.querySelector('.bar__name');
     var barBtn = bar.querySelector('.bar__ch');
-    var sheet = mv.querySelector('#sumario');
-    var list = sheet.querySelector('.sheet__list');
-    var marks = Array.prototype.slice.call(mv.querySelectorAll('[data-ch]'));
-    var links = marks.map(function (s) {
-      if (!s.id) s.id = 'cap-' + s.getAttribute('data-ch');
-      var li = document.createElement('li');
-      var a = document.createElement('a');
-      a.href = '#' + s.id;
-      a.innerHTML = '<span>' + s.getAttribute('data-ch') + '</span>' + s.getAttribute('data-name');
+    var sheet = mv.querySelector('#menu');
+    /* le seul lien interne : on ferme le menu et on descend jusqu'aux
+       services — l'ancre de la page grand écran porte le même id,
+       d'où la recherche dans .mv */
+    Array.prototype.forEach.call(sheet.querySelectorAll('[data-in]'), function (a) {
       a.addEventListener('click', function (e) {
+        var t = mv.querySelector(a.getAttribute('href'));
+        if (!t) return;
         e.preventDefault();
         closeSheet();
-        /* on arrive au moment où le texte est posé, pas sur la photo nue */
-        var t = s.offsetTop + (s.classList.contains('ch') ? (s.offsetHeight - window.innerHeight) * 0.62 : 0);
-        window.scrollTo({ top: t, behavior: reduce ? 'auto' : 'smooth' });
+        window.scrollTo({ top: t.offsetTop, behavior: reduce ? 'auto' : 'smooth' });
       });
-      li.appendChild(a);
-      list.appendChild(li);
-      return a;
     });
     sheet.hidden = false;
     function openSheet() { sheet.classList.add('is-open'); barBtn.setAttribute('aria-expanded', 'true'); }
@@ -202,16 +193,7 @@
     });
     sheet.addEventListener('click', function (e) { if (e.target === sheet) closeSheet(); });
 
-    var cur = -2;
     function navFrame(vh, y) {
-      var mid = y + vh * 0.5, n = -1;
-      marks.forEach(function (s, i) { if (s.offsetTop <= mid) n = i; });
-      if (n !== cur) {
-        cur = n;
-        barN.textContent = n < 0 ? '00' : marks[n].getAttribute('data-ch');
-        barName.textContent = n < 0 ? 'abertura' : marks[n].getAttribute('data-name');
-        links.forEach(function (a, i) { a.classList.toggle('is-cur', i === n); });
-      }
       var max = document.documentElement.scrollHeight - vh;
       bar.style.setProperty('--prog', (max > 0 ? y / max : 0).toFixed(4));
     }
@@ -225,7 +207,6 @@
     var album = mv.querySelector('.album');
     if (album) {
       var cards = Array.prototype.slice.call(album.querySelectorAll('.tirage'));
-      var counter = album.querySelector('.album__n span');
       var order = cards.slice();
       var shown = 0;
 
@@ -238,7 +219,6 @@
           c.style.filter = 'brightness(' + (1 - dd * 0.17) + ')';
           c.style.visibility = d > 3 ? 'hidden' : 'visible';
         });
-        counter.textContent = ('0' + (cards.indexOf(order[0]) + 1)).slice(-2);
       };
       layout(false);
 
@@ -316,7 +296,6 @@
         open.style.setProperty('--p', p.toFixed(3));
       }
       top.classList.toggle('is-hidden', y > openEnd * 0.9);
-      bar.classList.toggle('is-on', y > openEnd * 0.6);
 
       chs.forEach(function (c) { chapterFrame(c, vh); });
 

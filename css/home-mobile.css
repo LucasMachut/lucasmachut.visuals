@@ -66,7 +66,8 @@
 
 /* ─────────── 00 · ouverture en viseur ─────────── */
 .open{position:relative;height:150svh;--p:0;--ix:7%;--iy:12%}
-.open__stage{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--dark)}
+/* la barre est là dès le premier écran : le film se pose au-dessus */
+.open__stage{position:sticky;top:0;height:calc(100svh - var(--bar) - var(--safe));overflow:hidden;background:var(--dark)}
 .open__frame{position:absolute;inset:0;
   clip-path:inset(calc(var(--iy) * (1 - var(--p))) calc(var(--ix) * (1 - var(--p))))}
 .open__v{width:100%;height:100%;object-fit:cover;transform:scale(calc(1.08 - .08 * var(--p)))}
@@ -264,9 +265,7 @@
 /* ─────────── la barre du pouce ─────────── */
 .bar{position:fixed;bottom:0;z-index:80;display:flex;align-items:center;justify-content:space-between;gap:.8rem;
   height:calc(var(--bar) + var(--safe));padding:0 var(--g) var(--safe);
-  background:rgba(38,31,25,.97);
-  transform:translateY(105%);transition:transform .5s cubic-bezier(.3,.7,.2,1)}
-.bar.is-on{transform:none}
+  background:rgba(38,31,25,.97)}
 .bar__line{position:absolute;left:0;right:0;top:0;height:1px;background:var(--rose);
   transform-origin:0 50%;transform:scaleX(var(--prog,0))}
 .bar__ch{display:flex;align-items:center;gap:.55rem;min-height:44px;padding:0;background:none;border:0;
@@ -288,12 +287,9 @@
   background:var(--cream);color:var(--dark);
   transform:translateY(100%);transition:transform .45s cubic-bezier(.3,.7,.2,1)}
 .sheet.is-open .sheet__in{transform:none}
-.sheet__t{font-family:var(--type);font-size:.68rem;letter-spacing:.2em;color:rgba(46,38,32,.55);margin-bottom:.8rem}
 .sheet__list{list-style:none;margin:0;padding:0}
-.sheet__list a{display:flex;gap:1rem;align-items:baseline;min-height:44px;padding:.55rem 0;
-  font-family:var(--type);font-size:1rem;text-decoration:none;border-bottom:1px solid rgba(46,38,32,.12)}
-.sheet__list a span{color:var(--terra);font-size:.72rem;letter-spacing:.14em}
-.sheet__list a.is-cur{color:var(--terra)}
+.sheet__list a{display:flex;align-items:center;min-height:56px;padding:.6rem 0;
+  font-family:var(--type);font-size:1.35rem;text-decoration:none;border-bottom:1px solid rgba(46,38,32,.12)}
 .sheet__more{display:flex;flex-wrap:wrap;gap:.2rem 1.4rem;margin-top:1.2rem}
 .sheet__more a{font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;
   padding:.7rem 0;color:rgba(46,38,32,.75)}
