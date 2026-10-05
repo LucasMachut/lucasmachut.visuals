@@ -10,8 +10,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="/css/style.css?v=40" />
+  <link rel="stylesheet" href="/css/era-test.css?v=13" />
 </head>
-<body>
+<body class="era-page">
 
   <!-- =====================================================
        HEADER
@@ -50,55 +51,50 @@
   </nav>
   <!-- /partial:nav-lugares -->
 
-  <main>
+  <main class="era">
 
     <!-- ===================================================
-         ABERTURA — o filme, sem uma palavra
+         1 — ABERTURA
+         Le film plein écran avec le logo. Au scroll, la scène
+         reste fixe : le titre court passe sur le film, repart,
+         puis le film se referme en arche sur l'ivoire.
          =================================================== -->
-    <section class="hero" aria-label="Abertura">
-      <div class="hero__video-wrap fi">
-        <!-- Un seul film, pour tous les écrans. Les deux <video>
-             précédents se téléchargeaient l'un ET l'autre —
-             display:none n'empêche pas le chargement d'une vidéo —
-             et le téléphone payait les deux. Même arbitrage que sur
-             la page d'accueil.
-             poster : si iOS refuse la lecture (mode économie
-             d'énergie), le cadre montre une image au lieu d'un
-             rectangle noir. -->
-        <div class="hero__video-container">
-          <video
-            class="hero__video-frame"
-            autoplay
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            preload="auto"
-            poster="/photos/hero-piscine.jpg">
+    <section class="era-hero" aria-labelledby="hero-h1">
+      <div class="era-hero__sticky">
+        <div class="era-hero__frame">
+          <video autoplay muted loop playsinline webkit-playsinline preload="auto"
+                 poster="/photos/hero-piscine.jpg">
             <source src="/videos/piscine_min.mp4" type="video/mp4" />
           </video>
+          <div class="era-hero__veil"></div>
         </div>
-        <div class="hero__video-overlay"></div>
-        <div class="hero__video-logo">
+
+        <div class="era-hero__logo">
           <img src="/photos/Logo%20blanc%20casse.png" alt="Lucas Machut Visuals" decoding="async" />
         </div>
+
+        <div class="era-hero__texte">
+          <div class="era-head">
+            <span class="era-label">Fotografia e vídeo</span>
+            <h1 id="hero-h1" class="era-display">Sentir antes de chegar.</h1>
+            <p class="era-lead">Imagens que fazem um lugar ser sentido antes da chegada.</p>
+          </div>
+        </div>
+
+        <p class="era-hero__tag era-label">Hotéis · Pousadas · Imóveis — Brasil</p>
+
+        <div class="era-hero__cue" aria-hidden="true"><i></i></div>
       </div>
     </section>
 
     <!-- ===================================================
-         1 — A PROMESSA
-         Le film a déjà donné l'image : ce bloc ne fait que poser
-         la phrase, à gauche, sans sur-titre et sans photo d'appoint.
+         2 — ENTRÉE
+         Une ligne d'offre et les deux portes, sur l'axe.
          =================================================== -->
-    <section class="lg-promessa" aria-labelledby="promessa-h1">
-      <div class="lg-promessa__in">
-        <h1 class="fi" id="promessa-h1">
-          Imagens que fazem um lugar ser sentido antes da chegada.
-        </h1>
-        <p class="fi fi-d1">
-          Fotografia e vídeo para hotéis, pousadas e imóveis, no Brasil.
-        </p>
-        <div class="lg-promessa__acoes fi fi-d2">
+    <section class="era-promessa" aria-label="Fotografia e vídeo para hotéis, pousadas e imóveis">
+      <div class="era-head" data-rise>
+        <p class="era-lead">Fotografia e vídeo para hotéis, pousadas e imóveis, no Brasil.</p>
+        <div class="era-acoes">
           <a href="/lugares/portfolio.html" class="btn btn--dark">Ver trabalhos</a>
           <a href="/lugares/contato.html" class="btn btn--outline">Falar sobre um projeto</a>
         </div>
@@ -106,149 +102,193 @@
     </section>
 
     <!-- ===================================================
-         2 — A PERCEPÇÃO
-         Texte en bas à gauche : le voile est orienté vers le bas.
+         3 — A PERCEPÇÃO
+         L'image reste en place et recule ; deux temps passent
+         dessus, chacun un titre court et une phrase.
          =================================================== -->
-    <section class="lg-bloc lg-bloc--bas" aria-labelledby="percepcao-h2">
-      <img class="lg-bloc__img" src="/photos/lugares/salao.jpg"
-           alt="Salão aberto sob a cobertura de palha, no fim da tarde"
-           loading="lazy" decoding="async" />
-      <div class="lg-bloc__dire">
-        <div class="lg-bloc__in fi">
-          <h2 id="percepcao-h2">Antes da reserva, o hóspede já sente algo.</h2>
-          <p>
-            Ele observa a luz, os espaços, o ritmo, os detalhes e a forma como tudo aparece conectado.
-          </p>
-          <p>
-            A forma como um lugar aparece muda a forma como ele é <em>escolhido</em>. Quando o site, o Instagram e o Booking mostram versões diferentes da experiência, quem escolhe não percebe todo o valor do lugar.
-          </p>
+    <section class="era-percep" aria-labelledby="percepcao-h2">
+      <div class="era-percep__media">
+        <img src="/photos/lugares/salao.jpg"
+             alt="Salão aberto sob a cobertura de palha, no fim da tarde"
+             loading="lazy" decoding="async" />
+      </div>
+      <div class="era-percep__panels">
+        <div class="era-percep__panel">
+          <div class="era-head">
+            <span class="era-label" data-rise>A percepção</span>
+            <h2 id="percepcao-h2" class="era-display" data-rise>Antes da reserva.</h2>
+            <p class="era-lead" data-rise>
+              O hóspede já sente algo. Ele observa a luz, os espaços, o ritmo, os detalhes e a forma como tudo aparece conectado.
+            </p>
+          </div>
+        </div>
+        <div class="era-percep__panel">
+          <div class="era-head">
+            <h2 class="era-display" data-rise>Escolhido pela imagem.</h2>
+            <p class="era-lead" data-rise>
+              A forma como um lugar aparece muda a forma como ele é escolhido.
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- ===================================================
-         3 — O QUE EU FAÇO
-         Trois lieux, en lignes séparées d'un filet. Pas de cartes :
-         une grille de vignettes h3 + une phrase est le second
-         marqueur de gabarit, après les sur-titres.
+         4 — TRÊS TIPOS DE LUGAR
+         Tête sur l'axe, puis trois lignes : le nom en très grand,
+         une phrase, les supports ; l'image alterne de côté.
          =================================================== -->
-    <section class="lg-offre" id="services" aria-labelledby="offre-h2">
-      <div class="lg-offre__tete fi">
-        <h2 id="offre-h2">Três tipos de lugar, três formas de mostrar.</h2>
+    <section class="era-offre" id="services" aria-labelledby="offre-h2">
+      <div class="era-head">
+        <span class="era-label" data-rise>O que eu faço</span>
+        <h2 id="offre-h2" class="era-display" data-rise>Três lugares.</h2>
+        <p class="era-lead" data-rise>
+          Três formas de mostrar. Em todos os casos, uma leitura do lugar antes da produção — para não terminar com um conjunto de imagens soltas.
+        </p>
       </div>
 
-      <div class="lg-offre__liste">
-        <div class="lg-ligne fi">
-          <div class="lg-ligne__lieu">Hotéis</div>
-          <div class="lg-ligne__corpo">
-            <p class="lg-ligne__dit">
+      <div class="era-grid era-rows">
+        <article class="era-row">
+          <div class="era-row__texte" data-rise>
+            <span class="era-label era-row__num">01</span>
+            <h3 class="era-row__word">Hotéis</h3>
+            <p class="era-lead">
               A experiência inteira, do quarto à mesa: a luz de cada hora, o ritmo do dia, as áreas comuns quando elas estão vivas.
             </p>
-            <p class="lg-ligne__pour">
-              Site · Booking · Instagram · materiais de apresentação
-            </p>
+            <span class="era-label era-row__pour">Site · Booking · Instagram · apresentação</span>
           </div>
-        </div>
-
-        <div class="lg-ligne fi fi-d1">
-          <div class="lg-ligne__lieu">Pousadas e casas de temporada</div>
-          <div class="lg-ligne__corpo">
-            <p class="lg-ligne__dit">
-              O caráter do lugar e de quem recebe. O que faz alguém voltar, e contar para outra pessoa.
-            </p>
-            <p class="lg-ligne__pour">
-              Redes sociais · reservas diretas · plataformas
-            </p>
+          <div class="era-row__media" data-img>
+            <img src="/photos/lugares/sv-piscina.jpg" alt="Piscina entre dois salões de palha, com espreguiçadeiras de madeira" loading="lazy" decoding="async" />
           </div>
-        </div>
+        </article>
 
-        <div class="lg-ligne fi fi-d2">
-          <div class="lg-ligne__lieu">Imóveis</div>
-          <div class="lg-ligne__corpo">
-            <p class="lg-ligne__dit">
+        <article class="era-row era-row--inv">
+          <div class="era-row__texte" data-rise>
+            <span class="era-label era-row__num">02</span>
+            <h3 class="era-row__word">Pousadas</h3>
+            <p class="era-lead">
+              Pousadas e casas de temporada: o caráter do lugar e de quem recebe. O que faz alguém voltar, e contar para outra pessoa.
+            </p>
+            <span class="era-label era-row__pour">Redes sociais · reservas diretas · plataformas</span>
+          </div>
+          <div class="era-row__media" data-img>
+            <img src="/photos/lugares/vb-varanda-noite.jpg" alt="Varanda à noite, com rede, almofadas e luzes penduradas" loading="lazy" decoding="async" />
+          </div>
+        </article>
+
+        <article class="era-row">
+          <div class="era-row__texte" data-rise>
+            <span class="era-label era-row__num">03</span>
+            <h3 class="era-row__word">Imóveis</h3>
+            <p class="era-lead">
               O espaço lido de uma vez: luz, volumes, circulação. Quem visita precisa entender a planta antes de entrar.
             </p>
-            <p class="lg-ligne__pour">
-              Anúncio · visita · venda e locação
-            </p>
+            <span class="era-label era-row__pour">Anúncio · visita · venda e locação</span>
           </div>
-        </div>
+          <div class="era-row__media" data-img>
+            <img src="/photos/lugares/egeu-casa.jpg" alt="Casa térrea com piscina, espreguiçadeiras e jardim tropical" loading="lazy" decoding="async" />
+          </div>
+        </article>
       </div>
-
-      <p class="lg-offre__note fi">
-        Em todos os casos, uma leitura do lugar antes da produção — para não terminar com um conjunto de imagens soltas.
-      </p>
     </section>
 
     <!-- ===================================================
-         RESPIRAÇÃO — a imagem sozinha
+         RESPIRAÇÃO — Villa Balthazar, o café da manhã
+         Le lait versé, puis la tasse bue. Pleine largeur, sans
+         texte, entre l'offre et le regard. Boucle chargée à
+         l'approche (js/main.js).
          =================================================== -->
-    <section class="lg-respire" aria-hidden="true">
-      <picture>
-        <source media="(max-width:860px)" srcset="/photos/lugares/m-piscina.jpg">
-        <img src="/photos/lugares/piscina.jpg" alt="" loading="lazy" decoding="async" />
-      </picture>
+    <section class="era-respire" aria-hidden="true">
+      <div class="era-respire__media" data-img>
+        <video class="lg-loop" muted loop playsinline webkit-playsinline preload="none"
+               poster="/videos/lugares/manha.jpg"
+               data-src="/videos/lugares/manha.mp4"
+               data-src-m="/videos/lugares/manha-m.mp4"
+               data-poster-m="/videos/lugares/manha-m.jpg"></video>
+      </div>
     </section>
 
     <!-- ===================================================
-         4 — O OLHAR E O MÉTODO
-         Deux anciennes sections fondues en une. Texte en haut à
-         droite : la mesure est plus courte qu'au mouvement 2, et
-         c'est ce décalage qui casse la régularité.
+         5 — O OLHAR
+         Double page : l'image occupe les six colonnes de gauche,
+         pleine hauteur ; le texte tient dans les six autres.
          =================================================== -->
-    <section class="lg-bloc lg-bloc--haut" id="regard" aria-labelledby="olhar-h2">
-      <img class="lg-bloc__img" src="/photos/le-regard/chave-porta.jpg"
-           alt="Uma mão levando a chave à fechadura de uma porta antiga"
-           loading="lazy" decoding="async" />
-      <div class="lg-bloc__dire">
-        <div class="lg-bloc__in fi">
-          <h2 id="olhar-h2">Primeiro, eu leio o lugar.</h2>
-          <p>
-            Sou Lucas Machut, fotógrafo e filmmaker francês, baseado no Rio. Antes da imagem, minha formação passou pela interpretação: observar, entender o que não aparece de imediato, traduzir uma intenção com precisão.
+    <section class="era-olhar" id="regard" aria-labelledby="olhar-h2">
+      <div class="era-olhar__img" data-img>
+        <!-- Villa Balthazar : une silhouette qui regarde dehors.
+             Cadrée à 35 % pour garder la fenêtre et la silhouette. -->
+        <video class="lg-loop" muted loop playsinline webkit-playsinline preload="none"
+               poster="/videos/lugares/janela.jpg"
+               data-src="/videos/lugares/janela.mp4"
+               data-src-m="/videos/lugares/janela-m.mp4"
+               data-poster-m="/videos/lugares/janela-m.jpg"
+               aria-label="Silhueta de um hóspede diante da janela aberta sobre as palmeiras"></video>
+      </div>
+      <div class="era-olhar__corps">
+        <span class="era-label" data-rise>O olhar</span>
+        <h2 id="olhar-h2" class="era-display" data-rise>Primeiro, ler o lugar.</h2>
+        <div class="era-olhar__texte" data-rise>
+          <p class="era-lead">
+            Sou Lucas Machut, fotógrafo e filmmaker francês, baseado no Rio. Antes da imagem, minha formação passou pela interpretação: observar, entender o que não aparece de imediato, traduzir.
           </p>
-          <p>
-            Essa leitura tem um nome e um método. Chamo de <em>REGARD</em>: o que já funciona, o que ainda está pouco claro, e quais imagens fariam alguém sentir algo antes de chegar.
+          <p class="era-lead">
+            Essa leitura tem um nome e um método. Chamo de REGARD: o que já funciona, o que ainda está pouco claro, e quais imagens fariam alguém sentir algo antes de chegar.
           </p>
+        </div>
+        <div class="era-acoes" data-rise>
           <a href="/lugares/regard.html" class="btn btn--outline-light">Conhecer o método</a>
         </div>
       </div>
     </section>
 
     <!-- ===================================================
-         5 — OS LUGARES
+         6 — OS LUGARES
          =================================================== -->
-    <section class="lg-lieux" aria-labelledby="lugares-h2">
-      <div class="lg-lieux__tete fi">
-        <h2 id="lugares-h2">Alguns lugares, já filmados.</h2>
+    <section class="era-lieux" aria-labelledby="lugares-h2">
+      <div class="era-head">
+        <span class="era-label" data-rise>Filmes</span>
+        <h2 id="lugares-h2" class="era-display" data-rise>Lugares filmados.</h2>
       </div>
-
-      <div class="video-grid fi fi-d1">
-        <div class="video-embed">
-          <button class="video-facade" data-video="luJG2Lw5t7o" data-title="Villa Egeu — filme por Lucas Machut Visuals" aria-label="Ver o vídeo: Villa Egeu — filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/luJG2Lw5t7o/maxresdefault.jpg" alt="Villa Egeu — filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
-        </div>
-        <div class="video-embed">
-          <button class="video-facade" data-video="WREX4fxGm6w" data-title="Villa Egeu — segundo filme por Lucas Machut Visuals" aria-label="Ver o vídeo: Villa Egeu — segundo filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/WREX4fxGm6w/maxresdefault.jpg" alt="Villa Egeu — segundo filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
+      <div class="era-grid">
+        <div class="video-grid" data-rise>
+          <div class="video-embed">
+            <button class="video-facade" data-video="luJG2Lw5t7o" data-title="Villa Egeu — filme por Lucas Machut Visuals" aria-label="Ver o vídeo: Villa Egeu — filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/luJG2Lw5t7o/maxresdefault.jpg" alt="Villa Egeu — filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
+          </div>
+          <div class="video-embed">
+            <button class="video-facade" data-video="WREX4fxGm6w" data-title="Villa Egeu — segundo filme por Lucas Machut Visuals" aria-label="Ver o vídeo: Villa Egeu — segundo filme por Lucas Machut Visuals"><img class="video-facade__poster" src="https://i.ytimg.com/vi/WREX4fxGm6w/maxresdefault.jpg" alt="Villa Egeu — segundo filme por Lucas Machut Visuals" loading="lazy" decoding="async" /><span class="video-facade__play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></button>
+          </div>
         </div>
       </div>
-
-      <div class="lg-lieux__suite fi">
-        <a href="/lugares/portfolio.html" class="btn btn--outline">Ver todos os trabalhos</a>
+      <div class="era-head">
+        <div class="era-acoes" data-rise>
+          <a href="/lugares/portfolio.html" class="btn btn--outline">Ver todos os trabalhos</a>
+        </div>
       </div>
     </section>
 
     <!-- ===================================================
-         CLÔTURE — à gauche, pas au centre
+         7 — CLÔTURE
          =================================================== -->
-    <section class="lg-fin" aria-labelledby="fin-h2">
-      <div class="lg-fin__in fi">
-        <h2 id="fin-h2">Seu lugar já tem uma <em>atmosfera</em>.</h2>
-        <p>
-          Talvez ela ainda não esteja aparecendo como deveria — no site, nas plataformas, nas redes.
+    <section class="era-fin" aria-labelledby="fin-h2">
+      <div class="era-head">
+        <span class="era-label" data-rise>Contato</span>
+        <h2 id="fin-h2" class="era-display" data-rise>Vamos conversar.</h2>
+        <p class="era-lead" data-rise>
+          Seu lugar já tem uma atmosfera. Talvez ela ainda não esteja aparecendo como deveria — no site, nas plataformas, nas redes.
         </p>
-        <a href="/lugares/contato.html" class="btn btn--light">Vamos conversar</a>
+        <div class="era-acoes" data-rise>
+          <a href="/lugares/contato.html" class="btn btn--light">Falar sobre um projeto</a>
+        </div>
       </div>
     </section>
 
+    <!-- Bouton de contact flottant, mobile seulement -->
+    <a class="era-cta" href="/lugares/contato.html">
+      Falar sobre um projeto
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+
+    <div class="era-progress" aria-hidden="true"><i></i></div>
   </main>
 
   <!-- =====================================================
@@ -291,6 +331,9 @@
   </footer>
   <!-- /partial:footer-lugares -->
 
-  <script src="/js/main.js?v=3"></script>
+  <script src="/js/main.js?v=5"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+  <script src="/js/era-test.js?v=13"></script>
 </body>
 </html>

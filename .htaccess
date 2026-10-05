@@ -31,6 +31,8 @@ RewriteRule ^villa-balthazar/?$     /lugares/villa-balthazar [R=301,L]
 #     contact était la page B2B : elle devient le contato de lugares,
 #     tandis que /contato sert désormais le B2C.
 RewriteRule ^contact/?$             /lugares/contato [R=301,L]
+#     La maquette de lugares est devenue la vraie page.
+RewriteRule ^lugares/index-era/?$     /lugares/ [R=301,L]
 #     Parador est retiré du portfólio.
 RewriteRule ^parador/?$             /lugares/portfolio [R=301,L]
 
