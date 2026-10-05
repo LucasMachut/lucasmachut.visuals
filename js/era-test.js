@@ -49,8 +49,12 @@
   });
 
   /* --- 2. Images ----------------------------------------- */
+  /* Sur téléphone, les deux films horizontaux (tasse, silhouette)
+     restent entiers : pas de glissement dans le cadre. */
+  const mobile = window.matchMedia('(max-width: 860px)').matches;
   gsap.utils.toArray('[data-img]').forEach(box => {
-    const img = box.querySelector(':scope > img, :scope > video');
+    const entier = mobile && box.matches('.era-respire__media, .era-olhar__img');
+    const img = entier ? null : box.querySelector(':scope > img, :scope > video');
     gsap.fromTo(box,
       { clipPath: 'inset(100% 0% 0% 0%)' },
       {

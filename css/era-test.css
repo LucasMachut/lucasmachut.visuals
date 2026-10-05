@@ -280,7 +280,10 @@
 .era-respire__media { height: 82svh; }
 .era-respire__media > video { background: var(--bg-dark); }
 @media (max-width: 860px) {
-  .era-respire__media { height: auto; aspect-ratio: 3 / 4; }
+  /* La tasse est filmée à l'horizontale : sur téléphone on la
+     montre telle quelle, sans recadrage ni zoom. */
+  .era-respire__media { height: auto; aspect-ratio: 16 / 9; }
+  .era-anim .era-respire__media > video { height: 100%; margin-top: 0; }
 }
 
 /* ============================================================
@@ -461,7 +464,9 @@ body.era-film .header .nav__lang-link--active { color: var(--cream); }
 
   /* Regard : photo verticale pleine largeur, texte sur l'axe */
   .era-olhar { grid-template-columns: 1fr; min-height: 0; }
-  .era-olhar__img { min-height: 0; aspect-ratio: 4 / 5; }
+  /* La silhouette aussi : tout le plan, fenêtre et palmiers. */
+  .era-olhar__img { min-height: 0; aspect-ratio: 16 / 9; }
+  .era-anim .era-olhar__img > video { top: 0; height: 100%; object-position: 50% 50%; }
   .era-olhar__corps {
     padding: 3.5rem calc(var(--gut) + 0.25rem) var(--sec);
     text-align: center;

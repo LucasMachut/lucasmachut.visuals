@@ -74,9 +74,16 @@
             if (!v.src) {
               v.src = (isMobile() && v.dataset.srcM) || v.dataset.src;
               v.preload = 'auto';
+              /* Safari iPhone refuse souvent play() tant que rien n'est
+                 chargé : on réessaie dès que le film peut démarrer. */
+              const retry = () => { if (v.dataset.on) v.play().catch(() => {}); };
+              v.addEventListener('loadeddata', retry, { once: true });
+              v.addEventListener('canplay', retry, { once: true });
             }
+            v.dataset.on = '1';
             v.play().catch(() => {});
           } else if (v.src) {
+            delete v.dataset.on;
             v.pause();
           }
         });
