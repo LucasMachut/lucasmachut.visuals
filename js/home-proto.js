@@ -94,8 +94,8 @@
     c.s.classList.remove('is-in');
     showBeat(c, -1);
   }
-  function chapterFrame(c, vh) {
-    var r = c.s.getBoundingClientRect();
+  /* r = la position mesurée AVANT toute écriture (voir frame) */
+  function chapterFrame(c, vh, r) {
     if (r.top > vh) { if (c.seen) resetChapter(c); return; }
     if (r.bottom < 0) return;
     if (!c.seen && r.top < vh * 0.35) { c.seen = true; c.s.classList.add('is-in'); }
@@ -108,7 +108,7 @@
       }, 900);
     }
     var nb = c.beats.length;
-    var q = clamp(-r.top / Math.max(1, c.s.offsetHeight - vh), 0, 1);
+    var q = clamp(-r.top / Math.max(1, r.height - vh), 0, 1);
     if (q < 0.25 && !c.ready && c.shown < 0) return;
     showBeat(c, Math.min(nb - 1, Math.floor(q * nb)));
   }
@@ -250,35 +250,60 @@
     document.addEventListener('pointerleave', function () { vf.classList.remove('is-on'); });
   }
 
-  /* ─── la boucle ─── */
+  /* ─── la boucle ───
+     Une image = une lecture, puis une écriture. Lire la position d'un
+     élément juste après en avoir modifié un autre force le navigateur à
+     tout recalculer, et c'est ce qui faisait « bloquer puis lâcher » le
+     défilement au pavé tactile. Donc : toutes les mesures d'abord, les
+     tailles fixes gardées de côté (recalculées au redimensionnement),
+     puis toutes les modifications. */
   var hd = document.querySelector('.hd');
+  var flo = document.querySelector('.float');
+  var contato = document.querySelector('#contato');
   var ticking = false;
+  var dims = {};
+  function measure() {
+    dims.vh = window.innerHeight;
+    dims.max = document.documentElement.scrollHeight - dims.vh;
+    dims.heroTop = hero ? hero.offsetTop : 0;
+    dims.heroRun = hero ? hero.offsetHeight - dims.vh : 0;
+  }
   function frame() {
     ticking = false;
-    var vh = window.innerHeight, y = window.scrollY;
-    var heroEnd = 0;
-    if (hero) {
-      var run = hero.offsetHeight - vh;
-      heroEnd = hero.offsetTop + run;
-      if (!reduce && run > 0) hero.style.setProperty('--p', clamp(y / (run * 0.7), 0, 1).toFixed(3));
+    var vh = dims.vh, y = window.scrollY;
+    /* lecture */
+    var rects = chs.map(function (c) { return c.s.getBoundingClientRect(); });
+    var cTop = contato ? contato.getBoundingClientRect().top : Infinity;
+    var looseTops = loose.map(function (el) { return el._typed ? 0 : el.getBoundingClientRect().top; });
+    /* écriture */
+    if (hero && !reduce && dims.heroRun > 0) {
+      hero.style.setProperty('--p', clamp(y / (dims.heroRun * 0.7), 0, 1).toFixed(3));
     }
-    /* la barre prend son fond quand le film est sorti */
     if (hd) {
-      hd.classList.toggle('is-scrolled', y > heroEnd);
-      var max = document.documentElement.scrollHeight - vh;
-      hd.style.setProperty('--prog', (max > 0 ? y / max : 0).toFixed(4));
+      hd.classList.toggle('is-scrolled', y > dims.heroTop + dims.heroRun);
+      hd.style.setProperty('--prog', (dims.max > 0 ? y / dims.max : 0).toFixed(4));
     }
-    chs.forEach(function (c) { chapterFrame(c, vh); });
-    loose.forEach(function (el) {
-      if (!el._typed && el.getBoundingClientRect().top < vh * 0.85) {
+    if (flo) flo.classList.toggle('is-on', y > dims.heroTop + dims.heroRun * 0.8 && cTop > vh * 0.5);
+    chs.forEach(function (c, i) { chapterFrame(c, vh, rects[i]); });
+    loose.forEach(function (el, i) {
+      if (!el._typed && looseTops[i] < vh * 0.85) {
         el._typed = true;
         typeTimed(el, 100, 40);
       }
     });
   }
+  /* le grain s'arrête pendant qu'on défile : un calque plein écran qui
+     bouge en même temps que la page, c'est une image entière à
+     recomposer à chaque pas */
+  var scrollIdle = null;
   window.addEventListener('scroll', function () {
+    document.body.classList.add('is-scrolling');
+    clearTimeout(scrollIdle);
+    scrollIdle = setTimeout(function () { document.body.classList.remove('is-scrolling'); }, 180);
     if (!ticking) { ticking = true; requestAnimationFrame(frame); }
   }, { passive: true });
-  window.addEventListener('resize', frame);
+  window.addEventListener('resize', function () { measure(); frame(); });
+  window.addEventListener('load', function () { measure(); frame(); });
+  measure();
   frame();
 })();

@@ -21,6 +21,8 @@
 .grain::before{content:"";position:absolute;inset:-50%;background-image:var(--noise);
   background-size:180px;opacity:.07;will-change:transform;
   animation:grain 1s steps(5) infinite}
+/* le grain s'immobilise pendant qu'on défile (home-proto.js) */
+.is-scrolling .grain::before{animation-play-state:paused}
 @keyframes grain{
   0%{transform:translate(0,0)}20%{transform:translate(-4%,3%)}
   40%{transform:translate(3%,-5%)}60%{transform:translate(-6%,-2%)}
@@ -30,6 +32,9 @@
    Les liens de home.css, plus l'appel : « Falar comigo » est toujours
    à portée de main, comme dans la barre du pouce sur téléphone. Même
    dessin que là-bas : un pavé lin, petites capitales. */
+/* sans flou derrière la barre : un flou recalculé sur les photos à
+   chaque pas de défilement coûtait plus que tout le reste de la page */
+.proto .hd.is-scrolled{backdrop-filter:none;-webkit-backdrop-filter:none;background:rgba(38,31,25,.95)}
 .hd__end{display:flex;align-items:center;gap:2rem}
 .home .hd__cta{display:inline-flex;align-items:center;min-height:2.3rem;padding:0 1.1rem;
   background:var(--cream);color:var(--dark);text-decoration:none;
@@ -80,7 +85,7 @@
    (ou la planche) arrive seule ; le texte monte un instant après, à
    son propre rythme. La section suivante vient la recouvrir, comme on
    pose un tirage sur un autre. --beats = nombre de temps de texte. */
-.ch{position:relative;height:calc(100svh + var(--beats,1) * 70svh);background:var(--ink)}
+.ch{position:relative;height:calc(100svh + var(--beats,1) * 45svh);background:var(--ink)}
 .home .ch__stage{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden}
 .ch__stage .tile{height:100%}
 .ch__stage img{transform:scale(1.06);transform-origin:50% 40%;
@@ -95,8 +100,7 @@
 
 /* la mise au point : les coins se resserrent sur le sujet, clignent
    deux fois, virent au rose, puis s'effacent. Une fois par photo. */
-.ch__af{position:absolute;inset:4%;--af:30%;z-index:3;pointer-events:none;opacity:0;
-  filter:drop-shadow(0 0 3px rgba(20,16,12,.55))}
+.ch__af{position:absolute;inset:4%;--af:30%;z-index:3;pointer-events:none;opacity:0}
 /* plus marqué que sur téléphone : des coins plus longs et plus épais,
    et le cadre tient plus longtemps sur le sujet avant de s'effacer */
 .ch__af i{width:30px;height:30px;border-width:0;border-color:var(--cream)}
@@ -117,7 +121,6 @@
 
 /* la fuite de lumière, à l'arrivée de la photo */
 .ch__leak{position:absolute;inset:-30% -40%;z-index:2;pointer-events:none;opacity:0;
-  mix-blend-mode:screen;
   background:
     radial-gradient(26% 40% at 38% 42%,rgba(232,140,88,.5),rgba(232,140,88,0) 70%),
     radial-gradient(20% 30% at 58% 60%,rgba(201,142,122,.45),rgba(201,142,122,0) 70%)}
@@ -292,3 +295,27 @@
 .home .ft__logo{display:block;padding:0}
 .ft__logo img{height:44px;width:auto;opacity:.85;transition:opacity .3s ease}
 .ft__logo:hover img{opacity:1}
+
+/* ─────────── les appels flottants ───────────
+   En bas à droite, sur un pavé brun : le portfólio en lien frappé
+   souligné de rose, « Falar comigo » en pavé lin, le même dessin que la
+   barre du pouce sur téléphone. Ils montent quand le film d'ouverture
+   est passé et redescendent sur le contato. */
+.float{position:fixed;right:var(--pad);bottom:1.6rem;z-index:85;display:flex;align-items:center;gap:1.4rem;
+  padding:.55rem .55rem .55rem 1.4rem;background:rgba(38,31,25,.94);
+  box-shadow:0 14px 34px -12px rgba(8,6,4,.7);
+  opacity:0;transform:translateY(24px);pointer-events:none;
+  transition:opacity .5s ease,transform .6s cubic-bezier(.2,.7,.2,1)}
+.float.is-on{opacity:1;transform:none;pointer-events:auto}
+.home .float__link{display:inline-flex;gap:.55rem;align-items:baseline;
+  font-family:var(--font-title);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cream);text-decoration:none;padding:.5rem 0 .3rem;border-bottom:1px solid rgba(201,142,122,.6);
+  transition:border-color .3s ease}
+.home .float__link:hover{border-color:var(--rose)}
+.float__link i{font-style:normal;font-family:var(--font-sans)}
+.home .float__cta{display:inline-flex;align-items:center;min-height:2.6rem;padding:0 1.2rem;
+  background:var(--cream);color:var(--dark);text-decoration:none;border:1px solid var(--cream);
+  font-family:var(--font-sans);font-size:.62rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+  transition:background .3s ease,color .3s ease}
+.home .float__cta:hover{background:transparent;color:var(--cream)}
+@media(prefers-reduced-motion:reduce){.float{transition:none}}
