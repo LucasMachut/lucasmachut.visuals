@@ -162,78 +162,61 @@
     prests.forEach(function (p) { pio.observe(p); });
   }
 
-  /* ─── l'album ───
-     On attrape le tirage du dessus et on le pousse ; au-delà d'un
-     seuil il part du côté poussé et se glisse sous la pile. Un clic
-     simple, Entrée ou Espace font la même chose, vers la droite. */
-  var pile = document.querySelector('.album__pile');
-  if (pile) {
-    var order = all('.tirage', pile);
-    var layout = function (animate) {
-      order.forEach(function (c, d) {
-        var dd = Math.min(d, 3);
-        c.style.transition = animate ? 'transform .5s cubic-bezier(.3,.7,.2,1), filter .5s ease' : 'none';
-        c.style.zIndex = String(order.length - d);
-        c.style.transform = 'translate(-50%,-50%) translate(' + (dd * 10) + 'px,' + (dd * 8) + 'px) rotate(var(--r,0deg))';
-        c.style.filter = 'brightness(' + (1 - dd * 0.15) + ')';
+  /* ─── l'album : la table de tirages ───
+     Chaque tirage tombe quand il entre dans l'écran, avec un petit
+     décalage pour qu'ils arrivent l'un après l'autre et pas en bloc. */
+  var tiros = all('.mesa__t');
+  if (reduce || !('IntersectionObserver' in window)) {
+    tiros.forEach(function (t) { t.classList.add('is-down'); });
+  } else {
+    var queue = 0, qTimer = null;
+    var tio = new IntersectionObserver(function (en) {
+      en.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        tio.unobserve(e.target);
+        var t = e.target, d = queue++ * 160;
+        setTimeout(function () { t.classList.add('is-down'); }, d);
+        clearTimeout(qTimer);
+        qTimer = setTimeout(function () { queue = 0; }, d + 200);
       });
-    };
-    layout(false);
-    var flip = function (side) {
-      var c = order[0];
-      c.style.transition = 'transform .45s cubic-bezier(.2,.6,.3,1)';
-      c.style.transform = 'translate(-50%,-50%) translate(' + (side * pile.clientWidth * 1.1) + 'px,-40px) rotate(calc(var(--r,0deg) + ' + (side * 20) + 'deg))';
-      setTimeout(function () {
-        order.push(order.shift());
-        layout(false);
-        requestAnimationFrame(function () { layout(true); });
-      }, 430);
-    };
-    var drag = null;
-    pile.addEventListener('pointerdown', function (e) {
-      if (!order[0].contains(e.target)) return;
-      drag = { c: order[0], x: e.clientX, t: performance.now(), dx: 0, id: e.pointerId };
-      drag.c.style.transition = 'none';
-      drag.c.classList.add('is-drag');
-      try { drag.c.setPointerCapture(e.pointerId); } catch (err) {}
-    });
-    pile.addEventListener('pointermove', function (e) {
-      if (!drag || e.pointerId !== drag.id) return;
-      drag.dx = e.clientX - drag.x;
-      drag.c.style.transform = 'translate(-50%,-50%) translate(' + drag.dx + 'px,' + (Math.abs(drag.dx) * -0.08) + 'px) rotate(calc(var(--r,0deg) + ' + (drag.dx * 0.05) + 'deg))';
-    });
-    var release = function (e) {
-      if (!drag || e.pointerId !== drag.id) return;
-      var dx = drag.dx, v = Math.abs(dx) / Math.max(1, performance.now() - drag.t);
-      drag.c.classList.remove('is-drag');
-      drag = null;
-      if (Math.abs(dx) < 6) flip(1);                            /* un clic */
-      else if (Math.abs(dx) > pile.clientWidth * 0.22 || (v > 0.6 && Math.abs(dx) > 30)) flip(dx > 0 ? 1 : -1);
-      else layout(true);
-    };
-    pile.addEventListener('pointerup', release);
-    pile.addEventListener('pointercancel', release);
-    pile.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(1); }
-    });
-    var hint = document.querySelector('.album__hint');
-    if (hint) hint.addEventListener('click', function () { flip(1); });
+    }, { threshold: 0.25 });
+    tiros.forEach(function (t) { tio.observe(t); });
+  }
 
-    /* à la première rencontre, le tirage du dessus se soulève et
-       retombe : on comprend qu'il se prend en main */
-    if ('IntersectionObserver' in window && !reduce) {
-      var aio = new IntersectionObserver(function (en) {
-        if (!en[0].isIntersecting) return;
-        aio.disconnect();
-        setTimeout(function () {
-          var c = order[0];
-          c.style.transition = 'transform .45s cubic-bezier(.3,.7,.2,1)';
-          c.style.transform = 'translate(-50%,-50%) translate(42px,-12px) rotate(calc(var(--r,0deg) + 4deg))';
-          setTimeout(function () { layout(true); }, 480);
-        }, 500);
-      }, { threshold: 0.6 });
-      aio.observe(pile);
-    }
+  /* le tirage ouvert en grand : clic pour ouvrir, flèches pour passer,
+     Échap ou clic sur la table pour refermer */
+  var luz = document.querySelector('.luz');
+  if (luz && tiros.length) {
+    var luzImg = luz.querySelector('img'), cur = 0, opener = null;
+    var show = function (i) {
+      cur = (i + tiros.length) % tiros.length;
+      var src = tiros[cur].querySelector('img');
+      luzImg.src = src.currentSrc || src.src;
+      luzImg.alt = src.alt;
+    };
+    var openLuz = function (i) {
+      opener = tiros[i];
+      show(i);
+      luz.hidden = false;
+      requestAnimationFrame(function () { luz.classList.add('is-open'); });
+      luz.querySelector('.luz__close').focus();
+    };
+    var closeLuz = function () {
+      luz.classList.remove('is-open');
+      setTimeout(function () { luz.hidden = true; }, 350);
+      if (opener) opener.focus();
+    };
+    tiros.forEach(function (t, i) { t.addEventListener('click', function () { openLuz(i); }); });
+    luz.querySelector('.luz__prev').addEventListener('click', function () { show(cur - 1); });
+    luz.querySelector('.luz__next').addEventListener('click', function () { show(cur + 1); });
+    luz.querySelector('.luz__close').addEventListener('click', closeLuz);
+    luz.addEventListener('click', function (e) { if (e.target === luz) closeLuz(); });
+    document.addEventListener('keydown', function (e) {
+      if (luz.hidden) return;
+      if (e.key === 'Escape') closeLuz();
+      else if (e.key === 'ArrowRight') show(cur + 1);
+      else if (e.key === 'ArrowLeft') show(cur - 1);
+    });
   }
 
   /* ─── le viseur à la souris ─── */
@@ -242,7 +225,7 @@
     document.body.classList.add('vf-ready');
     window.addEventListener('pointermove', function (e) {
       var t = e.target;
-      var on = !!(t.closest && t.closest('.ch__stage, .album__pile'));
+      var on = !!(t.closest && t.closest('.ch__stage'));
       vf.classList.toggle('is-on', on);
       vf.classList.toggle('is-link', on && !!t.closest('a, button'));
       vf.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px)';

@@ -12,7 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/home.css?v=23">
-<link rel="stylesheet" href="css/home-proto.css?v=11">
+<link rel="stylesheet" href="css/home-proto.css?v=12">
 </head>
 <body class="home proto">
 
@@ -244,27 +244,39 @@
 </section>
 
 <!-- ═══ O ÁLBUM ═══
-     Les respirations d'avant (le rire entre les pierres, l'autoportrait,
-     la fenêtre) deviennent des tirages en pile. On attrape celui du
-     dessus et on le pousse, ou on clique, ou on tape sur Entrée : il
-     part sur le côté et revient sous la pile. Seule, centrée : la
-     liste des séries a été retirée (08.10.2026), elle ne correspondait
-     pas aux photos de la pile. -->
+     Refait le 08.10.2026 : la pile était trop pauvre. Une table de
+     tirages, sur toute la largeur — festival, mariage, ensaios, l'Arpoador
+     — posés de biais. Ils tombent un à un quand on arrive ; on en touche
+     un, il s'ouvre en grand (flèches pour passer au suivant, Échap pour
+     refermer). Aucune de ces photos n'est ailleurs sur la page.
+     Placement à la main : --x (gauche, %), --y (haut, vw), --w (largeur,
+     vw), --r (biais), --ar (proportions de la photo). -->
 <section class="album" id="album" data-name="o álbum">
-  <div class="album__in">
-    <p class="ch__n" data-type>o álbum</p>
-    <div class="album__pile" role="button" tabindex="0" aria-label="Virar o tirage">
-      <figure class="tirage tirage--h" style="--r:-2.4deg"><img decoding="async" src="photos/le-regard/riso-pedras.jpg" alt="Riso de braços abertos entre as pedras" loading="lazy"></figure>
-      <figure class="tirage tirage--v" style="--r:1.8deg"><img decoding="async" src="photos/le-regard/janela-montanha.jpg" alt="De costas na janela, a montanha atrás do vidro" loading="lazy"></figure>
-      <figure class="tirage tirage--h" style="--r:-1.2deg"><img decoding="async" src="photos/le-regard/autorretrato.jpg" alt="Autorretrato no espelho, câmera na mão" loading="lazy"></figure>
-      <figure class="tirage tirage--v" style="--r:2.2deg"><img decoding="async" src="photos/le-regard/mobile/v/t-homem.jpg" alt="Retrato ao pé das pedras, camisa preta" loading="lazy"></figure>
-    </div>
-    <p class="album__hint" aria-hidden="true">virar o tirage <i>&#8594;</i></p>
-    <div class="cta-row">
-      <a href="/portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
-    </div>
+  <p class="ch__n" data-type>o álbum</p>
+  <div class="mesa">
+      <button class="mesa__t" style="--x:3%;--y:4vw;--w:26vw;--r:-4deg;--ar:3/2" aria-label="Ver em grande: Amigas rindo e estendendo as mãos, noite de forró"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/forro-amigos.jpg" alt="Amigas rindo e estendendo as mãos, noite de forró"></button>
+      <button class="mesa__t" style="--x:33%;--y:1vw;--w:17vw;--r:3deg;--ar:910/1008" aria-label="Ver em grande: Um casal dança tango, rosto com rosto"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/tango-casal.jpg" alt="Um casal dança tango, rosto com rosto"></button>
+      <button class="mesa__t" style="--x:54%;--y:6vw;--w:23vw;--r:-2deg;--ar:4/3" aria-label="Ver em grande: Um menino salta entre as bolhas, no Arpoador"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/bolhas-salto.jpg" alt="Um menino salta entre as bolhas, no Arpoador"></button>
+      <button class="mesa__t" style="--x:80%;--y:2vw;--w:15vw;--r:5deg;--ar:2/3" aria-label="Ver em grande: Um abraço numa gargalhada, no casamento"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/amba-abraco.jpg" alt="Um abraço numa gargalhada, no casamento"></button>
+      <button class="mesa__t" style="--x:8%;--y:33vw;--w:25vw;--r:2.5deg;--ar:3/2" aria-label="Ver em grande: Braços abertos na floresta, Teresópolis"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/teresopolis-bracos.jpg" alt="Braços abertos na floresta, Teresópolis"></button>
+      <button class="mesa__t" style="--x:39%;--y:31vw;--w:26vw;--r:-3deg;--ar:3/2" aria-label="Ver em grande: O noivo rindo com os amigos"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/amba-amigos.jpg" alt="O noivo rindo com os amigos"></button>
+      <button class="mesa__t" style="--x:76%;--y:30vw;--w:15vw;--r:-5deg;--ar:2/3" aria-label="Ver em grande: Um homem na água, dentro da névoa"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/teresopolis-nevoa.jpg" alt="Um homem na água, dentro da névoa"></button>
+      <button class="mesa__t" style="--x:3%;--y:60vw;--w:24vw;--r:-2deg;--ar:3/2" aria-label="Ver em grande: De costas, braços abertos nas dunas de Itaúnas"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/dunas-bracos.jpg" alt="De costas, braços abertos nas dunas de Itaúnas"></button>
+      <button class="mesa__t" style="--x:34%;--y:58vw;--w:25vw;--r:4deg;--ar:3/2" aria-label="Ver em grande: Duas amigas rindo no meio da dança"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/forro-riso.jpg" alt="Duas amigas rindo no meio da dança"></button>
+      <button class="mesa__t" style="--x:68%;--y:62vw;--w:26vw;--r:-1.5deg;--ar:3/2" aria-label="Ver em grande: O noivo e uma senhora, testa com testa"><img decoding="async" loading="lazy" src="photos/le-regard/mesa/amba-avo.jpg" alt="O noivo e uma senhora, testa com testa"></button>
+  </div>
+  <div class="cta-row album__end">
+    <a href="/portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
   </div>
 </section>
+
+<!-- le tirage ouvert en grand -->
+<div class="luz" hidden role="dialog" aria-modal="true" aria-label="Foto em grande">
+  <figure class="luz__t"><img alt=""></figure>
+  <button class="luz__b luz__prev" aria-label="Foto anterior">&#8592;</button>
+  <button class="luz__b luz__next" aria-label="Próxima foto">&#8594;</button>
+  <button class="luz__close">fechar</button>
+</div>
 
 <!-- ═══ O QUE EU FAÇO ═══
      La page de papier : on s'arrête pour lire. Chaque prestation a son
@@ -372,6 +384,6 @@
      resserrent sur un lien. Souris seulement, jamais au doigt. -->
 <div class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
-<script src="js/home-proto.js?v=10"></script>
+<script src="js/home-proto.js?v=11"></script>
 </body>
 </html>

@@ -183,27 +183,44 @@
 .home .contact-alt a{color:var(--cream);text-decoration:underline;text-decoration-thickness:1px;
   text-underline-offset:.2em;text-decoration-color:rgba(201,142,122,.7)}
 
-/* ─────────── l'album ───────────
-   La pile seule, au centre de la table brune : l'étiquette au-dessus,
-   l'appel vers le portfólio en dessous. */
+/* ─────────── l'album : la table de tirages ───────────
+   Dix tirages posés de biais sur la table brune, sur toute la largeur.
+   Chacun tombe à son tour quand il entre dans l'écran (home-proto.js
+   pose .is-down), se soulève sous la souris, s'ouvre au clic. */
 .album{position:relative;z-index:1;background:var(--dark);
-  padding:clamp(5rem,12vh,8rem) var(--pad);min-height:100svh;display:flex;align-items:center}
-.album__in{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
-.album__in .ch__n{margin-bottom:3rem}
-.album__pile{position:relative;width:min(100%,640px,72svh);aspect-ratio:1/1;outline:none}
-.album__pile:focus-visible{outline:1px dashed rgba(201,142,122,.7);outline-offset:8px}
-.tirage{position:absolute;left:50%;top:50%;margin:0;background:var(--print);
-  box-shadow:0 26px 50px -20px rgba(8,6,4,.85),0 2px 5px rgba(8,6,4,.4);
-  cursor:grab;user-select:none;-webkit-user-select:none;touch-action:pan-y;
-  will-change:transform,filter}
-.tirage--h{width:92%;aspect-ratio:3/2;padding:2.2%}
-.tirage--v{width:62%;aspect-ratio:2/3;padding:3.2%}
-.tirage img{width:100%;height:100%;object-fit:cover;pointer-events:none;-webkit-user-drag:none}
-.tirage.is-drag{cursor:grabbing}
-.album__hint{margin-top:3.4rem;cursor:pointer;font-family:var(--font-title);font-size:.74rem;letter-spacing:.16em;
-  color:rgba(240,232,220,.6)}
-.album__hint i{font-style:normal;font-family:var(--font-sans)}
-.album .cta-row{margin-top:2rem;justify-content:center}
+  padding:clamp(5rem,12vh,8rem) var(--pad) clamp(4rem,10vh,7rem)}
+.album > .ch__n{text-align:center;margin-bottom:3rem}
+.mesa{position:relative;height:84vw;max-width:1500px;margin:0 auto}
+.mesa__t{position:absolute;left:var(--x);top:var(--y);width:var(--w);
+  margin:0;padding:.7vw .7vw 2.4vw;border:0;background:var(--print);cursor:zoom-in;
+  box-shadow:0 22px 44px -18px rgba(8,6,4,.85),0 2px 5px rgba(8,6,4,.35);
+  opacity:0;transform:translateY(-60px) scale(1.12) rotate(calc(var(--r) * 3));
+  transition:transform 1s cubic-bezier(.2,.8,.25,1),opacity .6s ease,box-shadow .4s ease}
+.mesa__t img{display:block;width:100%;aspect-ratio:var(--ar);object-fit:cover;pointer-events:none}
+.mesa__t.is-down{opacity:1;transform:rotate(var(--r))}
+/* sous la main, le tirage se soulève et se redresse un peu */
+.mesa__t.is-down:hover,.mesa__t.is-down:focus-visible{z-index:5;outline:none;
+  transform:translateY(-10px) rotate(calc(var(--r) * .4)) scale(1.03);
+  box-shadow:0 34px 60px -20px rgba(8,6,4,.9),0 2px 6px rgba(8,6,4,.4)}
+.mesa__t:focus-visible{outline:1px dashed var(--rose);outline-offset:6px}
+.album__end{justify-content:center;margin-top:2rem}
+
+/* le tirage ouvert en grand, sur la table assombrie */
+.luz{position:fixed;inset:0;z-index:96;display:flex;align-items:center;justify-content:center;
+  background:rgba(14,11,8,.9);opacity:0;transition:opacity .35s ease}
+.luz[hidden]{display:none}
+.luz.is-open{opacity:1}
+.luz__t{margin:0;padding:14px 14px 48px;background:var(--print);
+  box-shadow:0 40px 80px -30px rgba(0,0,0,.9);transform:scale(.94) rotate(-1deg);
+  transition:transform .45s cubic-bezier(.2,.8,.25,1)}
+.luz.is-open .luz__t{transform:none}
+.luz__t img{display:block;max-width:82vw;max-height:78vh;width:auto;height:auto}
+.luz__b,.luz__close{position:absolute;background:none;border:0;color:var(--cream);cursor:pointer;
+  font-family:var(--font-title);letter-spacing:.14em}
+.luz__b{top:50%;transform:translateY(-50%);font-size:1.6rem;padding:1.2rem;font-family:var(--font-sans);opacity:.75}
+.luz__b:hover{opacity:1}
+.luz__prev{left:2vw}.luz__next{right:2vw}
+.luz__close{top:1.6rem;right:2vw;font-size:.78rem;padding:.8rem;border-bottom:1px solid rgba(201,142,122,.7)}
 
 /* ─────────── la page de papier ───────────
    On s'arrête pour lire : le fond passe au lin, l'encre au brun. Chaque
@@ -254,7 +271,7 @@
 .vf.is-link{width:30px;height:30px;margin:-15px 0 0 -15px}
 .vf.is-link i{border-color:var(--rose)}
 @media(hover:hover) and (pointer:fine){
-  .proto.vf-ready .ch__stage,.proto.vf-ready .album__pile{cursor:none}
+  .proto.vf-ready .ch__stage{cursor:none}
   .proto.vf-ready .ch__stage a{cursor:none}
 }
 
@@ -266,6 +283,8 @@
   .hd__links{display:none}
   .hd__end{gap:1rem;margin-left:auto}
   .prest{grid-template-columns:1fr}
+  .mesa{height:auto;display:grid;grid-template-columns:1fr 1fr;gap:6vw 4vw}
+  .mesa__t{position:relative;left:auto;top:auto;width:auto}
   .prest--r .prest__print{order:0}
   .vf{display:none}
 }
@@ -285,6 +304,7 @@
   .proto h2 em{background-size:100% .42em;transition:none}
   .beat{grid-area:auto}
   .prest__print{opacity:1;transform:rotate(var(--r,0deg));transition:none}
+  .mesa__t{opacity:1;transform:rotate(var(--r));transition:none}
   .vf{display:none}
 }
 
