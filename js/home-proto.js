@@ -113,6 +113,37 @@
     showBeat(c, Math.min(nb - 1, Math.floor(q * nb)));
   }
 
+  /* ─── la mise au point, sur le sujet ───
+     data-focus = "x,y,l,h" : le sujet (une tête, un œil, des mains),
+     en fractions de la photo d'origine. data-img = rang de la photo
+     dans la planche (0 par défaut). On refait le calcul du recadrage
+     (object-fit: cover + object-position) pour savoir où le sujet
+     tombe à l'écran, quelle que soit la taille de la fenêtre, et les
+     coins du viseur viennent s'y resserrer. */
+  var afs = all('.ch__af[data-focus]').map(function (af) {
+    var stage = af.closest('.ch__stage');
+    var img = all('img', stage)[+(af.getAttribute('data-img') || 0)];
+    return { af: af, stage: stage, img: img, f: af.getAttribute('data-focus').split(',').map(Number) };
+  });
+  function placeAF(o) {
+    var img = o.img;
+    if (!img || !img.naturalWidth) return;
+    var box = img.parentElement.getBoundingClientRect();   /* le <picture>, sans le zoom */
+    var st = o.stage.getBoundingClientRect();
+    var W = box.width, H = box.height, nw = img.naturalWidth, nh = img.naturalHeight;
+    var k = Math.max(W / nw, H / nh), dw = nw * k, dh = nh * k;
+    var pos = getComputedStyle(img).objectPosition.split(' ').map(parseFloat);
+    var ox = (W - dw) * (pos[0] / 100), oy = (H - dh) * ((pos[1] === undefined ? 50 : pos[1]) / 100);
+    var x = box.left - st.left + ox + o.f[0] * dw, y = box.top - st.top + oy + o.f[1] * dh;
+    var w = o.f[2] * dw, h = o.f[3] * dh;
+    o.af.style.setProperty('--af', Math.round(y) + 'px ' + Math.round(st.width - x - w) + 'px ' +
+      Math.round(st.height - y - h) + 'px ' + Math.round(x) + 'px');
+  }
+  function placeAll() { afs.forEach(placeAF); }
+  afs.forEach(function (o) { if (o.img && !o.img.complete) o.img.addEventListener('load', function () { placeAF(o); }); });
+  window.addEventListener('resize', placeAll);
+  placeAll();
+
   /* ─── les étiquettes hors chapitre (album, papier) : frappées à
      l'arrivée, une fois ─── */
   var loose = all('.album .ch__n, .folha .ch__n');

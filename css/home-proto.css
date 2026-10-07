@@ -95,17 +95,25 @@
 
 /* la mise au point : les coins se resserrent sur le sujet, clignent
    deux fois, virent au rose, puis s'effacent. Une fois par photo. */
-.ch__af{position:absolute;inset:4%;z-index:3;pointer-events:none;opacity:0}
-.ch.is-in .ch__af{animation:af 1.9s cubic-bezier(.3,.7,.2,1) .15s both}
-.ch.is-in .ch__af i{animation:af-c 1.9s linear .15s both}
+.ch__af{position:absolute;inset:4%;--af:30%;z-index:3;pointer-events:none;opacity:0;
+  filter:drop-shadow(0 0 3px rgba(20,16,12,.55))}
+/* plus marqué que sur téléphone : des coins plus longs et plus épais,
+   et le cadre tient plus longtemps sur le sujet avant de s'effacer */
+.ch__af i{width:30px;height:30px;border-width:0;border-color:var(--cream)}
+.ch__af i:nth-child(1){border-top-width:2.5px;border-left-width:2.5px}
+.ch__af i:nth-child(2){border-top-width:2.5px;border-right-width:2.5px}
+.ch__af i:nth-child(3){border-bottom-width:2.5px;border-left-width:2.5px}
+.ch__af i:nth-child(4){border-bottom-width:2.5px;border-right-width:2.5px}
+.ch.is-in .ch__af{animation:af 3.2s cubic-bezier(.3,.7,.2,1) .15s both}
+.ch.is-in .ch__af i{animation:af-c 3.2s linear .15s both}
 @keyframes af{
   0%{inset:4%;opacity:0}
-  12%{opacity:1}
-  48%{inset:var(--af)}
-  56%{opacity:.15}62%{opacity:1}68%{opacity:.15}74%{opacity:1}
+  8%{opacity:1}
+  32%{inset:var(--af)}
+  38%{opacity:.2}42%{opacity:1}46%{opacity:.2}50%{opacity:1}
   90%{inset:var(--af);opacity:1}
   100%{inset:var(--af);opacity:0}}
-@keyframes af-c{0%,55%{border-color:var(--cream)}62%,100%{border-color:var(--rose)}}
+@keyframes af-c{0%,40%{border-color:var(--cream)}46%,100%{border-color:var(--rose)}}
 
 /* la fuite de lumière, à l'arrivée de la photo */
 .ch__leak{position:absolute;inset:-30% -40%;z-index:2;pointer-events:none;opacity:0;
@@ -159,26 +167,27 @@
 .beat.is-on h2 em{background-size:100% .42em}
 
 .proto .lede{margin-top:1.2rem}
+/* o nome : le bloc le plus long, posé sur le sable clair. Le voile du
+   haut seul s'éteignait à mi-hauteur et laissait le métier et les
+   appels sur du clair. Celui-ci couvre la colonne gauche sur toute sa
+   hauteur et s'éteint avant la tête de Leti. */
+.veil--nome{background:
+  linear-gradient(90deg,rgba(20,16,12,.86) 0%,rgba(20,16,12,.72) 28%,rgba(20,16,12,.3) 44%,rgba(20,16,12,0) 56%),
+  linear-gradient(to bottom,rgba(20,16,12,.55) 0%,rgba(20,16,12,0) 40%)}
+.ch .words__col{text-shadow:0 1px 22px rgba(20,16,12,.7)}
+.proto .metier{color:var(--cream)}
 .contact-alt{margin-top:1.2rem;font-size:.86rem;color:rgba(240,232,220,.7)}
 .home .contact-alt a{color:var(--cream);text-decoration:underline;text-decoration-thickness:1px;
   text-underline-offset:.2em;text-decoration-color:rgba(201,142,122,.7)}
 
 /* ─────────── l'album ───────────
-   Les séries à gauche, comme la légende d'une planche ; la pile de
-   tirages à droite, sur la table brune. */
+   La pile seule, au centre de la table brune : l'étiquette au-dessus,
+   l'appel vers le portfólio en dessous. */
 .album{position:relative;z-index:1;background:var(--dark);
   padding:clamp(5rem,12vh,8rem) var(--pad);min-height:100svh;display:flex;align-items:center}
-.album__in{width:100%;max-width:var(--max);margin:0 auto;display:grid;
-  grid-template-columns:minmax(16rem,5fr) 7fr;gap:clamp(3rem,6vw,7rem);align-items:center}
-.album__list{list-style:none;margin:0;padding:0;border-top:1px solid rgba(201,142,122,.45)}
-.album__list li{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-  padding:.85rem 0;border-bottom:1px solid rgba(240,232,220,.12)}
-.album__list span{font-family:var(--font-title);font-size:1.1rem;letter-spacing:.01em}
-.album__list em{font-style:normal;font-family:var(--font-sans);font-size:.6rem;font-weight:500;
-  letter-spacing:.2em;text-transform:uppercase;color:rgba(240,232,220,.55)}
-.album__side .cta-row{margin-top:2.2rem}
-.album__table{display:flex;flex-direction:column;align-items:center}
-.album__pile{position:relative;width:min(100%,600px);aspect-ratio:1/1;outline:none}
+.album__in{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
+.album__in .ch__n{margin-bottom:3rem}
+.album__pile{position:relative;width:min(100%,640px,72svh);aspect-ratio:1/1;outline:none}
 .album__pile:focus-visible{outline:1px dashed rgba(201,142,122,.7);outline-offset:8px}
 .tirage{position:absolute;left:50%;top:50%;margin:0;background:var(--print);
   box-shadow:0 26px 50px -20px rgba(8,6,4,.85),0 2px 5px rgba(8,6,4,.4);
@@ -191,6 +200,7 @@
 .album__hint{margin-top:3.4rem;cursor:pointer;font-family:var(--font-title);font-size:.74rem;letter-spacing:.16em;
   color:rgba(240,232,220,.6)}
 .album__hint i{font-style:normal;font-family:var(--font-sans)}
+.album .cta-row{margin-top:2rem;justify-content:center}
 
 /* ─────────── la page de papier ───────────
    On s'arrête pour lire : le fond passe au lin, l'encre au brun. Chaque
@@ -222,18 +232,21 @@
 /* le bouton s'inverse : brun plein sur le lin */
 .home .btn--ink{background:var(--dark);color:var(--cream);border-color:var(--dark)}
 .home .btn--ink:hover{background:transparent;color:var(--dark);border-color:var(--dark)}
-.home .lugares-link{font-size:.9rem;color:rgba(46,38,32,.7)}
-.home .lugares-link a{color:var(--dark);text-decoration:underline;text-decoration-thickness:1px;
-  text-underline-offset:.2em;text-decoration-color:rgba(181,98,60,.6)}
 .folha--depo .depo p{color:rgba(46,38,32,.88)}
 .folha--depo .depo cite{color:rgba(46,38,32,.6)}
 
 /* ─────────── le viseur à la souris ───────────
    Sur les photos seulement, et seulement avec une souris : quatre
    coins qui suivent le regard, et se resserrent sur un lien. */
-.vf{position:fixed;left:0;top:0;z-index:95;width:46px;height:46px;margin:-23px 0 0 -23px;
+.vf{position:fixed;left:0;top:0;z-index:95;width:54px;height:54px;margin:-27px 0 0 -27px;
   pointer-events:none;opacity:0;transition:opacity .25s ease,width .25s ease,height .25s ease,margin .25s ease}
-.vf i{width:10px;height:10px;border-width:0}
+.vf i{width:14px;height:14px;border-width:0}
+.vf i:nth-child(n){border-width:0}
+.vf i:nth-child(1){border-top-width:2px;border-left-width:2px}
+.vf i:nth-child(2){border-top-width:2px;border-right-width:2px}
+.vf i:nth-child(3){border-bottom-width:2px;border-left-width:2px}
+.vf i:nth-child(4){border-bottom-width:2px;border-right-width:2px}
+.vf{filter:drop-shadow(0 0 2px rgba(20,16,12,.6))}
 .vf.is-on{opacity:1}
 .vf.is-link{width:30px;height:30px;margin:-15px 0 0 -15px}
 .vf.is-link i{border-color:var(--rose)}
@@ -249,7 +262,7 @@
   .hero--vf{--ix:6%;--iy:12%;height:160svh}
   .hd__links{display:none}
   .hd__end{gap:1rem;margin-left:auto}
-  .album__in,.prest{grid-template-columns:1fr}
+  .prest{grid-template-columns:1fr}
   .prest--r .prest__print{order:0}
   .vf{display:none}
 }
