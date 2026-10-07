@@ -5,256 +5,360 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lucas Machut, fotógrafo e filmmaker no Rio de Janeiro</title>
 <meta name="description" content="Casamentos, retiros, ensaios e experiências. Fotografia e vídeo de pessoas em momentos que não voltam. Rio de Janeiro e todo o Brasil.">
+<!-- prototype : pas d'indexation tant qu'il n'est pas validé -->
 <meta name="robots" content="noindex, nofollow">
-<!-- PROTOTYPE — seuil en viseur, respiration papier.
-     La vraie page reste index.html. -->
-<link rel="alternate" hreflang="pt-BR" href="https://lucasmachut.com/index.html">
-<link rel="alternate" hreflang="en" href="https://lucasmachut.com/en/index.html">
-<link rel="alternate" hreflang="fr" href="https://lucasmachut.com/fr/index.html">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;1,6..72,300;1,6..72,400&family=Inter+Tight:wght@300;400;500&family=Special+Elite&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/home.css?v=23">
-<link rel="stylesheet" href="css/home-proto.css?v=6">
+<link rel="stylesheet" href="css/home-proto.css?v=7">
 </head>
-<body class="home">
+<body class="home proto">
 
-<!-- partial:nav-home -->
+<!-- ═══════════════════════════════════════════════════════════
+     PROTOTYPE GRAND ÉCRAN — 08.10.2026
+     La version mobile validée le 24.09.2026, transposée à l'écran
+     large : chaque chapitre est un écran collé, la photo arrive seule
+     et nue, le viseur fait la mise au point, puis le texte monte avec
+     son voile. Les idées reprises de la proposition Claude Design
+     (07.10.2026), dites dans la charte veralem :
+       · le premier écran parle : viseur, logo signé, ligne tapée
+       · « Falar comigo » ouvre WhatsApp, partout, et vit dans l'en-tête
+       · les prestations posées en tirages sur le papier
+       · l'album qu'on feuillette, à côté des séries
+       · les étiquettes de chapitre sont dans le HTML (lisibles sans
+         script, par Google et les lecteurs d'écran) ; seule leur
+         apparition est animée
+     Ce qui n'est PAS repris : les numéros de chapitre, les titres en
+     Newsreader et les liens en Inter Tight minuscule, la barre basse
+     qui tape le nom du chapitre.
+     Tous les textes et toutes les photos de l'accueil en ligne sont
+     là, avec leurs cadrages et leurs voiles mesurés photo par photo.
+     Autonome : charge home.css (la charte) puis home-proto.css, et
+     n'utilise pas home.js.
+     ═══════════════════════════════════════════════════════════ -->
+
+<!-- grain de pellicule, sur toute la page, qui bouge à peine -->
+<div class="grain" aria-hidden="true"></div>
+
 <header class="hd" role="banner">
   <nav class="hd__nav" aria-label="Navegação principal">
     <ul class="hd__links">
-      <li><a href="/" class="hd__link is-active">Início</a></li>
       <li><a href="/portfolio.html" class="hd__link">Trabalhos</a></li>
+      <li><a href="#o-que-eu-faco" class="hd__link">O que eu faço</a></li>
       <li><a href="/contato.html" class="hd__link">Contato</a></li>
     </ul>
-    <div class="hd__lang">
-      <a href="/" class="is-active">PT</a>
-      <a href="/en/index.html">EN</a>
-      <a href="/fr/index.html">FR</a>
+    <div class="hd__end">
+      <div class="hd__lang">
+        <a href="/" class="is-active">PT</a>
+        <a href="/en/index.html">EN</a>
+        <a href="/fr/index.html">FR</a>
+      </div>
+      <a href="https://wa.me/5571993554883" class="hd__cta" target="_blank" rel="noopener">Falar comigo</a>
     </div>
-    <button class="hd__toggle" aria-label="Abrir menu" aria-expanded="false">
-      <span></span><span></span><span></span>
-    </button>
   </nav>
+  <!-- où on en est dans la page : un filet rose sous l'en-tête -->
+  <span class="hd__prog" aria-hidden="true"></span>
 </header>
-<!-- /partial:nav-home -->
 
-<!-- ═══ 1 · VÍDEO ═══ -->
+<!-- ═══ ABERTURA ═══
+     Le film dans le viseur. Le défilement ouvre le cadre jusqu'au
+     plein écran. Le logo s'écrit de gauche à droite, puis la ligne se
+     tape : en trois secondes on sait chez qui on est. -->
 <section class="hero hero--vf">
   <div class="hero__stick">
-  <div class="hero__frame">
-  <!-- Un seul film, pour tous les écrans. Les deux <video> précédents se
-       téléchargeaient l'un ET l'autre — 58 Mo — parce que display:none
-       n'empêche pas le chargement d'une vidéo.
-       poster : si iOS refuse la lecture (mode économie d'énergie), le
-       cadre montre une image au lieu d'un rectangle noir. -->
-  <video class="hero__v" autoplay muted loop playsinline webkit-playsinline
-         preload="auto" poster="photos/hero-poster.jpg">
-    <source src="videos/header_min.mp4" type="video/mp4">
-  </video>
-  <div class="veil veil--soft"></div>
-  </div>
-  <!-- le bord du viseur : un filet et quatre coins, qui s'effacent à
-       mesure que le cadre s'ouvre -->
-  <div class="hero__edge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
-  <div class="hero__logo"><img src="photos/Logo%20blanc%20casse.png" alt="Lucas Machut"></div>
-  <!-- Le film est laissé nu : ni titre ni boutons dessus.
-       Le h1 reste dans le document pour la structure, sans être affiché. -->
-  <h1 class="sr-only">Casamentos, ensaios, retiros e experiências. Fotografia e vídeo de pessoas.</h1>
+    <div class="hero__frame">
+      <video class="hero__v" muted loop playsinline webkit-playsinline
+             preload="auto" poster="photos/hero-poster.jpg">
+        <source src="videos/header_min.mp4" type="video/mp4">
+      </video>
+      <div class="veil veil--soft"></div>
+    </div>
+    <div class="hero__edge" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="hero__logo"><img src="photos/Logo%20blanc%20casse.png" alt="Lucas Machut"></div>
+    <p class="hero__line" data-type>fotografia e filme · rio de janeiro</p>
+    <span class="hero__cue" aria-hidden="true"></span>
+    <h1 class="sr-only">Lucas Machut, fotógrafo e filmmaker no Rio de Janeiro. Casamentos, ensaios, retiros e experiências.</h1>
   </div>
 </section>
 
-<!-- ═══ 2 · O NOME ═══
-     veu-preto-praia : haut sombre (21/27/20), bas de sable clair (74/58/67).
-     Texte en haut, la danseuse reste lisible en bas à droite. -->
-<section class="panel">
-  <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-01.jpg">
-    <img src="photos/le-regard/veu-preto-praia.jpg" alt="Véu preto ao vento, na areia"
-         style="--dpos:72% 58%;--mpos:50% 50%">
-  </picture>
-  <div class="veil veil--top"></div>
-  <!-- mobile : le visage occupe le haut, la chemise noire le bas
-       (bandes plates à 26-38 de luminance) — le texte va en bas -->
-  <div class="words w-tl m-bot">
-    <div class="words__in">
-      <div class="words__col fi">
-        <h2>Me chamo Lucas Machut.<br>Sou fotógrafo e filmmaker.</h2>
-        <p class="lede">Fotografo e filmo pessoas em momentos que não voltam. Sou francês, moro no Rio, e se for em outro lugar, eu vou.</p>
-        <p class="metier">Casamentos · Ensaios · Retiros · Experiências</p>
-        <div class="cta-row">
-          <a href="#o-que-eu-faco" class="cta">O que eu faço <i>&#8594;</i></a>
-          <a href="/portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
+<!-- ═══ O NOME ═══
+     veu-preto-praia : haut sombre, bas de sable clair. Texte en haut,
+     la danseuse reste lisible en bas à droite. -->
+<section class="ch" data-name="o nome">
+  <div class="ch__stage panel">
+    <picture>
+      <img src="photos/le-regard/veu-preto-praia.jpg" alt="Véu preto ao vento, na areia"
+           style="--dpos:72% 58%">
+    </picture>
+    <div class="ch__af" aria-hidden="true" style="--af:30% 8% 14% 56%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="veil veil--top ch__veil"></div>
+    <div class="words w-tl">
+      <div class="words__in">
+        <div class="words__col">
+          <div class="beat">
+            <p class="ch__n" data-type>o nome</p>
+            <h2 class="rv">Me chamo Lucas Machut.<br>Sou fotógrafo e filmmaker.</h2>
+            <p class="lede rv">Fotografo e filmo pessoas em momentos que não voltam. Sou francês, moro no Rio, e se for em outro lugar, eu vou.</p>
+            <p class="metier rv">Casamentos · Retiros · Ensaios · Experiências · Hotéis</p>
+            <div class="cta-row rv">
+              <a href="#o-que-eu-faco" class="cta">O que eu faço <i>&#8594;</i></a>
+              <a href="/portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ 3 · A MEMÓRIA ═══
-     Une photo par section, plein cadre, et le texte toujours en bas à
-     gauche (04.10.2026). Seuls « o nome » et « contato » le posent en
-     haut : leur sujet occupe le bas du cadre.
-     Sur téléphone rien ne change : même recadrage vertical, même texte
-     en bas.
+<!-- ═══ A MEMÓRIA ═══
      abraco-pb : le visage de la dame tient le centre du cadre, son bras
      et l'épaule de l'homme laissent une masse noire vide en bas à
      gauche. Le texte s'y pose, il ne recouvre personne. -->
-<section class="panel panel--88">
-  <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-02.jpg">
-    <img src="photos/le-regard/abraco-pb.jpg" alt="Abraço, preto e branco"
-         style="--dpos:50% 40%;--mpos:50% 50%">
-  </picture>
-  <div class="veil veil--corner-bl"></div>
-  <div class="words w-bl m-bot">
-    <div class="words__in">
-      <div class="words__col fi">
-        <p class="mf">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. Uma imagem guarda um fragmento de vida antes que o tempo o modifique.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 4 · OS LAÇOS ═══
-     maos-agua : deux mains qui se cherchent dans l'eau, au crépuscule.
-     Le cœur du propos — le lien — juste avant de dire ce que je fais. -->
-<section class="panel panel--88">
-  <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-05.jpg">
-    <img src="photos/le-regard/maos-agua.jpg" alt="Mãos tocando a água no crepúsculo"
-         style="--dpos:46% 90%;--mpos:50% 50%">
-  </picture>
-  <div class="veil veil--corner-bl"></div>
-  <div class="words w-bl m-bot">
-    <div class="words__in">
-      <div class="words__col fi">
-        <p class="mf">Os laços são o que eu mais gosto de fotografar. Fico no meio e fotografo o que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 5 · O QUE EU FAÇO ═══
-     La cible de l'appel du premier écran, remontée juste après le
-     manifeste. Seule section de lecture de la page : pas de photo
-     dessous, elle a besoin de calme.
-
-     .panel pour la peau (le fond brun, rien de plus) : sa hauteur
-     fixe et son overflow:hidden sont annulés dans home.css, sans quoi
-     les trois prestations seraient coupées net au bas du cadre.
-
-     Pas de bouton ici : l'unique « Falar comigo » ferme la page.
-     Les hôtels n'ont plus de section sur l'accueil (04.10.2026) : une
-     ligne discrète renvoie vers la branche lugares. -->
-<section class="panel" id="o-que-eu-faco">
-  <div class="prestacoes">
-
-    <p class="folha__n fi">o que eu faço</p>
-
-    <div class="prestacao fi">
-      <h2 class="h2--sm">Casamentos e elopements</h2>
-      <p class="lede">Para quem quer o dia inteiro guardado, com as pessoas do jeito que elas são. Chego na preparação e fico até onde a festa for.</p>
-    </div>
-
-    <div class="prestacao fi">
-      <h2 class="h2--sm">Ensaios</h2>
-      <p class="lede">Para quem quer imagens suas e não sabe o que fazer na frente de uma câmera. Quase ninguém sabe, e tudo bem. A gente escolhe um lugar e a hora da luz, e o resto acontece andando.</p>
-    </div>
-
-    <div class="prestacao fi">
-      <h2 class="h2--sm">Retiros e experiências</h2>
-      <p class="lede">Para quem organiza um retiro, uma viagem, um festival ou um encontro, e quer sair de lá com imagens de quem estava dentro. Fico junto o tempo todo.</p>
-    </div>
-
-    <p class="lugares-link fi">Hotéis e pousadas: <a href="/lugares/">um trabalho à parte</a></p>
-
-  </div>
-</section>
-
-<!-- ═══ 6 · QUEM A GENTE É ═══
-     riso-pedras : un rire, bras ouverts, entre les pierres.
-     mobile : m-06, le visage flotte en haut du cadre, le voile fait le
-     travail en bas. -->
-<section class="panel panel--88">
-  <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-06.jpg">
-    <img src="photos/le-regard/riso-pedras.jpg" alt="Riso de braços abertos entre as pedras"
-         style="--dpos:15% 80%;--mpos:52% 50%">
-  </picture>
-  <div class="veil veil--corner-bl"></div>
-  <div class="words w-bl m-bot">
-    <div class="words__in">
-      <div class="words__col fi">
-        <h2 class="h2--sm">No fundo, nunca foi sobre como a gente aparece, <em>e sim sobre quem a gente é</em>.</h2>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 7 · RESPIRAÇÃO — QUEM OLHA ═══
-     L'autoportrait, sans un mot, juste avant la conversation : celui
-     à qui l'on va écrire. -->
-<section class="panel panel--88">
-  <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-08.jpg">
-    <img src="photos/le-regard/autorretrato.jpg" alt="Autorretrato no espelho, câmera na mão"
-         style="--dpos:50% 44%;--mpos:50% 50%">
-  </picture>
-</section>
-
-<!-- ═══ 8 · DEPOIMENTOS ═══
-     Masqué (`hidden`) tant que les témoignages réels ne sont pas
-     écrits dans la §6 de site-notas/textos-site-pessoas-2026-09-21.md.
-     Rien d'inventé ici : deux gabarits attendent, on retire `hidden`
-     le jour où les textes arrivent. La photo de fond reste à choisir. -->
-<section class="panel panel--88" id="depoimentos" hidden>
-  <div class="veil veil--corner-bl"></div>
-  <div class="words w-bl m-bot">
-    <div class="words__in">
-      <div class="words__col fi">
-        <p class="lede">Quem já passou por isso conta melhor do que eu.</p>
-
-        <blockquote class="depo">
-          <p>[texto do depoimento 1]</p>
-          <cite>[Nome] · [ano] · [ensaio / casamento / evento]</cite>
-        </blockquote>
-
-        <blockquote class="depo">
-          <p>[texto do depoimento 2]</p>
-          <cite>[Nome] · [ano] · [ensaio / casamento / evento]</cite>
-        </blockquote>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ 9 · CONTATO ═══
-     Le corps est tout en bas du cadre : panneau pleine hauteur et
-     cadrage calé sur le bas pour qu'elle reste entière. Le texte va
-     donc en haut — l'une des deux exceptions de la page.
-     Seul bouton plein de la page. -->
-<section class="panel" id="contato">
-  <picture>
-    <source media="(max-width:860px)" srcset="photos/le-regard/mobile/m-10-contato.jpg">
-    <img src="photos/le-regard/hero-corpo-mar.jpg" alt="Um corpo deitado na espuma, ao pé da falésia"
-         style="--dpos:55% 90%;--mpos:48% 50%">
-  </picture>
-  <div class="veil veil--top"></div>
-  <div class="words w-tl m-bot">
-    <div class="words__in">
-      <div class="words__col fi">
-        <h2>Tudo começa com <em>uma conversa</em>.</h2>
-        <div class="actions">
-          <a href="contato.html" class="btn btn--solid">Falar comigo</a>
+<section class="ch" data-name="a memória">
+  <div class="ch__stage band band--2">
+    <figure class="tile"><picture><img src="photos/le-regard/abraco-pb.jpg" alt="Abraço, preto e branco" loading="lazy" style="--dpos:58% 42%"></picture></figure>
+    <figure class="tile"><picture><img src="photos/le-regard/casal-deitado.jpg" alt="Casal deitado, um beijo na testa" loading="lazy" style="--dpos:50% 50%"></picture></figure>
+    <div class="ch__af" aria-hidden="true" style="--af:18% 64% 38% 14%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="veil veil--corner-bl ch__veil"></div>
+    <div class="words w-bl">
+      <div class="words__in">
+        <div class="words__col">
+          <div class="beat">
+            <p class="ch__n" data-type>a memória</p>
+            <p class="mf rv">A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou. Uma imagem guarda um fragmento de vida antes que o tempo o modifique.</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- partial:footer-home -->
+<!-- ═══ CADA PESSOA ═══
+     dois-olhares : luminance très plate, d'où le voile latéral franc.
+     Le plus long texte de la page : deux temps sur la même photo, le
+     premier s'efface quand le second monte. -->
+<section class="ch" data-name="cada pessoa" style="--beats:2">
+  <div class="ch__stage panel">
+    <picture>
+      <img loading="lazy" src="photos/le-regard/dois-olhares.jpg" alt="Dois rostos lado a lado, muito perto"
+           style="--dpos:56% 46%">
+    </picture>
+    <div class="ch__af" aria-hidden="true" style="--af:22% 22% 40% 48%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="veil veil--left ch__veil"></div>
+    <div class="words w-bl up">
+      <div class="words__in">
+        <div class="words__col">
+          <div class="beat">
+            <p class="ch__n" data-type>cada pessoa</p>
+            <p class="mf rv">Cada pessoa carrega o seu próprio mundo, a sua maneira de enxergar a vida. Quando filmo ou fotografo, não estou só fazendo imagens: tento transmitir esse mundo, o que se passa dentro da pessoa naquele instante.</p>
+          </div>
+          <div class="beat">
+            <p class="mf rv">Sabendo que a gente nunca entra por completo no mundo do outro. A imagem é uma tentativa de ponte entre nossos mundos.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ O OLHAR ═══ une planche de quatre verticales -->
+<section class="ch" data-name="o olhar">
+  <div class="ch__stage band band--4">
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/flor-branca.jpg" alt="Flor branca junto à boca" style="--dpos:58% 42%"></picture></figure>
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/silhueta-flores.jpg" alt="Silhueta de costas com flores vermelhas" style="--dpos:54% 46%"></picture></figure>
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/bracos-palmeiras.jpg" alt="Braços abertos sob as palmeiras" style="--dpos:64% 48%"></picture></figure>
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/rosto-agua.jpg" alt="Rosto na superfície da água" style="--dpos:50% 44%"></picture></figure>
+    <div class="ch__af" aria-hidden="true" style="--af:20% 79% 50% 4%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="veil veil--bottom ch__veil"></div>
+    <div class="words w-bl">
+      <div class="words__in">
+        <div class="words__col">
+          <div class="beat">
+            <p class="ch__n" data-type>o olhar</p>
+            <p class="mf rv">O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade. A beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OS LAÇOS ═══
+     Trois gestes : des mains dans l'eau, du sable qui coule, une main
+     endormie près d'une bague. La photo est claire de bout en bout,
+     d'où le voile plein qui fait passer l'image en atmosphère. -->
+<section class="ch" data-name="os laços">
+  <div class="ch__stage band band--3">
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/maos-agua.jpg" alt="Mãos tocando a água no crepúsculo" style="--dpos:46% 56%"></picture></figure>
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/areia-maos.jpg" alt="Areia escorrendo entre as mãos" style="--dpos:58% 50%"></picture></figure>
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/anel-cama.jpg" alt="Mão adormecida sobre o lençol, anel" style="--dpos:42% 50%"></picture></figure>
+    <div class="ch__af" aria-hidden="true" style="--af:48% 70% 18% 8%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="veil veil--scrim veil--hi ch__veil"></div>
+    <div class="words w-tc">
+      <div class="words__in">
+        <div class="words__col">
+          <div class="beat">
+            <p class="ch__n" data-type>os laços</p>
+            <p class="mf rv">Os laços são o que eu mais gosto de fotografar. Fico no meio e fotografo o que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ QUEM A GENTE É ═══
+     Bas gauche clair (bandeira), bas droit sombre (lampada) : le titre
+     passe à droite. -->
+<section class="ch" data-name="quem a gente é">
+  <div class="ch__stage band band--3">
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/bandeira-riso.jpg" alt="Riso sob a bandeira ao sol" style="--dpos:50% 40%"></picture></figure>
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/chapeu-verde.jpg" alt="Chapéu de palha e folhagem" style="--dpos:60% 40%"></picture></figure>
+    <figure class="tile"><picture><img loading="lazy" src="photos/le-regard/lampada-bar.jpg" alt="Copo e abajur, fim de noite" style="--dpos:56% 50%"></picture></figure>
+    <div class="ch__af" aria-hidden="true" style="--af:16% 72% 46% 8%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="veil veil--corner-br ch__veil"></div>
+    <div class="words w-br">
+      <div class="words__in">
+        <div class="words__col">
+          <div class="beat">
+            <p class="ch__n" data-type>quem a gente é</p>
+            <h2 class="h2--sm rv">No fundo, nunca foi sobre como a gente aparece, <em>e sim sobre quem a gente é</em>.</h2>
+            <div class="cta-row rv">
+              <a href="/portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ O ÁLBUM ═══
+     Les respirations d'avant (le rire entre les pierres, l'autoportrait,
+     la fenêtre) deviennent des tirages en pile. On attrape celui du
+     dessus et on le pousse, ou on clique, ou on tape sur Entrée : il
+     part sur le côté et revient sous la pile. À gauche, les séries
+     réelles du portfólio, comme la légende d'une planche contact. -->
+<section class="album" id="album" data-name="o álbum">
+  <div class="album__in">
+    <div class="album__side">
+      <p class="ch__n" data-type>o álbum</p>
+      <ul class="album__list">
+        <li><span>Teresópolis</span><em>ensaio</em></li>
+        <li><span>Pipa</span><em>ensaio</em></li>
+        <li><span>Dunas de Itaúnas</span><em>ensaio</em></li>
+        <li><span>Mujer Selvaje</span><em>ensaio</em></li>
+        <li><span>Tango</span><em>evento</em></li>
+        <li><span>Arpoador</span><em>conteúdo social</em></li>
+      </ul>
+      <div class="cta-row">
+        <a href="/portfolio.html" class="cta">Ver o portfólio <i>&#8594;</i></a>
+      </div>
+    </div>
+    <div class="album__table">
+      <div class="album__pile" role="button" tabindex="0" aria-label="Virar o tirage">
+        <figure class="tirage tirage--h" style="--r:-2.4deg"><img src="photos/le-regard/riso-pedras.jpg" alt="Riso de braços abertos entre as pedras" loading="lazy"></figure>
+        <figure class="tirage tirage--v" style="--r:1.8deg"><img src="photos/le-regard/janela-montanha.jpg" alt="De costas na janela, a montanha atrás do vidro" loading="lazy"></figure>
+        <figure class="tirage tirage--h" style="--r:-1.2deg"><img src="photos/le-regard/autorretrato.jpg" alt="Autorretrato no espelho, câmera na mão" loading="lazy"></figure>
+        <figure class="tirage tirage--v" style="--r:2.2deg"><img src="photos/le-regard/mobile/v/t-homem.jpg" alt="Retrato ao pé das pedras, camisa preta" loading="lazy"></figure>
+      </div>
+      <p class="album__hint" aria-hidden="true">virar o tirage <i>&#8594;</i></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ O QUE EU FAÇO ═══
+     La page de papier : on s'arrête pour lire. Chaque prestation a son
+     tirage, qui tombe sur la table quand on arrive. Les casamentos sont
+     illustrés par la série Amba (accord de Lucas, 08.10.2026). Pas de lien « ver os
+     casamentos » : le portfólio n'a pas encore de série de mariage.
+     Les hôtels : une ligne, en bas, vers la branche lugares. -->
+<section class="folha" id="o-que-eu-faco" data-name="o que eu faço">
+  <div class="folha__in">
+    <p class="ch__n" data-type>o que eu faço</p>
+
+    <div class="prest">
+      <figure class="prest__print" style="--r:-1.6deg"><img src="photos/le-regard/tirages/casamento.jpg" alt="Dois noivos de terno, frente a frente" loading="lazy"></figure>
+      <div class="prest__txt">
+        <h2 class="h2--sm">Casamentos e elopements</h2>
+        <p class="lede">Para quem quer o dia inteiro guardado, com as pessoas do jeito que elas são. Chego na preparação e fico até onde a festa for.</p>
+      </div>
+    </div>
+
+    <div class="prest prest--r">
+      <figure class="prest__print" style="--r:1.4deg"><img src="photos/le-regard/tirages/ensaio.jpg" alt="Braços abertos na floresta, Teresópolis" loading="lazy"></figure>
+      <div class="prest__txt">
+        <h2 class="h2--sm">Ensaios</h2>
+        <p class="lede">Para quem quer imagens suas e não sabe o que fazer na frente de uma câmera. Quase ninguém sabe, e tudo bem. A gente escolhe um lugar e a hora da luz, e o resto acontece andando.</p>
+        <a href="/portfolio.html" class="cta cta--ink">Ver os ensaios <i>&#8594;</i></a>
+      </div>
+    </div>
+
+    <div class="prest">
+      <figure class="prest__print" style="--r:-.9deg"><img src="photos/le-regard/tirages/retiro.jpg" alt="Noite de tango, as pessoas dançando" loading="lazy"></figure>
+      <div class="prest__txt">
+        <h2 class="h2--sm">Retiros e experiências</h2>
+        <p class="lede">Para quem organiza um retiro, uma viagem, um festival ou um encontro, e quer sair de lá com imagens de quem estava dentro. Fico junto o tempo todo.</p>
+        <a href="/portfolio.html" class="cta cta--ink">Ver os eventos <i>&#8594;</i></a>
+      </div>
+    </div>
+
+    <div class="folha__end">
+      <a href="https://wa.me/5571993554883" class="btn btn--ink" target="_blank" rel="noopener">Falar comigo</a>
+      <p class="lugares-link">Com hotéis e pousadas, o cliente é o lugar: <a href="/lugares/">um trabalho à parte</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ DEPOIMENTOS ═══
+     Masqué tant que les témoignages réels ne sont pas écrits. Rien
+     d'inventé : on retire `hidden` le jour où les textes arrivent. -->
+<section class="folha folha--depo" id="depoimentos" hidden>
+  <div class="folha__in">
+    <p class="lede">Quem já passou por isso conta melhor do que eu.</p>
+    <blockquote class="depo"><p>[texto do depoimento 1]</p><cite>[Nome] · [ano] · [ensaio / casamento / evento]</cite></blockquote>
+    <blockquote class="depo"><p>[texto do depoimento 2]</p><cite>[Nome] · [ano] · [ensaio / casamento / evento]</cite></blockquote>
+  </div>
+</section>
+
+<!-- ═══ CONTATO ═══
+     Le corps est tout en bas du cadre : cadrage calé sur le bas pour
+     qu'elle reste entière, le texte en haut. -->
+<section class="ch ch--last" id="contato" data-name="contato">
+  <div class="ch__stage panel">
+    <picture>
+      <img loading="lazy" src="photos/le-regard/hero-corpo-mar.jpg" alt="Um corpo deitado na espuma, ao pé da falésia"
+           style="--dpos:55% 90%">
+    </picture>
+    <div class="ch__af" aria-hidden="true" style="--af:62% 30% 10% 30%"><i></i><i></i><i></i><i></i></div>
+    <div class="ch__leak" aria-hidden="true"></div>
+    <div class="veil veil--top ch__veil"></div>
+    <div class="words w-tl">
+      <div class="words__in">
+        <div class="words__col">
+          <div class="beat">
+            <p class="ch__n" data-type>contato</p>
+            <h2 class="rv">Tudo começa com <em>uma conversa</em>.</h2>
+            <div class="actions rv">
+              <a href="https://wa.me/5571993554883" class="btn btn--solid" target="_blank" rel="noopener">Falar comigo</a>
+            </div>
+            <p class="contact-alt rv">ou por <a href="mailto:contato@lucasmachut.com">e-mail</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <footer class="ft">
   <div class="ft__in">
     <span>Lucas Machut</span>
@@ -262,9 +366,11 @@
     <span>Rio de Janeiro · Brasil</span>
   </div>
 </footer>
-<!-- /partial:footer-home -->
 
-<script src="js/home.js?v=6"></script>
-<script src="js/home-proto.js?v=5"></script>
+<!-- le viseur qui suit la souris sur les photos : quatre coins, qui se
+     resserrent sur un lien. Souris seulement, jamais au doigt. -->
+<div class="vf" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<script src="js/home-proto.js?v=7"></script>
 </body>
 </html>
