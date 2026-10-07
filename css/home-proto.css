@@ -284,3 +284,11 @@
   .prest__print{opacity:1;transform:rotate(var(--r,0deg));transition:none}
   .vf{display:none}
 }
+
+/* ─────────── pied ───────────
+   Le logo signé à la place du nom : le nom et @lucasmachut__ se
+   répétaient. Les trois éléments sur une même ligne médiane. */
+.proto .ft__in{align-items:center}
+.home .ft__logo{display:block;padding:0}
+.ft__logo img{height:44px;width:auto;opacity:.85;transition:opacity .3s ease}
+.ft__logo:hover img{opacity:1}
