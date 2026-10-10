@@ -62,12 +62,12 @@
     "serie_telefone": []
   },
   "olhar": {
-    "texto": "O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade.\nA beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.",
+    "texto": "Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade.\nA beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.",
     "fotos_grande": [
       {
-        "foto": "photos/le-regard/flor-branca.jpg",
         "alt": "Flor branca junto à boca",
-        "cadrage": "58% 42%"
+        "cadrage": "66% 23%",
+        "foto": "photos/le-regard/flor-branca.jpg"
       },
       {
         "foto": "photos/le-regard/silhueta-flores.jpg",
@@ -106,12 +106,12 @@
     ]
   },
   "lacos": {
-    "texto": "Os laços são o que eu mais gosto de fotografar.\nFico no meio e fotografo o que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.",
+    "texto": "Os laços são o que eu mais gosto de fotografar.\nFico atento no que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.",
     "fotos_grande": [
       {
-        "foto": "photos/le-regard/maos-agua.jpg",
-        "alt": "Mãos tocando a água no crepúsculo",
-        "cadrage": "46% 56%"
+        "alt": "Crianças brincando com bolhas de sabão no Arpoador",
+        "cadrage": "64% 42%",
+        "foto": "/Projets-web/Fotos/bolhasarpoador2-3-sur-17.webp"
       },
       {
         "foto": "photos/le-regard/areia-maos.jpg",
