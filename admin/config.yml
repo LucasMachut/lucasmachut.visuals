@@ -15,6 +15,11 @@ locale: fr
 site_url: https://lucasmachut.com/
 display_url: https://lucasmachut.com/
 
+# Les photos de l'accueil utilisent le champ « photo_cadree »
+# (admin/cadrage.js) : on touche le visage au lieu de taper des
+# chiffres. ratio = largeur / hauteur du cadre sur un écran
+# d'ordinateur ; mode telephone = ajoute le viseur.
+
 collections:
   # ═══════════ ACCUEIL ═══════════
   - name: accueil
@@ -24,7 +29,7 @@ collections:
       - name: accueil
         label: "Page d'accueil (portugais)"
         file: "data/accueil.json"
-        description: "Textes et photos de l'accueil, pour le téléphone et le grand écran. Après « Publier », le site se met à jour en 2 à 4 minutes."
+        description: "Textes et photos de l'accueil, pour le téléphone et le grand écran. Après « Enregistrer », le site se met à jour en 2 à 4 minutes."
         fields:
           - label: "Ouverture (téléphone)"
             name: abertura
@@ -41,31 +46,8 @@ collections:
               - { label: "Titre", name: titulo, widget: text, hint: "Retour à la ligne = retour à la ligne dans le titre." }
               - { label: "Texte", name: texto, widget: text }
               - { label: "Ligne des métiers", name: metier, widget: string }
-              - label: "Photo grand écran"
-                name: fotos_grande
-                widget: list
-                allow_add: false
-                allow_remove: false
-                fields: &foto_grande
-                  - { label: "Photo", name: foto, widget: image }
-                  - { label: "Description (pour Google et les malvoyants)", name: alt, widget: string, required: false }
-                  - label: "Cadrage"
-                    name: cadrage
-                    widget: string
-                    required: false
-                    default: "50% 50%"
-                    hint: "Point de la photo qui reste visible quand elle est rognée : horizontal puis vertical. « 50% 50% » = centre, « 50% 20% » = garder le haut."
-              - label: "Photo téléphone"
-                name: foto_telefone
-                widget: object
-                fields: &foto_telefone
-                  - { label: "Photo (verticale)", name: foto, widget: image }
-                  - { label: "Description", name: alt, widget: string, required: false }
-                  - label: "Viseur"
-                    name: viseur
-                    widget: string
-                    required: false
-                    hint: "Position du cadre de mise au point sur la photo (haut, droite, bas, gauche). Si tu changes la photo et que le cadre tombe à côté du visage, dis-le à Claude."
+              - { label: "Photo grand écran", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 1.6 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
 
           - label: "2 · A memória"
             name: memoria
@@ -76,8 +58,8 @@ collections:
                 name: texto
                 widget: text
                 hint: &hint_texte "Ligne vide = nouveau paragraphe (sur téléphone, le texte se remplace au défilement). Simple retour à la ligne = sur téléphone, la phrase passe en dessous. Une ligne entière *entre astérisques* = italique rose sur téléphone."
-              - { label: "Photos grand écran (2)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
-              - { label: "Photo téléphone", name: foto_telefone, widget: object, fields: *foto_telefone }
+              - { label: "Photos grand écran (2)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 0.98 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
               - label: "Suite de photos sous le chapitre (téléphone)"
                 name: serie_telefone
                 widget: list
@@ -93,8 +75,8 @@ collections:
             collapsed: true
             fields:
               - { label: "Texte", name: texto, widget: text, hint: *hint_texte }
-              - { label: "Photo grand écran", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
-              - { label: "Photo téléphone", name: foto_telefone, widget: object, fields: *foto_telefone }
+              - { label: "Photo grand écran", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 1.82 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
               - { label: "Suite de photos sous le chapitre (téléphone)", name: serie_telefone, widget: list, required: false, label_singular: "Photo", fields: *serie_telefone }
 
           - label: "4 · O olhar"
@@ -103,8 +85,8 @@ collections:
             collapsed: true
             fields:
               - { label: "Texte", name: texto, widget: text, hint: *hint_texte }
-              - { label: "Photos grand écran (4)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
-              - { label: "Photo téléphone", name: foto_telefone, widget: object, fields: *foto_telefone }
+              - { label: "Photos grand écran (4)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 0.43 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
               - { label: "Suite de photos sous le chapitre (téléphone)", name: serie_telefone, widget: list, required: false, label_singular: "Photo", fields: *serie_telefone }
 
           - label: "5 · Os laços"
@@ -113,8 +95,8 @@ collections:
             collapsed: true
             fields:
               - { label: "Texte", name: texto, widget: text, hint: *hint_texte }
-              - { label: "Photos grand écran (3)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
-              - { label: "Photo téléphone", name: foto_telefone, widget: object, fields: *foto_telefone }
+              - { label: "Photos grand écran (3)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 0.76 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
               - { label: "Suite de photos sous le chapitre (téléphone)", name: serie_telefone, widget: list, required: false, label_singular: "Photo", fields: *serie_telefone }
 
           - label: "6 · Quem a gente é"
@@ -123,8 +105,8 @@ collections:
             collapsed: true
             fields:
               - { label: "Titre", name: titulo, widget: string, hint: "*mots* = en italique." }
-              - { label: "Photos grand écran (3)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
-              - { label: "Photo téléphone", name: foto_telefone, widget: object, fields: *foto_telefone }
+              - { label: "Photos grand écran (3)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 0.76 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
               - { label: "Suite de photos sous le chapitre (téléphone)", name: serie_telefone, widget: list, required: false, label_singular: "Photo", fields: *serie_telefone }
 
           - label: "Respiration (grand écran)"
@@ -132,14 +114,14 @@ collections:
             widget: object
             collapsed: true
             fields:
-              - { label: "Photo seule, sans texte", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
+              - { label: "Photo seule, sans texte", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 1.67 } }
 
           - label: "Autoportrait (grand écran)"
             name: autorretrato
             widget: object
             collapsed: true
             fields:
-              - { label: "Photos (2)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
+              - { label: "Photos (2)", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 0.98 } }
 
           - label: "Album de tirages (téléphone)"
             name: album
@@ -172,8 +154,8 @@ collections:
             fields:
               - { label: "Titre", name: titulo, widget: string, hint: "*mots* = en italique." }
               - { label: "Texte", name: texto, widget: text }
-              - { label: "Photo grand écran", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
-              - { label: "Photo téléphone", name: foto_telefone, widget: object, fields: *foto_telefone }
+              - { label: "Photo grand écran", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 1.67 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
 
           - label: "9 · Contato"
             name: contato
@@ -181,8 +163,8 @@ collections:
             collapsed: true
             fields:
               - { label: "Titre", name: titulo, widget: string, hint: "*mots* = en italique." }
-              - { label: "Photo grand écran", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, fields: *foto_grande }
-              - { label: "Photo téléphone", name: foto_telefone, widget: object, fields: *foto_telefone }
+              - { label: "Photo grand écran", name: fotos_grande, widget: list, allow_add: false, allow_remove: false, field: { label: "Photo", name: foto, widget: photo_cadree, ratio: 1.6 } }
+              - { label: "Photo téléphone", name: foto_telefone, widget: photo_cadree, mode: telephone }
 
   # ═══════════ PORTFÓLIO ═══════════
   - name: galerie

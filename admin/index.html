@@ -18,7 +18,13 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
 </head>
 <body>
-  <!-- Sveltia CMS — https://github.com/sveltia/sveltia-cms -->
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+  <!-- Sveltia CMS — https://github.com/sveltia/sveltia-cms
+       Version figée : le champ de cadrage (cadrage.js) s'appuie sur son
+       API. Pour monter de version, tester d'abord /admin en local.
+       Démarrage manuel : cadrage.js enregistre son champ puis lance
+       le CMS. -->
+  <script>window.CMS_MANUAL_INIT = true;</script>
+  <script src="https://unpkg.com/@sveltia/cms@0.233.1/dist/sveltia-cms.js" type="module"></script>
+  <script src="cadrage.js?v=2" type="module"></script>
 </body>
 </html>

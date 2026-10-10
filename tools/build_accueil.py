@@ -179,12 +179,15 @@ def mv_chapitre(d, cle, num, nom, titre_cls=None, apres=(), extra_cls=''):
     temps[-1].extend(apres)
 
     style = ' style="--beats:%d"' % len(temps) if len(temps) > 1 else ''
+    # Cadrage posé au doigt dans /admin ; le centre n'écrit rien.
+    cad = (ft.get('cadrage') or '').strip()
+    pos = ' style="object-position:%s"' % attr(cad) if cad and cad != '50% 50%' else ''
     out = [
         '<section class="ch%s" data-ch="%s" data-name="%s"%s>'
         % (extra_cls, num, attr(nom), style),
         '  <div class="ch__stage">',
-        '    <div class="ch__photos"><picture>%s<img loading="lazy" src="%s" alt="%s"></picture></div>'
-        % (MV_SRC, src(ft['foto']), attr(ft.get('alt', ''))),
+        '    <div class="ch__photos"><picture>%s<img loading="lazy" src="%s" alt="%s"%s></picture></div>'
+        % (MV_SRC, src(ft['foto']), attr(ft.get('alt', '')), pos),
         '    <div class="ch__af" aria-hidden="true" style="--af:%s"><i></i><i></i><i></i><i></i></div>'
         % attr(ft.get('viseur') or '20% 20% 40% 20%'),
         '    <div class="ch__leak" aria-hidden="true"></div>',
