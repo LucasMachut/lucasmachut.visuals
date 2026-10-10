@@ -1,0 +1,123 @@
+{
+  "abertura": {
+    "linha": "fotografia e filme · rio de janeiro"
+  },
+  "nome": {
+    "titulo": "Me chamo Lucas Machut.\nSou fotógrafo e filmmaker.",
+    "texto": "Fotografo e filmo pessoas em momentos que não voltam. Sou francês, moro no Rio, e se for em outro lugar, eu vou.",
+    "metier": "Casamentos · Retiros · Ensaios · Experiências · Hotéis",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/veu-preto-praia.jpg", "alt": "Véu preto ao vento, na areia", "cadrage": "72% 58%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/m-01.jpg", "alt": "Autorretrato no espelho, câmera na mão", "viseur": "14% 18% 44% 18%" }
+  },
+  "memoria": {
+    "texto": "A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou.\nUma imagem guarda um fragmento de vida antes que o tempo o modifique.",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/abraco-pb.jpg", "alt": "Abraço, preto e branco", "cadrage": "58% 42%" },
+      { "foto": "photos/le-regard/casal-deitado.jpg", "alt": "Casal deitado, um beijo na testa", "cadrage": "50% 50%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/m-02.jpg", "alt": "Abraço, preto e branco", "viseur": "10% 16% 50% 22%" },
+    "serie_telefone": [
+      { "foto": "photos/le-regard/mobile/q/casal.jpg", "alt": "Casal deitado, um beijo na testa" }
+    ]
+  },
+  "cada_pessoa": {
+    "texto": "Cada pessoa carrega o seu próprio mundo, a sua maneira de enxergar a vida.\nQuando filmo ou fotografo, não estou só fazendo imagens: tento transmitir esse mundo, o que se passa dentro da pessoa naquele instante.\n\nSabendo que a gente nunca entra por completo no mundo do outro.\n*A imagem é uma tentativa de ponte entre nossos mundos.*",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/dois-olhares.jpg", "alt": "Dois rostos lado a lado, muito perto", "cadrage": "56% 46%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/m-03.jpg", "alt": "Flor branca junto à boca", "viseur": "8% 24% 60% 24%" },
+    "serie_telefone": []
+  },
+  "olhar": {
+    "texto": "O meu olhar vai além da técnica. Filmo e fotografo com intenção, atrás do que cada momento carrega de verdade.\nA beleza aparece nas expressões espontâneas, nos corpos em movimento, nos estados reais.",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/flor-branca.jpg", "alt": "Flor branca junto à boca", "cadrage": "58% 42%" },
+      { "foto": "photos/le-regard/silhueta-flores.jpg", "alt": "Silhueta de costas com flores vermelhas", "cadrage": "54% 46%" },
+      { "foto": "photos/le-regard/bracos-palmeiras.jpg", "alt": "Braços abertos sob as palmeiras", "cadrage": "64% 48%" },
+      { "foto": "photos/le-regard/rosto-agua.jpg", "alt": "Rosto na superfície da água", "cadrage": "50% 44%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/m-04.jpg", "alt": "Silhueta de costas com flores vermelhas", "viseur": "14% 22% 46% 30%" },
+    "serie_telefone": [
+      { "foto": "photos/le-regard/mobile/q/veu.jpg", "alt": "Véu preto ao vento, na areia" },
+      { "foto": "photos/le-regard/mobile/q/palmeiras.jpg", "alt": "Braços abertos sob as palmeiras" },
+      { "foto": "photos/le-regard/mobile/q/agua.jpg", "alt": "Rosto na superfície da água" }
+    ]
+  },
+  "lacos": {
+    "texto": "Os laços são o que eu mais gosto de fotografar.\nFico no meio e fotografo o que passa entre as pessoas, nos gestos que ninguém combinou e nos detalhes que a gente nem sempre nota.",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/maos-agua.jpg", "alt": "Mãos tocando a água no crepúsculo", "cadrage": "46% 56%" },
+      { "foto": "photos/le-regard/areia-maos.jpg", "alt": "Areia escorrendo entre as mãos", "cadrage": "58% 50%" },
+      { "foto": "photos/le-regard/anel-cama.jpg", "alt": "Mão adormecida sobre o lençol, anel", "cadrage": "42% 50%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/v/maos-agua.jpg", "alt": "Mãos tocando a água no crepúsculo", "viseur": "30% 20% 36% 20%" },
+    "serie_telefone": [
+      { "foto": "photos/le-regard/mobile/q/areia.jpg", "alt": "Areia escorrendo entre as mãos" },
+      { "foto": "photos/le-regard/mobile/q/anel.jpg", "alt": "Mão adormecida sobre o lençol, anel" }
+    ]
+  },
+  "quem": {
+    "titulo": "No fundo, nunca foi sobre como a gente aparece, *e sim sobre quem a gente é*.",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/bandeira-riso.jpg", "alt": "Riso sob a bandeira ao sol", "cadrage": "50% 40%" },
+      { "foto": "photos/le-regard/chapeu-verde.jpg", "alt": "Chapéu de palha e folhagem", "cadrage": "60% 40%" },
+      { "foto": "photos/le-regard/lampada-bar.jpg", "alt": "Copo e abajur, fim de noite", "cadrage": "56% 50%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/v/bandeira.jpg", "alt": "Riso sob a bandeira ao sol", "viseur": "8% 22% 58% 26%" },
+    "serie_telefone": [
+      { "foto": "photos/le-regard/mobile/q/chapeu.jpg", "alt": "Chapéu de palha e folhagem" },
+      { "foto": "photos/le-regard/mobile/q/lampada.jpg", "alt": "Copo e abajur, fim de noite" }
+    ]
+  },
+  "respiracao": {
+    "fotos_grande": [
+      { "foto": "photos/le-regard/riso-pedras.jpg", "alt": "Riso de braços abertos entre as pedras", "cadrage": "44% 44%" }
+    ]
+  },
+  "autorretrato": {
+    "fotos_grande": [
+      { "foto": "photos/le-regard/autorretrato.jpg", "alt": "Autorretrato no espelho, câmera na mão", "cadrage": "50% 44%" },
+      { "foto": "photos/le-regard/janela-montanha.jpg", "alt": "De costas na janela, a montanha atrás do vidro", "cadrage": "54% 50%" }
+    ]
+  },
+  "album": {
+    "tirages": [
+      { "foto": "photos/le-regard/mobile/v/t-olhares.jpg", "alt": "Dois rostos lado a lado, muito perto", "sens": "h" },
+      { "foto": "photos/le-regard/mobile/v/t-janela.jpg", "alt": "De costas na janela, a montanha atrás do vidro", "sens": "v" },
+      { "foto": "photos/le-regard/mobile/v/t-pedras.jpg", "alt": "Riso de braços abertos entre as pedras", "sens": "h" },
+      { "foto": "photos/le-regard/mobile/v/t-homem.jpg", "alt": "Retrato ao pé das pedras, camisa preta", "sens": "v" },
+      { "foto": "photos/le-regard/mobile/v/t-mar.jpg", "alt": "Um corpo deitado na espuma, ao pé da falésia", "sens": "h" }
+    ]
+  },
+  "prestacoes": [
+    {
+      "titulo": "Casamentos e elopements",
+      "texto": "Para quem quer o dia inteiro guardado, com as pessoas do jeito que elas são. Chego na preparação e fico até onde a festa for."
+    },
+    {
+      "titulo": "Ensaios",
+      "texto": "Para quem quer imagens suas e não sabe o que fazer na frente de uma câmera. Quase ninguém sabe, e tudo bem. A gente escolhe um lugar e a hora da luz, e o resto acontece andando."
+    },
+    {
+      "titulo": "Retiros e experiências",
+      "texto": "Para quem organiza um retiro, uma viagem, um festival ou um encontro, e quer sair de lá com imagens de quem estava dentro. Fico junto o tempo todo."
+    }
+  ],
+  "hoteis": {
+    "titulo": "Com hotéis e pousadas, *o cliente é o lugar*.",
+    "texto": "Mesmo ali eu procuro vida: uma presença, um movimento, alguém que faz o espaço respirar.",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/chave-porta.jpg", "alt": "Uma presença num quarto de hotel", "cadrage": "52% 50%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/m-09-hoteis.jpg", "alt": "Uma presença num quarto de hotel", "viseur": "44% 30% 28% 22%" }
+  },
+  "contato": {
+    "titulo": "Tudo começa com *uma conversa*.",
+    "fotos_grande": [
+      { "foto": "photos/le-regard/hero-corpo-mar.jpg", "alt": "Um corpo deitado na espuma, ao pé da falésia", "cadrage": "55% 90%" }
+    ],
+    "foto_telefone": { "foto": "photos/le-regard/mobile/m-10-contato.jpg", "alt": "Flores na mão, à beira do mar", "viseur": "30% 10% 36% 40%" }
+  }
+}
