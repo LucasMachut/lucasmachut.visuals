@@ -119,9 +119,9 @@
         "cadrage": "58% 50%"
       },
       {
-        "foto": "photos/le-regard/anel-cama.jpg",
         "alt": "Mão adormecida sobre o lençol, anel",
-        "cadrage": "42% 50%"
+        "cadrage": "38% 60%",
+        "foto": "photos/le-regard/anel-cama.jpg"
       }
     ],
     "foto_telefone": {
@@ -131,11 +131,11 @@
     },
     "serie_telefone": [
       {
-        "foto": "photos/le-regard/mobile/q/areia.jpg",
+        "foto": "/Projets-web/Fotos/img_5748.webp",
         "alt": "Areia escorrendo entre as mãos"
       },
       {
-        "foto": "photos/le-regard/mobile/q/anel.jpg",
+        "foto": "/Projets-web/Fotos/img_5719.webp",
         "alt": "Mão adormecida sobre o lençol, anel"
       }
     ]
