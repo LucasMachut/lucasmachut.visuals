@@ -9,6 +9,23 @@ backend:
 media_folder: "Projets-web/Fotos"
 public_folder: "Projets-web/Fotos"
 
+# Une photo envoyée depuis le téléphone (souvent 5 à 15 Mo) est réduite
+# avant d'être publiée : 2000 px au plus, en WebP. Noms de fichiers
+# nettoyés (ni espaces ni accents).
+media_libraries:
+  default:
+    config:
+      max_file_size: 50000000
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 2000
+          height: 2000
+
+app_title: "Admin — Lucas Machut"
+
 # CMS interface language
 locale: fr
 
