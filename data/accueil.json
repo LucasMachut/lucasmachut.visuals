@@ -4,13 +4,13 @@
   },
   "nome": {
     "titulo": "Me chamo Lucas Machut.\nSou fotógrafo e filmmaker.",
-    "texto": "Fotografo e filmo pessoas e o que elas sentem. Sou francês e moro no Rio há três anos. Atendo em todo o Brasil e no exterior.",
+    "texto": "Fotografo e filmo pessoas e o que elas sentem. \nSou francês e moro no Rio. Atendo em todo o Brasil e no exterior.",
     "metier": "Casamentos · Retiros · Ensaios · Experiências · Hotéis",
     "fotos_grande": [
       {
-        "foto": "photos/le-regard/veu-preto-praia.jpg",
         "alt": "Véu preto ao vento, na areia",
-        "cadrage": "72% 58%"
+        "cadrage": "53% 45%",
+        "foto": "photos/le-regard/veu-preto-praia.jpg"
       }
     ],
     "foto_telefone": {
@@ -20,12 +20,12 @@
     }
   },
   "memoria": {
-    "texto": "A memória vai falhar. As nossas lembranças são sempre uma reconstrução meio falsa de um momento que já passou.\nUma imagem guarda um fragmento de vida antes que o tempo o modifique.",
+    "texto": "Com o tempo, a gente vai lembrando das coisas de outro jeito.\n\nOs contornos se apagam, as cores desbotam. \n\nGosto de pensar que uma imagem guarda um pedaço do momento como ele foi.",
     "fotos_grande": [
       {
-        "foto": "photos/le-regard/abraco-pb.jpg",
         "alt": "Abraço, preto e branco",
-        "cadrage": "58% 42%"
+        "cadrage": "69% 28%",
+        "foto": "photos/le-regard/abraco-pb.jpg"
       },
       {
         "foto": "photos/le-regard/casal-deitado.jpg",
