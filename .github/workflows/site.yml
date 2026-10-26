@@ -1,21 +1,24 @@
-# Quand l'accueil est modifié depuis /admin, le CMS n'écrit que
-# data/accueil.json. Ce job reconstruit index.html à partir de ce
-# fichier et le publie ; le cron d'Hostinger le met en ligne ensuite.
-name: Accueil depuis le CMS
+# L'admin (/admin) n'écrit que les sources : data/accueil.json pour
+# l'accueil, partials/ pour les menus et pieds de page. Ce job
+# reconstruit les pages qui en dépendent et les publie ; le cron
+# d'Hostinger les met en ligne ensuite.
+name: Pages depuis l'admin
 
 on:
   push:
     branches: [master]
     paths:
       - data/accueil.json
+      - partials/**
       - tools/build_accueil.py
+      - tools/build_partials.py
   workflow_dispatch:
 
 permissions:
   contents: write
 
 concurrency:
-  group: accueil
+  group: site
   cancel-in-progress: false
 
 jobs:
@@ -26,17 +29,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Reconstruire index.html
+      - name: Menus et pieds de page
+        run: python tools/build_partials.py
+      - name: Accueil
         run: python tools/build_accueil.py
       - name: Publier
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898073+github-actions[bot]@users.noreply.github.com"
-          git add index.html
+          git add -A -- '*.html'
           if git diff --cached --quiet; then
-            echo "index.html déjà à jour."
+            echo "Pages déjà à jour."
           else
-            git commit -m "Accueil : mise à jour depuis /admin"
+            git commit -m "Pages reconstruites depuis l'admin"
             git pull --rebase origin master
             git push origin HEAD:master
           fi

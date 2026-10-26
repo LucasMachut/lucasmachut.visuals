@@ -4,8 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>Admin — Lucas Machut Visuals</title>
-  <link href="config.yml" type="text/yaml" rel="cms-config-url" />
+  <title>Admin — Lucas Machut</title>
   <!-- Installable sur le téléphone : « Ajouter à l'écran d'accueil »
        ouvre l'admin comme une application, avec l'icône du logo. -->
   <link rel="manifest" href="manifest.webmanifest" />
@@ -16,15 +15,27 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="Admin site" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <link rel="stylesheet" href="admin.css?v=10" />
 </head>
 <body>
-  <!-- Sveltia CMS — https://github.com/sveltia/sveltia-cms
-       Version figée : le champ de cadrage (cadrage.js) s'appuie sur son
-       API. Pour monter de version, tester d'abord /admin en local.
-       Démarrage manuel : cadrage.js enregistre son champ puis lance
-       le CMS. -->
-  <script>window.CMS_MANUAL_INIT = true;</script>
-  <script src="https://unpkg.com/@sveltia/cms@0.233.1/dist/sveltia-cms.js" type="module"></script>
-  <script src="cadrage.js?v=2" type="module"></script>
+  <!-- L'admin du site, fait maison : il lit les pages dans le dépôt
+       GitHub, les montre telles qu'elles sont, et publie un commit sur
+       master. Le code est dans js/ (main.js pour commencer). -->
+  <div id="app"><main class="loading">Chargement…</main></div>
+  <!-- Après une modification de l'admin, monter v= partout ici : le
+       navigateur recharge alors chaque fichier au lieu de garder
+       l'ancien en cache. -->
+  <script type="importmap">
+  { "imports": {
+      "./js/main.js": "./js/main.js?v=10",
+      "./js/store.js": "./js/store.js?v=10",
+      "./js/source.js": "./js/source.js?v=10",
+      "./js/images.js": "./js/images.js?v=10",
+      "./js/schemas.js": "./js/schemas.js?v=10",
+      "./js/forms.js": "./js/forms.js?v=10",
+      "./js/richtext.js": "./js/richtext.js?v=10"
+  } }
+  </script>
+  <script type="module">import './js/main.js';</script>
 </body>
 </html>
