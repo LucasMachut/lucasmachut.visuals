@@ -1,0 +1,195 @@
+{
+  "slug": "tango",
+  "title": "Tango",
+  "eyebrow": "Evento",
+  "type": "Evento",
+  "location": "",
+  "year": "",
+  "cover": "/Projets-web/Fotos/tango/destaque/tango-12.jpg",
+  "hero": "/Projets-web/Fotos/tango/destaque/tango-12.jpg",
+  "lede": "",
+  "film": {
+    "video": "",
+    "poster": "",
+    "label": "Filme em breve"
+  },
+  "videos": [],
+  "photos": [
+    {
+      "src": "/Projets-web/Fotos/tango/tango-01.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-02.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-03.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-04.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-05.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-06.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-07.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-08.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-09.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-10.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-11.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-12.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-13.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-14.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-15.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-16.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-17.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-18.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-19.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-20.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-21.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-22.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-23.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-24.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-25.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-26.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-27.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-28.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-29.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-30.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-31.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-32.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-33.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-34.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-35.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-36.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-37.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-38.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-39.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-40.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-41.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-42.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-43.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/tango/tango-44.jpg",
+      "alt": ""
+    }
+  ]
+}

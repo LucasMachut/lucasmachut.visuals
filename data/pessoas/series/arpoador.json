@@ -1,0 +1,116 @@
+{
+  "slug": "arpoador",
+  "title": "Arpoador",
+  "eyebrow": "Maravilhas cariocas",
+  "type": "Conteúdo social",
+  "location": "Rio de Janeiro, RJ",
+  "year": "2026",
+  "cover": "/Projets-web/Fotos/arpoador/destaque/arpoador-08.jpg",
+  "hero": "/Projets-web/Fotos/arpoador/arpoador-25-hero.jpg",
+  "lede": "No fim da tarde, no Arpoador, alguém solta bolhas de sabão e a praia inteira para um instante. Crianças correm atrás, estranhos riem juntos, o Dois Irmãos fica do outro lado da bolha. Nada foi combinado: eu só estava lá, perto o bastante para guardar o que durou poucos segundos.",
+  "film": {
+    "video": "",
+    "poster": "",
+    "label": "Filme em breve"
+  },
+  "videos": [
+    {
+      "id": "r-ExJ6PiLuw",
+      "title": "Arpoador, o filme",
+      "format": "wide"
+    },
+    {
+      "id": "nkBfvByZk_o",
+      "title": "Arpoador, short 01",
+      "format": "short"
+    },
+    {
+      "id": "_KB09RHYX9s",
+      "title": "Arpoador, short 02",
+      "format": "short"
+    },
+    {
+      "id": "TTtMBZ0F1ac",
+      "title": "Arpoador, short 03",
+      "format": "short"
+    }
+  ],
+  "photos": [
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-02.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-03.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-04.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-07.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-08.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-12.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-14.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-16.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-17.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-19.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-20.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-23.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-24.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-27.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-28.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-31.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-32.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-36.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/arpoador/arpoador-37.jpg",
+      "alt": ""
+    }
+  ]
+}

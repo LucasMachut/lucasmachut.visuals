@@ -1,0 +1,98 @@
+---
+// Gabarit série : une page par slug listé dans data/pessoas/trabalhos.json.
+// Hero, lede, scroll film, filmes YouTube, plaques, plein écran, série suivante.
+// Un bloc dont le JSON est vide (lede, videos) n'apparaît pas.
+import Base from '../layouts/Base.astro';
+import SerieFilm from '../components/SerieFilm.jsx';
+import SerieLightbox from '../components/SerieLightbox.jsx';
+import VideoFacade from '../components/VideoFacade.jsx';
+import accueil from '../../../data/pessoas/accueil.json';
+import { trabalhos as t, publishedSeries, placeDate } from '../lib/series.js';
+import '../styles/trabalhos.css';
+
+export function getStaticPaths() {
+  const all = publishedSeries();
+  return all.map((s, i) => ({ params: { serie: s.slug }, props: { s, next: all[(i + 1) % all.length] } }));
+}
+const { s, next } = Astro.props;
+const p = t.serie_page;
+const meta = [[p.meta.location, s.location], [p.meta.type, s.type], [p.meta.year, s.year]].filter(([, v]) => v);
+// Rythme des plaques : une grande, puis deux côte à côte, et on recommence
+const groups = [];
+for (let i = 0; i < s.photos.length; ) {
+  const size = groups.length % 2 === 0 ? 1 : 2;
+  groups.push(s.photos.slice(i, i + size).map((ph, k) => ({ ...ph, index: i + k })));
+  i += size;
+}
+const filmPoster = (s.photos[Math.floor(s.photos.length / 2)] || {}).src || s.hero;
+---
+<Base title={`${s.title}, Lucas Machut`} description={s.lede || `${s.title}: série de Lucas Machut.`} nav={accueil.nav} cta={accueil.nav_cta}>
+  <section class="sh">
+    <img class="sh-img" src={s.hero} alt={s.title} decoding="async" fetchpriority="high" />
+    <div class="sh-veil" />
+    <div class="sh-content">
+      {s.eyebrow && <div class="clip"><p class="heroLine sh-eyebrow">{s.eyebrow}</p></div>}
+      <h1 class="sh-title t-title"><span class="clip"><span class="heroLine">{s.title}</span></span></h1>
+      <div class="heroFade sh-rule" />
+      {s.location && <p class="heroFade sh-sub">{s.location}</p>}
+    </div>
+    {placeDate(s) && <div class="heroFade sh-vertical">{placeDate(s)}</div>}
+  </section>
+
+  <div class="sh-cover" data-covers-hero>
+    <section class="sl tb-wrap">
+      <div class="clip"><p class="eyebrow"><i></i>{s.lede ? p.lede_eyebrow : s.title}</p></div>
+      <div class="sl-grid">
+        <dl class="sl-meta">
+          {meta.map(([k, v]) => (<div><dt>{k}</dt><dd>{v}</dd></div>))}
+        </dl>
+        {s.lede && <p class="sl-lede">{s.lede}</p>}
+      </div>
+    </section>
+
+    <SerieFilm client:idle film={s.film} poster={filmPoster} eyebrow={p.film_eyebrow} />
+
+    {s.videos.length > 0 && (
+      <section class="sv tb-wrap" aria-label={p.videos_eyebrow}>
+        <p class="eyebrow"><i></i>{p.videos_eyebrow}</p>
+        <div class="sv-row">
+          {s.videos.map((v) => <VideoFacade client:idle {...v} />)}
+        </div>
+      </section>
+    )}
+
+    <section class="sp tb-wrap" aria-label={p.photos_eyebrow}>
+      <p class="eyebrow"><i></i>{p.photos_eyebrow} · {s.photos.length}</p>
+      {groups.map((g, gi) => (
+        <div class={g.length === 1 ? `sp-one ${gi % 4 === 2 ? 'sp-one--right' : ''}` : 'sp-two'}>
+          {g.map((ph) => (
+            <button class="plate sp-plate" data-lb={ph.index} aria-label={`${s.title}, foto ${ph.index + 1}`}>
+              <span class="plate-line" />
+              <span class="plate-clip"><img data-drift src={ph.src} alt={ph.alt} width={ph.w} height={ph.h} loading="lazy" decoding="async" /></span>
+            </button>
+          ))}
+        </div>
+      ))}
+    </section>
+
+    <section class="sn tb-wrap">
+      <a href={`/${next.slug}`} class="sn-next">
+        <span class="eyebrow"><i></i>{p.next}</span>
+        <span class="sn-row">
+          <span class="sn-title t-title">{next.title} <span aria-hidden="true">→</span></span>
+          <span class="plate sn-plate"><span class="plate-clip"><img data-drift src={next.cover} alt="" loading="lazy" /></span></span>
+        </span>
+      </a>
+      <a href="/portfolio" class="u-link sn-back">← {p.back}</a>
+    </section>
+  </div>
+
+  <SerieLightbox client:idle photos={s.photos}
+    labels={{ dialog: s.title, close: 'Fechar', prev: 'Foto anterior', next: 'Próxima foto' }} />
+</Base>
+
+<script>
+  import { initDrift, initReveal } from '../scripts/drift.js';
+  initDrift();
+  initReveal();
+</script>

@@ -1,0 +1,83 @@
+{
+  "slug": "dunas-itaunas",
+  "title": "Dunas de Itaúnas",
+  "eyebrow": "Ensaio",
+  "type": "Ensaio",
+  "location": "Itaúnas, ES",
+  "year": "",
+  "cover": "/Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-08.jpg",
+  "hero": "/Projets-web/Fotos/dunas-itaunas/destaque/dunas-itaunas-08.jpg",
+  "lede": "",
+  "film": {
+    "video": "",
+    "poster": "",
+    "label": "Filme em breve"
+  },
+  "videos": [],
+  "photos": [
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-01.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-03.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-04.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-08.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-11.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-13.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-17.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-20.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-21.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-22.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-24.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-27.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-28.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-31.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-34.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/dunas-itaunas/dunas-itaunas-36.jpg",
+      "alt": ""
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "seo": {
+    "title": "Trabalhos, Lucas Machut",
+    "description": "Séries de fotografia e filme de Lucas Machut: pessoas, encontros e momentos que não voltam."
+  },
+  "eyebrow": "II · Trabalhos",
+  "title": [[{ "t": "O que eu " }, { "t": "guardei", "em": true }]],
+  "lede": "Cada série é um lugar e as pessoas que estavam lá. Nada posado: o movimento, o riso, o gesto que passou.",
+  "card_link": "Ver a série",
+  "series": ["arpoador", "bolhas-arpoador", "tango", "pipa", "mujer-selvaje", "dunas-itaunas"],
+  "serie_page": {
+    "lede_eyebrow": "Sobre a série",
+    "meta": { "location": "Lugar", "type": "Tipo", "year": "Ano" },
+    "film_eyebrow": "Filme",
+    "videos_eyebrow": "Vídeos",
+    "photos_eyebrow": "Fotografias",
+    "next": "Próxima série",
+    "back": "Voltar aos trabalhos"
+  },
+  "contact": {
+    "title": [[{ "t": "A próxima história " }, { "t": "pode ser a sua", "em": true }]],
+    "text": "Um casamento, um festival, um encontro que você quer guardar vivo. A gente conversa.",
+    "button": { "label": "Começar", "href": "/contato" }
+  }
+}

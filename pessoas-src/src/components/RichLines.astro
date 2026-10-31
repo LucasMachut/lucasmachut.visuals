@@ -1,0 +1,11 @@
+---
+// Titre Koisei écrit en lignes [[{t, em}]] : chaque ligne est coupée (.clip)
+// et monte à l'arrivée (.heroLine). L'emphase devient le soulignement terracotta.
+const { lines, tag = 'h2', class: cls = '' } = Astro.props;
+const Tag = tag;
+---
+<Tag class={`t-title ${cls}`}>
+  {lines.map((line) => (
+    <span class="clip"><span class="heroLine">{line.map((p) => (p.em ? <em>{p.t}</em> : p.t))}</span></span>
+  ))}
+</Tag>

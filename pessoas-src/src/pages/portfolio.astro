@@ -1,0 +1,53 @@
+---
+// Trabalhos : une carte plate frame par série publiée. Textes dans
+// data/pessoas/trabalhos.json, séries dans data/pessoas/series/*.json.
+import Base from '../layouts/Base.astro';
+import RichLines from '../components/RichLines.astro';
+import accueil from '../../../data/pessoas/accueil.json';
+import { trabalhos as t, publishedSeries, metaLine } from '../lib/series.js';
+import '../styles/trabalhos.css';
+
+const series = publishedSeries();
+---
+<Base title={t.seo.title} description={t.seo.description} nav={accueil.nav} cta={accueil.nav_cta}>
+  <section class="tb-open">
+    <div class="tb-wrap tb-open-grid">
+      <div>
+        <div class="clip"><p class="eyebrow heroLine"><i></i>{t.eyebrow}</p></div>
+        <RichLines lines={t.title} tag="h1" class="tb-h1" />
+      </div>
+      <p class="tb-lede heroFade">{t.lede}</p>
+    </div>
+  </section>
+
+  <section class="tb-grid tb-wrap" aria-label={t.eyebrow}>
+    {series.map((s, i) => (
+      <article class="tb-card" data-num-card>
+        <a href={`/${s.slug}`} class="tb-card-link">
+          <span class="tb-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <div class="plate tb-card-plate">
+            <span class="plate-line" />
+            <span class="plate-clip"><img data-drift src={s.cover} alt={s.title} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" /></span>
+          </div>
+          <h2 class="tb-card-title t-title">{s.title}</h2>
+          {metaLine(s) && <p class="tb-card-meta">{metaLine(s)}</p>}
+          <span class="u-link tb-more">{t.card_link} <span aria-hidden="true">→</span></span>
+        </a>
+      </article>
+    ))}
+  </section>
+
+  <section class="tb-contact">
+    <div class="tb-wrap">
+      <RichLines lines={t.contact.title} class="tb-contact-title" />
+      <p class="tb-contact-text">{t.contact.text}</p>
+      <a href={t.contact.button.href} class="tb-disc">{t.contact.button.label}</a>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import { initDrift, initReveal } from '../scripts/drift.js';
+  initDrift();
+  initReveal();
+</script>
