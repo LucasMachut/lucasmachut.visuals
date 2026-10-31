@@ -1,6 +1,6 @@
-// Pied de page Koisei (#visit) : grand titre + disque aimanté (Begin disc),
-// colonnes de liens, mot vertical, logo qui monte quand le pied de page
-// atteint 30 % de l'écran (le nom géant Koisei, remplacé par le logo), barre du bas.
+// Pied de page (#visit) : à gauche l'invitation (surtitre, titre, pilule fine
+// comme celle de la nav), à droite les colonnes de liens, puis le logo qui monte
+// quand le pied de page atteint 30 % de l'écran, et la barre du bas.
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -12,36 +12,20 @@ export default function Fim({ data }) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
     const sec = root.current;
-    const word = sec.querySelector('.wordmark'), mag = sec.querySelector('.disc');
-    const isMobile = matchMedia('(max-width: 767px)').matches;
-    const tw = gsap.to(word, { y: 0, duration: 1.3, ease: 'power4.out',
+    const tw = gsap.to(sec.querySelector('.wordmark'), { y: 0, duration: 1.3, ease: 'power4.out',
       scrollTrigger: { trigger: sec, start: 'top 30%', toggleActions: 'play none none reverse' } });
-
-    let onMove = null, onLeave = null;
-    if (!isMobile) {
-      onMove = (e) => {
-        const r = mag.getBoundingClientRect();
-        gsap.to(mag, { x: (e.clientX - r.left - r.width / 2) * .3, y: (e.clientY - r.top - r.height / 2) * .3, duration: .4 });
-      };
-      onLeave = () => gsap.to(mag, { x: 0, y: 0, duration: .8, ease: 'elastic.out(1,0.4)' });
-      mag.addEventListener('mousemove', onMove);
-      mag.addEventListener('mouseleave', onLeave);
-    }
-    return () => {
-      tw.scrollTrigger && tw.scrollTrigger.kill(); tw.kill();
-      if (onMove) { mag.removeEventListener('mousemove', onMove); mag.removeEventListener('mouseleave', onLeave); }
-    };
+    return () => { tw.scrollTrigger && tw.scrollTrigger.kill(); tw.kill(); };
   }, []);
 
   return (
     <footer id="visit" ref={root} className="fim">
       <div className="fim-inner">
-        <p className="eyebrow fim-eyebrow" data-edit="fim.eyebrow"><i />{data.eyebrow}</p>
         <div className="fim-call">
+          <p className="eyebrow fim-eyebrow" data-edit="fim.eyebrow"><i />{data.eyebrow}</p>
           <h2 className="fim-title t-title"><Lines lines={data.lines} lineClass="fim-line" edit="fim.lines" /></h2>
-          <a href={data.disc.href} className="disc">
+          <a href={data.disc.href} className="fim-pill">
             <span data-edit="fim.disc.label">{data.disc.label}</span>
-            <Arrow size={18} />
+            <Arrow size={16} />
           </a>
         </div>
         <div className="fim-cols">
@@ -54,7 +38,6 @@ export default function Fim({ data }) {
               ))}
             </div>
           ))}
-          <div className="fim-vertical"><span data-edit="fim.vertical">{data.vertical}</span></div>
         </div>
       </div>
       <div className="wordmark-clip">
