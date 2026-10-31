@@ -76,7 +76,7 @@
 .tb-disc:hover { background: var(--terracotta); border-color: var(--terracotta); color: var(--lin); }
 
 /* ---------- Série : hero épinglé, recouvert par la feuille lin ---------- */
-.sh { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.sh { position: sticky; top: 0; height: 100vh; height: 100lvh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
 .sh-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .sh-content { position: relative; z-index: 2; text-align: center; padding: 0 1.5rem; display: flex; flex-direction: column; align-items: center; }
 .sh-eyebrow { margin-bottom: 1.5rem; font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--creme); }
@@ -118,7 +118,7 @@
 @media (max-width: 480px) { .sl-meta { grid-template-columns: 1fr 1fr; gap: 1.5rem; } }
 
 /* ---------- Scroll film ---------- */
-.sfilm { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: var(--terra); }
+.sfilm { position: relative; height: 100vh; height: 100lvh; overflow: hidden; background: var(--terra); }
 .sfilm-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .sfilm-chapter { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 1.5rem; }
 .sfilm-eyebrow { margin-bottom: 1rem; font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: var(--creme-2); text-shadow: 0 1px 18px rgba(26, 19, 14, .6); }

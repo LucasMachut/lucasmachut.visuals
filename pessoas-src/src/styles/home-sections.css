@@ -3,7 +3,10 @@
    pour garder la longueur de ligne d'origine. */
 
 /* ---------- Scroll films (#film1, #film2) ---------- */
-.film { position: relative; height: 100vh; height: 100svh; overflow: hidden; z-index: 20; background: var(--terra); }
+/* Plein écran épinglé : 100lvh, la hauteur de l'écran barre de Safari repliée.
+   En 100svh (barre affichée), il restait une bande en bas sur iPhone une fois
+   la barre repliée, où l'on voyait la section suivante. */
+.film { position: relative; height: 100vh; height: 100lvh; overflow: hidden; z-index: 20; background: var(--terra); }
 .film-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 /* Suite de photos du film de nuit : une seule visible, fondu de l'une à l'autre */
 .film-slide { opacity: 0; transition: opacity .8s var(--ease); }
@@ -99,7 +102,7 @@
 
 /* ---------- Tombée de la nuit (#nightfall) ---------- */
 .nightfall {
-  position: relative; z-index: 20; height: 100vh; height: 100svh; overflow: hidden; background: var(--lin);
+  position: relative; z-index: 20; height: 100vh; height: 100lvh; overflow: hidden; background: var(--lin);
   display: flex; align-items: center; justify-content: center;
 }
 .dissolveWrap { position: absolute; inset: 0; clip-path: inset(11vh 24vw); will-change: clip-path; }

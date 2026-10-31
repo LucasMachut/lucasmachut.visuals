@@ -71,7 +71,9 @@ export default function Nightfall({ data }) {
         if (pa > asp) { const s = asp / pa; scale.set(1, s); off.set(0, (1 - s) * (1 - y)); }
         else { const s = pa / asp; scale.set(s, 1); off.set((1 - s) * x, 0); } };
       const fit = () => {
-        renderer.setSize(W, H);
+        // false : la toile garde sa taille CSS (100 % de la section, 100lvh), sinon
+        // elle restait figée à la hauteur de l'écran du chargement sur iPhone
+        renderer.setSize(W, H, false);
         cover(aAsp, dUni.uScaleA.value, dUni.uOffA.value, data.day_crop);
         cover(bAsp, dUni.uScaleB.value, dUni.uOffB.value, data.night_crop);
       };

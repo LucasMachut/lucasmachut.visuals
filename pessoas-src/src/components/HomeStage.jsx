@@ -89,7 +89,7 @@ export default function HomeStage({ hero, edit = false }) {
       renderer.setPixelRatio(Math.min(devicePixelRatio, 1.75));
       const scene = new THREE.Scene();
       const cam = new THREE.OrthographicCamera(-W / 2, W / 2, H / 2, -H / 2, -100, 100);
-      renderer.setSize(W, H);
+      renderer.setSize(W, H, false);
 
       heroUniforms = {
         uTex: { value: null }, uTime: { value: 0 }, uDarken: { value: 0 }, uWaveT: { value: 10 },
@@ -190,7 +190,7 @@ export default function HomeStage({ hero, edit = false }) {
       onResize = () => {
         W = innerWidth; H = innerHeight;
         cam.left = -W / 2; cam.right = W / 2; cam.top = H / 2; cam.bottom = -H / 2; cam.updateProjectionMatrix();
-        renderer.setSize(W, H); fitHero();
+        renderer.setSize(W, H, false); fitHero();
       };
       addEventListener('resize', onResize);
 
