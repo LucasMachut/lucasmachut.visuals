@@ -194,21 +194,21 @@
     ]
   },
   "noite": {
-    "kicker": "III · Quando a luz cai",
+    "kicker": "III · Os laços",
     "day": "/photos/le-regard/bracos-palmeiras.jpg",
     "night": "/photos/le-regard/lampada-bar.jpg",
     "lines": [
       [
         {
-          "t": "Quando a luz cai,"
+          "t": "O que passa"
         }
       ],
       [
         {
-          "t": "a festa "
+          "t": "entre as "
         },
         {
-          "t": "começa",
+          "t": "pessoas",
           "em": true
         }
       ]
@@ -216,50 +216,53 @@
   },
   "film_noite": {
     "video": "",
-    "poster": "/photos/le-regard/mesa/tango-casal.jpg",
+    "poster": "/photos/le-regard/abraco-pb.jpg",
     "chapters": [
       {
-        "kicker": "A festa",
+        "kicker": "Os laços",
         "title": [
           {
-            "t": "Quando a música "
+            "t": "Os gestos que ninguém "
           },
           {
-            "t": "começa",
+            "t": "combinou",
             "em": true
           }
         ]
       },
       {
-        "kicker": "O flash",
+        "kicker": "O movimento",
         "title": [
           {
-            "t": "O suor, o riso, o "
+            "t": "Corpos em movimento, estados "
           },
           {
-            "t": "laço",
+            "t": "reais",
             "em": true
           }
         ]
       }
     ],
-    "quote": "Guardar vivo o que passa.",
+    "quote": "No fundo, nunca foi sobre como a gente aparece, e sim sobre quem a gente é.",
     "quote_by": "Lucas Machut",
     "slides": [
       {
-        "src": "/photos/le-regard/mesa/tango-casal.jpg"
-      },
-      {
-        "src": "/photos/le-regard/mesa/amba-amigos.jpg"
-      },
-      {
-        "src": "/photos/le-regard/mesa/tango-danca.jpg"
-      },
-      {
-        "src": "/photos/le-regard/mesa/amba-abraco.jpg"
+        "src": "/photos/le-regard/abraco-pb.jpg"
       },
       {
         "src": "/photos/le-regard/mesa/bolhas-salto.jpg"
+      },
+      {
+        "src": "/photos/le-regard/casal-deitado.jpg"
+      },
+      {
+        "src": "/photos/le-regard/mesa/teresopolis-bracos.jpg"
+      },
+      {
+        "src": "/photos/le-regard/mesa/amba-avo.jpg"
+      },
+      {
+        "src": "/photos/le-regard/mesa/dunas-bracos.jpg"
       }
     ]
   },
