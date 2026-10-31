@@ -29,6 +29,7 @@
   },
   "film_dia": {
     "video": "/videos/header_scroll.mp4",
+    "video_mobile": "/videos/header_scroll_mobile.mp4",
     "poster": "/photos/hero-poster.jpg",
     "chapters": [
       { "kicker": "Um gesto", "title": [{ "t": "Antes de " }, { "t": "pensar", "em": true }, { "t": " em posar" }] },

@@ -25,6 +25,7 @@ export default function Film({ id, data, variant = 'dia' }) {
     const q = sec.querySelector('.quote'), dark = sec.querySelector('.filmDark');
 
     if (reduced) {
+      if (video) video.src = data.video;
       gsap.set(ch[0], { autoAlpha: 1 });
       return undefined;
     }
@@ -51,29 +52,35 @@ export default function Film({ id, data, variant = 'dia' }) {
     }
     tl.to({}, { duration: 1 }, 100);
 
-    // Écran tactile : les téléphones (iOS surtout) ne chargent pas une vidéo jamais
-    // lue, et la faire avancer au défilement laisse un écran figé. Là, le film se
-    // lit, muet et en boucle, tant qu'il est à l'écran ; phrases et barre suivent
-    // toujours le défilement.
-    const playMode = !!video && matchMedia('(hover: none), (pointer: coarse), (max-width: 767px)').matches;
+    // Téléphone : même lecture au défilement que sur ordinateur. Deux conditions :
+    // une version carrée où chaque image est complète (le saut est immédiat), et
+    // une vidéo « amorcée » (lue puis mise en pause une fois), sans quoi iOS ne la
+    // charge jamais et l'écran reste figé.
+    const touch = matchMedia('(hover: none), (pointer: coarse), (max-width: 767px)').matches;
     let io = null;
-    if (playMode) {
+    if (video) {
       video.muted = true;
       video.setAttribute('muted', '');
-      video.loop = true;
-      io = new IntersectionObserver((e) => {
-        if (e[0].isIntersecting) { const p = video.play(); if (p) p.catch(() => {}); }
-        else video.pause();
-      }, { threshold: .15 });
-      io.observe(sec);
+      video.src = (touch && data.video_mobile) || data.video;
+      if (touch) {
+        let primed = false;
+        io = new IntersectionObserver((e) => {
+          if (primed || !e[0].isIntersecting) return;
+          primed = true;
+          const p = video.play();
+          if (p) p.then(() => video.pause()).catch(() => {});
+        }, { rootMargin: '100% 0px' });
+        io.observe(sec);
+      }
     }
 
     const loop = () => {
       cur += (target - cur) * .1;
       bar.style.transform = `scaleX(${cur})`;
       if (video && video.duration) {
-        const t = playMode ? video.currentTime : cur * video.duration;
-        if (!playMode && Math.abs(video.currentTime - t) > .02) video.currentTime = t;
+        const t = cur * video.duration;
+        // un seul saut à la fois : sur téléphone, empiler les sauts fige l'image
+        if (!video.seeking && Math.abs(video.currentTime - t) > .02) video.currentTime = t;
         time.textContent = `00:${pad(t)} / 00:${pad(video.duration)}`;
       }
     };
@@ -92,7 +99,7 @@ export default function Film({ id, data, variant = 'dia' }) {
   return (
     <section id={id} ref={root} className={`film film--${variant}`} data-pin>
       {data.video
-        ? <video className="filmVid film-media" src={data.video} poster={data.poster} muted playsInline preload="auto" />
+        ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
         : <img className="film-media" src={data.poster} alt="" decoding="async" />}
       {night && <div className="filmDark" />}
       {data.chapters.map((c, i) => (
