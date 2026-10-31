@@ -9,18 +9,13 @@ export function initDrift() {
   const plates = [...document.querySelectorAll('[data-drift]')];
   const cards = [...document.querySelectorAll('[data-num-card]')];
   if (!plates.length && !cards.length) return;
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let queued = false;
 
   const update = () => {
     queued = false;
     const mid = innerHeight / 2;
-    for (const img of plates) {
-      const r = img.parentElement.getBoundingClientRect();
-      if (r.bottom < -200 || r.top > innerHeight + 200) continue;
-      const off = Math.max(-.9, Math.min(.9, (r.top + r.height / 2 - mid) / innerHeight));
-      img.style.transform = reduced ? 'scale(1.15)' : `scale(1.15) translateY(${off * 7}%)`;
-    }
+    // La dérive des images (scale 1.15) est retirée : elle rognait les bords des
+    // photos, qui doivent apparaître entières. Reste le numéro qui se remplit.
     for (const card of cards) {
       const r = card.getBoundingClientRect();
       card.classList.toggle('is-near', Math.abs(r.top + r.height / 2 - mid) < r.height / 2);
