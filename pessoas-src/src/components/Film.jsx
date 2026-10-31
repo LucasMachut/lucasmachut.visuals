@@ -22,7 +22,6 @@ export default function Film({ id, data, variant = 'dia' }) {
     const video = sec.querySelector('.filmVid');
     const bar = sec.querySelector('.filmBar'), time = sec.querySelector('.filmTime');
     const ch = sec.querySelectorAll('.chapter'), roms = sec.querySelectorAll('.romNum');
-    const slides = [...sec.querySelectorAll('.film-slide')];
     const q = sec.querySelector('.quote'), dark = sec.querySelector('.filmDark');
 
     if (reduced) {
@@ -121,6 +120,8 @@ export default function Film({ id, data, variant = 'dia' }) {
       cur += (target - cur) * .1;
       bar.style.transform = `scaleX(${cur})`;
       // Suite de photos (data.slides) : chacune son tour, en fondu, au fil du défilement
+      // relues à chaque image : dans l'admin, la suite change (ordre, ajout) sans recharger
+      const slides = sec.querySelectorAll('.film-slide');
       if (slides.length) {
         const on = Math.min(slides.length - 1, Math.floor(cur * slides.length));
         slides.forEach((el, i) => el.classList.toggle('is-on', i === on));
@@ -157,7 +158,7 @@ export default function Film({ id, data, variant = 'dia' }) {
           ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
           : data.slides && data.slides.length
             ? data.slides.map((sl, i) => (
-              <img key={sl.src + i} className={`film-media film-slide${i === 0 ? ' is-on' : ''}`} src={sl.src} alt="" decoding="async"
+              <img key={sl.src} className={`film-media film-slide${i === 0 ? ' is-on' : ''}`} src={sl.src} alt="" decoding="async"
                 loading={i < 2 ? 'eager' : 'lazy'} />
             ))
             : <img className="film-media" src={data.poster} alt="" decoding="async" />}
