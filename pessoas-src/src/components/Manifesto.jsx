@@ -24,14 +24,14 @@ export default function Manifesto({ data }) {
 
   return (
     <div ref={root} className="journey-inner">
-      <p className="eyebrow journey-eyebrow"><i />{data.eyebrow}</p>
+      <p className="eyebrow journey-eyebrow" data-edit="manifesto.eyebrow"><i />{data.eyebrow}</p>
       <h2 className="manifesto t-title">
-        <Lines lines={data.lines} />
+        <Lines lines={data.lines} edit="manifesto.lines" />
       </h2>
       <div className="journey-text">
         <div>
-          <p>{data.text}</p>
-          <a href={data.link.href} className="u-link journey-link">
+          <p data-edit="manifesto.text">{data.text}</p>
+          <a href={data.link.href} className="u-link journey-link" data-edit="manifesto.link.label">
             {data.link.label}
             <Arrow size={16} />
           </a>

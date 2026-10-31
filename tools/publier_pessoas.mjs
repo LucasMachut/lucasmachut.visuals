@@ -12,6 +12,8 @@
 // Le dossier _astro/ (scripts et styles du build, noms à empreinte)
 // appartient au build : il est vidé puis recopié à chaque fois.
 // À la moindre entorse, rien n'est copié et le script sort en erreur.
+// Une seule exception à « la racine » : la page admin.html d'Astro devient
+// admin/index.html (servie à /admin) ; l'ancien admin reste dans admin/lugares/.
 import { cpSync, existsSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -20,6 +22,8 @@ const RACINE = fileURLToPath(new URL('..', import.meta.url));
 const i = process.argv.indexOf('--dist');
 const DIST = i > 0 ? resolve(process.argv[i + 1]) : join(RACINE, 'pessoas-src', 'dist');
 const ESSAI = process.argv.includes('--essai');
+
+const DEPLACES = { 'admin.html': 'admin/index.html' };
 
 const PROTEGES = [
   'lugares/', 'en/', 'fr/', 'admin/', 'photos/', 'videos/', 'data/', 'partials/', 'tools/',
@@ -43,6 +47,13 @@ if (!existsSync(join(DIST, 'index.html'))) {
 const remplaces = [], nouveaux = [], identiques = [], ignores = [], refus = [], pages = [];
 for (const f of fichiers(DIST)) {
   const rel = relative(DIST, f).split(sep).join('/');
+  if (DEPLACES[rel]) {
+    const dest = DEPLACES[rel];
+    pages.push(rel);
+    if (!existsSync(join(RACINE, dest))) nouveaux.push(dest);
+    else (readFileSync(join(RACINE, dest)).equals(readFileSync(f)) ? identiques : remplaces).push(dest);
+    continue;
+  }
   const cible = join(RACINE, rel);
   if (PROTEGES.some(p => rel === p || rel.startsWith(p))) { refus.push(rel + '  (dossier protégé)'); continue; }
   if (rel.startsWith('_astro/')) { nouveaux.push(rel); continue; }
@@ -74,5 +85,5 @@ if (ESSAI) {
 
 rmSync(join(RACINE, '_astro'), { recursive: true, force: true });
 if (existsSync(join(DIST, '_astro'))) cpSync(join(DIST, '_astro'), join(RACINE, '_astro'), { recursive: true });
-for (const p of pages) cpSync(join(DIST, p), join(RACINE, p));
+for (const p of pages) cpSync(join(DIST, p), join(RACINE, DEPLACES[p] || p));
 console.log('\nSite pessoas déposé à la racine.');

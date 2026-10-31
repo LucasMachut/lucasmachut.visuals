@@ -96,6 +96,7 @@ export default function Film({ id, data, variant = 'dia' }) {
   }, []);
 
   const night = variant === 'noite';
+  const field = night ? 'film_noite' : 'film_dia';
   return (
     <section id={id} ref={root} className={`film film--${variant}`} data-pin>
       {data.video
@@ -104,14 +105,14 @@ export default function Film({ id, data, variant = 'dia' }) {
       {night && <div className="filmDark" />}
       {data.chapters.map((c, i) => (
         <div className="chapter" key={i}>
-          <p className="chapter-kicker">{c.kicker}</p>
-          <h3 className="chapter-title t-title"><Segments parts={c.title} /></h3>
+          <p className="chapter-kicker" data-edit={`${field}.chapters.${i}.kicker`}>{c.kicker}</p>
+          <h3 className="chapter-title t-title" data-edit={`${field}.chapters.${i}.title`}><Segments parts={c.title} /></h3>
         </div>
       ))}
       {night && data.quote && (
         <div className="quote">
-          <p className="quote-text">« {data.quote} »</p>
-          <p className="quote-by">{data.quote_by}</p>
+          <p className="quote-text" data-edit={`${field}.quote`}>« {data.quote} »</p>
+          <p className="quote-by" data-edit={`${field}.quote_by`}>{data.quote_by}</p>
         </div>
       )}
       {!night && (

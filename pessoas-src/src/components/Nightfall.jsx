@@ -99,8 +99,8 @@ export default function Nightfall({ data }) {
         <img className="dissolve-fallback" src={data.night} alt="" loading="lazy" decoding="async" />
       </div>
       <div className="nf-text">
-        <p className="nf-kicker">{data.kicker}</p>
-        <h2 className="nf-title t-title"><Lines lines={data.lines} lineClass="nf-line" /></h2>
+        <p className="nf-kicker" data-edit="noite.kicker">{data.kicker}</p>
+        <h2 className="nf-title t-title"><Lines lines={data.lines} lineClass="nf-line" edit="noite.lines" /></h2>
       </div>
     </section>
   );

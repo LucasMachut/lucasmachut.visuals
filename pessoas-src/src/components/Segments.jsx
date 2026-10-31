@@ -7,10 +7,11 @@ export function Segments({ parts }) {
   });
 }
 
-// Plusieurs lignes, chacune dans son masque pour monter à la Koisei
-export function Lines({ lines, lineClass = 'mLine' }) {
+// Plusieurs lignes, chacune dans son masque pour monter à la Koisei.
+// edit = chemin du champ dans le JSON, lu par l'admin pour ouvrir le bon panneau.
+export function Lines({ lines, lineClass = 'mLine', edit }) {
   return lines.map((line, i) => (
-    <span className={lineClass} key={i}>
+    <span className={lineClass} key={i} data-edit={edit ? `${edit}.${i}` : undefined}>
       <span><Segments parts={line} /></span>
     </span>
   ));

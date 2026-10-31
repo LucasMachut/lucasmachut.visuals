@@ -22,7 +22,8 @@ function dustTexture(THREE) {
   return new THREE.CanvasTexture(c);
 }
 
-export default function HomeStage({ hero }) {
+// edit : affiché dans l'admin, sans preloader (on y arrive pour modifier, pas pour découvrir).
+export default function HomeStage({ hero, edit = false }) {
   const root = useRef(null);
 
   useEffect(() => {
@@ -44,7 +45,8 @@ export default function HomeStage({ hero }) {
     gsap.to(prog, { v: 88, duration: 1.4, ease: 'power2.out', onUpdate: paint });
     gsap.fromTo('#loaderWord', { letterSpacing: '.5em' }, { letterSpacing: '.02em', duration: 1.2, ease: 'power3.out' });
     let realDone = false, minDone = false, finished = false;
-    const minTimer = setTimeout(() => { minDone = true; tryFinish(); }, 1600);
+    if (edit) loaderEl.style.display = 'none';
+    const minTimer = setTimeout(() => { minDone = true; tryFinish(); }, edit ? 0 : 1600);
 
     let heroPlane = null, heroUniforms = null, dustMat = null, W = innerWidth, H = innerHeight;
 
@@ -246,20 +248,20 @@ export default function HomeStage({ hero }) {
       <section id="hero" className="hero" data-pin>
         <img className="hero-fallback" src={hero.photo} alt="" />
         <div id="heroContent" className="hero-content">
-          <div className="clip"><p className="heroLine eyebrow-hero">{hero.eyebrow}</p></div>
-          <h1 className="hero-name">
+          <div className="clip"><p className="heroLine eyebrow-hero" data-edit="hero.eyebrow">{hero.eyebrow}</p></div>
+          <h1 className="hero-name" data-edit="hero.name">
             {hero.name.map((w) => (
               <span className="clip" key={w}><span className="heroLine">{w}</span></span>
             ))}
           </h1>
           <div className="heroFade hero-rule" />
-          <p className="heroFade hero-sub">{hero.subline}</p>
+          <p className="heroFade hero-sub" data-edit="hero.subline">{hero.subline}</p>
         </div>
         <div className="heroFade hero-scroll">
-          <span>{hero.scroll}</span>
+          <span data-edit="hero.scroll">{hero.scroll}</span>
           <div className="hero-scroll-line"><div /></div>
         </div>
-        <div className="heroFade hero-vertical">{hero.vertical}</div>
+        <div className="heroFade hero-vertical" data-edit="hero.vertical">{hero.vertical}</div>
       </section>
     </div>
   );

@@ -1,0 +1,27 @@
+---
+// Admin du site pessoas, servi à /admin (l'ancien est à /admin/lugares/).
+// Tout se passe dans le navigateur : rien n'est pré-rendu ici.
+import '../../styles/tokens.css';
+import '../../styles/home.css';
+import '../../styles/home-sections.css';
+import '../../admin/admin.css';
+import AdminApp from '../../admin/AdminApp.jsx';
+---
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Admin, Lucas Machut</title>
+  <link rel="icon" href="/admin/icon-192.png" />
+  <link rel="apple-touch-icon" href="/admin/icon-180.png" />
+  <meta name="theme-color" content="#2E2620" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Space+Grotesk:wght@400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <AdminApp client:only="react" />
+</body>
+</html>

@@ -36,32 +36,32 @@ export default function Fim({ data }) {
   return (
     <footer id="visit" ref={root} className="fim">
       <div className="fim-inner">
-        <p className="eyebrow fim-eyebrow"><i />{data.eyebrow}</p>
+        <p className="eyebrow fim-eyebrow" data-edit="fim.eyebrow"><i />{data.eyebrow}</p>
         <div className="fim-call">
-          <h2 className="fim-title t-title"><Lines lines={data.lines} lineClass="fim-line" /></h2>
+          <h2 className="fim-title t-title"><Lines lines={data.lines} lineClass="fim-line" edit="fim.lines" /></h2>
           <a href={data.disc.href} className="disc">
-            <span>{data.disc.label}</span>
+            <span data-edit="fim.disc.label">{data.disc.label}</span>
             <Arrow size={18} />
           </a>
         </div>
         <div className="fim-cols">
-          {data.columns.map((col) => (
-            <div className="fim-col" key={col.head}>
-              <span className="fim-head">{col.head}</span>
-              {col.links.map((l) => (
-                <a key={l.href} href={l.href} className="u-link"
+          {data.columns.map((col, ci) => (
+            <div className="fim-col" key={ci}>
+              <span className="fim-head" data-edit={`fim.columns.${ci}.head`}>{col.head}</span>
+              {col.links.map((l, li) => (
+                <a key={li} href={l.href} className="u-link" data-edit={`fim.columns.${ci}.links.${li}.label`}
                   {...(l.href.startsWith('http') ? { target: '_blank', rel: 'noopener' } : {})}>{l.label}</a>
               ))}
             </div>
           ))}
-          <div className="fim-vertical"><span>{data.vertical}</span></div>
+          <div className="fim-vertical"><span data-edit="fim.vertical">{data.vertical}</span></div>
         </div>
       </div>
       <div className="wordmark-clip">
         <div className="wordmark"><img src={data.logo} alt={data.wordmark} loading="lazy" decoding="async" /></div>
       </div>
       <div className="fim-bar">
-        <div><span>{data.bar_left}</span><span>{data.bar_right}</span></div>
+        <div><span data-edit="fim.bar_left">{data.bar_left}</span><span data-edit="fim.bar_right">{data.bar_right}</span></div>
       </div>
     </footer>
   );
