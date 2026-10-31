@@ -10,7 +10,7 @@
   "nav_cta": { "label": "Começar", "href": "/contato" },
   "hero": {
     "photo": "/photos/le-regard/hero-corpo-mar.jpg",
-    "eyebrow": "Fotografia e filme · Rio de Janeiro",
+    "eyebrow": "Fotógrafo e filmmaker · Rio de Janeiro",
     "name": ["Lucas", "Machut"],
     "subline": "humano, autêntico, sensível",
     "vertical": "Rio de Janeiro · 2026",
@@ -28,7 +28,7 @@
     "link": { "label": "Ver os trabalhos", "href": "/portfolio" }
   },
   "film_dia": {
-    "video": "/videos/header_min.mp4",
+    "video": "/videos/header_scroll.mp4",
     "poster": "/photos/hero-poster.jpg",
     "chapters": [
       { "kicker": "Um gesto", "title": [{ "t": "Antes de " }, { "t": "pensar", "em": true }, { "t": " em posar" }] },
@@ -79,7 +79,8 @@
       { "head": "Lugares", "links": [{ "label": "Lugares →", "href": "/lugares/" }] }
     ],
     "vertical": "obrigado",
-    "wordmark": "LUCAS MACHUT",
+    "wordmark": "Lucas Machut",
+    "logo": "/photos/logo-lucas-machut-fonce.png",
     "bar_left": "© 2026 Lucas Machut · guardar vivo o que passa",
     "bar_right": "Rio de Janeiro · Brasil"
   }

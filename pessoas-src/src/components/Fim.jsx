@@ -1,6 +1,6 @@
 // Pied de page Koisei (#visit) : grand titre + disque aimanté (Begin disc),
-// colonnes de liens, mot vertical, nom géant qui monte quand le pied de page
-// atteint 30 % de l'écran, barre du bas.
+// colonnes de liens, mot vertical, logo qui monte quand le pied de page
+// atteint 30 % de l'écran (le nom géant Koisei, remplacé par le logo), barre du bas.
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -14,16 +14,6 @@ export default function Fim({ data }) {
     const sec = root.current;
     const word = sec.querySelector('.wordmark'), mag = sec.querySelector('.disc');
     const isMobile = matchMedia('(max-width: 767px)').matches;
-    // Koisei : innerWidth / 3.95 pour KOISEI (6 lettres). LUCAS MACHUT en a 12 et
-    // Special Elite chasse large : on mesure le mot et on le cale sur la largeur.
-    const fit = () => {
-      word.style.fontSize = '100px';
-      const w = word.scrollWidth || 1;
-      word.style.fontSize = Math.max(32, (innerWidth - 16) / w * 100) + 'px';
-    };
-    fit();
-    if (document.fonts) document.fonts.ready.then(fit);
-    addEventListener('resize', fit);
     const tw = gsap.to(word, { y: 0, duration: 1.3, ease: 'power4.out',
       scrollTrigger: { trigger: sec, start: 'top 30%', toggleActions: 'play none none reverse' } });
 
@@ -38,7 +28,6 @@ export default function Fim({ data }) {
       mag.addEventListener('mouseleave', onLeave);
     }
     return () => {
-      removeEventListener('resize', fit);
       tw.scrollTrigger && tw.scrollTrigger.kill(); tw.kill();
       if (onMove) { mag.removeEventListener('mousemove', onMove); mag.removeEventListener('mouseleave', onLeave); }
     };
@@ -69,7 +58,7 @@ export default function Fim({ data }) {
         </div>
       </div>
       <div className="wordmark-clip">
-        <div className="wordmark">{data.wordmark}</div>
+        <div className="wordmark"><img src={data.logo} alt={data.wordmark} loading="lazy" decoding="async" /></div>
       </div>
       <div className="fim-bar">
         <div><span>{data.bar_left}</span><span>{data.bar_right}</span></div>

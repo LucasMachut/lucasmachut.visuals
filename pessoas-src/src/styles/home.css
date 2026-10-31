@@ -33,15 +33,20 @@
   display: flex; flex-direction: column; align-items: center; text-align: center;
 }
 .eyebrow-hero {
-  display: block; margin-bottom: 1.5rem; font-size: 12px; letter-spacing: .32em;
-  text-transform: uppercase; color: var(--creme);
+  /* Lucas : on doit comprendre en arrivant que c'est le site d'un photographe.
+     Le métier passe avant le nom : bien plus grand que l'eyebrow Koisei. */
+  display: block; margin-bottom: 1.25rem; font-size: clamp(15px, 1.5vw, 22px); font-weight: 500;
+  letter-spacing: .24em; text-transform: uppercase; color: var(--creme);
 }
 .hero-name {
   font-family: var(--f-title); font-weight: 400; margin: 0;
-  font-size: clamp(4rem, 11vw, 11.5rem); line-height: .95; letter-spacing: -.015em;
+  font-size: clamp(2.2rem, 5.6vw, 5.8rem); line-height: 1; letter-spacing: .02em;
   color: var(--creme); text-shadow: 0 2px 40px rgba(46, 38, 32, .35);
   text-transform: uppercase;
 }
+/* Lucas : « trop gros ». Le nom tient sur une ligne, à la moitié du corps Koisei. */
+.hero-name .clip { display: inline-block; }
+.hero-name .clip + .clip { margin-left: .35em; }
 .hero-name .heroLine { display: block; }
 .heroLine { will-change: transform; }
 .hero-rule { margin-top: 2rem; height: 1px; width: 4rem; background: var(--creme); box-shadow: 0 0 8px rgba(46, 38, 32, .5); }
@@ -71,7 +76,7 @@
 .heroFade { opacity: 0; }
 @media (max-width: 767px) {
   .hero-vertical { display: none; }
-  .eyebrow-hero { font-size: 11px; letter-spacing: .22em; }
+  .eyebrow-hero { font-size: 13px; letter-spacing: .16em; line-height: 1.6; }
 }
 
 /* ---------- Journey : manifeste (#journey) ---------- */
