@@ -51,12 +51,29 @@ export default function Film({ id, data, variant = 'dia' }) {
     }
     tl.to({}, { duration: 1 }, 100);
 
+    // Écran tactile : les téléphones (iOS surtout) ne chargent pas une vidéo jamais
+    // lue, et la faire avancer au défilement laisse un écran figé. Là, le film se
+    // lit, muet et en boucle, tant qu'il est à l'écran ; phrases et barre suivent
+    // toujours le défilement.
+    const playMode = !!video && matchMedia('(hover: none), (pointer: coarse), (max-width: 767px)').matches;
+    let io = null;
+    if (playMode) {
+      video.muted = true;
+      video.setAttribute('muted', '');
+      video.loop = true;
+      io = new IntersectionObserver((e) => {
+        if (e[0].isIntersecting) { const p = video.play(); if (p) p.catch(() => {}); }
+        else video.pause();
+      }, { threshold: .15 });
+      io.observe(sec);
+    }
+
     const loop = () => {
       cur += (target - cur) * .1;
       bar.style.transform = `scaleX(${cur})`;
       if (video && video.duration) {
-        const t = cur * video.duration;
-        if (Math.abs(video.currentTime - t) > .02) video.currentTime = t;
+        const t = playMode ? video.currentTime : cur * video.duration;
+        if (!playMode && Math.abs(video.currentTime - t) > .02) video.currentTime = t;
         time.textContent = `00:${pad(t)} / 00:${pad(video.duration)}`;
       }
     };
@@ -64,6 +81,7 @@ export default function Film({ id, data, variant = 'dia' }) {
     scheduleRefresh();
 
     return () => {
+      if (io) io.disconnect();
       gsap.ticker.remove(loop);
       tl.scrollTrigger && tl.scrollTrigger.kill();
       tl.kill();
