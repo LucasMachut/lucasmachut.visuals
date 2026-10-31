@@ -1,0 +1,66 @@
+# Site pessoas (Astro, pessoas-src/). Construit les pages et les dépose à
+# la racine du dépôt, sur master ; le webhook d'Hostinger les met en
+# ligne ensuite, comme pour le reste du site.
+#
+# Deux crans de sécurité tant que les nouvelles pages ne sont pas validées :
+#   - lancé à la main (Actions > Site pessoas > Run workflow), c'est un
+#     essai par défaut : construit, liste ce qui serait remplacé, ne
+#     commite rien. Cocher « publier » pour mettre en ligne.
+#   - sur un push (l'admin qui modifie data/pessoas/*.json), rien ne se
+#     passe tant que la variable du dépôt PESSOAS_EN_LIGNE ne vaut pas
+#     « oui » (Settings > Secrets and variables > Actions > Variables).
+name: Site pessoas
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - data/pessoas/**
+      - pessoas-src/**
+      - tools/publier_pessoas.mjs
+  workflow_dispatch:
+    inputs:
+      publier:
+        description: Mettre en ligne (sinon simple essai)
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+# Même groupe que « Pages depuis l'admin » : les deux commitent sur master,
+# l'un attend l'autre.
+concurrency:
+  group: site
+  cancel-in-progress: false
+
+jobs:
+  build:
+    if: github.event_name == 'workflow_dispatch' || vars.PESSOAS_EN_LIGNE == 'oui'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: pessoas-src/package-lock.json
+      - name: Construire
+        working-directory: pessoas-src
+        run: npm ci && npm run build
+      - name: Ce qui changerait
+        run: node tools/publier_pessoas.mjs --essai
+      - name: Publier
+        if: inputs.publier || (github.event_name == 'push' && vars.PESSOAS_EN_LIGNE == 'oui')
+        run: |
+          node tools/publier_pessoas.mjs
+          git config user.name "github-actions[bot]"
+          git config user.email "41898073+github-actions[bot]@users.noreply.github.com"
+          git add -A -- '*.html' _astro
+          if git diff --cached --quiet; then
+            echo "Pages déjà à jour."
+          else
+            git commit -m "Pages pessoas reconstruites"
+            git pull --rebase origin master
+            git push origin HEAD:master
+          fi
