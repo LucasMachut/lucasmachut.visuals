@@ -10,6 +10,10 @@ import { pinPriority, scheduleRefresh } from './scroll.js';
 
 const ROMAN = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ'];
 const pad = (n) => String(Math.floor(n)).padStart(2, '0');
+// Cadrage d'une photo de la suite choisi dans l'admin : un pour écran large,
+// un pour écran haut (téléphone), appliqués par la feuille de style.
+const pos = (c) => (c ? `${(c.x ?? .5) * 100}% ${(c.y ?? .5) * 100}%` : '50% 50%');
+const slideCrop = (crop) => (crop ? { '--pos-wide': pos(crop.desktop), '--pos-tall': pos(crop.mobile) } : undefined);
 
 export default function Film({ id, data, variant = 'dia' }) {
   const root = useRef(null);
@@ -159,6 +163,7 @@ export default function Film({ id, data, variant = 'dia' }) {
           : data.slides && data.slides.length
             ? data.slides.map((sl, i) => (
               <img key={sl.src} className={`film-media film-slide${i === 0 ? ' is-on' : ''}`} src={sl.src} alt="" decoding="async"
+                style={slideCrop(sl.crop)}
                 loading={i < 2 ? 'eager' : 'lazy'} />
             ))
             : <img className="film-media" src={data.poster} alt="" decoding="async" />}

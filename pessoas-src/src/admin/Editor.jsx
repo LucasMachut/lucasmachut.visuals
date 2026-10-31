@@ -172,6 +172,7 @@ function SlidesField({ value, src, onChange, onPhotos }) {
   const input = useRef(null);
   const [busy, setBusy] = useState('');
   const [asking, setAsking] = useState(null);
+  const [sel, setSel] = useState(null);   // la photo dont on règle le cadrage
   const move = (from, to) => {
     const next = value.slice();
     const [it] = next.splice(from, 1);
@@ -192,13 +193,27 @@ function SlidesField({ value, src, onChange, onPhotos }) {
       <p className="adm-help">Les photos passent l'une après l'autre au fil du défilement, dans cet ordre.</p>
       <Sortable items={value} onMove={move} render={(sl, i) => (
         <>
-          <span className="adm-sort-text adm-thumb"><img src={src(sl.src)} alt="" loading="lazy" /> Photo {i + 1}</span>
+          <button type="button" className={`adm-sort-text adm-thumb${i === sel ? ' is-current' : ''}`} onClick={() => setSel(i === sel ? null : i)}>
+            <img src={src(sl.src)} alt="" loading="lazy" /> Photo {i + 1} <small>{i === sel ? '· cadrage ouvert' : '· recadrer'}</small>
+          </button>
           {asking === i ? (
             <span className="adm-ask">Retirer « photo {i + 1} » ? <button type="button" onClick={() => { setAsking(null); onChange(value.filter((_, j) => j !== i)); }}>Oui</button>
               <button type="button" onClick={() => setAsking(null)}>Non</button></span>
           ) : <button type="button" className="adm-x" aria-label={`Retirer photo ${i + 1}`} disabled={value.length <= 1} onClick={() => setAsking(i)}>×</button>}
         </>
       )} />
+      {sel != null && value[sel] && (
+        <div className="adm-photo">
+          <span className="adm-photo-label">Photo {sel + 1} : glisse-la dans chaque cadre</span>
+          <div className="adm-crops">
+            {[['desktop', 'Ordinateur', 16 / 9], ['mobile', 'Téléphone', 375 / 812]].map(([key, name, ratio]) => (
+              <CropFrame key={key} src={src(value[sel].src)} ratio={ratio} label={name} wide={ratio > 1}
+                value={value[sel].crop && value[sel].crop[key]}
+                onChange={(c) => onChange(value.map((x, j) => (j === sel ? { ...x, crop: { ...(x.crop || {}), [key]: c } } : x)))} />
+            ))}
+          </div>
+        </div>
+      )}
       <input ref={input} type="file" accept="image/*" multiple hidden onChange={add} />
       <button type="button" className="adm-btn" disabled={!!busy} onClick={() => input.current.click()}>{busy || '+ Ajouter des photos'}</button>
     </div>
