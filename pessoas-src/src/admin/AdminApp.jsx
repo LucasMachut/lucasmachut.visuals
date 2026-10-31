@@ -33,11 +33,26 @@ const DRAFT_KEY = (path) => 'lm-admin-pessoas.draft:' + path;
 const essai = typeof location !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
   && new URLSearchParams(location.search).has('essai');
 
+// Un brouillon garde aussi la version du site sur laquelle il a été commencé
+// ({ v: 2, base, data }). Si le site a changé depuis (une autre publication),
+// seuls les changements du brouillon sont réappliqués sur la version en ligne :
+// le reste suit le site au lieu de l'écraser à la prochaine publication.
 function loadDraft(path) {
   try { return JSON.parse(localStorage.getItem(DRAFT_KEY(path)) || 'null'); } catch (e) { return null; }
 }
-function saveDraft(path, data) {
-  try { data ? localStorage.setItem(DRAFT_KEY(path), JSON.stringify(data)) : localStorage.removeItem(DRAFT_KEY(path)); } catch (e) { /* rien */ }
+function saveDraft(path, data, base = null) {
+  try {
+    if (data) localStorage.setItem(DRAFT_KEY(path), JSON.stringify({ v: 2, base, data }));
+    else localStorage.removeItem(DRAFT_KEY(path));
+  } catch (e) { /* rien */ }
+}
+function fromDraft(draft, online) {
+  if (!draft) return { data: online, stale: false };
+  if (draft.v !== 2) return { data: draft, stale: !!online && JSON.stringify(draft) !== JSON.stringify(online) };
+  if (!online || !draft.base || JSON.stringify(draft.base) === JSON.stringify(online)) return { data: draft.data, stale: false };
+  let data = online;
+  for (const f of changed(draft.base, draft.data)) data = set(data, f, get(draft.data, f));
+  return { data, stale: false };
 }
 async function readJson(path) {
   if (!essai) return JSON.parse(await gh.readText(path));
@@ -182,6 +197,7 @@ export default function AdminApp() {
   const [urls, setUrls] = useState({});            // '/Projets-web/…' → image locale (photos pas encore publiées)
   const blobs = useRef({});
   const timers = useRef({});
+  const staleRef = useRef([]);   // brouillons d'ancien format, commencés avant une mise à jour du site
 
   useEffect(() => {
     const on = () => { setWhere(route()); setEditing(null); scrollTo(0, 0); };
@@ -198,9 +214,11 @@ export default function AdminApp() {
         const draft = loadDraft(path);
         try {
           const base = await readJson(path);
-          out[path] = { base, data: draft || base };
+          const { data, stale } = fromDraft(draft, base);
+          out[path] = { base, data };
+          if (stale) staleRef.current.push(path);
         } catch (e) {
-          if (e.status === 404 && draft) out[path] = { base: null, data: draft };
+          if (e.status === 404 && draft) out[path] = { base: null, data: draft.v === 2 ? draft.data : draft };
           else throw e;
         }
       };
@@ -228,7 +246,7 @@ export default function AdminApp() {
       const cur = d[path];
       const data = typeof next === 'function' ? next(cur ? cur.data : null) : next;
       clearTimeout(timers.current[path]);
-      timers.current[path] = setTimeout(() => saveDraft(path, data), 300);
+      timers.current[path] = setTimeout(() => saveDraft(path, data, cur ? cur.base : null), 300);
       return { ...d, [path]: { base: cur ? cur.base : null, data } };
     });
   };
@@ -345,6 +363,7 @@ export default function AdminApp() {
       setDocs((d) => Object.fromEntries(Object.entries(d).map(([p, x]) => [p, { base: x.data, data: x.data }])));
       Object.keys(docs).forEach((p) => saveDraft(p, null));
       blobs.current = {};
+      staleRef.current = [];
       await photos.clear().catch(() => {});
       setStatus('done');
     } catch (e) {
@@ -356,7 +375,7 @@ export default function AdminApp() {
   const reset = async () => {
     setDocs((d) => Object.fromEntries(Object.entries(d).filter(([, x]) => x.base).map(([p, x]) => [p, { base: x.base, data: x.base }])));
     Object.keys(docs).forEach((p) => saveDraft(p, null));
-    setEditing(null); setConfirm(null);
+    setEditing(null); setConfirm(null); staleRef.current = [];
     blobs.current = {};
     await photos.clear().catch(() => {});
     if (where.page === 'serie' && !docs[S(where.slug)].base) go('#/trabalhos');
@@ -424,7 +443,7 @@ export default function AdminApp() {
         setDocs((d) => {
           const cur = d[sPath].data;
           const data = { ...cur, photos: [...cur.photos, ...keys.map((k) => ({ src: k, alt: '' }))] };
-          saveDraft(sPath, data);
+          saveDraft(sPath, data, d[sPath].base);
           return { ...d, [sPath]: { ...d[sPath], data } };
         });
       }} />;
@@ -467,6 +486,12 @@ export default function AdminApp() {
         )}
       </header>
 
+      {staleRef.current.length > 0 && !status && (
+        <div className="adm-toast adm-toast--err">
+          Ton brouillon a été commencé avant une mise à jour du site : le publier remettrait l'ancienne version de ce qui a changé entre-temps. Regarde la liste dans « Publier », ou « Annuler » pour repartir de la version en ligne.
+          <button type="button" className="adm-btn adm-btn--ghost adm-btn--bar" onClick={() => { staleRef.current = []; setStatus(' '); }}>Compris</button>
+        </div>
+      )}
       {status === 'done' && <div className="adm-toast">Publié. En ligne dans 3 à 5 minutes.{essai && ' (essai : rien n\'est parti)'}</div>}
       {status.startsWith('error:') && <div className="adm-toast adm-toast--err">La publication a échoué : {status.slice(6)}. Tes changements sont gardés.</div>}
 

@@ -216,7 +216,7 @@
   },
   "film_noite": {
     "video": "",
-    "poster": "/photos/le-regard/abraco-pb.jpg",
+    "poster": "/photos/le-regard/mesa/tango-casal.jpg",
     "chapters": [
       {
         "kicker": "Os laços",
@@ -246,6 +246,9 @@
     "quote": "No fundo, nunca foi sobre como a gente aparece, e sim sobre quem a gente é.",
     "quote_by": "Lucas Machut",
     "slides": [
+      {
+        "src": "/photos/le-regard/mesa/tango-casal.jpg"
+      },
       {
         "src": "/photos/le-regard/abraco-pb.jpg"
       },
