@@ -244,7 +244,24 @@
       }
     ],
     "quote": "Guardar vivo o que passa.",
-    "quote_by": "Lucas Machut"
+    "quote_by": "Lucas Machut",
+    "slides": [
+      {
+        "src": "/photos/le-regard/mesa/tango-casal.jpg"
+      },
+      {
+        "src": "/photos/le-regard/mesa/amba-amigos.jpg"
+      },
+      {
+        "src": "/photos/le-regard/mesa/tango-danca.jpg"
+      },
+      {
+        "src": "/photos/le-regard/mesa/amba-abraco.jpg"
+      },
+      {
+        "src": "/photos/le-regard/mesa/bolhas-salto.jpg"
+      }
+    ]
   },
   "fim": {
     "eyebrow": "IV · Vamos conversar",

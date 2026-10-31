@@ -22,6 +22,7 @@ export default function Film({ id, data, variant = 'dia' }) {
     const video = sec.querySelector('.filmVid');
     const bar = sec.querySelector('.filmBar'), time = sec.querySelector('.filmTime');
     const ch = sec.querySelectorAll('.chapter'), roms = sec.querySelectorAll('.romNum');
+    const slides = [...sec.querySelectorAll('.film-slide')];
     const q = sec.querySelector('.quote'), dark = sec.querySelector('.filmDark');
 
     if (reduced) {
@@ -119,6 +120,11 @@ export default function Film({ id, data, variant = 'dia' }) {
     const loop = () => {
       cur += (target - cur) * .1;
       bar.style.transform = `scaleX(${cur})`;
+      // Suite de photos (data.slides) : chacune son tour, en fondu, au fil du défilement
+      if (slides.length) {
+        const on = Math.min(slides.length - 1, Math.floor(cur * slides.length));
+        slides.forEach((el, i) => el.classList.toggle('is-on', i === on));
+      }
       if (imgs) {
         canvas._draw(Math.round(cur * (fr.count - 1)));
         time.textContent = `00:${pad(cur * fr.duration)} / 00:${pad(fr.duration)}`;
@@ -143,33 +149,42 @@ export default function Film({ id, data, variant = 'dia' }) {
   const night = variant === 'noite';
   const field = night ? 'film_noite' : 'film_dia';
   return (
-    <section id={id} ref={root} className={`film film--${variant}`} data-pin data-edit={`${field}.poster`}>
-      {data.video
-        ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
-        : <img className="film-media" src={data.poster} alt="" decoding="async" />}
-      {data.frames && <canvas className="film-media film-canvas" hidden aria-hidden="true" />}
-      {night && <div className="filmDark" />}
-      {data.chapters.map((c, i) => (
-        <div className="chapter" key={i}>
-          <p className="chapter-kicker" data-edit={`${field}.chapters.${i}.kicker`}>{c.kicker}</p>
-          <h3 className="chapter-title t-title" data-edit={`${field}.chapters.${i}.title`}><Segments parts={c.title} /></h3>
+    <div className="pin-wrap">
+    {/* Enveloppe : l'épinglage glisse la section dans un conteneur ; sans elle, React
+        ne la retrouve plus à sa place quand l'admin la remplace, et tout l'écran tombe. */}
+      <section id={id} ref={root} className={`film film--${variant}`} data-pin data-edit={data.slides && data.slides.length ? `${field}.slides` : `${field}.poster`}>
+        {data.video
+          ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
+          : data.slides && data.slides.length
+            ? data.slides.map((sl, i) => (
+              <img key={sl.src + i} className={`film-media film-slide${i === 0 ? ' is-on' : ''}`} src={sl.src} alt="" decoding="async"
+                loading={i < 2 ? 'eager' : 'lazy'} />
+            ))
+            : <img className="film-media" src={data.poster} alt="" decoding="async" />}
+        {data.frames && <canvas className="film-media film-canvas" hidden aria-hidden="true" />}
+        {night && <div className="filmDark" />}
+        {data.chapters.map((c, i) => (
+          <div className="chapter" key={i}>
+            <p className="chapter-kicker" data-edit={`${field}.chapters.${i}.kicker`}>{c.kicker}</p>
+            <h3 className="chapter-title t-title" data-edit={`${field}.chapters.${i}.title`}><Segments parts={c.title} /></h3>
+          </div>
+        ))}
+        {night && data.quote && (
+          <div className="quote">
+            <p className="quote-text" data-edit={`${field}.quote`}>« {data.quote} »</p>
+            <p className="quote-by" data-edit={`${field}.quote_by`}>{data.quote_by}</p>
+          </div>
+        )}
+        {!night && (
+          <div className="film-roman">
+            {data.chapters.map((_, i) => <span className="romNum" key={i}>{ROMAN[i]}</span>)}
+          </div>
+        )}
+        <div className="film-progress">
+          <div className="film-track"><div className="filmBar" /></div>
+          <span className="filmTime">{data.video ? '00:00 / 00:00' : ''}</span>
         </div>
-      ))}
-      {night && data.quote && (
-        <div className="quote">
-          <p className="quote-text" data-edit={`${field}.quote`}>« {data.quote} »</p>
-          <p className="quote-by" data-edit={`${field}.quote_by`}>{data.quote_by}</p>
-        </div>
-      )}
-      {!night && (
-        <div className="film-roman">
-          {data.chapters.map((_, i) => <span className="romNum" key={i}>{ROMAN[i]}</span>)}
-        </div>
-      )}
-      <div className="film-progress">
-        <div className="film-track"><div className="filmBar" /></div>
-        <span className="filmTime">{data.video ? '00:00 / 00:00' : ''}</span>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

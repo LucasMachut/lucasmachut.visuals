@@ -77,6 +77,12 @@ function cropSpec(path) {
       { key: 'mobile', label: 'Téléphone', ratio: 375 / 812 },
     ] };
   }
+  if (path === 'noite.day' || path === 'noite.night') {
+    return { path: `${path}_crop`, frames: [
+      { key: 'desktop', label: 'Ordinateur', ratio: 16 / 9 },
+      { key: 'mobile', label: 'Téléphone', ratio: 375 / 812 },
+    ] };
+  }
   const m = path.match(/^oferta\.cards\.(\d+)\.photo$/);
   if (m) return { path: `oferta.cards.${m[1]}.crop`, frames: [{ key: null, label: 'Carte', ratio: 1 }] };
   return null;
@@ -161,6 +167,44 @@ function PhotoField({ path, value, src, onPhoto, data, onChange }) {
   );
 }
 
+// Suite de photos (film de nuit) : vignettes à glisser, retirer, ajouter
+function SlidesField({ value, src, onChange, onPhotos }) {
+  const input = useRef(null);
+  const [busy, setBusy] = useState('');
+  const [asking, setAsking] = useState(null);
+  const move = (from, to) => {
+    const next = value.slice();
+    const [it] = next.splice(from, 1);
+    next.splice(to, 0, it);
+    onChange(next);
+  };
+  const add = async (e) => {
+    const files = [...(e.target.files || [])];
+    e.target.value = '';
+    if (!files.length) return;
+    try {
+      const keys = await onPhotos(files, (i, n) => setBusy(`Préparation ${i}/${n}…`));
+      onChange([...value, ...keys.map((k) => ({ src: k }))]);
+    } finally { setBusy(''); }
+  };
+  return (
+    <div className="adm-group">
+      <p className="adm-help">Les photos passent l'une après l'autre au fil du défilement, dans cet ordre.</p>
+      <Sortable items={value} onMove={move} render={(sl, i) => (
+        <>
+          <span className="adm-sort-text adm-thumb"><img src={src(sl.src)} alt="" loading="lazy" /> Photo {i + 1}</span>
+          {asking === i ? (
+            <span className="adm-ask">Retirer « photo {i + 1} » ? <button type="button" onClick={() => { setAsking(null); onChange(value.filter((_, j) => j !== i)); }}>Oui</button>
+              <button type="button" onClick={() => setAsking(null)}>Non</button></span>
+          ) : <button type="button" className="adm-x" aria-label={`Retirer photo ${i + 1}`} disabled={value.length <= 1} onClick={() => setAsking(i)}>×</button>}
+        </>
+      )} />
+      <input ref={input} type="file" accept="image/*" multiple hidden onChange={add} />
+      <button type="button" className="adm-btn" disabled={!!busy} onClick={() => input.current.click()}>{busy || '+ Ajouter des photos'}</button>
+    </div>
+  );
+}
+
 function GroupList({ group, index, data, onList, onOpen }) {
   const list = get(data, group) || [];
   const g = GROUPS[group];
@@ -205,7 +249,7 @@ function GroupList({ group, index, data, onList, onOpen }) {
   );
 }
 
-export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, src, onClose }) {
+export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, onPhotos, src, onClose }) {
   const value = get(data, path);
   const k = kind(value, path);
   const grp = groupOf(path);
@@ -230,7 +274,8 @@ export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, 
         {k === 'photo' && photos.map((p) => (
           <PhotoField key={p} path={p} value={get(data, p)} src={src} onPhoto={onPhoto} data={data} onChange={onChange} />
         ))}
-        {k === 'other' && !grp && <p className="adm-help">Ce bloc se modifiera à une prochaine étape.</p>}
+        {k === 'other' && /\.slides$/.test(path) && <SlidesField value={value} src={src} onChange={(v) => onChange(path, v)} onPhotos={onPhotos} />}
+        {k === 'other' && !grp && !/\.slides$/.test(path) && <p className="adm-help">Ce bloc se modifiera à une prochaine étape.</p>}
         {grp && <GroupList group={grp.group} index={grp.index} data={data} onList={onList} onOpen={onOpen} />}
       </div>
     </aside>

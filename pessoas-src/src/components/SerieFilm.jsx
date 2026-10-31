@@ -39,20 +39,24 @@ export default function SerieFilm({ film, poster, eyebrow }) {
   }, [film.video]);
 
   return (
-    <section ref={sec} className="sfilm" aria-label={eyebrow}>
-      {film.video
-        ? <video ref={vid} className="sfilm-media" src={film.video} poster={film.poster || poster} muted playsInline preload="auto" />
-        : <img className="sfilm-media" src={film.poster || poster} alt="" loading="lazy" />}
-      <div className="sfilm-chapter">
-        <p className="sfilm-eyebrow">{eyebrow}</p>
-        {!film.video && <h3 className="sfilm-title t-title">{film.label}</h3>}
-      </div>
-      {film.video && (
-        <div className="sfilm-progress">
-          <div className="sfilm-track"><div ref={bar} className="sfilm-bar" /></div>
-          <span ref={time} className="sfilm-time">00:00 / 00:00</span>
+    <div className="pin-wrap">
+    {/* Enveloppe : l'épinglage glisse la section dans un conteneur ; sans elle, React
+        ne la retrouve plus à sa place quand l'admin la remplace, et tout l'écran tombe. */}
+      <section ref={sec} className="sfilm" aria-label={eyebrow}>
+        {film.video
+          ? <video ref={vid} className="sfilm-media" src={film.video} poster={film.poster || poster} muted playsInline preload="auto" />
+          : <img className="sfilm-media" src={film.poster || poster} alt="" loading="lazy" />}
+        <div className="sfilm-chapter">
+          <p className="sfilm-eyebrow">{eyebrow}</p>
+          {!film.video && <h3 className="sfilm-title t-title">{film.label}</h3>}
         </div>
-      )}
-    </section>
+        {film.video && (
+          <div className="sfilm-progress">
+            <div className="sfilm-track"><div ref={bar} className="sfilm-bar" /></div>
+            <span ref={time} className="sfilm-time">00:00 / 00:00</span>
+          </div>
+        )}
+      </section>
+    </div>
   );
 }

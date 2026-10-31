@@ -71,7 +71,7 @@ const NAMES = {
   lede: 'intro', contact: 'bloc contact', button: 'bouton', card_link: 'lien des cartes',
   location: 'lieu', type: 'type', year: 'année', strip: 'bandeau', voice: 'texte', paragraphs: 'paragraphe',
   handle: 'lien', form: 'formulaire', whatsapp: 'numéro WhatsApp', intro: "message d'intro",
-  photos: 'photos', videos: 'vidéos', crop: 'cadrage', hidden: 'séries masquées', series: 'ordre des séries', cover: 'couverture',
+  photos: 'photos', videos: 'vidéos', crop: 'cadrage', slides: 'suite de photos', day_crop: 'cadrage de la photo de jour', night_crop: 'cadrage de la photo de nuit', hidden: 'séries masquées', series: 'ordre des séries', cover: 'couverture',
 };
 const GROUP_NAMES = { 'manifesto.lines': 'Manifeste, lignes', 'film_dia.chapters': 'Film du jour, phrases',
   'film_noite.chapters': 'Film de nuit, phrases', 'oferta.cards': 'Offres', sections: 'Sections' };
@@ -105,7 +105,7 @@ export function changed(base, data) {
   // Un groupe allongé, raccourci ou réordonné compte pour un seul changement
   const whole = [];
   // (listes de l'accueil, sections, ordre et masquage des séries, photos et vidéos d'une série)
-  for (const g of [...Object.keys(GROUPS), 'sections', 'series', 'hidden', 'photos', 'videos']) {
+  for (const g of [...Object.keys(GROUPS), 'sections', 'series', 'hidden', 'photos', 'videos', 'film_noite.slides', 'film_dia.slides']) {
     const x = get(base, g), y = get(data, g);
     if (!Array.isArray(x) && !Array.isArray(y)) continue;
     if (!Array.isArray(x) || !Array.isArray(y)) { fields.add(g); whole.push(g + '.'); continue; }
@@ -121,7 +121,7 @@ export function changed(base, data) {
     let f = p;
     while (/\.\d+\.(t|em)$/.test(f)) f = f.replace(/\.\d+\.(t|em)$/, '');
     f = f.replace(/^(hero\.name)\.\d+$/, '$1');
-    f = f.replace(/\.crop\..*$/, '.crop');   // un cadrage = un seul changement
+    f = f.replace(/\.(\w*_)?crop\..*$/, (m, pre) => '.' + (pre || '') + 'crop');   // un cadrage = un seul changement
     fields.add(f);
   }
   return [...fields];

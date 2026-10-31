@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Lines } from './Segments.jsx';
 import { pinPriority, scheduleRefresh } from './scroll.js';
+import { cropFor } from './HomeStage.jsx';
 
 export default function Nightfall({ data }) {
   const root = useRef(null);
@@ -65,9 +66,15 @@ export default function Nightfall({ data }) {
           }` });
       scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), mat));
       let aAsp = 1, bAsp = 1, W = innerWidth, H = innerHeight, ready = 0;
-      const cover = (asp, scale, off) => { const pa = W / H;
-        if (pa > asp) { scale.set(1, asp / pa); off.set(0, (1 - asp / pa) / 2); } else { scale.set(pa / asp, 1); off.set((1 - pa / asp) / 2, 0); } };
-      const fit = () => { renderer.setSize(W, H); cover(aAsp, dUni.uScaleA.value, dUni.uOffA.value); cover(bAsp, dUni.uScaleB.value, dUni.uOffB.value); };
+      // cadrage choisi dans l'admin (noite.day_crop, noite.night_crop), comme le hero
+      const cover = (asp, scale, off, crop) => { const pa = W / H; const { x, y } = cropFor(crop, pa >= 1);
+        if (pa > asp) { const s = asp / pa; scale.set(1, s); off.set(0, (1 - s) * (1 - y)); }
+        else { const s = pa / asp; scale.set(s, 1); off.set((1 - s) * x, 0); } };
+      const fit = () => {
+        renderer.setSize(W, H);
+        cover(aAsp, dUni.uScaleA.value, dUni.uOffA.value, data.day_crop);
+        cover(bAsp, dUni.uScaleB.value, dUni.uOffB.value, data.night_crop);
+      };
       fit();
       // Photos sans colorSpace, comme au hero : pixels rendus tels quels, sans contraste ajouté.
       const loader = new THREE.TextureLoader();
@@ -93,15 +100,19 @@ export default function Nightfall({ data }) {
   }, []);
 
   return (
-    <section id="nightfall" ref={root} className="nightfall" data-pin>
-      <div className="dissolveWrap" data-edit="noite.day">
-        <canvas className="dissolve" aria-hidden="true" />
-        <img className="dissolve-fallback" src={data.night} alt="" loading="lazy" decoding="async" />
-      </div>
-      <div className="nf-text">
-        <p className="nf-kicker" data-edit="noite.kicker">{data.kicker}</p>
-        <h2 className="nf-title t-title"><Lines lines={data.lines} lineClass="nf-line" edit="noite.lines" /></h2>
-      </div>
-    </section>
+    <div className="pin-wrap">
+    {/* Enveloppe : l'épinglage glisse la section dans un conteneur ; sans elle, React
+        ne la retrouve plus à sa place quand l'admin la remplace, et tout l'écran tombe. */}
+      <section id="nightfall" ref={root} className="nightfall" data-pin>
+        <div className="dissolveWrap" data-edit="noite.day">
+          <canvas className="dissolve" aria-hidden="true" />
+          <img className="dissolve-fallback" src={data.night} alt="" loading="lazy" decoding="async" />
+        </div>
+        <div className="nf-text">
+          <p className="nf-kicker" data-edit="noite.kicker">{data.kicker}</p>
+          <h2 className="nf-title t-title"><Lines lines={data.lines} lineClass="nf-line" edit="noite.lines" /></h2>
+        </div>
+      </section>
+    </div>
   );
 }

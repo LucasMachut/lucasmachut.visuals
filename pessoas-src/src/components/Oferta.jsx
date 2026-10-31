@@ -55,37 +55,41 @@ export default function Oferta({ data }) {
   }, []);
 
   return (
-    <section id="oferta" ref={root} className="gallery" data-pin>
-      <div className="gallery-inner">
-        <div className="gallery-head">
-          <div>
-            <p className="eyebrow gallery-eyebrow" data-edit="oferta.eyebrow"><i />{data.eyebrow}</p>
-            <h2 className="gallery-title t-title" data-edit="oferta.title"><Segments parts={data.title} /></h2>
+    <div className="pin-wrap">
+    {/* Enveloppe : l'épinglage glisse la section dans un conteneur ; sans elle, React
+        ne la retrouve plus à sa place quand l'admin la remplace, et tout l'écran tombe. */}
+      <section id="oferta" ref={root} className="gallery" data-pin>
+        <div className="gallery-inner">
+          <div className="gallery-head">
+            <div>
+              <p className="eyebrow gallery-eyebrow" data-edit="oferta.eyebrow"><i />{data.eyebrow}</p>
+              <h2 className="gallery-title t-title" data-edit="oferta.title"><Segments parts={data.title} /></h2>
+            </div>
+            <span className="gallery-hint" data-edit="oferta.hint">{data.hint}</span>
           </div>
-          <span className="gallery-hint" data-edit="oferta.hint">{data.hint}</span>
-        </div>
-        <div className="galTrack">
-          {data.cards.map((c, i) => (
-            <article className="galCard" key={i}>
-              <span className="galNum">{pad(i + 1)}</span>
-              <div className="galFrame" data-edit={`oferta.cards.${i}.photo`}>
-                <div className="galLine" />
-                <div className="galClip">
-                  <img className="galImg" src={c.photo} alt={c.title} decoding="async"
-                    style={c.crop ? { objectPosition: `${c.crop.x * 100}% ${c.crop.y * 100}%` } : undefined} />
+          <div className="galTrack">
+            {data.cards.map((c, i) => (
+              <article className="galCard" key={i}>
+                <span className="galNum">{pad(i + 1)}</span>
+                <div className="galFrame" data-edit={`oferta.cards.${i}.photo`}>
+                  <div className="galLine" />
+                  <div className="galClip">
+                    <img className="galImg" src={c.photo} alt={c.title} decoding="async"
+                      style={c.crop ? { objectPosition: `${c.crop.x * 100}% ${c.crop.y * 100}%` } : undefined} />
+                  </div>
                 </div>
-              </div>
-              <h3 className="galCard-title t-title" data-edit={`oferta.cards.${i}.title`}>{c.title}</h3>
-              <p className="galCard-text" data-edit={`oferta.cards.${i}.text`}>{c.text}</p>
-              <a href={c.link.href} className="u-link galCard-link" data-edit={`oferta.cards.${i}.link.label`}>{c.link.label} <Arrow size={14} /></a>
-            </article>
-          ))}
+                <h3 className="galCard-title t-title" data-edit={`oferta.cards.${i}.title`}>{c.title}</h3>
+                <p className="galCard-text" data-edit={`oferta.cards.${i}.text`}>{c.text}</p>
+                <a href={c.link.href} className="u-link galCard-link" data-edit={`oferta.cards.${i}.link.label`}>{c.link.label} <Arrow size={14} /></a>
+              </article>
+            ))}
+          </div>
+          <div className="gallery-progress">
+            <div className="gallery-track"><div className="galBar" /></div>
+            <span className="galCount">{`01 · ${pad(n)}`}</span>
+          </div>
         </div>
-        <div className="gallery-progress">
-          <div className="gallery-track"><div className="galBar" /></div>
-          <span className="galCount">{`01 · ${pad(n)}`}</span>
-        </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

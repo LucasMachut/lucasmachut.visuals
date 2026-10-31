@@ -3,7 +3,7 @@
 // photo ouvre le panneau, la page suit. Tout ce qui change (textes, nouvelles
 // séries, photos) attend dans le navigateur jusqu'à « Publier » : un seul commit
 // sur master, que l'Action « Site pessoas » reconstruit et met en ligne.
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { Component, useEffect, useMemo, useRef, useState } from 'react';
 import * as gh from './github.js';
 import * as photos from './photos.js';
 import { get, set, changed, label, GROUPS } from './fields.js';
@@ -62,6 +62,26 @@ function route() {
   return { page: ['trabalhos', 'contato'].includes(h[0]) ? h[0] : 'accueil' };
 }
 
+// Filet de sécurité : si l'aperçu d'une page plante, l'admin reste debout
+// (barre, brouillon, Publier) et propose de réafficher, au lieu d'une page vide.
+class Boundary extends Component {
+  constructor(props) { super(props); this.state = { err: null, n: 0 }; }
+  static getDerivedStateFromError(err) { return { err }; }
+  componentDidCatch(err) { console.error('[admin] aperçu', err); }
+  render() {
+    if (!this.state.err) return <div key={this.state.n}>{this.props.children}</div>;
+    return (
+      <main className="adm-login">
+        <div>
+          <p>L'aperçu de la page n'a pas pu s'afficher. Tes changements sont gardés.</p>
+          <p className="adm-err">{String(this.state.err.message || this.state.err)}</p>
+          <button type="button" className="adm-btn" onClick={() => this.setState((s) => ({ err: null, n: s.n + 1 }))}>Réafficher la page</button>
+        </div>
+      </main>
+    );
+  }
+}
+
 function Login({ onDone }) {
   const [value, setValue] = useState('');
   const [err, setErr] = useState('');
@@ -94,7 +114,7 @@ function Section({ id, data }) {
   if (id === 'manifesto') return <section id="journey" className="journey"><Manifesto data={data.manifesto} /></section>;
   if (id === 'film_dia') return <Film id="film1" variant="dia" data={data.film_dia} />;
   if (id === 'oferta') return <Oferta data={data.oferta} />;
-  if (id === 'noite') return <Nightfall key={data.noite.day + data.noite.night} data={data.noite} />;
+  if (id === 'noite') return <Nightfall key={data.noite.day + data.noite.night + JSON.stringify([data.noite.day_crop, data.noite.night_crop])} data={data.noite} />;
   if (id === 'film_noite') return <Film id="film2" variant="noite" data={data.film_noite} />;
   return null;
 }
@@ -200,12 +220,19 @@ export default function AdminApp() {
   }, [logged]);
 
   const doc = (path) => docs && docs[path] && docs[path].data;
-  const setDoc = (path, data) => {
-    setDocs((d) => ({ ...d, [path]: { base: d[path] ? d[path].base : null, data } }));
-    clearTimeout(timers.current[path]);
-    timers.current[path] = setTimeout(() => saveDraft(path, data), 300);
+  // next : la nouvelle version, ou une fonction (version actuelle → nouvelle).
+  // Toujours calculé sur la dernière version : deux changements à la suite (la
+  // photo, puis son cadrage remis au centre) ne s'effacent plus l'un l'autre.
+  const setDoc = (path, next) => {
+    setDocs((d) => {
+      const cur = d[path];
+      const data = typeof next === 'function' ? next(cur ? cur.data : null) : next;
+      clearTimeout(timers.current[path]);
+      timers.current[path] = setTimeout(() => saveDraft(path, data), 300);
+      return { ...d, [path]: { base: cur ? cur.base : null, data } };
+    });
   };
-  const setField = (path, field, value) => setDoc(path, set(doc(path), field, value));
+  const setField = (path, field, value) => setDoc(path, (cur) => set(cur, field, value));
 
   const seriesTitle = (slug) => { const s = doc(S(slug)); return (s && s.title) || slug; };
   const pageName = (path) => (path === A ? 'Accueil' : path === T ? 'Trabalhos' : path === C ? 'Contato'
@@ -261,7 +288,7 @@ export default function AdminApp() {
     };
     setDocs((d) => ({ ...d, [S(slug)]: { base: null, data: s } }));
     saveDraft(S(slug), s);
-    setDoc(T, { ...t, series: [...t.series, slug] });
+    setDoc(T, (cur) => ({ ...cur, series: [...cur.series, slug] }));
     setEditing(null);
     go(`#/serie/${slug}`);
   };
@@ -375,7 +402,8 @@ export default function AdminApp() {
   let panel = null;
   if (e && e.kind === 'field' && get(doc(e.path), e.field) !== undefined) {
     panel = <Editor path={e.field} data={doc(e.path)} src={src} onChange={(f, v) => setField(e.path, f, v)}
-      onList={onList(e.path)} onOpen={openItem} onPhoto={onFieldPhoto(e.path)} onClose={() => setEditing(null)} />;
+      onList={onList(e.path)} onOpen={openItem} onPhoto={onFieldPhoto(e.path)} onClose={() => setEditing(null)}
+      onPhotos={(files, progress) => addPhotos(files, photos.FOLDER, null, progress)} />;
   } else if (e && e.kind === 'sections') {
     panel = <SectionsPanel data={doc(A)} onSections={(s) => setField(A, 'sections', s)} onClose={() => setEditing(null)} />;
   } else if (e && e.kind === 'series') {
@@ -443,7 +471,7 @@ export default function AdminApp() {
       {status.startsWith('error:') && <div className="adm-toast adm-toast--err">La publication a échoué : {status.slice(6)}. Tes changements sont gardés.</div>}
 
       <div className={`adm-preview adm-preview--${where.page}`} onClickCapture={onPreviewClick} onClick={() => setMenu(false)}>
-        {page}
+        <Boundary key={where.page + (where.slug || '')}>{page}</Boundary>
       </div>
 
       {panel}
