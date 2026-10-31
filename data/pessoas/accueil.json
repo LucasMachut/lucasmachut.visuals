@@ -190,6 +190,10 @@
         "link": {
           "label": "Ver trabalhos",
           "href": "/portfolio"
+        },
+        "crop": {
+          "x": 0.5,
+          "y": 0
         }
       },
       {
@@ -292,6 +296,9 @@
       },
       {
         "src": "/Projets-web/Fotos/site/louis-e-marco-1-sur-1-mvwwx46u.webp"
+      },
+      {
+        "src": "/Projets-web/Fotos/site/img-5719-mvwx6crx.jpg"
       }
     ]
   },
