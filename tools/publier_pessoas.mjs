@@ -14,7 +14,7 @@
 // À la moindre entorse, rien n'est copié et le script sort en erreur.
 // Une seule exception à « la racine » : la page admin.html d'Astro devient
 // admin/index.html (servie à /admin) ; l'ancien admin reste dans admin/lugares/.
-import { cpSync, existsSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { cpSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -63,6 +63,14 @@ for (const f of fichiers(DIST)) {
   else (readFileSync(cible).equals(readFileSync(f)) ? identiques : remplaces).push(rel);
 }
 
+// Les pages déposées la fois précédente (liste gardée dans _astro/) : une page
+// qui n'est plus dans le build (série masquée dans l'admin) est retirée. Seules
+// des pages de cette liste peuvent l'être, jamais une page d'avant pessoas.
+const MANIFESTE = join(RACINE, '_astro', 'pessoas-pages.json');
+const cibles = pages.map((p) => DEPLACES[p] || p);
+const avant = existsSync(MANIFESTE) ? JSON.parse(readFileSync(MANIFESTE, 'utf8')) : [];
+const retires = avant.filter((p) => !cibles.includes(p) && p.endsWith('.html') && !p.includes('/') && existsSync(join(RACINE, p)));
+
 const anciensAstro = existsSync(join(RACINE, '_astro'))
   ? fichiers(join(RACINE, '_astro')).map(f => relative(RACINE, f).split(sep).join('/'))
   : [];
@@ -73,6 +81,7 @@ liste('Fichiers ajoutés', nouveaux);
 liste('Pages déjà identiques', identiques);
 liste('Anciens fichiers _astro/ retirés', anciensAstro.filter(a => !nouveaux.includes(a)));
 liste('Ignorés, ni page de la racine ni _astro/', ignores);
+liste('Pages pessoas retirées (plus dans le build)', retires);
 
 if (refus.length) {
   liste('REFUSÉ, rien n\'a été copié', refus);
@@ -86,4 +95,6 @@ if (ESSAI) {
 rmSync(join(RACINE, '_astro'), { recursive: true, force: true });
 if (existsSync(join(DIST, '_astro'))) cpSync(join(DIST, '_astro'), join(RACINE, '_astro'), { recursive: true });
 for (const p of pages) cpSync(join(DIST, p), join(RACINE, DEPLACES[p] || p));
+for (const p of retires) rmSync(join(RACINE, p));
+writeFileSync(MANIFESTE, JSON.stringify(cibles, null, 2) + '\n');
 console.log('\nSite pessoas déposé à la racine.');
