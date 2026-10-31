@@ -20,9 +20,9 @@
     "eyebrow": "I · O que eu guardo",
     "lines": [
       [{ "t": "Guardar vivo o que passa." }],
-      [{ "t": "Um " }, { "t": "olhar", "em": true }, { "img": "/photos/le-regard/dois-olhares.jpg" }, { "t": " um abraço" }],
+      [{ "t": "Um " }, { "t": "olhar", "em": true }, { "t": ", um abraço" }],
       [{ "t": "que ninguém pediu para posar," }],
-      [{ "t": "o riso antes de " }, { "img": "/photos/le-regard/riso-pedras.jpg" }, { "t": "acabar", "em": true }, { "t": "." }]
+      [{ "t": "o riso antes de " }, { "t": "acabar", "em": true }, { "t": "." }]
     ],
     "text": "Fotografo o laço entre as pessoas. O que se sente quando se está lá, e que volta anos depois, ao rever a imagem. Nunca a pose: o movimento, o espontâneo, os detalhes que escapam.",
     "link": { "label": "Ver os trabalhos", "href": "/portfolio" }

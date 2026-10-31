@@ -1,5 +1,5 @@
 // Manifeste Koisei (#journey .manifesto) : chaque ligne monte de sous son masque
-// quand le titre arrive à 70 % de l'écran, les capsules photo s'ouvrent à 65 %.
+// quand le titre arrive à 70 % de l'écran.
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -17,13 +17,6 @@ export default function Manifesto({ data }) {
       tweens.push(gsap.fromTo(line, { yPercent: 110, rotate: 1.5 }, {
         yPercent: 0, rotate: 0, duration: 1.1, ease: 'power4.out', delay: i * .09,
         scrollTrigger: { trigger: title, start: 'top 70%', toggleActions: 'play none none reverse' },
-      }));
-    });
-    const capsule = matchMedia('(max-width: 767px)').matches ? 84 : 140;
-    el.querySelectorAll('.mImg').forEach((img) => {
-      tweens.push(gsap.to(img, {
-        width: capsule, duration: 1.2, ease: 'power4.inOut',
-        scrollTrigger: { trigger: title, start: 'top 65%', toggleActions: 'play none none reverse' },
       }));
     });
     return () => tweens.forEach((t) => { t.scrollTrigger && t.scrollTrigger.kill(); t.kill(); });

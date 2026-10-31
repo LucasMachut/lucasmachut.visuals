@@ -1,15 +1,8 @@
-// Un texte de l'accueil.json : une suite de morceaux { t, em } ou { img }.
-// em = le mot en avant (souligné terracotta, Special Elite n'a pas d'italique) ;
-// img = une capsule photo dans la ligne (manifeste Koisei).
+// Un texte de l'accueil.json : une suite de morceaux { t, em }.
+// em = le mot en avant (souligné terracotta, Special Elite n'a pas d'italique).
+// Pas de capsules photo dans les lignes (Koisei en a, Lucas n'en veut pas).
 export function Segments({ parts }) {
   return parts.map((s, i) => {
-    if (s.img) {
-      return (
-        <span className="mImg" key={i}>
-          <img src={s.img} alt="" loading="lazy" decoding="async" />
-        </span>
-      );
-    }
     return s.em ? <em key={i}>{s.t}</em> : <span key={i}>{s.t}</span>;
   });
 }

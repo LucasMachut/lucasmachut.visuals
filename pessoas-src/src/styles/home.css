@@ -44,17 +44,21 @@
 }
 .hero-name .heroLine { display: block; }
 .heroLine { will-change: transform; }
-.hero-rule { margin-top: 2rem; height: 1px; width: 4rem; background: rgba(237, 233, 223, .7); }
-.hero-sub { margin-top: 1rem; font-size: 14px; letter-spacing: .08em; color: var(--creme-2); }
+.hero-rule { margin-top: 2rem; height: 1px; width: 4rem; background: var(--creme); box-shadow: 0 0 8px rgba(46, 38, 32, .5); }
+.hero-sub { margin-top: 1rem; font-size: 15px; font-weight: 500; letter-spacing: .08em; color: var(--creme); }
 /* Koisei pose son ombre de titre sur tout le texte crème du hero : ma photo
    est plus claire en bas que la plaque sakura, sans elle la sous-ligne disparaît. */
-.eyebrow-hero, .hero-sub, .hero-scroll, .hero-vertical { text-shadow: 0 1px 18px rgba(46, 38, 32, .55); }
+/* Le contraste se règle sur le texte, jamais par un voile sur la photo : crème plein,
+   une ombre serrée qui détoure les lettres et une large qui les décolle de l'eau claire. */
+.eyebrow-hero, .hero-sub, .hero-scroll, .hero-vertical {
+  text-shadow: 0 0 1px rgba(46, 38, 32, .9), 0 0 6px rgba(46, 38, 32, .75), 0 0 14px rgba(46, 38, 32, .6), 0 0 28px rgba(46, 38, 32, .45);
+}
 .hero-scroll {
   position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10;
   display: flex; flex-direction: column; align-items: center; gap: .75rem;
-  font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: rgba(237, 233, 223, .8);
+  font-size: 12px; font-weight: 500; letter-spacing: .32em; text-transform: uppercase; color: var(--creme);
 }
-.hero-scroll-line { position: relative; width: 1px; height: 2.5rem; background: rgba(237, 233, 223, .35); }
+.hero-scroll-line { position: relative; width: 1px; height: 2.5rem; background: rgba(237, 233, 223, .7); box-shadow: 0 0 6px rgba(46, 38, 32, .5); }
 .hero-scroll-line div {
   position: absolute; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%;
   background: var(--creme); animation: scrollDot 1.8s ease-in-out infinite;
@@ -62,7 +66,7 @@
 .hero-vertical {
   position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); z-index: 10;
   writing-mode: vertical-rl; font-family: var(--f-title); text-transform: uppercase;
-  color: var(--creme-mute); letter-spacing: .4em; font-size: 13px;
+  color: var(--creme-2); letter-spacing: .4em; font-size: 13px;
 }
 .heroFade { opacity: 0; }
 @media (max-width: 767px) {
@@ -87,15 +91,6 @@
 }
 .mLine { display: block; overflow: hidden; padding-bottom: .06em; }
 .mLine > span { display: block; }
-.mImg {
-  display: inline-block; vertical-align: middle; overflow: hidden; border-radius: 9999px;
-  width: 0; height: 70px; margin: 0 .5rem;
-}
-.mImg img { height: 100%; width: 140px; max-width: none; object-fit: cover; }
-@media (max-width: 767px) {
-  .mImg { height: 42px; margin: 0 .3rem; }
-  .mImg img { width: 84px; }
-}
 .journey-text { display: flex; justify-content: flex-end; margin-top: 4rem; }
 .journey-text > div { max-width: 34em; }
 .journey-text p {
