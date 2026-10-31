@@ -39,7 +39,13 @@ jobs:
     if: github.event_name == 'workflow_dispatch' || vars.PESSOAS_EN_LIGNE == 'oui'
     runs-on: ubuntu-latest
     steps:
+      # Le dernier état de master, pas le commit qui a déclenché : les publications
+      # passent une par une (groupe « site »), et chacune repart ainsi des pages
+      # déjà construites par la précédente. Sinon deux publications rapprochées
+      # reconstruisaient chacune index.html de leur côté et entraient en conflit.
       - uses: actions/checkout@v4
+        with:
+          ref: master
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
