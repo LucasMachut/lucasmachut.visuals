@@ -23,12 +23,9 @@
     "tango",
     "pipa",
     "mujer-selvaje",
-    "dunas-itaunas",
-    "serie-d-essai"
+    "dunas-itaunas"
   ],
-  "hidden": [
-    "serie-d-essai"
-  ],
+  "hidden": [],
   "serie_page": {
     "lede_eyebrow": "Sobre a série",
     "meta": {

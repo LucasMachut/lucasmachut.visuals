@@ -66,10 +66,15 @@ for (const f of fichiers(DIST)) {
 // Les pages déposées la fois précédente (liste gardée dans _astro/) : une page
 // qui n'est plus dans le build (série masquée dans l'admin) est retirée. Seules
 // des pages de cette liste peuvent l'être, jamais une page d'avant pessoas.
+// Hostinger copie le dépôt sans supprimer ce qui en sort : la page n'est donc
+// pas effacée mais remplacée par un renvoi vers Trabalhos, non indexé.
+const RENVOI = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="robots" content="noindex">'
+  + '<meta http-equiv="refresh" content="0; url=/portfolio"><link rel="canonical" href="/portfolio">'
+  + '<title>Lucas Machut</title></head><body><a href="/portfolio">Trabalhos</a></body></html>\n';
 const MANIFESTE = join(RACINE, '_astro', 'pessoas-pages.json');
 const cibles = pages.map((p) => DEPLACES[p] || p);
 const avant = existsSync(MANIFESTE) ? JSON.parse(readFileSync(MANIFESTE, 'utf8')) : [];
-const retires = avant.filter((p) => !cibles.includes(p) && p.endsWith('.html') && !p.includes('/') && existsSync(join(RACINE, p)));
+const retires = avant.filter((p) => !cibles.includes(p) && p.endsWith('.html') && !p.includes('/'));
 
 const anciensAstro = existsSync(join(RACINE, '_astro'))
   ? fichiers(join(RACINE, '_astro')).map(f => relative(RACINE, f).split(sep).join('/'))
@@ -81,7 +86,7 @@ liste('Fichiers ajoutés', nouveaux);
 liste('Pages déjà identiques', identiques);
 liste('Anciens fichiers _astro/ retirés', anciensAstro.filter(a => !nouveaux.includes(a)));
 liste('Ignorés, ni page de la racine ni _astro/', ignores);
-liste('Pages pessoas retirées (plus dans le build)', retires);
+liste('Pages pessoas retirées, remplacées par un renvoi vers Trabalhos', retires);
 
 if (refus.length) {
   liste('REFUSÉ, rien n\'a été copié', refus);
@@ -95,6 +100,6 @@ if (ESSAI) {
 rmSync(join(RACINE, '_astro'), { recursive: true, force: true });
 if (existsSync(join(DIST, '_astro'))) cpSync(join(DIST, '_astro'), join(RACINE, '_astro'), { recursive: true });
 for (const p of pages) cpSync(join(DIST, p), join(RACINE, DEPLACES[p] || p));
-for (const p of retires) rmSync(join(RACINE, p));
+for (const p of retires) writeFileSync(join(RACINE, p), RENVOI);
 writeFileSync(MANIFESTE, JSON.stringify(cibles, null, 2) + '\n');
 console.log('\nSite pessoas déposé à la racine.');
