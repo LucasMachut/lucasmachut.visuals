@@ -147,3 +147,15 @@
 @media (max-width: 767px) {
   .adm-bar .adm-btn { padding: .45rem .75rem; font-size: 12px; }
 }
+
+/* ---------- Cadrage : la photo glissée dans les cadres du site ---------- */
+.adm-crops { display: flex; gap: .75rem; align-items: flex-start; }
+.adm-crop { margin: 0; flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: .35rem; }
+.adm-crop--wide { flex: 3 1 0; }
+.adm-crop-box {
+  position: relative; overflow: hidden; border-radius: 4px; background: var(--lin-deep);
+  outline: 1px solid var(--line); cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+}
+.adm-crop-box:active { cursor: grabbing; }
+.adm-crop-box img { display: block; width: 100%; height: 100%; object-fit: cover; pointer-events: none; max-height: none; }
+.adm-crop figcaption { font-family: var(--f-ui); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-mute); }

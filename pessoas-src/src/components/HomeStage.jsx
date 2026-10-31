@@ -23,8 +23,19 @@ function dustTexture(THREE) {
 }
 
 // edit : affiché dans l'admin, sans preloader (on y arrive pour modifier, pas pour découvrir).
+// Cadrage choisi dans l'admin (hero.crop) : pour chaque format d'écran, la part
+// du débordement gardée à gauche / en haut, de 0 à 1 (0,5 = centré). Un écran
+// plus haut que large prend le cadrage « mobile », sinon « desktop ».
+export function cropFor(crop, wide) {
+  const c = (crop && (wide ? crop.desktop : crop.mobile)) || {};
+  return { x: c.x ?? .5, y: c.y ?? .5 };
+}
+
 export default function HomeStage({ hero, edit = false }) {
   const root = useRef(null);
+  const cropRef = useRef(hero.crop);
+  const fitRef = useRef(null);
+  useEffect(() => { cropRef.current = hero.crop; if (fitRef.current) fitRef.current(); }, [JSON.stringify(hero.crop || {})]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -107,8 +118,11 @@ export default function HomeStage({ hero, edit = false }) {
       const fitHero = () => {
         heroPlane.scale.set(W * 1.001, H * 1.001, 1);
         const pa = W / H;
-        if (pa > imgAspect) { heroUniforms.uScale.value.set(1, imgAspect / pa); heroUniforms.uOffset.value.set(0, (1 - imgAspect / pa) / 2); }
-        else { heroUniforms.uScale.value.set(pa / imgAspect, 1); heroUniforms.uOffset.value.set((1 - pa / imgAspect) / 2, 0); }
+        const { x, y } = cropFor(cropRef.current, pa >= 1);
+        // la texture a son origine en bas : y (0 = haut de la photo) se retourne
+        if (pa > imgAspect) { const s = imgAspect / pa; heroUniforms.uScale.value.set(1, s); heroUniforms.uOffset.value.set(0, (1 - s) * (1 - y)); }
+        else { const s = pa / imgAspect; heroUniforms.uScale.value.set(s, 1); heroUniforms.uOffset.value.set((1 - s) * x, 0); }
+        fallback.style.objectPosition = `${x * 100}% ${y * 100}%`;
       };
 
       // Poussière : même mécanique que les pétales Koisei, plus petite et plus lente
@@ -172,6 +186,7 @@ export default function HomeStage({ hero, edit = false }) {
       };
       gsap.ticker.add(tick);
 
+      fitRef.current = fitHero;
       onResize = () => {
         W = innerWidth; H = innerHeight;
         cam.left = -W / 2; cam.right = W / 2; cam.top = H / 2; cam.bottom = -H / 2; cam.updateProjectionMatrix();

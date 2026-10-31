@@ -67,20 +67,92 @@ function SegmentsEditor({ value, onChange }) {
   );
 }
 
-function PhotoField({ path, value, src, onPhoto }) {
+// Les photos coupées par leur cadre sur le site, et les cadres où l'on choisit
+// ce qu'on garde : le hero (un cadrage pour ordinateur, un pour téléphone) et
+// les cartes d'offres (carrées).
+function cropSpec(path) {
+  if (path === 'hero.photo') {
+    return { path: 'hero.crop', frames: [
+      { key: 'desktop', label: 'Ordinateur', ratio: 16 / 9 },
+      { key: 'mobile', label: 'Téléphone', ratio: 375 / 812 },
+    ] };
+  }
+  const m = path.match(/^oferta\.cards\.(\d+)\.photo$/);
+  if (m) return { path: `oferta.cards.${m[1]}.crop`, frames: [{ key: null, label: 'Carte', ratio: 1 }] };
+  return null;
+}
+
+// Un cadre aux proportions de l'écran : on y glisse la photo, au doigt ou à la
+// souris, jusqu'à garder ce qu'on veut. x, y = part du débordement à gauche /
+// en haut (0,5 = centré), la même valeur que le site applique.
+function CropFrame({ src, ratio, label: name, value, onChange, wide }) {
+  const box = useRef(null);
+  const [nat, setNat] = useState(null);
+  const v = { x: value?.x ?? .5, y: value?.y ?? .5 };
+  const start = (e) => {
+    if (!nat) return;
+    e.preventDefault();
+    const r = box.current.getBoundingClientRect();
+    const sc = Math.max(r.width / nat.w, r.height / nat.h);
+    const ox = nat.w * sc - r.width, oy = nat.h * sc - r.height;
+    const x0 = e.clientX, y0 = e.clientY, v0 = { ...v };
+    const el = e.currentTarget;
+    el.setPointerCapture(e.pointerId);
+    const move = (ev) => {
+      const clamp = (n) => Math.round(Math.max(0, Math.min(1, n)) * 1000) / 1000;
+      onChange({
+        x: ox > 0 ? clamp(v0.x - (ev.clientX - x0) / ox) : .5,
+        y: oy > 0 ? clamp(v0.y - (ev.clientY - y0) / oy) : .5,
+      });
+    };
+    const end = () => { el.removeEventListener('pointermove', move); el.removeEventListener('pointerup', end); el.removeEventListener('pointercancel', end); };
+    el.addEventListener('pointermove', move);
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+  };
+  return (
+    <figure className={`adm-crop${wide ? ' adm-crop--wide' : ''}`}>
+      <div ref={box} className="adm-crop-box" style={{ aspectRatio: String(ratio) }} onPointerDown={start}>
+        <img src={src} alt="" draggable="false" style={{ objectPosition: `${v.x * 100}% ${v.y * 100}%` }}
+          onLoad={(e) => setNat({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })} />
+      </div>
+      <figcaption>{name}</figcaption>
+    </figure>
+  );
+}
+
+function PhotoField({ path, value, src, onPhoto, data, onChange }) {
   const input = useRef(null);
   const [busy, setBusy] = useState(false);
+  const spec = cropSpec(path);
+  const crop = spec ? get(data, spec.path) : null;
   const pick = async (e) => {
     const file = e.target.files && e.target.files[0];
     e.target.value = '';
     if (!file) return;
     setBusy(true);
-    try { await onPhoto(path, file); } finally { setBusy(false); }
+    try {
+      await onPhoto(path, file);
+      if (spec) onChange(spec.path, undefined);   // nouvelle photo : cadrage remis au centre
+    } finally { setBusy(false); }
   };
   return (
     <div className="adm-photo">
       <span className="adm-photo-label">{label(path)}</span>
-      {value ? <img src={src(value)} alt="" /> : <div className="adm-photo-empty">Pas de photo</div>}
+      {!value && <div className="adm-photo-empty">Pas de photo</div>}
+      {value && !spec && <img src={src(value)} alt="" />}
+      {value && spec && (
+        <>
+          <div className="adm-crops">
+            {spec.frames.map((f) => (
+              <CropFrame key={f.key || 'one'} src={src(value)} ratio={f.ratio} label={f.label} wide={f.ratio > 1}
+                value={f.key ? crop && crop[f.key] : crop}
+                onChange={(c) => onChange(spec.path, f.key ? { ...(crop || {}), [f.key]: c } : c)} />
+            ))}
+          </div>
+          <p className="adm-help">Glisse la photo dans {spec.frames.length > 1 ? 'chaque cadre' : 'le cadre'} : ce qui est dedans est ce que le site montre{spec.frames.length > 1 ? ', sur ordinateur et sur téléphone' : ''}.</p>
+        </>
+      )}
       <input ref={input} type="file" accept="image/*" hidden onChange={pick} />
       <button type="button" className="adm-btn" disabled={busy} onClick={() => input.current.click()}>
         {busy ? 'Préparation…' : 'Changer la photo'}
@@ -156,7 +228,7 @@ export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, 
         )}
         {k === 'segments' && <SegmentsEditor value={value} onChange={(v) => onChange(path, v)} />}
         {k === 'photo' && photos.map((p) => (
-          <PhotoField key={p} path={p} value={get(data, p)} src={src} onPhoto={onPhoto} />
+          <PhotoField key={p} path={p} value={get(data, p)} src={src} onPhoto={onPhoto} data={data} onChange={onChange} />
         ))}
         {k === 'other' && !grp && <p className="adm-help">Ce bloc se modifiera à une prochaine étape.</p>}
         {grp && <GroupList group={grp.group} index={grp.index} data={data} onList={onList} onOpen={onOpen} />}

@@ -1,6 +1,7 @@
 // Galerie horizontale Koisei (#gallery) avec mes 4 offres. Sur ordinateur la
-// section s'épingle et la piste glisse ; la carte au centre remplit son numéro,
-// la photo dérive de 7 %. Sur téléphone la piste se glisse au doigt et la barre
+// section s'épingle et la piste glisse ; la carte au centre remplit son numéro.
+// (Koisei agrandit la photo à 1.15 pour la faire dériver : retiré, la photo
+// garde le cadrage choisi dans l'admin, sans rien rogner de plus.) Sur téléphone la piste se glisse au doigt et la barre
 // et le compteur suivent ce glissement (mode mobile de Koisei).
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
@@ -30,8 +31,6 @@ export default function Oferta({ data }) {
         const r = card.getBoundingClientRect(), c = r.left + r.width / 2;
         const near = Math.abs(c - innerWidth / 2) < r.width / 2;
         card.querySelector('.galNum').style.color = near ? 'var(--terra)' : 'transparent';
-        const off = (c - innerWidth / 2) / innerWidth;
-        card.querySelector('.galImg').style.transform = `scale(1.15) translateX(${off * 7}%)`;
       });
     };
 
@@ -72,7 +71,8 @@ export default function Oferta({ data }) {
               <div className="galFrame" data-edit={`oferta.cards.${i}.photo`}>
                 <div className="galLine" />
                 <div className="galClip">
-                  <img className="galImg" src={c.photo} alt={c.title} decoding="async" />
+                  <img className="galImg" src={c.photo} alt={c.title} decoding="async"
+                    style={c.crop ? { objectPosition: `${c.crop.x * 100}% ${c.crop.y * 100}%` } : undefined} />
                 </div>
               </div>
               <h3 className="galCard-title t-title" data-edit={`oferta.cards.${i}.title`}>{c.title}</h3>

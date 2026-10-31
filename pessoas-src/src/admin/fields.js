@@ -71,7 +71,7 @@ const NAMES = {
   lede: 'intro', contact: 'bloc contact', button: 'bouton', card_link: 'lien des cartes',
   location: 'lieu', type: 'type', year: 'année', strip: 'bandeau', voice: 'texte', paragraphs: 'paragraphe',
   handle: 'lien', form: 'formulaire', whatsapp: 'numéro WhatsApp', intro: "message d'intro",
-  photos: 'photos', videos: 'vidéos', hidden: 'séries masquées', series: 'ordre des séries', cover: 'couverture',
+  photos: 'photos', videos: 'vidéos', crop: 'cadrage', hidden: 'séries masquées', series: 'ordre des séries', cover: 'couverture',
 };
 const GROUP_NAMES = { 'manifesto.lines': 'Manifeste, lignes', 'film_dia.chapters': 'Film du jour, phrases',
   'film_noite.chapters': 'Film de nuit, phrases', 'oferta.cards': 'Offres', sections: 'Sections' };
@@ -121,6 +121,7 @@ export function changed(base, data) {
     let f = p;
     while (/\.\d+\.(t|em)$/.test(f)) f = f.replace(/\.\d+\.(t|em)$/, '');
     f = f.replace(/^(hero\.name)\.\d+$/, '$1');
+    f = f.replace(/\.crop\..*$/, '.crop');   // un cadrage = un seul changement
     fields.add(f);
   }
   return [...fields];
