@@ -1,0 +1,27 @@
+{
+  "slug": "serie-d-essai",
+  "title": "Série d'essai",
+  "eyebrow": "",
+  "type": "",
+  "location": "",
+  "year": "2026",
+  "cover": "/Projets-web/Fotos/serie-d-essai/serie-d-essai-01.jpg",
+  "hero": "/Projets-web/Fotos/serie-d-essai/serie-d-essai-01.jpg",
+  "lede": "",
+  "film": {
+    "video": "",
+    "poster": "",
+    "label": "Filme em breve"
+  },
+  "videos": [],
+  "photos": [
+    {
+      "src": "/Projets-web/Fotos/serie-d-essai/serie-d-essai-01.jpg",
+      "alt": ""
+    },
+    {
+      "src": "/Projets-web/Fotos/serie-d-essai/serie-d-essai-02.jpg",
+      "alt": ""
+    }
+  ]
+}
