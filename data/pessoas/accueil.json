@@ -195,7 +195,7 @@
   },
   "noite": {
     "kicker": "III · Os laços",
-    "day": "/photos/le-regard/bracos-palmeiras.jpg",
+    "day": "/Projets-web/Fotos/site/carroussel-1-sur-1-28-mvww5k4l.webp",
     "night": "/photos/le-regard/lampada-bar.jpg",
     "lines": [
       [
@@ -212,7 +212,23 @@
           "em": true
         }
       ]
-    ]
+    ],
+    "day_crop": {
+      "mobile": {
+        "x": 0.209,
+        "y": 0.5
+      },
+      "desktop": {
+        "x": 0.5,
+        "y": 0.47
+      }
+    },
+    "night_crop": {
+      "desktop": {
+        "x": 0.5,
+        "y": 0.518
+      }
+    }
   },
   "film_noite": {
     "video": "",
