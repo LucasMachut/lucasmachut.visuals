@@ -1,7 +1,9 @@
 ---
-// Accueil pessoas, dans l'ordre de Koisei : hero, manifeste, film du jour,
-// offres, tombée de la nuit, film de la nuit, pied de page.
-// Tout le texte vient de data/pessoas/accueil.json, le fichier que l'admin modifiera.
+// Accueil pessoas : hero, puis les sections dans l'ordre choisi dans l'admin
+// (data.sections, ordre de Koisei par défaut : manifeste, film du jour, offres,
+// tombée de la nuit, film de la nuit), puis le pied de page.
+// Une section masquée (hidden) n'est pas publiée mais garde son contenu.
+// Tout le texte vient de data/pessoas/accueil.json, le fichier que l'admin modifie.
 import Base from '../layouts/Base.astro';
 import HomeStage from '../components/HomeStage.jsx';
 import Manifesto from '../components/Manifesto.jsx';
@@ -12,15 +14,21 @@ import Fim from '../components/Fim.jsx';
 import data from '../../../data/pessoas/accueil.json';
 import '../styles/home.css';
 import '../styles/home-sections.css';
+
+const sections = (data.sections || []).filter((s) => !s.hidden);
 ---
 <Base title={data.seo.title} description={data.seo.description} nav={data.nav} cta={data.nav_cta}>
   <HomeStage client:load hero={data.hero} />
-  <section id="journey" class="journey" data-covers-hero>
-    <Manifesto client:load data={data.manifesto} />
-  </section>
-  <Film client:load id="film1" variant="dia" data={data.film_dia} />
-  <Oferta client:load data={data.oferta} />
-  <Nightfall client:load data={data.noite} />
-  <Film client:load id="film2" variant="noite" data={data.film_noite} />
+  {sections.map((s, i) => (
+    <div class="sec" data-sec={s.id} data-covers-hero={i === 0 ? '' : undefined}>
+      {s.id === 'manifesto' && (
+        <section id="journey" class="journey"><Manifesto client:load data={data.manifesto} /></section>
+      )}
+      {s.id === 'film_dia' && <Film client:load id="film1" variant="dia" data={data.film_dia} />}
+      {s.id === 'oferta' && <Oferta client:load data={data.oferta} />}
+      {s.id === 'noite' && <Nightfall client:load data={data.noite} />}
+      {s.id === 'film_noite' && <Film client:load id="film2" variant="noite" data={data.film_noite} />}
+    </div>
+  ))}
   <Fim client:load data={data.fim} />
 </Base>

@@ -8,7 +8,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Segments } from './Segments.jsx';
 import { pinPriority, scheduleRefresh } from './scroll.js';
 
-const ROMAN = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ'];
+const ROMAN = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ'];
 const pad = (n) => String(Math.floor(n)).padStart(2, '0');
 
 export default function Film({ id, data, variant = 'dia' }) {
@@ -36,7 +36,12 @@ export default function Film({ id, data, variant = 'dia' }) {
       onUpdate: (s) => { target = s.progress; } } });
 
     if (variant === 'dia') {
-      const spans = [[5, 30], [38, 63], [70, 95]];
+      // Koisei : 3 phrases sur [5,30] [38,63] [70,95]. Autre nombre (ajouté ou
+      // retiré dans l'admin) : même rythme réparti sur 5 à 95.
+      const n = ch.length;
+      const seg = 90 / Math.max(1, n);
+      const spans = n === 3 ? [[5, 30], [38, 63], [70, 95]]
+        : Array.from({ length: n }, (_, i) => [5 + i * seg, 5 + (i + 1) * seg - Math.min(8, seg * .25)]);
       spans.forEach((sp, i) => {
         if (!ch[i]) return;
         tl.fromTo(ch[i], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 6 }, sp[0])
@@ -45,8 +50,17 @@ export default function Film({ id, data, variant = 'dia' }) {
           .to(roms[i], { color: 'rgba(237,233,223,.5)', duration: 1 }, sp[1]);
       });
     } else {
-      if (ch[0]) tl.fromTo(ch[0], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 8 }, 6).to(ch[0], { autoAlpha: 0, y: -40, duration: 6 }, 34);
-      if (ch[1]) tl.fromTo(ch[1], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: 8 }, 44).to(ch[1], { autoAlpha: 0, y: -40, duration: 6 }, 72);
+      // Koisei : 2 phrases sur [6,40] et [44,78], puis la citation. Autre nombre :
+      // même rythme réparti sur 6 à 78.
+      const n = ch.length;
+      const seg = 72 / Math.max(1, n);
+      const spans = n === 2 ? [[6, 40], [44, 78]]
+        : Array.from({ length: n }, (_, i) => [6 + i * seg, 6 + (i + 1) * seg - Math.min(4, seg * .12)]);
+      spans.forEach((sp, i) => {
+        const fade = Math.min(8, (sp[1] - sp[0]) * .25);
+        tl.fromTo(ch[i], { autoAlpha: 0, y: 40 }, { autoAlpha: 1, y: 0, duration: fade }, sp[0])
+          .to(ch[i], { autoAlpha: 0, y: -40, duration: fade * .75 }, sp[1] - fade * .75);
+      });
       tl.to(dark, { opacity: .3, duration: 6 }, 82);
       if (q) tl.fromTo(q, { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 8 }, 85);
     }
@@ -98,7 +112,7 @@ export default function Film({ id, data, variant = 'dia' }) {
   const night = variant === 'noite';
   const field = night ? 'film_noite' : 'film_dia';
   return (
-    <section id={id} ref={root} className={`film film--${variant}`} data-pin>
+    <section id={id} ref={root} className={`film film--${variant}`} data-pin data-edit={`${field}.poster`}>
       {data.video
         ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
         : <img className="film-media" src={data.poster} alt="" decoding="async" />}

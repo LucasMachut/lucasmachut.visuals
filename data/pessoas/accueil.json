@@ -17,6 +17,23 @@
     "label": "Começar",
     "href": "/contato"
   },
+  "sections": [
+    {
+      "id": "manifesto"
+    },
+    {
+      "id": "film_dia"
+    },
+    {
+      "id": "oferta"
+    },
+    {
+      "id": "noite"
+    },
+    {
+      "id": "film_noite"
+    }
+  ],
   "hero": {
     "photo": "/photos/le-regard/hero-corpo-mar.jpg",
     "eyebrow": "Fotógrafo e filmmaker · Rio de Janeiro",

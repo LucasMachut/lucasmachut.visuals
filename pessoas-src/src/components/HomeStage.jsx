@@ -206,7 +206,9 @@ export default function HomeStage({ hero, edit = false }) {
         if (cover) {
           triggers.push(gsap.to(dustMat, { opacity: 0, ease: 'none',
             scrollTrigger: { trigger: cover, start: 'top 60%', end: 'top top', scrub: true } }).scrollTrigger);
-          triggers.push(gsap.fromTo(cover, { borderTopLeftRadius: 32, borderTopRightRadius: 32 }, { borderTopLeftRadius: 0, borderTopRightRadius: 0, ease: 'none',
+          // l'arrondi Koisei du haut ne se voit que sur le manifeste (fond lin)
+          const rounded = cover.querySelector('.journey') || cover;
+          triggers.push(gsap.fromTo(rounded, { borderTopLeftRadius: 32, borderTopRightRadius: 32 }, { borderTopLeftRadius: 0, borderTopRightRadius: 0, ease: 'none',
             scrollTrigger: { trigger: cover, start: 'top 60%', end: 'top top', scrub: true } }).scrollTrigger);
         }
         // nuit : la poussière passe devant les sections (z 45), teintée sable, et remonte
@@ -245,7 +247,7 @@ export default function HomeStage({ hero, edit = false }) {
 
       <canvas id="gl" className="gl" aria-hidden="true" />
 
-      <section id="hero" className="hero" data-pin>
+      <section id="hero" className="hero" data-pin data-edit="hero.photo">
         <img className="hero-fallback" src={hero.photo} alt="" />
         <div id="heroContent" className="hero-content">
           <div className="clip"><p className="heroLine eyebrow-hero" data-edit="hero.eyebrow">{hero.eyebrow}</p></div>

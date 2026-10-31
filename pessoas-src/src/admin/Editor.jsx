@@ -1,9 +1,12 @@
-// Le panneau qui s'ouvre quand on touche un texte de la page.
+// Le panneau qui s'ouvre quand on touche un texte ou une photo de la page.
 // Texte simple : un champ. Nom : les mots dans un champ. Ligne avec mot en
 // avant : le texte tel qu'il s'affiche, où l'on sélectionne un mot puis
-// « Mot en avant » pour le souligner (ou l'inverse pour l'enlever).
-import { useEffect, useRef } from 'react';
-import { kind, label } from './fields.js';
+// « Mot en avant ». Photo : la vignette et « Changer la photo ».
+// Un élément d'un groupe (ligne, phrase, offre) montre en dessous tout son
+// groupe : glisser pour réordonner, × pour retirer, + pour ajouter.
+import { useEffect, useRef, useState } from 'react';
+import { get, kind, label, groupOf, itemText, GROUPS } from './fields.js';
+import Sortable from './Sortable.jsx';
 
 function segmentsToHtml(parts) {
   const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -64,8 +67,78 @@ function SegmentsEditor({ value, onChange }) {
   );
 }
 
-export default function Editor({ path, value, onChange, onClose }) {
-  const k = kind(value);
+function PhotoField({ path, value, src, onPhoto }) {
+  const input = useRef(null);
+  const [busy, setBusy] = useState(false);
+  const pick = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    setBusy(true);
+    try { await onPhoto(path, file); } finally { setBusy(false); }
+  };
+  return (
+    <div className="adm-photo">
+      <span className="adm-photo-label">{label(path)}</span>
+      {value ? <img src={src(value)} alt="" /> : <div className="adm-photo-empty">Pas de photo</div>}
+      <input ref={input} type="file" accept="image/*" hidden onChange={pick} />
+      <button type="button" className="adm-btn" disabled={busy} onClick={() => input.current.click()}>
+        {busy ? 'Préparation…' : 'Changer la photo'}
+      </button>
+    </div>
+  );
+}
+
+function GroupList({ group, index, data, onList, onOpen }) {
+  const list = get(data, group) || [];
+  const g = GROUPS[group];
+  const [asking, setAsking] = useState(null);
+  const move = (from, to) => {
+    const next = list.slice();
+    const [it] = next.splice(from, 1);
+    next.splice(to, 0, it);
+    // l'élément ouvert garde son panneau à sa nouvelle place
+    const now = index === from ? to : index > from && index <= to ? index - 1 : index < from && index >= to ? index + 1 : index;
+    onList(group, next, now);
+  };
+  const removeAt = (i) => {
+    const next = list.filter((_, j) => j !== i);
+    setAsking(null);
+    onList(group, next, null);
+  };
+  const add = () => {
+    const next = [...list, g.make(list)];
+    onList(group, next, next.length - 1);
+  };
+  return (
+    <div className="adm-group">
+      <p className="adm-group-title">{label(group)}</p>
+      <Sortable items={list} onMove={move} render={(item, i) => (
+        <>
+          <button type="button" className={`adm-sort-text${i === index ? ' is-current' : ''}`} onClick={() => onOpen(group, i)}>
+            {i + 1}. {itemText(item) || '(vide)'}
+          </button>
+          {asking === i ? (
+            <span className="adm-ask">
+              Retirer « {itemText(item) || g.one} » ? <button type="button" onClick={() => removeAt(i)}>Oui</button>
+              <button type="button" onClick={() => setAsking(null)}>Non</button>
+            </span>
+          ) : (
+            <button type="button" className="adm-x" aria-label={`Retirer ${itemText(item)}`} disabled={list.length <= 1} onClick={() => setAsking(i)}>×</button>
+          )}
+        </>
+      )} />
+      <button type="button" className="adm-btn adm-btn--ghost" onClick={add}>+ {g.add}</button>
+    </div>
+  );
+}
+
+export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, src, onClose }) {
+  const value = get(data, path);
+  const k = kind(value, path);
+  const grp = groupOf(path);
+  // La tombée de la nuit a deux photos : on les montre ensemble
+  const photos = path === 'noite.day' || path === 'noite.night' ? ['noite.day', 'noite.night'] : [path];
   return (
     <aside className="adm-panel" role="dialog" aria-label={label(path)}>
       <header className="adm-panel-head">
@@ -75,14 +148,18 @@ export default function Editor({ path, value, onChange, onClose }) {
       <div className="adm-panel-body" key={path}>
         {k === 'text' && (
           <textarea className="adm-input" rows={value.length > 80 ? 6 : 2} value={value} autoFocus
-            onChange={(e) => onChange(e.target.value)} />
+            onChange={(e) => onChange(path, e.target.value)} />
         )}
         {k === 'words' && (
           <input className="adm-input" value={value.join(' ')} autoFocus
-            onChange={(e) => onChange(e.target.value.split(' '))} />
+            onChange={(e) => onChange(path, e.target.value.split(' '))} />
         )}
-        {k === 'segments' && <SegmentsEditor value={value} onChange={onChange} />}
-        {k === 'other' && <p className="adm-help">Ce bloc se modifiera à une prochaine étape.</p>}
+        {k === 'segments' && <SegmentsEditor value={value} onChange={(v) => onChange(path, v)} />}
+        {k === 'photo' && photos.map((p) => (
+          <PhotoField key={p} path={p} value={get(data, p)} src={src} onPhoto={onPhoto} />
+        ))}
+        {k === 'other' && !grp && <p className="adm-help">Ce bloc se modifiera à une prochaine étape.</p>}
+        {grp && <GroupList group={grp.group} index={grp.index} data={data} onList={onList} onOpen={onOpen} />}
       </div>
     </aside>
   );

@@ -69,7 +69,7 @@ export default function Oferta({ data }) {
           {data.cards.map((c, i) => (
             <article className="galCard" key={i}>
               <span className="galNum">{pad(i + 1)}</span>
-              <div className="galFrame">
+              <div className="galFrame" data-edit={`oferta.cards.${i}.photo`}>
                 <div className="galLine" />
                 <div className="galClip">
                   <img className="galImg" src={c.photo} alt={c.title} decoding="async" />

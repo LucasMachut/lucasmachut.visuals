@@ -1,11 +1,14 @@
 // Admin du site pessoas (/admin). La page s'affiche avec les vrais composants
-// du site ; toucher un texte ouvre le panneau, la page suit la frappe.
-// Les changements attendent dans le navigateur jusqu'à « Publier » : un commit
-// sur master, que l'Action « Site pessoas » reconstruit et met en ligne.
+// du site ; toucher un texte ou une photo ouvre le panneau, la page suit.
+// Les changements (photos comprises) attendent dans le navigateur jusqu'à
+// « Publier » : un seul commit sur master, que l'Action « Site pessoas »
+// reconstruit et met en ligne.
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as gh from './github.js';
-import { get, set, changed, label } from './fields.js';
+import * as photos from './photos.js';
+import { get, set, changed, label, GROUPS } from './fields.js';
 import Editor from './Editor.jsx';
+import Sortable from './Sortable.jsx';
 import HomeStage from '../components/HomeStage.jsx';
 import Manifesto from '../components/Manifesto.jsx';
 import Film from '../components/Film.jsx';
@@ -19,6 +22,7 @@ const PAGES = [
   { id: 'series', name: 'Séries', soon: true },
   { id: 'contato', name: 'Contato', soon: true },
 ];
+const SECTION_NAMES = { manifesto: 'Manifeste', film_dia: 'Film du jour', oferta: 'Offres', noite: 'Tombée de la nuit', film_noite: 'Film de nuit' };
 const DRAFT_KEY = (path) => 'lm-admin-pessoas.draft:' + path;
 
 // En local avec ?essai : lit les fichiers du dossier, « Publier » montre seulement ce qui partirait
@@ -31,6 +35,15 @@ function loadDraft(path) {
 function saveDraft(path, data) {
   try { data ? localStorage.setItem(DRAFT_KEY(path), JSON.stringify(data)) : localStorage.removeItem(DRAFT_KEY(path)); } catch (e) { /* rien */ }
 }
+
+// Les chaînes du JSON qui désignent une photo pas encore publiée → leur image locale
+function withLocalPhotos(o, urls) {
+  if (typeof o === 'string') return urls[o] || o;
+  if (Array.isArray(o)) return o.map((v) => withLocalPhotos(v, urls));
+  if (o && typeof o === 'object') return Object.fromEntries(Object.entries(o).map(([k, v]) => [k, withLocalPhotos(v, urls)]));
+  return o;
+}
+const usesPath = (o, p) => JSON.stringify(o).includes(JSON.stringify(p));
 
 function Login({ onDone }) {
   const [value, setValue] = useState('');
@@ -60,19 +73,63 @@ function Login({ onDone }) {
   );
 }
 
+function Section({ id, data }) {
+  if (id === 'manifesto') return <section id="journey" className="journey"><Manifesto data={data.manifesto} /></section>;
+  if (id === 'film_dia') return <Film id="film1" variant="dia" data={data.film_dia} />;
+  if (id === 'oferta') return <Oferta data={data.oferta} />;
+  if (id === 'noite') return <Nightfall key={data.noite.day + data.noite.night} data={data.noite} />;
+  if (id === 'film_noite') return <Film id="film2" variant="noite" data={data.film_noite} />;
+  return null;
+}
+
 function Accueil({ data }) {
+  const visible = data.sections.filter((s) => !s.hidden);
   return (
     <>
-      <HomeStage hero={data.hero} edit />
-      <section id="journey" className="journey" data-covers-hero>
-        <Manifesto data={data.manifesto} />
-      </section>
-      <Film id="film1" variant="dia" data={data.film_dia} />
-      <Oferta data={data.oferta} />
-      <Nightfall data={data.noite} />
-      <Film id="film2" variant="noite" data={data.film_noite} />
+      <HomeStage key={data.hero.photo} hero={data.hero} edit />
+      {data.sections.map((s) => (
+        <div key={s.id} className={`sec${s.hidden ? ' adm-hidden' : ''}`} data-sec={s.id}
+          data-covers-hero={visible[0] && visible[0].id === s.id ? '' : undefined}
+          data-hidden-label={s.hidden ? `${SECTION_NAMES[s.id]} : masquée, pas publiée` : undefined}>
+          <Section id={s.id} data={data} />
+        </div>
+      ))}
       <Fim data={data.fim} />
     </>
+  );
+}
+
+function SectionsPanel({ data, onSections, onClose }) {
+  const rows = [{ id: 'hero', fixed: true }, ...data.sections, { id: 'fim', fixed: true }];
+  const names = { hero: 'Hero', fim: 'Pied de page', ...SECTION_NAMES };
+  const move = (from, to) => {
+    const next = data.sections.slice();
+    const [it] = next.splice(from - 1, 1);
+    next.splice(to - 1, 0, it);
+    onSections(next);
+  };
+  const toggle = (id) => onSections(data.sections.map((s) => (s.id === id ? (s.hidden ? { id: s.id } : { ...s, hidden: true }) : s)));
+  return (
+    <aside className="adm-panel" role="dialog" aria-label="Sections">
+      <header className="adm-panel-head">
+        <strong>Sections de la page</strong>
+        <button type="button" className="adm-btn adm-btn--ghost" onClick={onClose}>Fermer</button>
+      </header>
+      <div className="adm-panel-body">
+        <Sortable items={rows} fixedTop={1} fixedBottom={1} onMove={move} render={(r) => (
+          <>
+            <span className={`adm-sort-text${r.hidden ? ' is-off' : ''}`}>{names[r.id]}{r.fixed ? ' (toujours là)' : ''}</span>
+            {!r.fixed && (
+              <button type="button" className="adm-eye" aria-pressed={!r.hidden} onClick={() => toggle(r.id)}
+                aria-label={r.hidden ? `Afficher ${names[r.id]}` : `Masquer ${names[r.id]}`}>
+                {r.hidden ? 'Masquée' : 'Visible'}
+              </button>
+            )}
+          </>
+        )} />
+        <p className="adm-help">Tiens la poignée ⠿ et glisse pour changer l'ordre. Une section masquée garde tous ses textes et photos ; elle n'apparaît plus sur le site une fois publié.</p>
+      </div>
+    </aside>
   );
 }
 
@@ -82,19 +139,25 @@ export default function AdminApp() {
   const [base, setBase] = useState(null);
   const [data, setData] = useState(null);
   const [error, setError] = useState('');
-  const [editing, setEditing] = useState(null);
+  const [editing, setEditing] = useState(null);   // chemin du champ, ou 'sections'
   const [menu, setMenu] = useState(false);
   const [confirm, setConfirm] = useState(null);   // 'publish' | 'reset'
   const [status, setStatus] = useState('');
+  const [urls, setUrls] = useState({});           // '/Projets-web/…' → image locale (photos pas encore publiées)
+  const blobs = useRef({});
   const saveTimer = useRef(0);
 
   useEffect(() => {
     if (!logged) return;
     const read = essai ? fetch('/' + page.path, { cache: 'no-store' }).then((r) => r.text()) : gh.readText(page.path);
-    read.then((text) => {
+    Promise.all([read, photos.all().catch(() => ({}))]).then(([text, stored]) => {
       const online = JSON.parse(text);
+      const u = {};
+      for (const [p, blob] of Object.entries(stored)) { blobs.current['/' + p] = blob; u['/' + p] = URL.createObjectURL(blob); }
+      setUrls(u);
       setBase(online);
-      setData(loadDraft(page.path) || online);
+      const draft = loadDraft(page.path);
+      setData(draft && draft.sections ? draft : online);   // brouillon d'avant les sections : ignoré
     }).catch((e) => {
       if (e.status === 401) { gh.setToken(''); setLogged(false); return; }
       setError('Impossible de lire la page (' + e.message + ').');
@@ -102,17 +165,38 @@ export default function AdminApp() {
   }, [logged]);
 
   const diff = useMemo(() => (base && data ? changed(base, data) : []), [base, data]);
+  const shown = useMemo(() => (data ? withLocalPhotos(data, urls) : null), [data, urls]);
+  // Une structure qui change (ordre, nombre d'éléments) remonte la page : les
+  // animations au défilement se recalculent sur la nouvelle mise en page.
+  const shape = data ? JSON.stringify([data.sections, ...Object.keys(GROUPS).map((g) => (get(data, g) || []).length)]) : '';
 
-  const update = (path, value) => {
-    setData((d) => {
-      const next = set(d, path, value);
-      clearTimeout(saveTimer.current);
-      saveTimer.current = setTimeout(() => saveDraft(page.path, next), 300);
-      return next;
+  const commit = (next) => {
+    clearTimeout(saveTimer.current);
+    saveTimer.current = setTimeout(() => saveDraft(page.path, next), 300);
+    return next;
+  };
+  const update = (path, value) => setData((d) => commit(set(d, path, value)));
+
+  const openItem = (group, i) => setEditing(group === 'manifesto.lines' ? `${group}.${i}` : `${group}.${i}.title`);
+  const onList = (group, list, now) => {
+    setData((d) => commit(set(d, group, list)));
+    if (now == null) setEditing(null);
+    else setEditing((cur) => {
+      const rest = cur && cur.startsWith(group + '.') ? cur.slice(group.length + 1).replace(/^\d+/, '') : '';
+      return `${group}.${now}${rest || (group === 'manifesto.lines' ? '' : '.title')}`;
     });
   };
+  const onPhoto = async (path, file) => {
+    const p = await photos.prepare(file);
+    await photos.put(p.path, p.blob).catch(() => {});
+    const key = '/' + p.path;
+    blobs.current[key] = p.blob;
+    setUrls((u) => ({ ...u, [key]: URL.createObjectURL(p.blob) }));
+    update(path, key);
+  };
+  const src = (v) => urls[v] || v;
 
-  // Toucher un texte de la page : ouvrir son panneau ; aucun lien ne quitte l'admin
+  // Toucher un texte ou une photo de la page : ouvrir son panneau ; aucun lien ne quitte l'admin
   const onPreviewClick = (e) => {
     const el = e.target.closest('[data-edit]');
     if (el || e.target.closest('a')) e.preventDefault();
@@ -121,16 +205,18 @@ export default function AdminApp() {
 
   const publish = async () => {
     setStatus('publishing');
-    const content = JSON.stringify(data, null, 2) + '\n';
+    const files = [{ path: page.path, content: JSON.stringify(data, null, 2) + '\n' }];
+    for (const [key, blob] of Object.entries(blobs.current)) {
+      if (usesPath(data, key)) files.push({ path: key.slice(1), base64: await photos.toBase64(blob) });
+    }
     const message = 'Admin : ' + diff.map(label).join(' ; ');
     try {
-      if (essai) {
-        console.info('[essai] partirait :', page.path, message);
-      } else {
-        await gh.publish([{ path: page.path, content }], message);
-      }
+      if (essai) console.info('[essai] partirait :', files.map((f) => f.path), message);
+      else await gh.publish(files, message);
       setBase(data);
       saveDraft(page.path, null);
+      blobs.current = {};
+      await photos.clear().catch(() => {});
       setStatus('done');
     } catch (e) {
       setStatus('error:' + e.message);
@@ -138,7 +224,11 @@ export default function AdminApp() {
     setConfirm(null);
   };
 
-  const reset = () => { setData(base); saveDraft(page.path, null); setEditing(null); setConfirm(null); };
+  const reset = async () => {
+    setData(base); saveDraft(page.path, null); setEditing(null); setConfirm(null);
+    blobs.current = {};
+    await photos.clear().catch(() => {});
+  };
 
   if (!logged) return <Login onDone={() => setLogged(true)} />;
   if (error) return <main className="adm-login"><p className="adm-err">{error}</p></main>;
@@ -146,13 +236,14 @@ export default function AdminApp() {
 
   return (
     <div className={`adm${editing ? ' adm--editing' : ''}`}>
-      <style>{editing ? `[data-edit="${editing}"]{outline:2px solid var(--terracotta)!important;outline-offset:6px}` : ''}</style>
+      <style>{editing && editing !== 'sections' ? `[data-edit="${editing}"]{outline:2px solid var(--terracotta)!important;outline-offset:6px}` : ''}</style>
       <header className="adm-bar">
         <button type="button" className="adm-burger" aria-label="Menu" aria-expanded={menu} onClick={() => setMenu(!menu)}>☰</button>
         <strong className="adm-title">{page.name}</strong>
+        <button type="button" className="adm-btn adm-btn--ghost adm-btn--bar" onClick={() => setEditing('sections')}>Sections</button>
         <div className="adm-actions">
           {diff.length > 0 && <span className="adm-count">{diff.length} changement{diff.length > 1 ? 's' : ''}</span>}
-          {diff.length > 0 && <button type="button" className="adm-btn adm-btn--ghost" onClick={() => setConfirm('reset')}>Annuler</button>}
+          {diff.length > 0 && <button type="button" className="adm-btn adm-btn--ghost adm-btn--bar" onClick={() => setConfirm('reset')}>Annuler</button>}
           <button type="button" className="adm-btn" disabled={!diff.length} onClick={() => { setStatus(''); setConfirm('publish'); }}>Publier</button>
         </div>
         {menu && (
@@ -169,15 +260,19 @@ export default function AdminApp() {
         )}
       </header>
 
-      {status === 'done' && <div className="adm-toast">Publié. En ligne dans 3 à 4 minutes.{essai && ' (essai : rien n\'est parti)'}</div>}
+      {status === 'done' && <div className="adm-toast">Publié. En ligne dans 3 à 5 minutes.{essai && ' (essai : rien n\'est parti)'}</div>}
       {status.startsWith('error:') && <div className="adm-toast adm-toast--err">La publication a échoué : {status.slice(6)}. Tes changements sont gardés.</div>}
 
       <div className="adm-preview" onClickCapture={onPreviewClick}>
-        <Accueil data={data} />
+        <Accueil key={shape} data={shown} />
       </div>
 
-      {editing && (
-        <Editor path={editing} value={get(data, editing)} onChange={(v) => update(editing, v)} onClose={() => setEditing(null)} />
+      {editing === 'sections' && (
+        <SectionsPanel data={data} onSections={(s) => update('sections', s)} onClose={() => setEditing(null)} />
+      )}
+      {editing && editing !== 'sections' && get(data, editing) !== undefined && (
+        <Editor path={editing} data={data} src={src} onChange={update} onList={onList} onOpen={openItem}
+          onPhoto={onPhoto} onClose={() => setEditing(null)} />
       )}
 
       {confirm && (

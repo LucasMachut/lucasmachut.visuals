@@ -94,7 +94,7 @@ export default function Nightfall({ data }) {
 
   return (
     <section id="nightfall" ref={root} className="nightfall" data-pin>
-      <div className="dissolveWrap">
+      <div className="dissolveWrap" data-edit="noite.day">
         <canvas className="dissolve" aria-hidden="true" />
         <img className="dissolve-fallback" src={data.night} alt="" loading="lazy" decoding="async" />
       </div>

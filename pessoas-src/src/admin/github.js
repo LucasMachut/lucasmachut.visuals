@@ -44,14 +44,16 @@ export async function readText(path) {
   return r.text();
 }
 
-// files = [{ path, content }] ; un seul commit, au-dessus du dernier état de master
+// files = [{ path, content }] pour du texte, [{ path, base64 }] pour une photo ;
+// un seul commit, au-dessus du dernier état de master
 export async function publish(files, message) {
   const ref = await (await gh(`/git/ref/heads/${BRANCH}`)).json();
   const parent = ref.object.sha;
   const commit = await (await gh(`/git/commits/${parent}`)).json();
   const tree = [];
   for (const f of files) {
-    const blob = await (await gh('/git/blobs', { method: 'POST', body: JSON.stringify({ content: f.content, encoding: 'utf-8' }) })).json();
+    const body = f.base64 != null ? { content: f.base64, encoding: 'base64' } : { content: f.content, encoding: 'utf-8' };
+    const blob = await (await gh('/git/blobs', { method: 'POST', body: JSON.stringify(body) })).json();
     tree.push({ path: f.path, mode: '100644', type: 'blob', sha: blob.sha });
   }
   const newTree = await (await gh('/git/trees', { method: 'POST', body: JSON.stringify({ base_tree: commit.tree.sha, tree }) })).json();
