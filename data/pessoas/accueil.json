@@ -195,7 +195,7 @@
   },
   "noite": {
     "kicker": "III · Os laços",
-    "day": "/Projets-web/Fotos/site/carroussel-1-sur-1-28-mvww5k4l.webp",
+    "day": "/Projets-web/Fotos/site/ensaio-com-meu-amor-1-sur-1-2-mvwwt7jn.webp",
     "night": "/Projets-web/Fotos/site/ensaio-com-meu-amor-1-sur-1-3-mvwwri9a.webp",
     "lines": [
       [
@@ -215,12 +215,12 @@
     ],
     "day_crop": {
       "mobile": {
-        "x": 0.209,
+        "x": 0.433,
         "y": 0.5
       },
       "desktop": {
         "x": 0.5,
-        "y": 0.47
+        "y": 0.518
       }
     },
     "night_crop": {
