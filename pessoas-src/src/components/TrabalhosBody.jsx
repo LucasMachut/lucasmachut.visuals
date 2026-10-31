@@ -5,7 +5,8 @@
 import { RichLines } from './Segments.jsx';
 import { metaLine } from '../lib/serie-text.js';
 
-export default function TrabalhosBody({ t, series }) {
+// base : préfixe de langue des liens ('' en portugais, '/fr'…).
+export default function TrabalhosBody({ t, series, base = '' }) {
   return (
     <>
       <section className="tb-open">
@@ -21,7 +22,7 @@ export default function TrabalhosBody({ t, series }) {
         {series.map((s, i) => (
           <article key={s.slug} className={`tb-card${s.hidden ? ' adm-hidden' : ''}`} data-num-card
             data-hidden-label={s.hidden ? 'Masquée, pas publiée' : undefined}>
-            <a href={`/${s.slug}`} className="tb-card-link" data-edit={`card:${s.slug}`}>
+            <a href={`${base}/${s.slug}`} className="tb-card-link" data-edit={`card:${s.slug}`}>
               <span className="tb-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
               <div className="plate tb-card-plate">
                 <span className="plate-line" />

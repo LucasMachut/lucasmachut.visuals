@@ -1,0 +1,6 @@
+---
+// Version française et anglaise (/fr/, /en/). Corps : views/Trabalhos.astro.
+import Trabalhos from '../../views/Trabalhos.astro';
+export const getStaticPaths = () => [{ params: { lang: 'fr' } }, { params: { lang: 'en' } }];
+---
+<Trabalhos lang={Astro.params.lang} />

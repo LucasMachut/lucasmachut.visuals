@@ -1,10 +1,13 @@
 ---
 import '../styles/tokens.css';
 import Header from '../components/Header.astro';
-const { title, description, nav, cta } = Astro.props;
+import { LANGS, HTML_LANG, pathIn } from '../lib/i18n.js';
+// path : chemin portugais de la page ('/', '/portfolio', '/tango'), pour les
+// versions dans les autres langues (sélecteur et liens hreflang pour Google)
+const { title, description, nav, cta, lang = 'pt', path = '/' } = Astro.props;
 ---
 <!doctype html>
-<html lang="pt-BR">
+<html lang={HTML_LANG[lang]}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,13 +15,15 @@ const { title, description, nav, cta } = Astro.props;
   <meta name="description" content={description} />
   <meta property="og:title" content={title} />
   <meta property="og:description" content={description} />
+  {LANGS.map((l) => <link rel="alternate" hreflang={HTML_LANG[l]} href={`https://lucasmachut.com${pathIn(l, path)}`} />)}
+  <link rel="alternate" hreflang="x-default" href={`https://lucasmachut.com${path}`} />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Space+Grotesk:wght@400;500&family=Special+Elite&display=swap" rel="stylesheet" />
   <noscript><style>#loader{display:none!important}</style></noscript>
 </head>
 <body>
-  <Header nav={nav} cta={cta} />
+  <Header nav={nav} cta={cta} lang={lang} path={path} />
   <main>
     <slot />
   </main>

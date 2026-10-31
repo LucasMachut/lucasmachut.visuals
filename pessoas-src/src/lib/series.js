@@ -4,6 +4,7 @@
 import trabalhos from '../../../data/pessoas/trabalhos.json';
 import { openSync, readSync, closeSync, existsSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { inLang } from './i18n.js';
 
 const files = import.meta.glob('../../../data/pessoas/series/*.json', { eager: true, import: 'default' });
 const bySlug = Object.fromEntries(Object.values(files).map((s) => [s.slug, s]));
@@ -12,9 +13,11 @@ export { trabalhos };
 
 // Une série masquée dans l'admin (trabalhos.hidden) garde son fichier mais
 // n'est plus publiée : ni carte, ni page, ni « série suivante ».
-export function publishedSeries() {
+// lang : textes de la série dans cette langue (photos et ordre du portugais).
+export function publishedSeries(lang = 'pt') {
   const hidden = new Set(trabalhos.hidden || []);
-  return trabalhos.series.filter((slug) => !hidden.has(slug)).map((slug) => bySlug[slug]).filter(Boolean).map(withSizes);
+  return trabalhos.series.filter((slug) => !hidden.has(slug)).map((slug) => bySlug[slug]).filter(Boolean)
+    .map((s) => inLang(lang, 'series/' + s.slug, s)).map(withSizes);
 }
 
 // Largeur et hauteur de chaque photo, lues dans le fichier au build : le HTML

@@ -1,0 +1,72 @@
+{
+  "seo": {
+    "title": "Lucas Machut, photographe et filmmaker à Rio de Janeiro",
+    "description": "Photo et film de personnes : mariages, festivals, séances et voyages. Le lien, le mouvement, jamais la pose."
+  },
+  "nav": [{ "label": "Travaux" }, { "label": "Contact" }],
+  "nav_cta": { "label": "Commencer" },
+  "hero": {
+    "eyebrow": "Photographe et filmmaker · Rio de Janeiro",
+    "subline": "humain, authentique, sensible",
+    "scroll": "Défiler"
+  },
+  "manifesto": {
+    "eyebrow": "I · Ce que je garde",
+    "lines": [
+      [{ "t": "Garder vivant ce qui passe." }],
+      [{ "t": "Un " }, { "t": "regard", "em": true }, { "t": ", une étreinte" }],
+      [{ "t": "que personne n'a fait poser," }],
+      [{ "t": "le rire avant qu'il " }, { "t": "s'efface", "em": true }, { "t": "." }]
+    ],
+    "text": "Je photographie le lien entre les personnes. Ce qu'on ressent quand on y est, et qui revient des années plus tard, en revoyant l'image. Jamais la pose : le mouvement, le spontané, les détails qui échappent.",
+    "link": { "label": "Voir les travaux" }
+  },
+  "film_dia": {
+    "chapters": [
+      { "kicker": "Un geste", "title": [{ "t": "Avant de " }, { "t": "penser", "em": true }, { "t": " à poser" }] },
+      { "kicker": "Un regard", "title": [{ "t": "Ce qui passe entre deux " }, { "t": "personnes", "em": true }] },
+      { "kicker": "Un instant", "title": [{ "t": "Et qu'on a " }, { "t": "gardé", "em": true }] }
+    ]
+  },
+  "oferta": {
+    "eyebrow": "II · Ce que je fais",
+    "title": [{ "t": "Quatre façons d'" }, { "t": "être", "em": true }, { "t": " là" }],
+    "hint": "( défiler )",
+    "cards": [
+      { "title": "Mariages et elopements", "text": "Toute la journée sans pose, de la première étreinte à la dernière chanson.", "link": { "label": "Voir les travaux" } },
+      { "title": "Festivals et événements", "text": "Flash, téléobjectif et attention : les interactions que personne ne voit.", "link": { "label": "Voir les travaux" } },
+      { "title": "Séances et portraits", "text": "Couples, familles, le corps libre. Dans la nature, en mouvement.", "link": { "label": "Voir les travaux" } },
+      { "title": "Retraites et voyages", "text": "Des expériences, l'aventure, le lieu avec des gens dedans.", "link": { "label": "Voir les travaux" } }
+    ]
+  },
+  "noite": {
+    "kicker": "III · Les liens",
+    "lines": [
+      [{ "t": "Ce qui passe" }],
+      [{ "t": "entre les " }, { "t": "personnes", "em": true }]
+    ]
+  },
+  "film_noite": {
+    "chapters": [
+      { "kicker": "Les liens", "title": [{ "t": "Les gestes que personne n'a " }, { "t": "prévus", "em": true }] },
+      { "kicker": "Le mouvement", "title": [{ "t": "Des corps en mouvement, des états " }, { "t": "vrais", "em": true }] }
+    ],
+    "quote": "Au fond, ça n'a jamais été une question de comment on apparaît, mais de qui on est."
+  },
+  "fim": {
+    "eyebrow": "IV · Parlons-en",
+    "lines": [
+      [{ "t": "Tout commence" }],
+      [{ "t": "par une " }, { "t": "conversation", "em": true }]
+    ],
+    "disc": { "label": "Commencer" },
+    "columns": [
+      { "head": "Explorer", "links": [{ "label": "Travaux" }, { "label": "Contact" }] },
+      { "head": "Ailleurs" },
+      { "links": [{ "href": "/fr/hoteis" }] }
+    ],
+    "vertical": "merci",
+    "bar_left": "© 2026 Lucas Machut · garder vivant ce qui passe",
+    "bar_right": "Rio de Janeiro · Brésil"
+  }
+}

@@ -1,0 +1,24 @@
+---
+// Gabarit série : s et next viennent de publishedSeries(lang).
+// Le corps de page est SerieBody, le même composant que l'admin affiche
+// (hydraté pour le scroll film, les vidéos et le plein écran).
+import Base from '../layouts/Base.astro';
+import SerieBody from '../components/SerieBody.jsx';
+import accueilPt from '../../../data/pessoas/accueil.json';
+import { trabalhos } from '../lib/series.js';
+import { inLang, base, UI } from '../lib/i18n.js';
+import '../styles/trabalhos.css';
+
+const { lang = 'pt', s, next } = Astro.props;
+const t = inLang(lang, 'trabalhos', trabalhos);
+const accueil = inLang(lang, 'accueil', accueilPt);
+const by = { pt: 'série de Lucas Machut', fr: 'série de Lucas Machut', en: 'a series by Lucas Machut' }[lang];
+---
+<Base title={`${s.title}, Lucas Machut`} description={s.lede || `${s.title}: ${by}.`} nav={accueil.nav} cta={accueil.nav_cta} lang={lang} path={`/${s.slug}`}>
+  <SerieBody client:load s={s} next={next} p={t.serie_page} base={base(lang)} ui={UI[lang]} />
+</Base>
+<script>
+  import { initDrift, initReveal } from '../scripts/drift.js';
+  initDrift();
+  initReveal();
+</script>

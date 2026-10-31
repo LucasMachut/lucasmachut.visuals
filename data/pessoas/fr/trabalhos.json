@@ -1,0 +1,24 @@
+{
+  "seo": {
+    "title": "Travaux, Lucas Machut",
+    "description": "Séries de photo et de film de Lucas Machut : des personnes, des rencontres et des moments qui ne reviennent pas."
+  },
+  "eyebrow": "II · Travaux",
+  "title": [[{ "t": "Ce que j'ai " }, { "t": "gardé", "em": true }]],
+  "lede": "Chaque série, c'est un lieu et les personnes qui y étaient. Rien de posé : le mouvement, le rire, le geste qui est passé.",
+  "card_link": "Voir la série",
+  "serie_page": {
+    "lede_eyebrow": "À propos de la série",
+    "meta": { "location": "Lieu", "type": "Type", "year": "Année" },
+    "film_eyebrow": "Film",
+    "videos_eyebrow": "Vidéos",
+    "photos_eyebrow": "Photographies",
+    "next": "Série suivante",
+    "back": "Retour aux travaux"
+  },
+  "contact": {
+    "title": [[{ "t": "La prochaine histoire " }, { "t": "peut être la vôtre", "em": true }]],
+    "text": "Un mariage, un festival, une rencontre que vous voulez garder vivante. On en parle.",
+    "button": { "label": "Commencer" }
+  }
+}

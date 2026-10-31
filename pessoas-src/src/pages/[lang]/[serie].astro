@@ -1,0 +1,13 @@
+---
+// Séries en français et en anglais (/fr/tango, /en/tango). Corps : views/Serie.astro.
+import Serie from '../../views/Serie.astro';
+import { publishedSeries } from '../../lib/series.js';
+
+export function getStaticPaths() {
+  return ['fr', 'en'].flatMap((lang) => {
+    const all = publishedSeries(lang);
+    return all.map((s, i) => ({ params: { lang, serie: s.slug }, props: { s, next: all[(i + 1) % all.length] } }));
+  });
+}
+---
+<Serie lang={Astro.params.lang} s={Astro.props.s} next={Astro.props.next} />

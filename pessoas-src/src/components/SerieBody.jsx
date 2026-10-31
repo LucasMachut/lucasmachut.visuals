@@ -6,7 +6,10 @@ import SerieLightbox from './SerieLightbox.jsx';
 import VideoFacade from './VideoFacade.jsx';
 import { placeDate } from '../lib/serie-text.js';
 
-export default function SerieBody({ s, next, p }) {
+// base : préfixe de langue des liens ('' en portugais, '/fr'…) ; ui : textes du plein écran.
+const UI_PT = { close: 'Fechar', prev: 'Foto anterior', next: 'Próxima foto', photo: 'foto' };
+
+export default function SerieBody({ s, next, p, base = '', ui = UI_PT }) {
   const meta = [['location', p.meta.location, s.location], ['type', p.meta.type, s.type], ['year', p.meta.year, s.year]]
     .filter(([, , v]) => v);
   // Rythme des plaques : une grande, puis deux côte à côte, et on recommence
@@ -55,7 +58,7 @@ export default function SerieBody({ s, next, p }) {
             <div key={gi} className={g.length === 1 ? `sp-one ${gi % 4 === 2 ? 'sp-one--right' : ''}` : 'sp-two'}>
               {g.map((ph) => (
                 <button key={ph.index} className="plate sp-plate" data-lb={ph.index} data-edit={`photos.${ph.index}`}
-                  aria-label={`${s.title}, foto ${ph.index + 1}`}>
+                  aria-label={`${s.title}, ${ui.photo} ${ph.index + 1}`}>
                   <span className="plate-line" />
                   <span className="plate-clip"><img data-drift src={ph.src} alt={ph.alt} width={ph.w} height={ph.h} loading="lazy" decoding="async" /></span>
                 </button>
@@ -65,18 +68,18 @@ export default function SerieBody({ s, next, p }) {
         </section>
         {next && (
           <section className="sn tb-wrap">
-            <a href={`/${next.slug}`} className="sn-next">
+            <a href={`${base}/${next.slug}`} className="sn-next">
               <span className="eyebrow"><i />{p.next}</span>
               <span className="sn-row">
                 <span className="sn-title t-title">{next.title} <span aria-hidden="true">→</span></span>
                 <span className="plate sn-plate"><span className="plate-clip"><img data-drift src={next.cover} alt="" loading="lazy" /></span></span>
               </span>
             </a>
-            <a href="/portfolio" className="u-link sn-back">← {p.back}</a>
+            <a href={`${base}/portfolio`} className="u-link sn-back">← {p.back}</a>
           </section>
         )}
       </div>
-      <SerieLightbox photos={s.photos} labels={{ dialog: s.title, close: 'Fechar', prev: 'Foto anterior', next: 'Próxima foto' }} />
+      <SerieLightbox photos={s.photos} labels={{ dialog: s.title, close: ui.close, prev: ui.prev, next: ui.next }} />
     </>
   );
 }

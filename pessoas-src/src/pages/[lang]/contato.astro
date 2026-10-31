@@ -1,0 +1,6 @@
+---
+// Version française et anglaise (/fr/, /en/). Corps : views/Contato.astro.
+import Contato from '../../views/Contato.astro';
+export const getStaticPaths = () => [{ params: { lang: 'fr' } }, { params: { lang: 'en' } }];
+---
+<Contato lang={Astro.params.lang} />

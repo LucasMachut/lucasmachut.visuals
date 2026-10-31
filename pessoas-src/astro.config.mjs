@@ -3,7 +3,7 @@
 // le serveur de dev les sert depuis là, en ligne elles y sont déjà.
 import { defineConfig } from 'astro/config';
 import react from '@astrojs/react';
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, statSync, renameSync } from 'node:fs';
 import { sendFile } from './send-file.mjs';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -24,8 +24,24 @@ function serveMedia(req, res, next) {
   sendFile(req, res, file, TYPES[extname(file).toLowerCase()] || 'application/octet-stream');
 }
 
+// format 'file' sort l'accueil traduit en fr.html et en.html ; en ligne il doit
+// être fr/index.html et en/index.html (lucasmachut.com/fr/, et les pages lugares
+// pointent déjà vers /fr/index.html).
+const langIndex = {
+  name: 'lang-index',
+  hooks: {
+    'astro:build:done': ({ dir }) => {
+      const out = fileURLToPath(dir);
+      for (const l of ['fr', 'en']) {
+        const from = join(out, l + '.html');
+        if (existsSync(from)) renameSync(from, join(out, l, 'index.html'));
+      }
+    },
+  },
+};
+
 export default defineConfig({
-  integrations: [react()],
+  integrations: [react(), langIndex],
   build: { format: 'file' },
   vite: { plugins: [siteMedia] },
 });

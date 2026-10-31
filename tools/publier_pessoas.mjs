@@ -5,15 +5,18 @@
 //   node tools/publier_pessoas.mjs           copie pour de vrai
 //   --dist <dossier>                         lit un autre build que pessoas-src/dist/
 //
-// Règles de sécurité : lugares, les anciennes pages EN/FR, l'admin, les
+// Règles de sécurité : lugares (et ses pages traduites de en/ fr/), l'admin, les
 // photos, les vidéos et les sources ne sont jamais touchés. Un fichier
-// existant n'est remplacé que s'il s'agit d'une page .html à la racine.
+// existant n'est remplacé que s'il s'agit d'une page .html à la racine (ou de fr/, en/).
 // Rien d'autre que ces pages et _astro/ n'est copié.
 // Le dossier _astro/ (scripts et styles du build, noms à empreinte)
 // appartient au build : il est vidé puis recopié à chaque fois.
 // À la moindre entorse, rien n'est copié et le script sort en erreur.
 // Une seule exception à « la racine » : la page admin.html d'Astro devient
 // admin/index.html (servie à /admin) ; l'ancien admin reste dans admin/lugares/.
+// Les versions française et anglaise vont dans fr/ et en/ : seules les pages
+// .html de premier niveau y sont déposées, et jamais par-dessus les pages
+// lugares traduites qui y vivent aussi (hoteis, regard, villas, contact).
 import { cpSync, existsSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -25,8 +28,12 @@ const ESSAI = process.argv.includes('--essai');
 
 const DEPLACES = { 'admin.html': 'admin/index.html' };
 
+const LANGUES = ['fr', 'en'];
+const LUGARES_TRADUITS = ['hoteis', 'portfolio-hoteis', 'regard', 'sempre-vivo', 'villa-egeu', 'villa-balthazar', 'contact']
+  .map((n) => n + '.html');
+
 const PROTEGES = [
-  'lugares/', 'en/', 'fr/', 'admin/', 'photos/', 'videos/', 'data/', 'partials/', 'tools/',
+  'lugares/', 'admin/', 'photos/', 'videos/', 'data/', 'partials/', 'tools/',
   'css/', 'js/', 'pessoas-src/', 'Projets-web/', 'page regard/', '.github/', '.htaccess',
 ];
 
@@ -57,6 +64,14 @@ for (const f of fichiers(DIST)) {
   const cible = join(RACINE, rel);
   if (PROTEGES.some(p => rel === p || rel.startsWith(p))) { refus.push(rel + '  (dossier protégé)'); continue; }
   if (rel.startsWith('_astro/')) { nouveaux.push(rel); continue; }
+  const [langue, page, ...reste] = rel.split('/');
+  if (LANGUES.includes(langue) && page && !reste.length && page.endsWith('.html')) {
+    if (LUGARES_TRADUITS.includes(page)) { refus.push(rel + '  (page lugares traduite)'); continue; }
+    pages.push(rel);
+    if (!existsSync(cible)) nouveaux.push(rel);
+    else (readFileSync(cible).equals(readFileSync(f)) ? identiques : remplaces).push(rel);
+    continue;
+  }
   if (rel.includes('/') || !rel.endsWith('.html')) { ignores.push(rel); continue; }
   pages.push(rel);
   if (!existsSync(cible)) nouveaux.push(rel);
@@ -68,20 +83,29 @@ for (const f of fichiers(DIST)) {
 // des pages de cette liste peuvent l'être, jamais une page d'avant pessoas.
 // Hostinger copie le dépôt sans supprimer ce qui en sort : la page n'est donc
 // pas effacée mais remplacée par un renvoi vers Trabalhos, non indexé.
-const RENVOI = '<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="robots" content="noindex">'
-  + '<meta http-equiv="refresh" content="0; url=/portfolio"><link rel="canonical" href="/portfolio">'
-  + '<title>Lucas Machut</title></head><body><a href="/portfolio">Trabalhos</a></body></html>\n';
+// Une page fr/ ou en/ renvoie vers les Trabalhos de sa langue.
+const renvoi = (p) => {
+  const l = LANGUES.find((x) => p.startsWith(x + '/'));
+  const vers = l ? `/${l}/portfolio` : '/portfolio';
+  return `<!doctype html><html lang="${l || 'pt-BR'}"><head><meta charset="utf-8"><meta name="robots" content="noindex">`
+    + `<meta http-equiv="refresh" content="0; url=${vers}"><link rel="canonical" href="${vers}">`
+    + `<title>Lucas Machut</title></head><body><a href="${vers}">${{ fr: 'Travaux', en: 'Work' }[l] || 'Trabalhos'}</a></body></html>\n`;
+};
 const MANIFESTE = join(RACINE, '_astro', 'pessoas-pages.json');
 const cibles = pages.map((p) => DEPLACES[p] || p);
 const avant = existsSync(MANIFESTE) ? JSON.parse(readFileSync(MANIFESTE, 'utf8')) : [];
-const retires = avant.filter((p) => !cibles.includes(p) && p.endsWith('.html') && !p.includes('/'));
+const enLangue = (p) => {
+  const [l, page, ...reste] = p.split('/');
+  return LANGUES.includes(l) && page && !reste.length && !LUGARES_TRADUITS.includes(page);
+};
+const retires = avant.filter((p) => !cibles.includes(p) && p.endsWith('.html') && (!p.includes('/') || enLangue(p)));
 
 const anciensAstro = existsSync(join(RACINE, '_astro'))
   ? fichiers(join(RACINE, '_astro')).map(f => relative(RACINE, f).split(sep).join('/'))
   : [];
 
 const liste = (titre, l) => console.log(`\n${titre} (${l.length})` + (l.length ? '\n  ' + l.join('\n  ') : ''));
-liste('Pages de la racine remplacées', remplaces);
+liste('Pages remplacées', remplaces);
 liste('Fichiers ajoutés', nouveaux);
 liste('Pages déjà identiques', identiques);
 liste('Anciens fichiers _astro/ retirés', anciensAstro.filter(a => !nouveaux.includes(a)));
@@ -100,6 +124,6 @@ if (ESSAI) {
 rmSync(join(RACINE, '_astro'), { recursive: true, force: true });
 if (existsSync(join(DIST, '_astro'))) cpSync(join(DIST, '_astro'), join(RACINE, '_astro'), { recursive: true });
 for (const p of pages) cpSync(join(DIST, p), join(RACINE, DEPLACES[p] || p));
-for (const p of retires) writeFileSync(join(RACINE, p), RENVOI);
+for (const p of retires) writeFileSync(join(RACINE, p), renvoi(p));
 writeFileSync(MANIFESTE, JSON.stringify(cibles, null, 2) + '\n');
 console.log('\nSite pessoas déposé à la racine.');

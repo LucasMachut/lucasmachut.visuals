@@ -1,0 +1,72 @@
+{
+  "seo": {
+    "title": "Lucas Machut, photographer and filmmaker in Rio de Janeiro",
+    "description": "Photography and film about people: weddings, festivals, sessions and travel. The bond, the movement, never the pose."
+  },
+  "nav": [{ "label": "Work" }, { "label": "Contact" }],
+  "nav_cta": { "label": "Begin" },
+  "hero": {
+    "eyebrow": "Photographer and filmmaker · Rio de Janeiro",
+    "subline": "human, authentic, sensitive",
+    "scroll": "Scroll"
+  },
+  "manifesto": {
+    "eyebrow": "I · What I keep",
+    "lines": [
+      [{ "t": "Keeping alive what passes." }],
+      [{ "t": "A " }, { "t": "glance", "em": true }, { "t": ", a hug" }],
+      [{ "t": "no one was asked to pose for," }],
+      [{ "t": "the laugh before it " }, { "t": "fades", "em": true }, { "t": "." }]
+    ],
+    "text": "I photograph the bond between people. What you feel when you are there, and what comes back years later, looking at the image again. Never the pose: the movement, the spontaneous, the details that slip away.",
+    "link": { "label": "See the work" }
+  },
+  "film_dia": {
+    "chapters": [
+      { "kicker": "A gesture", "title": [{ "t": "Before " }, { "t": "thinking", "em": true }, { "t": " of posing" }] },
+      { "kicker": "A glance", "title": [{ "t": "What passes between two " }, { "t": "people", "em": true }] },
+      { "kicker": "An instant", "title": [{ "t": "And what was " }, { "t": "kept", "em": true }] }
+    ]
+  },
+  "oferta": {
+    "eyebrow": "II · What I do",
+    "title": [{ "t": "Four ways of " }, { "t": "being", "em": true }, { "t": " there" }],
+    "hint": "( scroll )",
+    "cards": [
+      { "title": "Weddings and elopements", "text": "The whole day without posing, from the first hug to the last song.", "link": { "label": "See the work" } },
+      { "title": "Festivals and events", "text": "Flash, a long lens and attention: the interactions no one sees.", "link": { "label": "See the work" } },
+      { "title": "Sessions and portraits", "text": "Couples, families, the body set free. In nature, in motion.", "link": { "label": "See the work" } },
+      { "title": "Retreats and travel", "text": "Experiences, adventure, a place with people in it.", "link": { "label": "See the work" } }
+    ]
+  },
+  "noite": {
+    "kicker": "III · The bonds",
+    "lines": [
+      [{ "t": "What passes" }],
+      [{ "t": "between " }, { "t": "people", "em": true }]
+    ]
+  },
+  "film_noite": {
+    "chapters": [
+      { "kicker": "The bonds", "title": [{ "t": "Gestures no one " }, { "t": "planned", "em": true }] },
+      { "kicker": "Movement", "title": [{ "t": "Bodies in motion, feelings that are " }, { "t": "real", "em": true }] }
+    ],
+    "quote": "In the end, it was never about how we look, but about who we are."
+  },
+  "fim": {
+    "eyebrow": "IV · Let's talk",
+    "lines": [
+      [{ "t": "Everything begins" }],
+      [{ "t": "with a " }, { "t": "conversation", "em": true }]
+    ],
+    "disc": { "label": "Begin" },
+    "columns": [
+      { "head": "Explore", "links": [{ "label": "Work" }, { "label": "Contact" }] },
+      { "head": "Elsewhere" },
+      { "links": [{ "href": "/en/hoteis" }] }
+    ],
+    "vertical": "thank you",
+    "bar_left": "© 2026 Lucas Machut · keeping alive what passes",
+    "bar_right": "Rio de Janeiro · Brazil"
+  }
+}

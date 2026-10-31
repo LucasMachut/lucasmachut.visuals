@@ -1,0 +1,25 @@
+---
+// Trabalhos : une carte plate frame par série publiée. Textes dans
+// data/pessoas/trabalhos.json, séries dans data/pessoas/series/*.json
+// (traductions dans data/pessoas/<lang>/).
+// Le corps de page est TrabalhosBody, le même composant que l'admin affiche.
+import Base from '../layouts/Base.astro';
+import TrabalhosBody from '../components/TrabalhosBody.jsx';
+import accueilPt from '../../../data/pessoas/accueil.json';
+import { trabalhos, publishedSeries } from '../lib/series.js';
+import { inLang, base } from '../lib/i18n.js';
+import '../styles/trabalhos.css';
+
+const { lang = 'pt' } = Astro.props;
+const t = inLang(lang, 'trabalhos', trabalhos);
+const accueil = inLang(lang, 'accueil', accueilPt);
+const series = publishedSeries(lang);
+---
+<Base title={t.seo.title} description={t.seo.description} nav={accueil.nav} cta={accueil.nav_cta} lang={lang} path="/portfolio">
+  <TrabalhosBody t={t} series={series} base={base(lang)} />
+</Base>
+<script>
+  import { initDrift, initReveal } from '../scripts/drift.js';
+  initDrift();
+  initReveal();
+</script>

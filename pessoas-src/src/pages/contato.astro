@@ -1,11 +1,5 @@
 ---
-// Contato pessoas. Tout le texte vient de data/pessoas/contato.json.
-// Le corps de page est ContatoBody, le même composant que l'admin affiche.
-import Base from '../layouts/Base.astro';
-import ContatoBody from '../components/ContatoBody.jsx';
-import data from '../../../data/pessoas/contato.json';
-import '../styles/contato.css';
+// Contato en portugais ; /fr/ et /en/ sont dans pages/[lang]/. Corps : views/Contato.astro.
+import Contato from '../views/Contato.astro';
 ---
-<Base title={data.seo.title} description={data.seo.description} nav={data.nav} cta={data.nav_cta}>
-  <ContatoBody client:load data={data} />
-</Base>
+<Contato lang="pt" />

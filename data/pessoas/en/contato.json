@@ -1,0 +1,49 @@
+{
+  "seo": {
+    "title": "Contact, Lucas Machut",
+    "description": "Weddings, festivals, sessions and travel in Rio de Janeiro and wherever the story happens. Tell me the date, the place and the people."
+  },
+  "nav": [{ "label": "Work" }, { "label": "Contact" }],
+  "nav_cta": { "label": "Begin" },
+  "hero": {
+    "eyebrow": "Contact",
+    "title": [{ "t": "Tell me what is going to " }, { "t": "happen", "em": true }],
+    "strip": "Weddings · Festivals · Sessions · Travel"
+  },
+  "voice": {
+    "title": [{ "t": "The date, the place, " }, { "t": "the people", "em": true }],
+    "paragraphs": [
+      "The sooner we talk, the more time I have to understand who will be there and what that day holds.",
+      "I reply within 48 hours, always myself.",
+      "If you would rather talk directly, WhatsApp is the fastest way."
+    ],
+    "links": [{}, { "label": "Festivals" }, {}, { "label": "Email" }]
+  },
+  "form": {
+    "intro": "Hi Lucas, I found you through your website.",
+    "fields": [
+      { "label": "Name" },
+      { "label": "What it is", "options": ["Wedding", "Session", "Event", "Other"] },
+      { "label": "Date or period", "placeholder": "March 2027, still open…" },
+      { "label": "Place", "placeholder": "city, beach, countryside…" },
+      { "label": "Expected length", "options": ["A few hours", "Half a day", "The whole day", "More than a day"] },
+      { "label": "How many people", "options": ["Just me", "The two of us", "Up to 20", "Up to 50", "Up to 120", "More than 120"] },
+      { "label": "Email" },
+      { "label": "WhatsApp", "placeholder": "+ country code" },
+      { "label": "Message", "placeholder": "Who will be there, how you met, what cannot be missing." },
+      { "label": "How you found me", "options": ["Instagram", "Someone recommended you", "Google", "Other"] }
+    ],
+    "select_placeholder": "Select",
+    "errors": {
+      "nome": "Tell me your name.",
+      "email": "I need a valid email to reply to you."
+    },
+    "submit": "Send",
+    "sent": {
+      "title": "WhatsApp is open with your message.",
+      "text": "All that is left is to press send there.",
+      "retry": "WhatsApp did not open? Open it again",
+      "again": "Write another message"
+    }
+  }
+}

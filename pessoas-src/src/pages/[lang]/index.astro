@@ -1,0 +1,6 @@
+---
+// Version française et anglaise (/fr/, /en/). Corps : views/Home.astro.
+import Home from '../../views/Home.astro';
+export const getStaticPaths = () => [{ params: { lang: 'fr' } }, { params: { lang: 'en' } }];
+---
+<Home lang={Astro.params.lang} />

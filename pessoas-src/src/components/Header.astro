@@ -1,22 +1,33 @@
 ---
 // En-tête Koisei (#nav) : 88 px, verre lin après 120 px de défilement (68 px).
 // Sur la photo du hero il passe en crème (état .nav--night de Koisei).
-const { nav = [], cta } = Astro.props;
+// Sélecteur PT · FR · EN : la même page dans l'autre langue ; sur téléphone,
+// en bas du menu ouvert.
+import { LANGS, UI, pathIn } from '../lib/i18n.js';
+const { nav = [], cta, lang = 'pt', path = '/' } = Astro.props;
+const ui = UI[lang];
+const langs = LANGS.map((l) => ({ l, href: pathIn(l, path), on: l === lang }));
 ---
 <header id="nav" class="nav nav--night">
   <div class="nav-shell">
-    <a href="/" class="nav-mark">LUCAS MACHUT</a>
-    <nav class="nav-links" aria-label="Navegação principal">
+    <a href={pathIn(lang, '/')} class="nav-mark">LUCAS MACHUT</a>
+    <nav class="nav-links" aria-label={ui.nav}>
+      <span class="nav-langs" role="group" aria-label={ui.langs}>
+        {langs.map(({ l, href, on }, i) => <>{i > 0 && <span class="nav-sep" aria-hidden="true">·</span>}<a href={href} hreflang={l} class:list={['nav-lang', { 'is-on': on }]} aria-current={on ? 'true' : undefined}>{l.toUpperCase()}</a></>)}
+      </span>
       {nav.map((l) => <a href={l.href} class="u-link">{l.label}</a>)}
       {cta && <a href={cta.href} class="nav-pill">{cta.label}</a>}
     </nav>
-    <button class="nav-burger" aria-label="Abrir menu" aria-expanded="false">
+    <button class="nav-burger" aria-label={ui.menu} aria-expanded="false">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
   </div>
   <nav class="nav-sheet" aria-label="Menu">
     {nav.map((l) => <a href={l.href}>{l.label}</a>)}
     {cta && <a href={cta.href}>{cta.label}</a>}
+    <span class="nav-langs nav-langs--sheet" role="group" aria-label={ui.langs}>
+      {langs.map(({ l, href, on }, i) => <>{i > 0 && <span class="nav-sep" aria-hidden="true">·</span>}<a href={href} hreflang={l} class:list={['nav-lang', { 'is-on': on }]} aria-current={on ? 'true' : undefined}>{l.toUpperCase()}</a></>)}
+    </span>
   </nav>
 </header>
 
@@ -43,6 +54,13 @@ const { nav = [], cta } = Astro.props;
   }
   .nav--night .nav-pill { border-color: rgba(237, 233, 223, .3); }
   .nav-pill:hover { background: var(--terra); color: var(--lin); border-color: var(--terra); }
+  /* PT · FR · EN : petites lettres, la langue active soulignée terracotta */
+  .nav-langs { display: inline-flex; align-items: center; gap: .55rem; font-family: var(--f-ui, 'Space Grotesk', sans-serif); font-size: 11px; letter-spacing: .14em; }
+  .nav-lang { opacity: .6; padding: .25rem 0; border-bottom: 1px solid transparent; transition: opacity .3s; }
+  .nav-lang:hover { opacity: 1; }
+  .nav-lang.is-on { opacity: 1; border-bottom-color: var(--terracotta); }
+  .nav-sep { opacity: .5; }
+  .nav-langs--sheet { display: none; }
   .nav-burger { display: none; background: none; border: 0; padding: 0; color: inherit; cursor: pointer; }
   .nav-sheet { display: none; }
 
@@ -56,6 +74,7 @@ const { nav = [], cta } = Astro.props;
       clip-path: inset(0 0 100% 0); transition: clip-path .6s var(--ease);
     }
     .nav.is-open .nav-sheet { clip-path: inset(0 0 0 0); }
+    .nav-langs--sheet { display: inline-flex; margin-top: 1.5rem; font-size: 13px; gap: .9rem; }
     .nav.is-open { color: var(--terra); }
     .nav.is-open .nav-shell { background: transparent; backdrop-filter: none; }
   }

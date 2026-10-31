@@ -1,24 +1,12 @@
 ---
-// Gabarit série : une page par série publiée de data/pessoas/trabalhos.json.
-// Le corps de page est SerieBody, le même composant que l'admin affiche
-// (hydraté pour le scroll film, les vidéos et le plein écran).
-import Base from '../layouts/Base.astro';
-import SerieBody from '../components/SerieBody.jsx';
-import accueil from '../../../data/pessoas/accueil.json';
-import { trabalhos as t, publishedSeries } from '../lib/series.js';
-import '../styles/trabalhos.css';
+// Une page par série publiée de data/pessoas/trabalhos.json, en portugais ;
+// /fr/ et /en/ sont dans pages/[lang]/. Corps : views/Serie.astro.
+import Serie from '../views/Serie.astro';
+import { publishedSeries } from '../lib/series.js';
 
 export function getStaticPaths() {
   const all = publishedSeries();
   return all.map((s, i) => ({ params: { serie: s.slug }, props: { s, next: all[(i + 1) % all.length] } }));
 }
-const { s, next } = Astro.props;
 ---
-<Base title={`${s.title}, Lucas Machut`} description={s.lede || `${s.title}: série de Lucas Machut.`} nav={accueil.nav} cta={accueil.nav_cta}>
-  <SerieBody client:load s={s} next={next} p={t.serie_page} />
-</Base>
-<script>
-  import { initDrift, initReveal } from '../scripts/drift.js';
-  initDrift();
-  initReveal();
-</script>
+<Serie lang="pt" s={Astro.props.s} next={Astro.props.next} />

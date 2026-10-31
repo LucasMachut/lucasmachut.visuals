@@ -1,0 +1,49 @@
+{
+  "seo": {
+    "title": "Contact, Lucas Machut",
+    "description": "Mariages, festivals, séances et voyages à Rio de Janeiro et là où l'histoire se passe. Racontez-moi la date, le lieu et les personnes."
+  },
+  "nav": [{ "label": "Travaux" }, { "label": "Contact" }],
+  "nav_cta": { "label": "Commencer" },
+  "hero": {
+    "eyebrow": "Contact",
+    "title": [{ "t": "Racontez-moi ce qui va se " }, { "t": "passer", "em": true }],
+    "strip": "Mariages · Festivals · Séances · Voyages"
+  },
+  "voice": {
+    "title": [{ "t": "La date, le lieu, " }, { "t": "les personnes", "em": true }],
+    "paragraphs": [
+      "Plus tôt on en parle, plus j'ai de temps pour comprendre qui sera là et ce qui compte ce jour-là.",
+      "Je réponds sous 48 heures, toujours moi-même.",
+      "Si vous préférez parler directement, WhatsApp est le chemin le plus rapide."
+    ],
+    "links": [{}, { "label": "Festivals" }, {}, { "label": "E-mail" }]
+  },
+  "form": {
+    "intro": "Bonjour Lucas, je viens du site.",
+    "fields": [
+      { "label": "Nom" },
+      { "label": "Le projet", "options": ["Mariage", "Séance", "Événement", "Autre"] },
+      { "label": "Date ou période", "placeholder": "mars 2027, encore ouvert…" },
+      { "label": "Lieu", "placeholder": "ville, plage, maison de campagne…" },
+      { "label": "Durée prévue", "options": ["Quelques heures", "Une demi-journée", "Toute la journée", "Plus d'une journée"] },
+      { "label": "Combien de personnes", "options": ["Juste moi", "Nous deux", "Jusqu'à 20", "Jusqu'à 50", "Jusqu'à 120", "Plus de 120"] },
+      { "label": "E-mail" },
+      { "label": "WhatsApp", "placeholder": "+33" },
+      { "label": "Message", "placeholder": "Qui sera là, comment vous vous êtes rencontrés, ce qui ne peut pas manquer." },
+      { "label": "Comment vous m'avez trouvé", "options": ["Instagram", "Recommandé par quelqu'un", "Google", "Autre"] }
+    ],
+    "select_placeholder": "Choisir",
+    "errors": {
+      "nome": "Dites-moi votre nom.",
+      "email": "J'ai besoin d'un e-mail valide pour vous répondre."
+    },
+    "submit": "Envoyer",
+    "sent": {
+      "title": "On a ouvert WhatsApp avec votre message.",
+      "text": "Il ne reste qu'à appuyer sur envoyer là-bas.",
+      "retry": "WhatsApp ne s'est pas ouvert ? Le rouvrir",
+      "again": "Écrire un autre message"
+    }
+  }
+}

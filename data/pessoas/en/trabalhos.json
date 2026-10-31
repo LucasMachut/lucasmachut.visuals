@@ -1,0 +1,24 @@
+{
+  "seo": {
+    "title": "Work, Lucas Machut",
+    "description": "Photography and film series by Lucas Machut: people, encounters and moments that don't come back."
+  },
+  "eyebrow": "II · Work",
+  "title": [[{ "t": "What I " }, { "t": "kept", "em": true }]],
+  "lede": "Each series is a place and the people who were there. Nothing posed: the movement, the laughter, the gesture that passed.",
+  "card_link": "See the series",
+  "serie_page": {
+    "lede_eyebrow": "About the series",
+    "meta": { "location": "Place", "type": "Type", "year": "Year" },
+    "film_eyebrow": "Film",
+    "videos_eyebrow": "Videos",
+    "photos_eyebrow": "Photographs",
+    "next": "Next series",
+    "back": "Back to the work"
+  },
+  "contact": {
+    "title": [[{ "t": "The next story " }, { "t": "could be yours", "em": true }]],
+    "text": "A wedding, a festival, a gathering you want to keep alive. Let's talk.",
+    "button": { "label": "Begin" }
+  }
+}

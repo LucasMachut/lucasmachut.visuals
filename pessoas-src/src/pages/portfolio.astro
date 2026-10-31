@@ -1,19 +1,5 @@
 ---
-// Trabalhos : une carte plate frame par série publiée. Textes dans
-// data/pessoas/trabalhos.json, séries dans data/pessoas/series/*.json.
-// Le corps de page est TrabalhosBody, le même composant que l'admin affiche.
-import Base from '../layouts/Base.astro';
-import TrabalhosBody from '../components/TrabalhosBody.jsx';
-import accueil from '../../../data/pessoas/accueil.json';
-import { trabalhos as t, publishedSeries } from '../lib/series.js';
-import '../styles/trabalhos.css';
-const series = publishedSeries();
+// Trabalhos en portugais ; /fr/ et /en/ sont dans pages/[lang]/. Corps : views/Trabalhos.astro.
+import Trabalhos from '../views/Trabalhos.astro';
 ---
-<Base title={t.seo.title} description={t.seo.description} nav={accueil.nav} cta={accueil.nav_cta}>
-  <TrabalhosBody t={t} series={series} />
-</Base>
-<script>
-  import { initDrift, initReveal } from '../scripts/drift.js';
-  initDrift();
-  initReveal();
-</script>
+<Trabalhos lang="pt" />
