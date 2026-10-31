@@ -43,7 +43,6 @@ export default function SerieFilm({ film, poster, eyebrow }) {
       {film.video
         ? <video ref={vid} className="sfilm-media" src={film.video} poster={film.poster || poster} muted playsInline preload="auto" />
         : <img className="sfilm-media" src={film.poster || poster} alt="" loading="lazy" />}
-      <div className="sfilm-vignette" />
       <div className="sfilm-chapter">
         <p className="sfilm-eyebrow">{eyebrow}</p>
         {!film.video && <h3 className="sfilm-title t-title">{film.label}</h3>}

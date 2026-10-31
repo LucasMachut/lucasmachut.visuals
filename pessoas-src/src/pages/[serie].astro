@@ -29,7 +29,6 @@ const filmPoster = (s.photos[Math.floor(s.photos.length / 2)] || {}).src || s.he
 <Base title={`${s.title}, Lucas Machut`} description={s.lede || `${s.title}: série de Lucas Machut.`} nav={accueil.nav} cta={accueil.nav_cta}>
   <section class="sh">
     <img class="sh-img" src={s.hero} alt={s.title} decoding="async" fetchpriority="high" />
-    <div class="sh-veil" />
     <div class="sh-content">
       {s.eyebrow && <div class="clip"><p class="heroLine sh-eyebrow">{s.eyebrow}</p></div>}
       <h1 class="sh-title t-title"><span class="clip"><span class="heroLine">{s.title}</span></span></h1>
