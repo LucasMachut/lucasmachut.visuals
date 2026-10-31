@@ -1,0 +1,16 @@
+---
+// Accueil pessoas. Tout le texte vient de data/pessoas/accueil.json,
+// le fichier que l'admin modifiera.
+import Base from '../layouts/Base.astro';
+import HomeStage from '../components/HomeStage.jsx';
+import Manifesto from '../components/Manifesto.jsx';
+import data from '../../../data/pessoas/accueil.json';
+import '../styles/home.css';
+---
+<Base title={data.seo.title} description={data.seo.description} nav={data.nav} cta={data.nav_cta}>
+  <HomeStage client:load hero={data.hero} />
+  <section id="journey" class="journey" data-covers-hero>
+    <Manifesto client:load data={data.manifesto} />
+  </section>
+  <div style="height:60vh;background:var(--lin);position:relative;z-index:20"></div>
+</Base>

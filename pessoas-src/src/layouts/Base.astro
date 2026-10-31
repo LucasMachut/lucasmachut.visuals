@@ -1,0 +1,43 @@
+---
+import '../styles/tokens.css';
+import Header from '../components/Header.astro';
+const { title, description, nav, cta } = Astro.props;
+---
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..500;1,6..72,300..500&family=Space+Grotesk:wght@400;500&family=Special+Elite&display=swap" rel="stylesheet" />
+  <noscript><style>#loader{display:none!important}</style></noscript>
+</head>
+<body>
+  <canvas id="grain" aria-hidden="true"></canvas>
+  <Header nav={nav} cta={cta} />
+  <main>
+    <slot />
+  </main>
+  <script>
+    // Grain Koisei : bruit 180 px renouvelé une image sur deux, posé en overlay
+    const c = document.getElementById('grain') as HTMLCanvasElement;
+    const x = c.getContext('2d')!;
+    c.width = c.height = 180;
+    let f = 0;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    (function grain() {
+      if (++f % 2 === 0 || f === 1) {
+        const d = x.createImageData(180, 180), p = d.data;
+        for (let i = 0; i < p.length; i += 4) { const v = Math.random() * 255; p[i] = p[i + 1] = p[i + 2] = v; p[i + 3] = 255; }
+        x.putImageData(d, 0, 0);
+      }
+      if (!reduced) requestAnimationFrame(grain);
+    })();
+  </script>
+</body>
+</html>

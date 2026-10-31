@@ -1,0 +1,105 @@
+/* Accueil pessoas : preloader, hero, manifeste. Valeurs Koisei (index.html de
+   l'Overview), couleurs et polices transposées par tokens.css.
+   Special Elite chasse environ 1,4 fois plus large que Cormorant : pour garder
+   la longueur de ligne Koisei du manifeste, son corps est réduit d'autant. */
+
+/* ---------- Preloader (#loader) ---------- */
+.loader {
+  position: fixed; inset: 0; z-index: 110; background: var(--lin);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.loader-word {
+  font-family: var(--f-title); font-size: clamp(1.6rem, 4.2vw, 3rem); letter-spacing: .5em;
+  color: var(--terra); white-space: nowrap; padding: 0 1rem; text-align: center;
+}
+.loader-track { margin-top: 2rem; width: 12rem; position: relative; }
+.loader-line { height: 1px; width: 100%; background: var(--line); }
+.loader-bar { height: 1px; position: absolute; left: 0; top: 0; width: 100%; background: var(--terra); transform: scaleX(0); transform-origin: left; }
+.loader-pct { margin-top: .75rem; font-size: 12px; letter-spacing: .2em; color: rgba(46, 38, 32, .6); }
+
+/* ---------- Plaque WebGL + hero (#gl, #hero) ---------- */
+.gl { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
+.hero {
+  position: relative; height: 100vh; height: 100svh; z-index: 6;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.hero-fallback {
+  position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1;
+  transition: opacity .6s;
+}
+.clip { display: block; overflow: hidden; }
+.hero-content {
+  position: relative; z-index: 10; margin-top: 8vh; padding: 0 1.5rem;
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+}
+.eyebrow-hero {
+  display: block; margin-bottom: 1.5rem; font-size: 12px; letter-spacing: .32em;
+  text-transform: uppercase; color: var(--creme);
+}
+.hero-name {
+  font-family: var(--f-title); font-weight: 400; margin: 0;
+  font-size: clamp(4rem, 11vw, 11.5rem); line-height: .95; letter-spacing: -.015em;
+  color: var(--creme); text-shadow: 0 2px 40px rgba(46, 38, 32, .35);
+  text-transform: uppercase;
+}
+.hero-name .heroLine { display: block; }
+.heroLine { will-change: transform; }
+.hero-rule { margin-top: 2rem; height: 1px; width: 4rem; background: rgba(237, 233, 223, .7); }
+.hero-sub { margin-top: 1rem; font-size: 14px; letter-spacing: .08em; color: var(--creme-2); }
+/* Koisei pose son ombre de titre sur tout le texte crème du hero : ma photo
+   est plus claire en bas que la plaque sakura, sans elle la sous-ligne disparaît. */
+.eyebrow-hero, .hero-sub, .hero-scroll, .hero-vertical { text-shadow: 0 1px 18px rgba(46, 38, 32, .55); }
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 10;
+  display: flex; flex-direction: column; align-items: center; gap: .75rem;
+  font-size: 12px; letter-spacing: .32em; text-transform: uppercase; color: rgba(237, 233, 223, .8);
+}
+.hero-scroll-line { position: relative; width: 1px; height: 2.5rem; background: rgba(237, 233, 223, .35); }
+.hero-scroll-line div {
+  position: absolute; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%;
+  background: var(--creme); animation: scrollDot 1.8s ease-in-out infinite;
+}
+.hero-vertical {
+  position: absolute; right: 1.5rem; top: 50%; transform: translateY(-50%); z-index: 10;
+  writing-mode: vertical-rl; font-family: var(--f-title); text-transform: uppercase;
+  color: var(--creme-mute); letter-spacing: .4em; font-size: 13px;
+}
+.heroFade { opacity: 0; }
+@media (max-width: 767px) {
+  .hero-vertical { display: none; }
+  .eyebrow-hero { font-size: 11px; letter-spacing: .22em; }
+}
+
+/* ---------- Journey : manifeste (#journey) ---------- */
+.journey {
+  position: relative; z-index: 20; background: var(--lin); padding: 16vh 0;
+  border-top-left-radius: 32px; border-top-right-radius: 32px;
+}
+.journey::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: radial-gradient(120% 90% at 50% 50%, transparent 60%, rgba(46, 38, 32, .03) 100%);
+}
+.journey-inner { position: relative; max-width: 1400px; margin: 0 auto; padding: 0 var(--pad); }
+.journey-eyebrow { margin-bottom: 2.5rem; }
+.manifesto {
+  font-family: var(--f-title); font-weight: 400; margin: 0;
+  font-size: clamp(1.8rem, 3.9vw, 4.35rem); line-height: 1.08; letter-spacing: -.015em; max-width: 62ch;
+}
+.mLine { display: block; overflow: hidden; padding-bottom: .06em; }
+.mLine > span { display: block; }
+.mImg {
+  display: inline-block; vertical-align: middle; overflow: hidden; border-radius: 9999px;
+  width: 0; height: 70px; margin: 0 .5rem;
+}
+.mImg img { height: 100%; width: 140px; max-width: none; object-fit: cover; }
+@media (max-width: 767px) {
+  .mImg { height: 42px; margin: 0 .3rem; }
+  .mImg img { width: 84px; }
+}
+.journey-text { display: flex; justify-content: flex-end; margin-top: 4rem; }
+.journey-text > div { max-width: 34em; }
+.journey-text p {
+  font-family: var(--f-read); font-weight: 300; line-height: 1.7;
+  font-size: clamp(1.05rem, 1.25vw, 1.25rem); color: var(--ink-body);
+}
+.journey-link { display: inline-flex; align-items: center; gap: .5rem; margin-top: 1.5rem; font-size: 12px; letter-spacing: .12em; }

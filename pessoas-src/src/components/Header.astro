@@ -1,0 +1,79 @@
+---
+// En-tête Koisei (#nav) : 88 px, verre lin après 120 px de défilement (68 px).
+// Sur la photo du hero il passe en crème (état .nav--night de Koisei).
+const { nav = [], cta } = Astro.props;
+---
+<header id="nav" class="nav nav--night">
+  <div class="nav-shell">
+    <a href="/" class="nav-mark">LUCAS MACHUT</a>
+    <nav class="nav-links" aria-label="Navegação principal">
+      {nav.map((l) => <a href={l.href} class="u-link">{l.label}</a>)}
+      {cta && <a href={cta.href} class="nav-pill">{cta.label}</a>}
+    </nav>
+    <button class="nav-burger" aria-label="Abrir menu" aria-expanded="false">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <nav class="nav-sheet" aria-label="Menu">
+    {nav.map((l) => <a href={l.href}>{l.label}</a>)}
+    {cta && <a href={cta.href}>{cta.label}</a>}
+  </nav>
+</header>
+
+<style>
+  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 90; color: var(--terra); }
+  .nav-shell {
+    display: flex; align-items: center; justify-content: space-between;
+    height: 88px; padding: 0 var(--pad);
+    transition: height .5s var(--ease), background .5s, backdrop-filter .5s, color .5s;
+  }
+  .nav--scrolled .nav-shell { background: rgba(240, 232, 220, .82); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); height: 68px; }
+  .nav--night { color: var(--creme); }
+  .nav--night.nav--scrolled .nav-shell { background: rgba(46, 38, 32, .82); }
+  .nav-mark { font-family: var(--f-title); font-size: 14px; letter-spacing: .2em; }
+  .nav-links { display: flex; align-items: center; gap: 2rem; font-size: 12px; letter-spacing: .12em; }
+  .nav-pill {
+    border: 1px solid rgba(46, 38, 32, .4); border-radius: 9999px; padding: .625rem 1.25rem;
+    letter-spacing: .08em; transition: background .35s, color .35s, border-color .35s;
+  }
+  .nav--night .nav-pill { border-color: rgba(237, 233, 223, .3); }
+  .nav-pill:hover { background: var(--terra); color: var(--lin); border-color: var(--terra); }
+  .nav-burger { display: none; background: none; border: 0; padding: 0; color: inherit; cursor: pointer; }
+  .nav-sheet { display: none; }
+
+  @media (max-width: 767px) {
+    .nav-links { display: none; }
+    .nav-burger { display: block; }
+    .nav-sheet {
+      position: fixed; inset: 0; z-index: -1; display: flex; flex-direction: column; justify-content: center;
+      gap: 1.5rem; padding: 0 var(--pad); background: var(--lin); color: var(--terra);
+      font-family: var(--f-title); font-size: 2rem;
+      clip-path: inset(0 0 100% 0); transition: clip-path .6s var(--ease);
+    }
+    .nav.is-open .nav-sheet { clip-path: inset(0 0 0 0); }
+    .nav.is-open { color: var(--terra); }
+    .nav.is-open .nav-shell { background: transparent; backdrop-filter: none; }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById('nav')!;
+  const burger = nav.querySelector('.nav-burger')!;
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('is-open');
+    burger.setAttribute('aria-expanded', String(open));
+  });
+  // Koisei : .nav--scrolled après 120 px. Le crème ne vaut que tant que la photo
+  // fixe du hero est visible, c'est-à-dire avant que la section lin la recouvre.
+  const cover = document.querySelector('[data-covers-hero]');
+  const update = () => {
+    nav.classList.toggle('nav--scrolled', scrollY > 120);
+    const onPhoto = cover ? cover.getBoundingClientRect().top > 68 : false;
+    nav.classList.toggle('nav--night', onPhoto);
+  };
+  addEventListener('scroll', update, { passive: true });
+  addEventListener('resize', update);
+  addEventListener('load', update);
+  addEventListener('lm:layout', update);   // le hero épinglé change la hauteur de la page
+  update();
+</script>
