@@ -21,7 +21,12 @@ const { nav = [], cta } = Astro.props;
 </header>
 
 <style>
-  .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 90; color: var(--terra); }
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 90; color: var(--terra);
+    transition: transform .5s var(--ease);
+  }
+  /* Ordinateur : la nav s'efface quand on descend, revient dès qu'on remonte (Lucas) */
+  @media (min-width: 768px) { .nav--hidden { transform: translateY(-100%); } }
   .nav-shell {
     display: flex; align-items: center; justify-content: space-between;
     height: 88px; padding: 0 var(--pad);
@@ -70,8 +75,15 @@ const { nav = [], cta } = Astro.props;
   const cover = document.querySelector('[data-covers-hero]');
   const nightfall = document.getElementById('nightfall');
   const visit = document.getElementById('visit');
+  let lastY = scrollY;
   const update = () => {
-    nav.classList.toggle('nav--scrolled', scrollY > 120);
+    const y = scrollY;
+    // cachée en descendant (au-delà des 120 premiers px), visible dès qu'on remonte
+    if (Math.abs(y - lastY) > 4) {
+      nav.classList.toggle('nav--hidden', y > lastY && y > 120 && !nav.classList.contains('is-open'));
+      lastY = y;
+    }
+    nav.classList.toggle('nav--scrolled', y > 120);
     const onPhoto = cover ? cover.getBoundingClientRect().top > 68 : false;
     const atNight = nightfall && visit
       ? nightfall.getBoundingClientRect().top < innerHeight * .4 && visit.getBoundingClientRect().top > innerHeight * .6
