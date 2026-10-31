@@ -1,0 +1,58 @@
+{
+  "seo": {
+    "title": "Contato, Lucas Machut",
+    "description": "Casamentos, festivais, ensaios e viagens no Rio de Janeiro e onde a história acontecer. Me conte a data, o lugar e as pessoas."
+  },
+  "nav": [
+    { "label": "Trabalhos", "href": "/portfolio" },
+    { "label": "Contato", "href": "/contato" }
+  ],
+  "nav_cta": { "label": "Começar", "href": "/contato" },
+  "hero": {
+    "eyebrow": "Contato",
+    "title": [{ "t": "Me conta o que vai " }, { "t": "acontecer", "em": true }],
+    "strip": "Casamentos · Festivais · Ensaios · Viagens"
+  },
+  "voice": {
+    "title": [{ "t": "A data, o lugar, " }, { "t": "as pessoas", "em": true }],
+    "paragraphs": [
+      "Quanto mais cedo a gente conversa, mais tempo eu tenho para entender quem vai estar ali e o que está em jogo naquele dia.",
+      "Respondo em até 48 horas, sempre eu mesmo.",
+      "Se você prefere falar direto, o WhatsApp é o caminho mais rápido."
+    ],
+    "links": [
+      { "label": "Instagram", "handle": "@lucasmachut__", "href": "https://www.instagram.com/lucasmachut__" },
+      { "label": "Festivais", "handle": "@forro.films", "href": "https://www.instagram.com/forro.films" },
+      { "label": "WhatsApp", "handle": "+55 71 99355-4883", "href": "https://wa.me/5571993554883" },
+      { "label": "E-mail", "handle": "contato@lucasmachut.com", "href": "mailto:contato@lucasmachut.com" }
+    ]
+  },
+  "form": {
+    "whatsapp": "5571993554883",
+    "intro": "Olá Lucas, vim pelo site.",
+    "fields": [
+      { "name": "nome", "label": "Nome", "type": "text", "autocomplete": "name", "required": true },
+      { "name": "tipo", "label": "O que é", "type": "select", "options": ["Casamento", "Ensaio", "Evento", "Outro"] },
+      { "name": "data", "label": "Data ou período", "type": "text", "placeholder": "março de 2027, ainda aberto…" },
+      { "name": "lugar", "label": "Lugar", "type": "text", "placeholder": "cidade, praia, sítio…" },
+      { "name": "duracao", "label": "Duração prevista", "type": "select", "options": ["Algumas horas", "Meio dia", "O dia inteiro", "Mais de um dia"] },
+      { "name": "pessoas", "label": "Quantas pessoas", "type": "select", "options": ["Só eu", "Nós dois", "Até 20", "Até 50", "Até 120", "Mais de 120"] },
+      { "name": "email", "label": "E-mail", "type": "email", "autocomplete": "email", "required": true },
+      { "name": "whatsapp", "label": "WhatsApp", "type": "tel", "autocomplete": "tel", "placeholder": "+55" },
+      { "name": "mensagem", "label": "Mensagem", "type": "textarea", "full": true, "placeholder": "Quem vai estar lá, como vocês se conheceram, o que não pode faltar." },
+      { "name": "origem", "label": "Como você chegou até mim", "type": "select", "options": ["Instagram", "Indicação de alguém", "Google", "Outro"] }
+    ],
+    "select_placeholder": "Selecionar",
+    "errors": {
+      "nome": "Me diz o seu nome.",
+      "email": "Preciso de um e-mail válido para te responder."
+    },
+    "submit": "Enviar",
+    "sent": {
+      "title": "Abrimos o WhatsApp com a sua mensagem.",
+      "text": "Falta só apertar enviar lá.",
+      "retry": "O WhatsApp não abriu? Abrir de novo",
+      "again": "Escrever outra mensagem"
+    }
+  }
+}

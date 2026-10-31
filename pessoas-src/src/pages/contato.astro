@@ -1,0 +1,39 @@
+---
+// Contato pessoas. Tout le texte vient de data/pessoas/contato.json.
+import Base from '../layouts/Base.astro';
+import ContactForm from '../components/ContactForm.jsx';
+import data from '../../../data/pessoas/contato.json';
+import '../styles/contato.css';
+const { hero, voice, form } = data;
+---
+<Base title={data.seo.title} description={data.seo.description} nav={data.nav} cta={data.nav_cta}>
+  <div class="contact-page">
+    <header class="contact-head">
+      <p class="eyebrow"><i></i>{hero.eyebrow}</p>
+      <h1 class="t-title contact-title">
+        {hero.title.map((p) => p.em ? <em>{p.t}</em> : p.t)}
+      </h1>
+      <p class="contact-strip">{hero.strip}</p>
+    </header>
+
+    <section class="sheet" aria-labelledby="contato-voz">
+      <div class="sheet-inner">
+        <div class="voice">
+          <h2 id="contato-voz" class="t-title voice-title">
+            {voice.title.map((p) => p.em ? <em>{p.t}</em> : p.t)}
+          </h2>
+          {voice.paragraphs.map((p) => <p class="voice-p">{p}</p>)}
+          <ul class="voice-links">
+            {voice.links.map((l) => (
+              <li>
+                <span class="voice-label">{l.label}</span>
+                <a href={l.href} class="u-link" target={l.href.startsWith('http') ? '_blank' : undefined} rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}>{l.handle}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <ContactForm client:load form={form} />
+      </div>
+    </section>
+  </div>
+</Base>
