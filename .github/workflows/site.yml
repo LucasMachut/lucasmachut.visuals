@@ -1,5 +1,6 @@
-# L'admin (/admin) n'écrit que les sources : data/accueil.json pour
-# l'accueil, partials/ pour les menus et pieds de page. Ce job
+# L'admin (/admin) écrit partials/ pour les menus et pieds de page.
+# L'accueil pessoas est construit par Astro (pessoas.yml) depuis le 31.10.2026 :
+# plus d'étape « Accueil » ici, build_accueil.py ne sait pas lire cette page. Ce job
 # reconstruit les pages qui en dépendent et les publie ; le cron
 # d'Hostinger les met en ligne ensuite.
 name: Pages depuis l'admin
@@ -8,9 +9,7 @@ on:
   push:
     branches: [master]
     paths:
-      - data/accueil.json
       - partials/**
-      - tools/build_accueil.py
       - tools/build_partials.py
   workflow_dispatch:
 
@@ -31,8 +30,6 @@ jobs:
           python-version: '3.12'
       - name: Menus et pieds de page
         run: python tools/build_partials.py
-      - name: Accueil
-        run: python tools/build_accueil.py
       - name: Publier
         run: |
           git config user.name "github-actions[bot]"
