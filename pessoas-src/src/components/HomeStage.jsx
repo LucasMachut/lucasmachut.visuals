@@ -6,6 +6,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { pinPriority, scheduleRefresh } from './scroll.js';
 
 function dustTexture(THREE) {
   // Un grain de poussière : point doux, cœur rose poussière, bord qui s'efface
@@ -128,15 +129,21 @@ export default function HomeStage({ hero }) {
         }
       };
       addEventListener('pointermove', onMove);
+      // Koisei : les pétales tombent sur le hero (down), remontent à la tombée de la
+      // nuit (up), se posent au pied de page (settle). Même chose pour la poussière.
+      let mode = 'down';
       const updateDust = (t, dt) => {
         for (const p of dust) {
           const sway = (Math.sin(t * .5 + p.ph) * .2 + Math.sin(t * .23 + p.ph * 2.1) * .14);
           const dx = p.x - mouse.x, dy = p.y - mouse.y, dist = Math.hypot(dx, dy);
           if (dist < 180 && dist > 1) { const f = 1 - dist / 180; const k = f * f * 9; p.vx += dx / dist * k; p.vyImp += dy / dist * k; }
           p.vx *= .9; p.vyImp *= .9;
-          p.y -= p.vy * (dt * 60) * .45;
+          if (mode === 'down') p.y -= p.vy * (dt * 60) * .45;
+          else if (mode === 'up') p.y += p.vy * .55 * (dt * 60);
+          else { p.y += Math.max(-H * .28, p.y) - p.y; p.y -= p.vy * .08 * (dt * 60) * Math.max(0, (p.y + H * .28) / (H * .28)); }
           p.x += sway + p.vx * dt * 6; p.y += p.vyImp * dt * 6;
-          if (p.y < -H / 2 - 30) { p.y = H / 2 + 30; p.x = (Math.random() - .5) * W * 1.2; }
+          if (mode !== 'up' && p.y < -H / 2 - 30) { p.y = H / 2 + 30; p.x = (Math.random() - .5) * W * 1.2; }
+          if (mode === 'up' && p.y > H / 2 + 30) { p.y = -H / 2 - 30; p.x = (Math.random() - .5) * W * 1.2; }
           if (p.x > W / 2 + 40) p.x = -W / 2 - 40; if (p.x < -W / 2 - 40) p.x = W / 2 + 40;
         }
         dust.forEach((p, i) => {
@@ -158,6 +165,7 @@ export default function HomeStage({ hero }) {
         if (!finished) return;
         heroUniforms.uTime.value = t; heroUniforms.uWaveT.value += dt;
         if (!reduced) updateDust(t, dt);
+        heroPlane.visible = heroVisible && !!heroUniforms.uTex.value;
         if (heroVisible || dustMat.opacity > 0) renderer.render(scene, cam);
       };
       gsap.ticker.add(tick);
@@ -171,7 +179,8 @@ export default function HomeStage({ hero }) {
 
       new THREE.TextureLoader().load(hero.photo, (tex) => {
         if (!alive) return;
-        tex.colorSpace = THREE.SRGBColorSpace;
+        // Pas de colorSpace : le shader renvoie les pixels tels quels. Déclarée sRGB,
+        // la photo était linéarisée sans être reconvertie : assombrie et contrastée.
         heroUniforms.uTex.value = tex;
         imgAspect = tex.image.width / tex.image.height;
         fitHero();
@@ -183,6 +192,7 @@ export default function HomeStage({ hero }) {
       if (!reduced) {
         triggers.push(ScrollTrigger.create({
           trigger: '#hero', start: 'top top', end: '+=120%', pin: true, pinSpacing: true, scrub: 1,
+          refreshPriority: pinPriority(q('#hero')),
           onUpdate: (s) => {
             heroUniforms.uDarken.value = s.progress * .25;
             const sc = 1 + s.progress * .18; heroPlane.scale.set(W * sc, H * sc, 1);
@@ -197,9 +207,16 @@ export default function HomeStage({ hero }) {
           triggers.push(gsap.fromTo(cover, { borderTopLeftRadius: 32, borderTopRightRadius: 32 }, { borderTopLeftRadius: 0, borderTopRightRadius: 0, ease: 'none',
             scrollTrigger: { trigger: cover, start: 'top 60%', end: 'top top', scrub: true } }).scrollTrigger);
         }
-        ScrollTrigger.refresh();
+        // nuit : la poussière passe devant les sections (z 45), teintée sable, et remonte
+        const night = document.getElementById('nightfall'), visit = document.getElementById('visit');
+        if (night) triggers.push(ScrollTrigger.create({ trigger: night, start: 'top 30%',
+          onEnter: () => { mode = 'up'; glCan.style.zIndex = 45; gsap.to(dustMat.color, { r: 1, g: .86, b: .62, duration: 1 }); gsap.to(dustMat, { opacity: .85, duration: 1.5 }); },
+          onLeaveBack: () => { mode = 'down'; glCan.style.zIndex = 5; gsap.to(dustMat.color, { r: 1, g: 1, b: 1, duration: 1 }); gsap.to(dustMat, { opacity: 0, duration: .8 }); } }));
+        if (visit) triggers.push(ScrollTrigger.create({ trigger: visit, start: 'top 50%',
+          onEnter: () => { mode = 'settle'; gsap.to(dustMat.color, { r: 1, g: 1, b: 1, duration: 1.2 }); },
+          onLeaveBack: () => { mode = 'up'; gsap.to(dustMat.color, { r: 1, g: .86, b: .62, duration: 1 }); } }));
       }
-      dispatchEvent(new Event('lm:layout'));
+      scheduleRefresh();
     });
 
     return () => {
@@ -226,7 +243,7 @@ export default function HomeStage({ hero }) {
 
       <canvas id="gl" className="gl" aria-hidden="true" />
 
-      <section id="hero" className="hero">
+      <section id="hero" className="hero" data-pin>
         <img className="hero-fallback" src={hero.photo} alt="" />
         <div id="heroContent" className="hero-content">
           <div className="clip"><p className="heroLine eyebrow-hero">{hero.eyebrow}</p></div>

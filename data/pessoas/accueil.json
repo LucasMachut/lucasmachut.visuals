@@ -26,5 +26,61 @@
     ],
     "text": "Fotografo o laço entre as pessoas. O que se sente quando se está lá, e que volta anos depois, ao rever a imagem. Nunca a pose: o movimento, o espontâneo, os detalhes que escapam.",
     "link": { "label": "Ver os trabalhos", "href": "/portfolio" }
+  },
+  "film_dia": {
+    "video": "/videos/header_min.mp4",
+    "poster": "/photos/hero-poster.jpg",
+    "chapters": [
+      { "kicker": "Um gesto", "title": [{ "t": "Antes de " }, { "t": "pensar", "em": true }, { "t": " em posar" }] },
+      { "kicker": "Um olhar", "title": [{ "t": "O que passa entre duas " }, { "t": "pessoas", "em": true }] },
+      { "kicker": "Um instante", "title": [{ "t": "E que ficou " }, { "t": "guardado", "em": true }] }
+    ]
+  },
+  "oferta": {
+    "eyebrow": "II · O que eu faço",
+    "title": [{ "t": "Quatro maneiras de " }, { "t": "estar", "em": true }, { "t": " lá" }],
+    "hint": "( rolar )",
+    "cards": [
+      { "title": "Casamentos e elopements", "text": "O dia inteiro sem pose, do primeiro abraço à última música.", "photo": "/photos/le-regard/tirages/casamento.jpg", "link": { "label": "Ver trabalhos", "href": "/portfolio" } },
+      { "title": "Festivais e eventos", "text": "Flash, teleobjetiva e atenção: as interações que ninguém vê.", "photo": "/photos/le-regard/mesa/tango-danca.jpg", "link": { "label": "Ver trabalhos", "href": "/portfolio" } },
+      { "title": "Ensaios e retratos", "text": "Casais, famílias, o corpo livre. Na natureza, em movimento.", "photo": "/photos/le-regard/tirages/ensaio.jpg", "link": { "label": "Ver trabalhos", "href": "/portfolio" } },
+      { "title": "Retiros e viagens", "text": "Experiências, aventura, o lugar com gente dentro.", "photo": "/photos/le-regard/tirages/retiro.jpg", "link": { "label": "Ver trabalhos", "href": "/portfolio" } }
+    ]
+  },
+  "noite": {
+    "kicker": "III · Quando a luz cai",
+    "day": "/photos/le-regard/bracos-palmeiras.jpg",
+    "night": "/photos/le-regard/lampada-bar.jpg",
+    "lines": [
+      [{ "t": "Quando a luz cai," }],
+      [{ "t": "a festa " }, { "t": "começa", "em": true }]
+    ]
+  },
+  "film_noite": {
+    "video": "",
+    "poster": "/photos/le-regard/mesa/tango-casal.jpg",
+    "chapters": [
+      { "kicker": "A festa", "title": [{ "t": "Quando a música " }, { "t": "começa", "em": true }] },
+      { "kicker": "O flash", "title": [{ "t": "O suor, o riso, o " }, { "t": "laço", "em": true }] }
+    ],
+    "quote": "Guardar vivo o que passa.",
+    "quote_by": "Lucas Machut"
+  },
+  "fim": {
+    "eyebrow": "IV · Vamos conversar",
+    "lines": [
+      [{ "t": "Tudo começa" }],
+      [{ "t": "com uma " }, { "t": "conversa", "em": true }]
+    ],
+    "disc": { "label": "Começar", "href": "/contato" },
+    "columns": [
+      { "head": "Explorar", "links": [{ "label": "Trabalhos", "href": "/portfolio" }, { "label": "Contato", "href": "/contato" }] },
+      { "head": "Em outro lugar", "links": [{ "label": "@lucasmachut__", "href": "https://www.instagram.com/lucasmachut__/" }, { "label": "@forro.films", "href": "https://www.instagram.com/forro.films/" }] },
+      { "head": "Lugares", "links": [{ "label": "Lugares →", "href": "/lugares/" }] }
+    ],
+    "vertical": "obrigado",
+    "wordmark": "LUCAS MACHUT",
+    "bar_left": "© 2026 Lucas Machut · guardar vivo o que passa",
+    "bar_right": "Rio de Janeiro · Brasil"
   }
 }

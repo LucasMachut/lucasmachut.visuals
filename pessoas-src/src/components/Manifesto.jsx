@@ -3,17 +3,7 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-function Segment({ s }) {
-  if (s.img) {
-    return (
-      <span className="mImg">
-        <img src={s.img} alt="" loading="lazy" decoding="async" />
-      </span>
-    );
-  }
-  return s.em ? <em>{s.t}</em> : <>{s.t}</>;
-}
+import { Lines, Arrow } from './Segments.jsx';
 
 export default function Manifesto({ data }) {
   const root = useRef(null);
@@ -43,18 +33,14 @@ export default function Manifesto({ data }) {
     <div ref={root} className="journey-inner">
       <p className="eyebrow journey-eyebrow"><i />{data.eyebrow}</p>
       <h2 className="manifesto t-title">
-        {data.lines.map((line, i) => (
-          <span className="mLine" key={i}>
-            <span>{line.map((s, j) => <Segment s={s} key={j} />)}</span>
-          </span>
-        ))}
+        <Lines lines={data.lines} />
       </h2>
       <div className="journey-text">
         <div>
           <p>{data.text}</p>
           <a href={data.link.href} className="u-link journey-link">
             {data.link.label}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12h16m-6-6 6 6-6 6" /></svg>
+            <Arrow size={16} />
           </a>
         </div>
       </div>

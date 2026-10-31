@@ -65,11 +65,18 @@ const { nav = [], cta } = Astro.props;
   });
   // Koisei : .nav--scrolled après 120 px. Le crème ne vaut que tant que la photo
   // fixe du hero est visible, c'est-à-dire avant que la section lin la recouvre.
+  // Koisei passe aussi la nav en nuit de la tombée de la nuit (haut à 40 %)
+  // jusqu'au pied de page (haut à 60 %).
   const cover = document.querySelector('[data-covers-hero]');
+  const nightfall = document.getElementById('nightfall');
+  const visit = document.getElementById('visit');
   const update = () => {
     nav.classList.toggle('nav--scrolled', scrollY > 120);
     const onPhoto = cover ? cover.getBoundingClientRect().top > 68 : false;
-    nav.classList.toggle('nav--night', onPhoto);
+    const atNight = nightfall && visit
+      ? nightfall.getBoundingClientRect().top < innerHeight * .4 && visit.getBoundingClientRect().top > innerHeight * .6
+      : false;
+    nav.classList.toggle('nav--night', onPhoto || atNight);
   };
   addEventListener('scroll', update, { passive: true });
   addEventListener('resize', update);

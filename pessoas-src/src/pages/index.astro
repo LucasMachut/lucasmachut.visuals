@@ -1,16 +1,26 @@
 ---
-// Accueil pessoas. Tout le texte vient de data/pessoas/accueil.json,
-// le fichier que l'admin modifiera.
+// Accueil pessoas, dans l'ordre de Koisei : hero, manifeste, film du jour,
+// offres, tombée de la nuit, film de la nuit, pied de page.
+// Tout le texte vient de data/pessoas/accueil.json, le fichier que l'admin modifiera.
 import Base from '../layouts/Base.astro';
 import HomeStage from '../components/HomeStage.jsx';
 import Manifesto from '../components/Manifesto.jsx';
+import Film from '../components/Film.jsx';
+import Oferta from '../components/Oferta.jsx';
+import Nightfall from '../components/Nightfall.jsx';
+import Fim from '../components/Fim.jsx';
 import data from '../../../data/pessoas/accueil.json';
 import '../styles/home.css';
+import '../styles/home-sections.css';
 ---
 <Base title={data.seo.title} description={data.seo.description} nav={data.nav} cta={data.nav_cta}>
   <HomeStage client:load hero={data.hero} />
   <section id="journey" class="journey" data-covers-hero>
     <Manifesto client:load data={data.manifesto} />
   </section>
-  <div style="height:60vh;background:var(--lin);position:relative;z-index:20"></div>
+  <Film client:load id="film1" variant="dia" data={data.film_dia} />
+  <Oferta client:load data={data.oferta} />
+  <Nightfall client:load data={data.noite} />
+  <Film client:load id="film2" variant="noite" data={data.film_noite} />
+  <Fim client:load data={data.fim} />
 </Base>

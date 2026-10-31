@@ -1,7 +1,8 @@
 // Aperçu local de la version construite, comme en ligne : les pages de dist/
 // d'abord, puis le reste du dépôt (photos, vidéos, lugares) à la racine du site.
 import { createServer } from 'node:http';
-import { createReadStream, existsSync, statSync } from 'node:fs';
+import { existsSync, statSync } from 'node:fs';
+import { sendFile } from './send-file.mjs';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -27,6 +28,5 @@ createServer((req, res) => {
   const url = decodeURIComponent((req.url || '/').split('?')[0]);
   const file = find(DIST, url) || find(SITE, url);
   if (!file) { res.writeHead(404); res.end('404'); return; }
-  res.writeHead(200, { 'Content-Type': TYPES[extname(file).toLowerCase()] || 'application/octet-stream' });
-  createReadStream(file).pipe(res);
+  sendFile(req, res, file, TYPES[extname(file).toLowerCase()] || 'application/octet-stream');
 }).listen(PORT, () => console.log(`pessoas (build) sur http://localhost:${PORT}`));

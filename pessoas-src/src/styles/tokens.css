@@ -71,11 +71,8 @@ h1, h2, h3, p { margin: 0; }
 }
 .u-link:hover::after { transform: scaleX(1); }
 
-/* Grain plein écran (Koisei #grain) */
-#grain {
-  position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none;
-  z-index: 80; opacity: .05; mix-blend-mode: overlay;
-}
+/* Pas de grain plein écran ni de vignettage : le grain Koisei (bruit en
+   incrustation) durcissait le contraste des photos, qui ont déjà leur grain. */
 
 @keyframes scrollDot {
   0% { transform: translateY(0); opacity: 0 }
