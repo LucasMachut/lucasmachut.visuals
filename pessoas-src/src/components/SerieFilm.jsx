@@ -19,7 +19,7 @@ export default function SerieFilm({ film, poster, eyebrow }) {
       gsap.registerPlugin(ScrollTrigger);
       const mobile = innerWidth < 768;
       st = ScrollTrigger.create({
-        trigger: sec.current, start: 'top top', end: mobile ? '+=250%' : '+=400%', pin: true, scrub: 1,
+        trigger: sec.current, start: 'top top', end: mobile ? '+=250%' : '+=400%', pin: true, anticipatePin: 1, scrub: 1,
         onUpdate: (s) => { target = s.progress; },
       });
       const loop = () => {

@@ -193,7 +193,7 @@ export default function HomeStage({ hero, edit = false }) {
 
       if (!reduced) {
         triggers.push(ScrollTrigger.create({
-          trigger: '#hero', start: 'top top', end: '+=120%', pin: true, pinSpacing: true, scrub: 1,
+          trigger: '#hero', start: 'top top', end: '+=120%', pin: true, pinSpacing: true, anticipatePin: 1, scrub: 1,
           refreshPriority: pinPriority(q('#hero')),
           onUpdate: (s) => {
             heroUniforms.uDarken.value = s.progress * .25;

@@ -5,6 +5,11 @@
 // remet tout d'aplomb après chaque création.
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// Téléphone : la barre d'adresse qui apparaît ou disparaît change la hauteur
+// de l'écran ; sans ce réglage, ScrollTrigger recalcule tout en plein geste et
+// les épinglages arrivent en retard (on voit la section suivante avant le film).
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 export function pinPriority(el) {
   const all = [...document.querySelectorAll('[data-pin]')];
   return 100 - all.indexOf(el);

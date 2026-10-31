@@ -48,7 +48,7 @@ export default function Oferta({ data }) {
 
     const getDist = () => track.scrollWidth - innerWidth + 48;
     const tw = gsap.to(track, { x: () => -getDist(), ease: 'none',
-      scrollTrigger: { trigger: sec, start: 'top top', end: '+=250%', pin: true, scrub: 1, invalidateOnRefresh: true, refreshPriority: pinPriority(sec),
+      scrollTrigger: { trigger: sec, start: 'top top', end: '+=250%', pin: true, anticipatePin: 1, scrub: 1, invalidateOnRefresh: true, refreshPriority: pinPriority(sec),
         onUpdate: (s) => paint(s.progress) } });
     paint(0);
     scheduleRefresh();

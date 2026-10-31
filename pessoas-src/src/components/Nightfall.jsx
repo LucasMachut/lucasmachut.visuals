@@ -23,7 +23,7 @@ export default function Nightfall({ data }) {
       sec.style.background = 'var(--terra)';
       gsap.set([kicker, title], { opacity: 1, color: 'var(--creme)' });
     } else {
-      tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: '+=200%', pin: true, scrub: 1,
+      tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: '+=200%', pin: true, anticipatePin: 1, scrub: 1,
         refreshPriority: pinPriority(sec) } });
       tl.fromTo(sec.querySelector('.dissolveWrap'), { clipPath: 'inset(11vh 24vw)' }, { clipPath: 'inset(0vh 0vw)', ease: 'none', duration: 40 }, 0)
         .fromTo(kicker, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 8 }, 8)

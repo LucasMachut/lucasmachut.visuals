@@ -32,7 +32,7 @@ export default function Film({ id, data, variant = 'dia' }) {
 
     let target = 0, cur = 0;
     const pinLen = isMobile ? '250%' : variant === 'dia' ? '400%' : '350%';
-    const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: '+=' + pinLen, pin: true, scrub: 1, refreshPriority: pinPriority(sec),
+    const tl = gsap.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: '+=' + pinLen, pin: true, anticipatePin: 1, scrub: 1, refreshPriority: pinPriority(sec),
       onUpdate: (s) => { target = s.progress; } } });
 
     if (variant === 'dia') {
@@ -66,34 +66,64 @@ export default function Film({ id, data, variant = 'dia' }) {
     }
     tl.to({}, { duration: 1 }, 100);
 
-    // Téléphone : même lecture au défilement que sur ordinateur. Deux conditions :
-    // une version carrée où chaque image est complète (le saut est immédiat), et
-    // une vidéo « amorcée » (lue puis mise en pause une fois), sans quoi iOS ne la
-    // charge jamais et l'écran reste figé.
+    // Téléphone : même lecture au défilement que sur ordinateur, mais sans
+    // vidéo. iOS ne charge pas une vidéo jamais lue (et refuse de la lire en
+    // économie d'énergie) : le film y est une suite d'images (data.frames)
+    // peinte sur une toile, comme les pages produit d'Apple. Chargement en deux
+    // passes : une image sur quatre d'abord, puis le reste.
     const touch = matchMedia('(hover: none), (pointer: coarse), (max-width: 767px)').matches;
-    let io = null;
-    if (video) {
+    const fr = data.frames;
+    const canvas = sec.querySelector('.film-canvas');
+    let imgs = null, drawn = -1, onSize = null, loadTimer = 0;
+    if (touch && fr && canvas) {
+      if (video) video.style.display = 'none';
+      canvas.hidden = false;
+      const ctx = canvas.getContext('2d');
+      const size = () => {
+        const r = sec.getBoundingClientRect(), k = Math.min(devicePixelRatio || 1, 2);
+        canvas.width = Math.round(r.width * k); canvas.height = Math.round(r.height * k); drawn = -1;
+      };
+      size();
+      onSize = size;
+      addEventListener('resize', size);
+      imgs = new Array(fr.count);
+      const url = (i) => fr.path.replace('{n}', String(i + 1).padStart(3, '0'));
+      const load = () => {
+        const order = [];
+        for (let i = 0; i < fr.count; i += 4) order.push(i);
+        for (let i = 0; i < fr.count; i++) if (i % 4) order.push(i);
+        order.forEach((i) => { const im = new Image(); im.decoding = 'async'; im.onload = () => { imgs[i] = im; if (drawn < 0) drawn = -2; }; im.src = url(i); });
+      };
+      // Chargées dès l'arrivée sur la page : attendre l'approche du film les
+      // faisait arriver trop tard, on dépassait le film avant qu'il démarre.
+      loadTimer = setTimeout(load, 300);
+      // l'image chargée la plus proche, dessinée en « cover » sur la toile
+      const draw = (want) => {
+        let i = want, j = want;
+        while (i >= 0 && !imgs[i]) i--;
+        while (j < fr.count && !imgs[j]) j++;
+        const k = i < 0 ? j : j >= fr.count ? i : (want - i <= j - want ? i : j);
+        if (k < 0 || k >= fr.count || !imgs[k] || k === drawn) return;
+        const im = imgs[k], cw = canvas.width, ch = canvas.height;
+        const sc = Math.max(cw / im.width, ch / im.height), w = im.width * sc, h = im.height * sc;
+        ctx.drawImage(im, (cw - w) / 2, (ch - h) / 2, w, h);
+        drawn = k;
+      };
+      canvas._draw = draw;
+    } else if (video) {
       video.muted = true;
       video.setAttribute('muted', '');
-      video.src = (touch && data.video_mobile) || data.video;
-      if (touch) {
-        let primed = false;
-        io = new IntersectionObserver((e) => {
-          if (primed || !e[0].isIntersecting) return;
-          primed = true;
-          const p = video.play();
-          if (p) p.then(() => video.pause()).catch(() => {});
-        }, { rootMargin: '100% 0px' });
-        io.observe(sec);
-      }
+      video.src = data.video;
     }
 
     const loop = () => {
       cur += (target - cur) * .1;
       bar.style.transform = `scaleX(${cur})`;
-      if (video && video.duration) {
+      if (imgs) {
+        canvas._draw(Math.round(cur * (fr.count - 1)));
+        time.textContent = `00:${pad(cur * fr.duration)} / 00:${pad(fr.duration)}`;
+      } else if (video && video.duration) {
         const t = cur * video.duration;
-        // un seul saut à la fois : sur téléphone, empiler les sauts fige l'image
         if (!video.seeking && Math.abs(video.currentTime - t) > .02) video.currentTime = t;
         time.textContent = `00:${pad(t)} / 00:${pad(video.duration)}`;
       }
@@ -102,7 +132,8 @@ export default function Film({ id, data, variant = 'dia' }) {
     scheduleRefresh();
 
     return () => {
-      if (io) io.disconnect();
+      clearTimeout(loadTimer);
+      if (onSize) removeEventListener('resize', onSize);
       gsap.ticker.remove(loop);
       tl.scrollTrigger && tl.scrollTrigger.kill();
       tl.kill();
@@ -116,6 +147,7 @@ export default function Film({ id, data, variant = 'dia' }) {
       {data.video
         ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
         : <img className="film-media" src={data.poster} alt="" decoding="async" />}
+      {data.frames && <canvas className="film-media film-canvas" hidden aria-hidden="true" />}
       {night && <div className="filmDark" />}
       {data.chapters.map((c, i) => (
         <div className="chapter" key={i}>
