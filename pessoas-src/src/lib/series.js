@@ -10,8 +10,11 @@ const bySlug = Object.fromEntries(Object.values(files).map((s) => [s.slug, s]));
 
 export { trabalhos };
 
+// Une série masquée dans l'admin (trabalhos.hidden) garde son fichier mais
+// n'est plus publiée : ni carte, ni page, ni « série suivante ».
 export function publishedSeries() {
-  return trabalhos.series.map((slug) => bySlug[slug]).filter(Boolean).map(withSizes);
+  const hidden = new Set(trabalhos.hidden || []);
+  return trabalhos.series.filter((slug) => !hidden.has(slug)).map((slug) => bySlug[slug]).filter(Boolean).map(withSizes);
 }
 
 // Largeur et hauteur de chaque photo, lues dans le fichier au build : le HTML
@@ -39,11 +42,4 @@ function jpegSize(src) {
   } finally { closeSync(fd); }
 }
 
-// « Rio de Janeiro, RJ » + 2026 → « Rio de Janeiro · 2026 » (texte vertical Koisei)
-export function placeDate(s) {
-  return [s.location.split(',')[0].trim(), s.year].filter(Boolean).join(' · ');
-}
-
-export function metaLine(s) {
-  return [s.location.split(',')[0].trim(), s.type, s.year].filter(Boolean).join(' · ');
-}
+export { placeDate, metaLine } from './serie-text.js';

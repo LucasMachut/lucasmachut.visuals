@@ -43,14 +43,16 @@ export async function all() {
   });
 }
 
-function slug(s) {
+export function slug(s) {
   return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase()
     .replace(/\.[a-z0-9]+$/, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 40) || 'photo';
 }
 
 // Une photo du téléphone (souvent 5 à 15 Mo) → WebP (JPEG si le navigateur ne
 // sait pas écrire le WebP), 2000 px au plus sur le grand côté.
-export async function prepare(file) {
+// folder / name : rangement choisi (une nouvelle série range ses photos dans
+// son propre dossier) ; sinon Projets-web/Fotos/site/<nom du fichier>-<horodatage>.
+export async function prepare(file, folder = FOLDER, name = null) {
   let bmp;
   try { bmp = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
   catch (e) { bmp = await createImageBitmap(file); }
@@ -62,7 +64,7 @@ export async function prepare(file) {
   let blob = await new Promise((r) => c.toBlob(r, 'image/webp', 0.9));
   let ext = 'webp';
   if (!blob || blob.type !== 'image/webp') { blob = await new Promise((r) => c.toBlob(r, 'image/jpeg', 0.9)); ext = 'jpg'; }
-  const path = `${FOLDER}/${slug(file.name)}-${Date.now().toString(36)}.${ext}`;
+  const path = `${folder}/${name || slug(file.name) + '-' + Date.now().toString(36)}.${ext}`;
   return { path, blob };
 }
 

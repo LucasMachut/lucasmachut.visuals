@@ -68,6 +68,10 @@ const NAMES = {
   cards: 'carte', disc: 'disque', columns: 'colonne', links: 'lien', head: 'titre',
   bar_left: 'barre du bas, gauche', bar_right: 'barre du bas, droite', description: 'description',
   photo: 'photo', poster: "photo d'attente", day: 'photo de jour', night: 'photo de nuit', sections: 'Sections',
+  lede: 'intro', contact: 'bloc contact', button: 'bouton', card_link: 'lien des cartes',
+  location: 'lieu', type: 'type', year: 'année', strip: 'bandeau', voice: 'texte', paragraphs: 'paragraphe',
+  handle: 'lien', form: 'formulaire', whatsapp: 'numéro WhatsApp', intro: "message d'intro",
+  photos: 'photos', videos: 'vidéos', hidden: 'séries masquées', series: 'ordre des séries', cover: 'couverture',
 };
 const GROUP_NAMES = { 'manifesto.lines': 'Manifeste, lignes', 'film_dia.chapters': 'Film du jour, phrases',
   'film_noite.chapters': 'Film de nuit, phrases', 'oferta.cards': 'Offres', sections: 'Sections' };
@@ -77,7 +81,12 @@ export function label(path) {
   if (GROUP_NAMES[path]) return GROUP_NAMES[path];
   const parts = [];
   for (const k of path.split('.')) {
-    if (/^\d+$/.test(k)) { if (parts.length) parts[parts.length - 1] += ' ' + (Number(k) + 1); continue; }
+    if (/^\d+$/.test(k)) {
+      if (!parts.length) continue;
+      // un titre en plusieurs lignes : « titre, ligne 2 » plutôt que « titre 2 »
+      parts[parts.length - 1] += (parts[parts.length - 1] === 'titre' ? ', ligne ' : ' ') + (Number(k) + 1);
+      continue;
+    }
     parts.push(NAMES[k] || k);
   }
   const [first, ...rest] = parts;
@@ -95,10 +104,13 @@ export function changed(base, data) {
   const fields = new Set();
   // Un groupe allongé, raccourci ou réordonné compte pour un seul changement
   const whole = [];
-  for (const g of [...Object.keys(GROUPS), 'sections']) {
-    const x = get(base, g) || [], y = get(data, g) || [];
+  // (listes de l'accueil, sections, ordre et masquage des séries, photos et vidéos d'une série)
+  for (const g of [...Object.keys(GROUPS), 'sections', 'series', 'hidden', 'photos', 'videos']) {
+    const x = get(base, g), y = get(data, g);
+    if (!Array.isArray(x) && !Array.isArray(y)) continue;
+    if (!Array.isArray(x) || !Array.isArray(y)) { fields.add(g); whole.push(g + '.'); continue; }
     const sx = x.map((v) => JSON.stringify(v)), sy = y.map((v) => JSON.stringify(v));
-    if (sx.length !== sy.length || (sx.join() !== sy.join() && [...sx].sort().join() === [...sy].sort().join()) || g === 'sections' && sx.join() !== sy.join()) {
+    if (sx.length !== sy.length || (sx.join() !== sy.join() && [...sx].sort().join() === [...sy].sort().join()) || ((g === 'sections' || g === 'hidden') && sx.join() !== sy.join())) {
       fields.add(g); whole.push(g + '.');
     }
   }

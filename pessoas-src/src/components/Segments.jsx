@@ -17,6 +17,19 @@ export function Lines({ lines, lineClass = 'mLine', edit }) {
   ));
 }
 
+// Titre en lignes [[{t, em}]] de Trabalhos et des séries : chaque ligne dans
+// son masque (.clip), qui monte à l'arrivée (.heroLine).
+export function RichLines({ lines, tag: Tag = 'h2', className = '', edit }) {
+  return (
+    <Tag className={`t-title ${className}`}>
+      {lines.map((line, i) => (
+        <span className="clip" key={i} data-edit={edit ? `${edit}.${i}` : undefined}>
+          <span className="heroLine"><Segments parts={line} /></span>
+        </span>
+      ))}
+    </Tag>
+  );
+}
 
 // Flèche des liens (Koisei : solar:arrow-right-linear)
 export function Arrow({ size = 16 }) {
