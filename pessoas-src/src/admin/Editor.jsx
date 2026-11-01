@@ -202,6 +202,42 @@ function PhotoField({ path, value, src, onPhoto, data, onChange }) {
   );
 }
 
+// Vidéo d'un film : on choisit un fichier (60 Mo au plus : GitHub refuse un envoi de
+// plus de 100 Mo, et le fichier grossit d'un tiers à l'envoi) ; il part avec
+// « Publier », et GitHub prépare la version qui défile, les images pour
+// téléphone et la photo d'attente (tools/preparer_videos.mjs).
+const VIDEO_MAX = 60 * 1024 * 1024;
+function VideoField({ film, data, src, onVideo, onChange }) {
+  const input = useRef(null);
+  const [err, setErr] = useState('');
+  const pending = get(data, `${film}.video_source`);
+  const current = pending || get(data, `${film}.video`);
+  const pick = async (e) => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    if (file.size > VIDEO_MAX) {
+      setErr(`Trop lourde (${Math.round(file.size / 1048576)} Mo). Exporte-la en 1080p, moins de 60 Mo.`);
+      return;
+    }
+    setErr('');
+    await onVideo(`${film}.video_source`, file);
+  };
+  return (
+    <div className="adm-photo">
+      <span className="adm-photo-label">Vidéo du film</span>
+      {current && <video key={current} src={src(current)} muted playsInline controls preload="metadata" className="adm-video-preview" />}
+      {pending && <p className="adm-help">Nouvelle vidéo : à la publication, elle est préparée (version qui défile, images pour le téléphone, photo d'attente), en ligne environ 5 minutes plus tard. Sur téléphone, l'aperçu la montre telle quelle d'ici là.</p>}
+      {err && <p className="adm-err">{err}</p>}
+      <input ref={input} type="file" accept="video/*" hidden onChange={pick} />
+      <div className="adm-row">
+        <button type="button" className="adm-btn" onClick={() => input.current.click()}>Changer la vidéo</button>
+        {pending && <button type="button" className="adm-btn adm-btn--ghost" onClick={() => onChange(`${film}.video_source`, undefined)}>Garder la vidéo actuelle</button>}
+      </div>
+    </div>
+  );
+}
+
 // Suite de photos (film de nuit) : vignettes à glisser, retirer, ajouter
 function SlidesField({ value, src, onChange, onPhotos }) {
   const input = useRef(null);
@@ -308,7 +344,7 @@ function GroupList({ group, index, data, onList, onOpen }) {
   );
 }
 
-export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, onPhotos, src, onClose, shared }) {
+export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, onPhotos, onVideo, src, onClose, shared }) {
   const value = get(data, path);
   const k = kind(value, path);
   const grp = groupOf(path);
@@ -331,6 +367,9 @@ export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, 
         )}
         {k === 'segments' && <SegmentsEditor value={value} onChange={(v) => onChange(path, v)} />}
         {shared && (k === 'photo' || /\.slides$/.test(path)) && shared}
+        {!shared && onVideo && /^film_dia\.poster$/.test(path) && (
+          <VideoField film={path.split('.')[0]} data={data} src={src} onVideo={onVideo} onChange={onChange} />
+        )}
         {!shared && k === 'photo' && photos.map((p) => (
           <PhotoField key={p} path={p} value={get(data, p)} src={src} onPhoto={onPhoto} data={data} onChange={onChange} />
         ))}

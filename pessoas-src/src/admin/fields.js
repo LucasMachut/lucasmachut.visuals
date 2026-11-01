@@ -71,7 +71,7 @@ const NAMES = {
   lede: 'intro', contact: 'bloc contact', button: 'bouton', card_link: 'lien des cartes',
   location: 'lieu', type: 'type', year: 'année', strip: 'bandeau', voice: 'texte', paragraphs: 'paragraphe',
   handle: 'lien', form: 'formulaire', whatsapp: 'numéro WhatsApp', intro: "message d'intro",
-  photos: 'photos', videos: 'vidéos', crop: 'cadrage', photo_mobile: 'photo téléphone', poster_mobile: "photo d'attente téléphone", day_mobile: 'photo de jour téléphone', night_mobile: 'photo de nuit téléphone', hero_mobile: 'hero téléphone', src_mobile: 'photo téléphone', slides: 'suite de photos', day_crop: 'cadrage de la photo de jour', night_crop: 'cadrage de la photo de nuit', hidden: 'séries masquées', series: 'ordre des séries', cover: 'couverture',
+  photos: 'photos', videos: 'vidéos', crop: 'cadrage', video_source: 'nouvelle vidéo', photo_mobile: 'photo téléphone', poster_mobile: "photo d'attente téléphone", day_mobile: 'photo de jour téléphone', night_mobile: 'photo de nuit téléphone', hero_mobile: 'hero téléphone', src_mobile: 'photo téléphone', slides: 'suite de photos', day_crop: 'cadrage de la photo de jour', night_crop: 'cadrage de la photo de nuit', hidden: 'séries masquées', series: 'ordre des séries', cover: 'couverture',
 };
 const GROUP_NAMES = { 'manifesto.lines': 'Manifeste, lignes', 'film_dia.chapters': 'Film du jour, phrases',
   'film_noite.chapters': 'Film de nuit, phrases', 'oferta.cards': 'Offres', sections: 'Sections' };

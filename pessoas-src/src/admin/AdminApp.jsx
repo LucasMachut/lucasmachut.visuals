@@ -138,7 +138,7 @@ function Login({ onDone }) {
 
 function Section({ id, data }) {
   if (id === 'manifesto') return <section id="journey" className="journey"><Manifesto data={data.manifesto} /></section>;
-  if (id === 'film_dia') return <Film id="film1" variant="dia" data={data.film_dia} />;
+  if (id === 'film_dia') return <Film key={data.film_dia.video_source || data.film_dia.video} id="film1" variant="dia" data={data.film_dia} />;
   if (id === 'oferta') return <Oferta data={data.oferta} />;
   if (id === 'noite') return <Nightfall key={JSON.stringify([data.noite.day, data.noite.night, data.noite.day_mobile, data.noite.night_mobile, data.noite.day_crop, data.noite.night_crop])} data={data.noite} />;
   if (id === 'film_noite') return <Film id="film2" variant="noite" data={data.film_noite} />;
@@ -370,6 +370,18 @@ export default function AdminApp() {
       return { kind: 'field', path, field: `${group}.${now}${f || (group === 'manifesto.lines' ? '' : '.title')}` };
     });
   };
+  // Vidéo choisie : gardée telle quelle (pas de réduction) dans videos/source/,
+  // envoyée à la publication ; l'Action la prépare ensuite.
+  const onFieldVideo = (path) => async (field, file) => {
+    const ext = (file.name.match(/\.([a-z0-9]+)$/i) || [, 'mp4'])[1].toLowerCase();
+    const rel = `videos/source/${photos.slug(file.name)}-${Date.now().toString(36)}.${ext}`;
+    await photos.put(rel, file).catch(() => {});
+    const key = '/' + rel;
+    blobs.current[key] = file;
+    const url = URL.createObjectURL(file);
+    setUrls((u) => ({ ...u, [key]: url }));
+    setField(path, field, key);
+  };
   const onFieldPhoto = (path) => async (field, file) => {
     const [key] = await addPhotos([file], photos.FOLDER);
     setField(path, field, key);
@@ -472,7 +484,7 @@ export default function AdminApp() {
     panel = <Editor path={e.field} data={view(e.path)} src={src} onChange={(f, v) => setText(e.path, f, v)}
       shared={!pt && <Shared onPt={toPt} />}
       onList={onList(e.path)} onOpen={openItem} onPhoto={onFieldPhoto(e.path)} onClose={() => setEditing(null)}
-      onPhotos={(files, progress) => addPhotos(files, photos.FOLDER, null, progress)} />;
+      onPhotos={(files, progress) => addPhotos(files, photos.FOLDER, null, progress)} onVideo={onFieldVideo(e.path)} />;
   } else if (e && e.kind === 'sections') {
     panel = pt ? <SectionsPanel data={doc(A)} onSections={(s) => setField(A, 'sections', s)} onClose={() => setEditing(null)} />
       : <SharedPanel title="Sections de la page" onPt={toPt} onClose={() => setEditing(null)} />;

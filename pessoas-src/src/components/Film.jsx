@@ -32,7 +32,7 @@ export default function Film({ id, data, variant = 'dia' }) {
     const q = sec.querySelector('.quote'), dark = sec.querySelector('.filmDark');
 
     if (reduced) {
-      if (video) video.src = data.video;
+      if (video) video.src = data.video_source || data.video;
       gsap.set(ch[0], { autoAlpha: 1 });
       return undefined;
     }
@@ -82,7 +82,9 @@ export default function Film({ id, data, variant = 'dia' }) {
     const fr = data.frames;
     const canvas = sec.querySelector('.film-canvas');
     let imgs = null, drawn = -1, onSize = null, loadTimer = 0;
-    if (touch && fr && canvas) {
+    // video_source : vidéo choisie dans l'admin, pas encore préparée (pas d'images
+    // téléphone avant la publication) ; l'aperçu la lit directement.
+    if (touch && fr && canvas && !data.video_source) {
       if (video) video.style.display = 'none';
       canvas.hidden = false;
       const ctx = canvas.getContext('2d');
@@ -120,7 +122,7 @@ export default function Film({ id, data, variant = 'dia' }) {
     } else if (video) {
       video.muted = true;
       video.setAttribute('muted', '');
-      video.src = data.video;
+      video.src = data.video_source || data.video;
     }
 
     const loop = () => {
@@ -161,7 +163,7 @@ export default function Film({ id, data, variant = 'dia' }) {
     {/* Enveloppe : l'épinglage glisse la section dans un conteneur ; sans elle, React
         ne la retrouve plus à sa place quand l'admin la remplace, et tout l'écran tombe. */}
       <section id={id} ref={root} className={`film film--${variant}`} data-pin data-edit={data.slides && data.slides.length ? `${field}.slides` : `${field}.poster`}>
-        {data.video
+        {(data.video || data.video_source)
           ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
           : data.slides && data.slides.length
             ? data.slides.map((sl, i) => (
