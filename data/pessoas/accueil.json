@@ -147,7 +147,8 @@
       "path": "/videos/header_scroll_frames/f-{n}.jpg",
       "count": 172,
       "duration": 14.3
-    }
+    },
+    "video_source": "/videos/source/essai-admin-video.mp4"
   },
   "oferta": {
     "eyebrow": "II · O que eu faço",
