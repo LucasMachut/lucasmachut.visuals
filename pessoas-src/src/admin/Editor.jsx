@@ -4,6 +4,8 @@
 // « Mot en avant ». Photo : la vignette et « Changer la photo ».
 // Un élément d'un groupe (ligne, phrase, offre) montre en dessous tout son
 // groupe : glisser pour réordonner, × pour retirer, + pour ajouter.
+// shared (en FR et EN) : seuls les textes se modifient ; photos et groupes
+// montrent à la place le bloc « communs aux trois langues ».
 import { useEffect, useRef, useState } from 'react';
 import { get, kind, label, groupOf, itemText, GROUPS } from './fields.js';
 import Sortable from './Sortable.jsx';
@@ -264,7 +266,7 @@ function GroupList({ group, index, data, onList, onOpen }) {
   );
 }
 
-export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, onPhotos, src, onClose }) {
+export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, onPhotos, src, onClose, shared }) {
   const value = get(data, path);
   const k = kind(value, path);
   const grp = groupOf(path);
@@ -286,12 +288,14 @@ export default function Editor({ path, data, onChange, onList, onOpen, onPhoto, 
             onChange={(e) => onChange(path, e.target.value.split(' '))} />
         )}
         {k === 'segments' && <SegmentsEditor value={value} onChange={(v) => onChange(path, v)} />}
-        {k === 'photo' && photos.map((p) => (
+        {shared && (k === 'photo' || /\.slides$/.test(path)) && shared}
+        {!shared && k === 'photo' && photos.map((p) => (
           <PhotoField key={p} path={p} value={get(data, p)} src={src} onPhoto={onPhoto} data={data} onChange={onChange} />
         ))}
-        {k === 'other' && /\.slides$/.test(path) && <SlidesField value={value} src={src} onChange={(v) => onChange(path, v)} onPhotos={onPhotos} />}
+        {!shared && k === 'other' && /\.slides$/.test(path) && <SlidesField value={value} src={src} onChange={(v) => onChange(path, v)} onPhotos={onPhotos} />}
         {k === 'other' && !grp && !/\.slides$/.test(path) && <p className="adm-help">Ce bloc se modifiera à une prochaine étape.</p>}
-        {grp && <GroupList group={grp.group} index={grp.index} data={data} onList={onList} onOpen={onOpen} />}
+        {grp && !shared && <GroupList group={grp.group} index={grp.index} data={data} onList={onList} onOpen={onOpen} />}
+        {grp && shared && k !== 'photo' && shared}
       </div>
     </aside>
   );

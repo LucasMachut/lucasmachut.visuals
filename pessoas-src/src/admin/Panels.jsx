@@ -1,6 +1,8 @@
 // Panneaux propres à Trabalhos, aux séries et à Contato : liste des séries,
 // nouvelle série, hero d'une série, photos, vidéos YouTube, WhatsApp.
 // Chaque panneau reçoit le document qu'il modifie et renvoie la nouvelle version.
+// shared : en FR et EN, le bloc « communs aux trois langues » ; le panneau ne
+// montre alors que ses textes, le reste se change en PT.
 import { useRef, useState } from 'react';
 import Sortable from './Sortable.jsx';
 
@@ -14,6 +16,21 @@ function Panel({ title, onClose, children }) {
       <div className="adm-panel-body">{children}</div>
     </aside>
   );
+}
+
+// En FR et EN : photos, ordre, cadrages et sections se changent en PT, pour les trois langues
+export function Shared({ onPt }) {
+  return (
+    <div className="adm-shared">
+      <p className="adm-help">Photos, ordre, cadrages et sections sont communs aux trois langues : ils se changent en PT.</p>
+      <button type="button" className="adm-btn adm-btn--ghost" onClick={onPt}>Passer en PT</button>
+    </div>
+  );
+}
+
+// Un panneau sans texte à traduire (sections, photos d'une série)
+export function SharedPanel({ title, onPt, onClose }) {
+  return <Panel title={title} onClose={onClose}><Shared onPt={onPt} /></Panel>;
 }
 
 function Field({ label, value, onChange, rows }) {
@@ -47,7 +64,7 @@ function Remove({ name, onYes }) {
 }
 
 // Liste des séries de Trabalhos : ordre, visible ou masquée, ouvrir, nouvelle
-export function SeriesPanel({ t, series, current, onT, onOpen, onNew, onTitle, onClose }) {
+export function SeriesPanel({ t, series, current, onT, onOpen, onNew, onTitle, onClose, shared }) {
   const hidden = new Set(t.hidden || []);
   const move = (from, to) => {
     const next = t.series.slice();
@@ -65,6 +82,16 @@ export function SeriesPanel({ t, series, current, onT, onOpen, onNew, onTitle, o
           <button type="button" className="adm-btn adm-btn--ghost" onClick={() => onOpen(current)}>Ouvrir la série →</button>
         </>
       )}
+      {shared ? (
+        <div className="adm-group">
+          <p className="adm-group-title">Séries de Trabalhos</p>
+          {t.series.map((slug) => (
+            <button key={slug} type="button" className={`adm-sort-text${slug === current ? ' is-current' : ''}${hidden.has(slug) ? ' is-off' : ''}`}
+              onClick={() => onOpen(slug)}>{(series[slug] && series[slug].title) || slug}</button>
+          ))}
+          {shared}
+        </div>
+      ) : (
       <div className="adm-group">
         <p className="adm-group-title">Séries de Trabalhos</p>
         <Sortable items={t.series} onMove={move} render={(slug) => (
@@ -79,6 +106,7 @@ export function SeriesPanel({ t, series, current, onT, onOpen, onNew, onTitle, o
         <button type="button" className="adm-btn adm-btn--ghost" onClick={onNew}>+ Nouvelle série</button>
         <p className="adm-help">Une série masquée garde ses photos et ses textes ; elle n'apparaît plus sur le site une fois publié.</p>
       </div>
+      )}
     </Panel>
   );
 }
@@ -101,20 +129,21 @@ export function NewSeriePanel({ onCreate, onClose }) {
 }
 
 // Hero d'une série : photo, titre, surtitre, lieu, type, année
-export function SerieHeroPanel({ s, src, onS, onPhoto, onClose }) {
+export function SerieHeroPanel({ s, src, onS, onPhoto, onClose, shared }) {
   const [busy, setBusy] = useState('');
   return (
     <Panel title="Hero de la série" onClose={onClose}>
       <div className="adm-photo">
         <img src={src(s.hero)} alt="" />
-        <FilePick label="Changer la photo" busy={busy} onFiles={async ([f]) => { setBusy('Préparation…'); try { await onPhoto(f, 'hero'); } finally { setBusy(''); } }} />
+        {!shared && <FilePick label="Changer la photo" busy={busy} onFiles={async ([f]) => { setBusy('Préparation…'); try { await onPhoto(f, 'hero'); } finally { setBusy(''); } }} />}
       </div>
       <Field label="Titre" value={s.title} onChange={(v) => onS({ ...s, title: v })} />
       <Field label="Surtitre" value={s.eyebrow} onChange={(v) => onS({ ...s, eyebrow: v })} />
       <Field label="Lieu" value={s.location} onChange={(v) => onS({ ...s, location: v })} />
       <Field label="Type" value={s.type} onChange={(v) => onS({ ...s, type: v })} />
-      <Field label="Année" value={s.year} onChange={(v) => onS({ ...s, year: v })} />
+      {!shared && <Field label="Année" value={s.year} onChange={(v) => onS({ ...s, year: v })} />}
       <p className="adm-help">Le texte vertical (lieu · année) se calcule tout seul.</p>
+      {shared}
     </Panel>
   );
 }
@@ -170,7 +199,7 @@ export function youtubeId(link) {
 }
 
 // Vidéos YouTube d'une série
-export function VideosPanel({ s, onS, onClose }) {
+export function VideosPanel({ s, onS, onClose, shared }) {
   const [link, setLink] = useState('');
   const id = youtubeId(link);
   const set = (i, v) => onS({ ...s, videos: s.videos.map((x, j) => (j === i ? { ...x, ...v } : x)) });
@@ -182,6 +211,14 @@ export function VideosPanel({ s, onS, onClose }) {
   };
   return (
     <Panel title="Vidéos de la série" onClose={onClose}>
+      {shared ? (
+        <>
+          {s.videos.map((v, i) => (
+            <input key={i} className="adm-input" value={v.title} onChange={(e) => set(i, { title: e.target.value })} aria-label={`Titre de la vidéo ${i + 1}`} />
+          ))}
+          {shared}
+        </>
+      ) : (<>
       <Sortable items={s.videos} onMove={move} render={(v, i) => (
         <>
           <span className="adm-video">
@@ -202,18 +239,20 @@ export function VideosPanel({ s, onS, onClose }) {
           setLink('');
         }}>+ Ajouter la vidéo</button>
       </div>
+      </>)}
     </Panel>
   );
 }
 
 // Contato : le numéro qui reçoit les demandes et le message d'intro
-export function WhatsappPanel({ c, onC, onClose }) {
+export function WhatsappPanel({ c, onC, onClose, shared }) {
   return (
     <Panel title="WhatsApp du formulaire" onClose={onClose}>
-      <Field label="Numéro (avec l'indicatif, sans + ni espaces)" value={c.form.whatsapp}
-        onChange={(v) => onC({ ...c, form: { ...c.form, whatsapp: v.replace(/[^\d]/g, '') } })} />
+      {!shared && <Field label="Numéro (avec l'indicatif, sans + ni espaces)" value={c.form.whatsapp}
+        onChange={(v) => onC({ ...c, form: { ...c.form, whatsapp: v.replace(/[^\d]/g, '') } })} />}
       <Field label="Message d'intro" rows={2} value={c.form.intro} onChange={(v) => onC({ ...c, form: { ...c.form, intro: v } })} />
       <p className="adm-help">Le formulaire ouvre WhatsApp vers ce numéro, avec ce message suivi des réponses.</p>
+      {shared && <p className="adm-help">Le numéro est le même dans les trois langues : il se change en PT.</p>}
     </Panel>
   );
 }

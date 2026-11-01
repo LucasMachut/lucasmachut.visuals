@@ -7,9 +7,10 @@ import { Component, useEffect, useMemo, useRef, useState } from 'react';
 import * as gh from './github.js';
 import * as photos from './photos.js';
 import { get, set, changed, label, GROUPS } from './fields.js';
+import { merge, setIn } from '../lib/translate.js';
 import Editor from './Editor.jsx';
 import Sortable from './Sortable.jsx';
-import { SeriesPanel, NewSeriePanel, SerieHeroPanel, PhotosPanel, VideosPanel, WhatsappPanel } from './Panels.jsx';
+import { SeriesPanel, NewSeriePanel, SerieHeroPanel, PhotosPanel, VideosPanel, WhatsappPanel, Shared, SharedPanel } from './Panels.jsx';
 import HomeStage from '../components/HomeStage.jsx';
 import Manifesto from '../components/Manifesto.jsx';
 import Film from '../components/Film.jsx';
@@ -29,6 +30,15 @@ const SECTION_NAMES = { manifesto: 'Manifeste', film_dia: 'Film du jour', oferta
 const RESERVED = ['index', 'portfolio', 'contato', 'contact', 'admin', 'lugares', 'en', 'fr', 'photos', 'videos', 'data', 'regard', 'fotos', 'hoteis'];
 const DRAFT_KEY = (path) => 'lm-admin-pessoas.draft:' + path;
 
+// Langues : en FR et EN, la page montre le portugais avec la traduction par-dessus
+// (data/pessoas/fr/…, en/…, seulement des textes) ; toucher un texte l'écrit dans
+// la traduction. Photos, ordre, cadrages et sections restent ceux du portugais.
+const LANGS = ['pt', 'fr', 'en'];
+const LANG_KEY = 'lm-admin-pessoas.lang';
+const TR = (lang, path) => path.replace('data/pessoas/', `data/pessoas/${lang}/`);
+const trLang = (path) => (path.match(/^data\/pessoas\/(fr|en)\//) || [])[1];
+const ptOf = (path) => path.replace(/^data\/pessoas\/(fr|en)\//, 'data/pessoas/');
+
 // En local avec ?essai : lit les fichiers du dossier, « Publier » montre seulement ce qui partirait
 const essai = typeof location !== 'undefined' && /^(localhost|127\.0\.0\.1)$/.test(location.hostname)
   && new URLSearchParams(location.search).has('essai');
@@ -46,12 +56,13 @@ function saveDraft(path, data, base = null) {
     else localStorage.removeItem(DRAFT_KEY(path));
   } catch (e) { /* rien */ }
 }
-function fromDraft(draft, online) {
+// put : comment réécrire un champ (pour une traduction, setIn garde la forme du portugais)
+function fromDraft(draft, online, put = set) {
   if (!draft) return { data: online, stale: false };
   if (draft.v !== 2) return { data: draft, stale: !!online && JSON.stringify(draft) !== JSON.stringify(online) };
   if (!online || !draft.base || JSON.stringify(draft.base) === JSON.stringify(online)) return { data: draft.data, stale: false };
   let data = online;
-  for (const f of changed(draft.base, draft.data)) data = set(data, f, get(draft.data, f));
+  for (const f of changed(draft.base, draft.data)) data = put(data, f, get(draft.data, f));
   return { data, stale: false };
 }
 async function readJson(path) {
@@ -198,6 +209,8 @@ export default function AdminApp() {
   const blobs = useRef({});
   const timers = useRef({});
   const staleRef = useRef([]);   // brouillons d'ancien format, commencés avant une mise à jour du site
+  const [lang, setLangState] = useState(() => { try { return LANGS.includes(localStorage.getItem(LANG_KEY)) ? localStorage.getItem(LANG_KEY) : 'pt'; } catch (e) { return 'pt'; } });
+  const setLang = (l) => { setLangState(l); setEditing(null); try { localStorage.setItem(LANG_KEY, l); } catch (e) { /* rien */ } };
 
   useEffect(() => {
     const on = () => { setWhere(route()); setEditing(null); scrollTo(0, 0); };
@@ -212,13 +225,18 @@ export default function AdminApp() {
       const out = {};
       const load = async (path) => {
         const draft = loadDraft(path);
+        const lang = trLang(path);
+        // une traduction se fusionne sur la version en ligne avec la forme du portugais
+        const put = lang ? (o, f, v) => setIn(o, out[ptOf(path)] && out[ptOf(path)].data, f, v) : set;
         try {
           const base = await readJson(path);
-          const { data, stale } = fromDraft(draft, base);
+          const { data, stale } = fromDraft(draft, base, put);
           out[path] = { base, data };
           if (stale) staleRef.current.push(path);
         } catch (e) {
-          if (e.status === 404 && draft) out[path] = { base: null, data: draft.v === 2 ? draft.data : draft };
+          // pas encore de traduction : un fichier vide, créé à la première publication
+          if (e.status === 404 && lang) out[path] = { base: {}, data: draft ? (draft.v === 2 ? draft.data : draft) : {} };
+          else if (e.status === 404 && draft) out[path] = { base: null, data: draft.v === 2 ? draft.data : draft };
           else throw e;
         }
       };
@@ -226,6 +244,8 @@ export default function AdminApp() {
       if (!out[A].data.sections) out[A].data = out[A].base;   // brouillon d'avant les sections
       const slugs = new Set([...out[T].base.series, ...out[T].data.series]);
       await Promise.all([...slugs].map((slug) => load(S(slug)).catch(() => {})));
+      const pts = [A, T, C, ...[...slugs].map(S)].filter((p) => out[p]);
+      await Promise.all(['fr', 'en'].flatMap((l) => pts.map((p) => load(TR(l, p)).catch(() => {}))));
       const stored = await photos.all().catch(() => ({}));
       const u = {};
       for (const [p, blob] of Object.entries(stored)) { blobs.current['/' + p] = blob; u['/' + p] = URL.createObjectURL(blob); }
@@ -247,14 +267,31 @@ export default function AdminApp() {
       const data = typeof next === 'function' ? next(cur ? cur.data : null) : next;
       clearTimeout(timers.current[path]);
       timers.current[path] = setTimeout(() => saveDraft(path, data, cur ? cur.base : null), 300);
-      return { ...d, [path]: { base: cur ? cur.base : null, data } };
+      return { ...d, [path]: { base: cur ? cur.base : trLang(path) ? {} : null, data } };
     });
   };
   const setField = (path, field, value) => setDoc(path, (cur) => set(cur, field, value));
 
+  // La page dans la langue choisie, et l'écriture d'un texte dans cette langue
+  const view = (path) => (lang === 'pt' ? doc(path) : doc(path) && merge(doc(path), doc(TR(lang, path)) || {}));
+  const setText = (path, field, value) => (lang === 'pt' ? setField(path, field, value)
+    : setDoc(TR(lang, path), (cur) => setIn(cur || {}, doc(path), field, value)));
+  // Un panneau renvoie la page entière : en FR et EN, seuls ses textes changés partent
+  const onView = (path) => (next) => {
+    if (lang === 'pt') { setDoc(path, next); return; }
+    const before = view(path);
+    for (const f of changed(before, next)) {
+      const v = get(next, f);
+      if (typeof v === 'string') setText(path, f, v);
+    }
+  };
+
   const seriesTitle = (slug) => { const s = doc(S(slug)); return (s && s.title) || slug; };
-  const pageName = (path) => (path === A ? 'Accueil' : path === T ? 'Trabalhos' : path === C ? 'Contato'
-    : `Série ${seriesTitle(path.replace(/^.*\/|\.json$/g, ''))}`);
+  const pageName = (path) => {
+    const l = trLang(path), p = ptOf(path);
+    const name = p === A ? 'Accueil' : p === T ? 'Trabalhos' : p === C ? 'Contato' : `Série ${seriesTitle(p.replace(/^.*\/|\.json$/g, ''))}`;
+    return l ? `${name} (${l.toUpperCase()})` : name;
+  };
 
   // Ce qui partirait : par page, au niveau où on le modifie
   const diff = useMemo(() => {
@@ -273,8 +310,20 @@ export default function AdminApp() {
 
   const src = (v) => urls[v] || v;
   const show = (o) => withLocalPhotos(o, urls);
-  const t = doc(T);
-  const seriesMap = Object.fromEntries(t.series.map((slug) => [slug, doc(S(slug))]).filter(([, s]) => s));
+  const t = view(T);
+  const seriesMap = Object.fromEntries(t.series.map((slug) => [slug, view(S(slug))]).filter(([, s]) => s));
+  const pt = lang === 'pt';
+  const toPt = () => setLang('pt');
+  // PT · FR · EN : dans la barre sur ordinateur, en haut du menu ☰ sur téléphone
+  // (la barre du téléphone est déjà pleine), comme sur le site
+  const langs = (place) => (
+    <span className={`adm-langs ${place}`} role="group" aria-label="Langue de la page">
+      {LANGS.map((l) => (
+        <button key={l} type="button" className={l === lang ? 'is-on' : ''} aria-pressed={l === lang}
+          onClick={() => { setLang(l); setMenu(false); }}>{l.toUpperCase()}</button>
+      ))}
+    </span>
+  );
   const go = (hash) => { setMenu(false); location.hash = hash; };
 
   const addPhotos = async (files, folder, nameFor, progress) => {
@@ -383,9 +432,9 @@ export default function AdminApp() {
 
   // La page affichée et ses boutons dans la barre
   let page = null, title = '', tools = null;
-  const serie = where.page === 'serie' ? doc(S(where.slug)) : null;
+  const serie = where.page === 'serie' ? view(S(where.slug)) : null;
   if (where.page === 'accueil') {
-    const a = doc(A);
+    const a = view(A);
     const shape = JSON.stringify([a.sections, ...Object.keys(GROUPS).map((g) => (get(a, g) || []).length)]);
     page = <Accueil key={shape} data={show(a)} />;
     title = 'Accueil';
@@ -409,7 +458,7 @@ export default function AdminApp() {
       </>
     );
   } else if (where.page === 'contato') {
-    page = <ContatoBody data={show(doc(C))} />;
+    page = <ContatoBody data={show(view(C))} />;
     title = 'Contato';
     tools = <button type="button" className="adm-btn adm-btn--ghost adm-btn--bar" onClick={() => setEditing({ kind: 'whatsapp' })}>WhatsApp</button>;
   } else {
@@ -419,21 +468,27 @@ export default function AdminApp() {
   const e = editing;
   const sPath = where.page === 'serie' ? S(where.slug) : null;
   let panel = null;
-  if (e && e.kind === 'field' && get(doc(e.path), e.field) !== undefined) {
-    panel = <Editor path={e.field} data={doc(e.path)} src={src} onChange={(f, v) => setField(e.path, f, v)}
+  if (e && e.kind === 'field' && get(view(e.path), e.field) !== undefined) {
+    panel = <Editor path={e.field} data={view(e.path)} src={src} onChange={(f, v) => setText(e.path, f, v)}
+      shared={!pt && <Shared onPt={toPt} />}
       onList={onList(e.path)} onOpen={openItem} onPhoto={onFieldPhoto(e.path)} onClose={() => setEditing(null)}
       onPhotos={(files, progress) => addPhotos(files, photos.FOLDER, null, progress)} />;
   } else if (e && e.kind === 'sections') {
-    panel = <SectionsPanel data={doc(A)} onSections={(s) => setField(A, 'sections', s)} onClose={() => setEditing(null)} />;
+    panel = pt ? <SectionsPanel data={doc(A)} onSections={(s) => setField(A, 'sections', s)} onClose={() => setEditing(null)} />
+      : <SharedPanel title="Sections de la page" onPt={toPt} onClose={() => setEditing(null)} />;
   } else if (e && e.kind === 'series') {
     panel = <SeriesPanel t={t} series={seriesMap} current={e.slug} onT={(x) => setDoc(T, x)}
       onOpen={(slug) => go(`#/serie/${slug}`)} onNew={() => setEditing({ kind: 'new' })}
-      onTitle={(slug, v) => setField(S(slug), 'title', v)} onClose={() => setEditing(null)} />;
+      onTitle={(slug, v) => setText(S(slug), 'title', v)} onClose={() => setEditing(null)}
+      shared={!pt && <Shared onPt={toPt} />} />;
   } else if (e && e.kind === 'new') {
     panel = <NewSeriePanel onCreate={createSerie} onClose={() => setEditing(null)} />;
   } else if (e && e.kind === 'hero' && serie) {
-    panel = <SerieHeroPanel s={serie} src={src} onS={(x) => setDoc(sPath, x)} onClose={() => setEditing(null)}
+    panel = <SerieHeroPanel s={serie} src={src} onS={onView(sPath)} onClose={() => setEditing(null)}
+      shared={!pt && <Shared onPt={toPt} />}
       onPhoto={async (f) => { const [key] = await addPhotos([f], `Projets-web/Fotos/${where.slug}`); setField(sPath, 'hero', key); }} />;
+  } else if (e && e.kind === 'photos' && serie && !pt) {
+    panel = <SharedPanel title="Photos de la série" onPt={toPt} onClose={() => setEditing(null)} />;
   } else if (e && e.kind === 'photos' && serie) {
     panel = <PhotosPanel s={serie} index={e.index} src={src} onS={(x) => setDoc(sPath, x)}
       onIndex={(i) => setEditing({ kind: 'photos', index: i })} onClose={() => setEditing(null)}
@@ -448,9 +503,9 @@ export default function AdminApp() {
         });
       }} />;
   } else if (e && e.kind === 'videos' && serie) {
-    panel = <VideosPanel s={serie} onS={(x) => setDoc(sPath, x)} onClose={() => setEditing(null)} />;
+    panel = <VideosPanel s={serie} onS={onView(sPath)} onClose={() => setEditing(null)} shared={!pt && <Shared onPt={toPt} />} />;
   } else if (e && e.kind === 'whatsapp') {
-    panel = <WhatsappPanel c={doc(C)} onC={(x) => setDoc(C, x)} onClose={() => setEditing(null)} />;
+    panel = <WhatsappPanel c={view(C)} onC={onView(C)} onClose={() => setEditing(null)} shared={!pt && <Shared onPt={toPt} />} />;
   }
   const outline = e && e.kind === 'field' ? `[data-edit="${e.field}"]`
     : e && e.kind === 'photos' && e.index != null ? `[data-edit="photos.${e.index}"]`
@@ -462,6 +517,7 @@ export default function AdminApp() {
       <header className="adm-bar">
         <button type="button" className="adm-burger" aria-label="Menu" aria-expanded={menu} onClick={() => setMenu(!menu)}>☰</button>
         <strong className="adm-title">{title}</strong>
+        {langs('adm-langs--bar')}
         {tools}
         <div className="adm-actions">
           {diff.length > 0 && <span className="adm-count">{diff.length} changement{diff.length > 1 ? 's' : ''}</span>}
@@ -470,6 +526,7 @@ export default function AdminApp() {
         </div>
         {menu && (
           <nav className="adm-menu">
+            {langs('adm-langs--menu')}
             <button type="button" className={where.page === 'accueil' ? 'is-current' : ''} onClick={() => go('#/accueil')}>Accueil</button>
             <button type="button" className={where.page === 'trabalhos' ? 'is-current' : ''} onClick={() => go('#/trabalhos')}>Trabalhos</button>
             <span className="adm-menu-head">Séries</span>
@@ -491,6 +548,9 @@ export default function AdminApp() {
           Ton brouillon a été commencé avant une mise à jour du site : le publier remettrait l'ancienne version de ce qui a changé entre-temps. Regarde la liste dans « Publier », ou « Annuler » pour repartir de la version en ligne.
           <button type="button" className="adm-btn adm-btn--ghost adm-btn--bar" onClick={() => { staleRef.current = []; setStatus(' '); }}>Compris</button>
         </div>
+      )}
+      {!pt && !status && !staleRef.current.length && (
+        <div className="adm-lang-note">{lang === 'fr' ? 'Version française' : 'Version anglaise'} : touche un texte pour le traduire. Un texte pas encore traduit s'affiche en portugais.</div>
       )}
       {status === 'done' && <div className="adm-toast">Publié. En ligne dans 3 à 5 minutes.{essai && ' (essai : rien n\'est parti)'}</div>}
       {status.startsWith('error:') && <div className="adm-toast adm-toast--err">La publication a échoué : {status.slice(6)}. Tes changements sont gardés.</div>}

@@ -3,6 +3,8 @@
 // data/pessoas/fr/ et data/pessoas/en/, avec la même forme que le fichier
 // portugais. Photos, cadrages, ordre et séries publiées restent ceux du
 // portugais ; un texte pas encore traduit s'affiche en portugais.
+import { merge } from './translate.js';
+
 const files = import.meta.glob('../../../data/pessoas/{fr,en}/**/*.json', { eager: true, import: 'default' });
 
 export const LANGS = ['pt', 'fr', 'en'];
@@ -29,24 +31,6 @@ export function inLang(lang, name, pt) {
   if (lang === 'pt') return pt;
   const over = files[`../../../data/pessoas/${lang}/${name}.json`];
   return localize(over ? merge(pt, over) : pt, lang);
-}
-
-// Les objets se fusionnent clé par clé, et les listes d'objets (cartes,
-// champs, liens) case par case : la traduction ne remplace que ses textes.
-// Une liste de textes ou de segments ({ t, em }) est remplacée en entier,
-// parce qu'une phrase traduite n'a pas le même découpage.
-function merge(pt, over) {
-  if (Array.isArray(pt) && Array.isArray(over)) {
-    const byCell = pt.every((x) => x && typeof x === 'object' && !Array.isArray(x) && !('t' in x));
-    if (!byCell) return over;
-    return pt.map((x, i) => (i in over && over[i] != null ? merge(x, over[i]) : x));
-  }
-  if (pt && over && typeof pt === 'object' && typeof over === 'object' && !Array.isArray(pt) && !Array.isArray(over)) {
-    const out = { ...pt };
-    for (const k of Object.keys(over)) out[k] = k in pt ? merge(pt[k], over[k]) : over[k];
-    return out;
-  }
-  return over;
 }
 
 // Les liens internes restent dans la langue : /portfolio → /fr/portfolio.
