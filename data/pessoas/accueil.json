@@ -100,8 +100,8 @@
     }
   },
   "film_dia": {
-    "video": "/videos/scroll/essai-admin-video.mp4",
-    "poster": "/videos/scroll/essai-admin-video-poster.jpg",
+    "video": "/videos/header_scroll.mp4",
+    "poster": "/photos/hero-poster.jpg",
     "chapters": [
       {
         "kicker": "Um gesto",
@@ -144,9 +144,9 @@
       }
     ],
     "frames": {
-      "path": "/videos/scroll/essai-admin-video-frames/f-{n}.jpg",
-      "count": 48,
-      "duration": 4
+      "path": "/videos/header_scroll_frames/f-{n}.jpg",
+      "count": 172,
+      "duration": 14.3
     }
   },
   "oferta": {
