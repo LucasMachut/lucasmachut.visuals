@@ -178,3 +178,7 @@
   .adm-menu > .adm-langs--menu { display: flex; gap: .75rem; padding: .4rem 1.25rem .8rem; border-bottom: 1px solid rgba(237, 233, 223, .2); margin-bottom: .4rem; }
   .adm-langs--menu button { font-size: 14px; padding: .6rem .2rem; }
 }
+
+/* Photo téléphone : sous la photo ordinateur, séparée d'un filet */
+.adm-mobile-pick { display: flex; flex-direction: column; gap: .5rem; border-top: 1px solid var(--line); padding-top: .9rem; margin-top: .4rem; }
+.adm-mobile-pick img { width: 40%; max-height: 220px; object-fit: contain; background: var(--lin-deep); border-radius: 4px; align-self: flex-start; }

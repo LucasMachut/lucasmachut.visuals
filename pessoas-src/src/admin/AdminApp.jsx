@@ -140,7 +140,7 @@ function Section({ id, data }) {
   if (id === 'manifesto') return <section id="journey" className="journey"><Manifesto data={data.manifesto} /></section>;
   if (id === 'film_dia') return <Film id="film1" variant="dia" data={data.film_dia} />;
   if (id === 'oferta') return <Oferta data={data.oferta} />;
-  if (id === 'noite') return <Nightfall key={data.noite.day + data.noite.night + JSON.stringify([data.noite.day_crop, data.noite.night_crop])} data={data.noite} />;
+  if (id === 'noite') return <Nightfall key={JSON.stringify([data.noite.day, data.noite.night, data.noite.day_mobile, data.noite.night_mobile, data.noite.day_crop, data.noite.night_crop])} data={data.noite} />;
   if (id === 'film_noite') return <Film id="film2" variant="noite" data={data.film_noite} />;
   return null;
 }
@@ -149,7 +149,7 @@ function Accueil({ data }) {
   const visible = data.sections.filter((s) => !s.hidden);
   return (
     <>
-      <HomeStage key={data.hero.photo} hero={data.hero} edit />
+      <HomeStage key={data.hero.photo + (data.hero.photo_mobile || "")} hero={data.hero} edit />
       {data.sections.map((s) => (
         <div key={s.id} className={`sec${s.hidden ? ' adm-hidden' : ''}`} data-sec={s.id}
           data-covers-hero={visible[0] && visible[0].id === s.id ? '' : undefined}
@@ -486,7 +486,7 @@ export default function AdminApp() {
   } else if (e && e.kind === 'hero' && serie) {
     panel = <SerieHeroPanel s={serie} src={src} onS={onView(sPath)} onClose={() => setEditing(null)}
       shared={!pt && <Shared onPt={toPt} />}
-      onPhoto={async (f) => { const [key] = await addPhotos([f], `Projets-web/Fotos/${where.slug}`); setField(sPath, 'hero', key); }} />;
+      onPhoto={async (f, field = 'hero') => { const [key] = await addPhotos([f], `Projets-web/Fotos/${where.slug}`); setField(sPath, field, key); }} />;
   } else if (e && e.kind === 'photos' && serie && !pt) {
     panel = <SharedPanel title="Photos de la série" onPt={toPt} onClose={() => setEditing(null)} />;
   } else if (e && e.kind === 'photos' && serie) {

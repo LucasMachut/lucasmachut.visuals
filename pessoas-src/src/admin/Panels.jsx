@@ -137,6 +137,17 @@ export function SerieHeroPanel({ s, src, onS, onPhoto, onClose, shared }) {
         <img src={src(s.hero)} alt="" />
         {!shared && <FilePick label="Changer la photo" busy={busy} onFiles={async ([f]) => { setBusy('Préparation…'); try { await onPhoto(f, 'hero'); } finally { setBusy(''); } }} />}
       </div>
+      {!shared && (
+        <div className="adm-mobile-pick">
+          <span className="adm-photo-label">Photo téléphone</span>
+          {s.hero_mobile ? <img src={src(s.hero_mobile)} alt="" /> : <p className="adm-help">La même que l'ordinateur.</p>}
+          <div className="adm-row">
+            <FilePick label={s.hero_mobile ? 'Changer la photo téléphone' : 'Une autre photo pour le téléphone'} busy={busy}
+              onFiles={async ([f]) => { setBusy('Préparation…'); try { await onPhoto(f, 'hero_mobile'); } finally { setBusy(''); } }} />
+            {s.hero_mobile && <button type="button" className="adm-btn adm-btn--ghost" onClick={() => onS({ ...s, hero_mobile: undefined })}>Reprendre celle de l'ordinateur</button>}
+          </div>
+        </div>
+      )}
       <Field label="Titre" value={s.title} onChange={(v) => onS({ ...s, title: v })} />
       <Field label="Surtitre" value={s.eyebrow} onChange={(v) => onS({ ...s, eyebrow: v })} />
       <Field label="Lieu" value={s.location} onChange={(v) => onS({ ...s, location: v })} />

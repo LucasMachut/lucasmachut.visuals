@@ -129,11 +129,34 @@ function CropFrame({ src, ratio, label: name, value, onChange, wide }) {
   );
 }
 
+// Bloc « Photo téléphone » : par défaut le téléphone montre la même photo que
+// l'ordinateur ; on peut en choisir une autre (champ « …_mobile ») et revenir.
+function MobilePick({ value, src, onFile, onClear, busy }) {
+  const input = useRef(null);
+  return (
+    <div className="adm-mobile-pick">
+      <span className="adm-photo-label">Photo téléphone</span>
+      {value ? <img src={src(value)} alt="" /> : <p className="adm-help">La même que l'ordinateur.</p>}
+      <input ref={input} type="file" accept="image/*" hidden
+        onChange={(e) => { const f = e.target.files && e.target.files[0]; e.target.value = ''; if (f) onFile(f); }} />
+      <div className="adm-row">
+        <button type="button" className="adm-btn adm-btn--ghost" disabled={busy} onClick={() => input.current.click()}>
+          {busy ? 'Préparation…' : value ? 'Changer la photo téléphone' : 'Une autre photo pour le téléphone'}
+        </button>
+        {value && <button type="button" className="adm-btn adm-btn--ghost" onClick={onClear}>Reprendre celle de l'ordinateur</button>}
+      </div>
+    </div>
+  );
+}
+
 function PhotoField({ path, value, src, onPhoto, data, onChange }) {
   const input = useRef(null);
   const [busy, setBusy] = useState(false);
+  const [busyM, setBusyM] = useState(false);
   const spec = cropSpec(path);
   const crop = spec ? get(data, spec.path) : null;
+  const mPath = `${path}_mobile`;
+  const mobile = get(data, mPath);
   const pick = async (e) => {
     const file = e.target.files && e.target.files[0];
     e.target.value = '';
@@ -144,6 +167,15 @@ function PhotoField({ path, value, src, onPhoto, data, onChange }) {
       if (spec) onChange(spec.path, undefined);   // nouvelle photo : cadrage remis au centre
     } finally { setBusy(false); }
   };
+  const pickMobile = async (file) => {
+    setBusyM(true);
+    try {
+      await onPhoto(mPath, file);
+      if (spec && crop && crop.mobile) onChange(spec.path, { ...crop, mobile: undefined });
+    } finally { setBusyM(false); }
+  };
+  // le cadre « Téléphone » montre la photo téléphone quand il y en a une
+  const frameSrc = (key) => src(key === 'mobile' && mobile ? mobile : value);
   return (
     <div className="adm-photo">
       <span className="adm-photo-label">{label(path)}</span>
@@ -153,7 +185,7 @@ function PhotoField({ path, value, src, onPhoto, data, onChange }) {
         <>
           <div className="adm-crops">
             {spec.frames.map((f) => (
-              <CropFrame key={f.key || 'one'} src={src(value)} ratio={f.ratio} label={f.label} wide={f.ratio > 1}
+              <CropFrame key={(f.key || 'one') + frameSrc(f.key)} src={frameSrc(f.key)} ratio={f.ratio} label={f.label} wide={f.ratio > 1}
                 value={f.key ? crop && crop[f.key] : crop}
                 onChange={(c) => onChange(spec.path, f.key ? { ...(crop || {}), [f.key]: c } : c)} />
             ))}
@@ -165,6 +197,7 @@ function PhotoField({ path, value, src, onPhoto, data, onChange }) {
       <button type="button" className="adm-btn" disabled={busy} onClick={() => input.current.click()}>
         {busy ? 'Préparation…' : 'Changer la photo'}
       </button>
+      {value && <MobilePick value={mobile} src={src} busy={busyM} onFile={pickMobile} onClear={() => onChange(mPath, undefined)} />}
     </div>
   );
 }
@@ -209,12 +242,21 @@ function SlidesField({ value, src, onChange, onPhotos }) {
           <span className="adm-photo-label">Photo {sel + 1} : glisse-la dans chaque cadre</span>
           <div className="adm-crops">
             {[['desktop', 'Ordinateur', 16 / 9], ['mobile', 'Téléphone', 375 / 812]].map(([key, name, ratio]) => (
-              <CropFrame key={key} src={src(value[sel].src)} ratio={ratio} label={name} wide={ratio > 1}
+              <CropFrame key={key + (key === 'mobile' ? value[sel].src_mobile || '' : '')}
+                src={src(key === 'mobile' && value[sel].src_mobile ? value[sel].src_mobile : value[sel].src)} ratio={ratio} label={name} wide={ratio > 1}
                 value={value[sel].crop && value[sel].crop[key]}
                 onChange={(c) => onChange(value.map((x, j) => (j === sel ? { ...x, crop: { ...(x.crop || {}), [key]: c } } : x)))} />
             ))}
           </div>
         </div>
+      )}
+      {sel != null && value[sel] && (
+        <MobilePick value={value[sel].src_mobile} src={src} busy={!!busy}
+          onFile={async (f) => {
+            const [k] = await onPhotos([f]);
+            onChange(value.map((x, j) => (j === sel ? { ...x, src_mobile: k, crop: x.crop ? { ...x.crop, mobile: undefined } : x.crop } : x)));
+          }}
+          onClear={() => onChange(value.map((x, j) => (j === sel ? { ...x, src_mobile: undefined } : x)))} />
       )}
       <input ref={input} type="file" accept="image/*" multiple hidden onChange={add} />
       <button type="button" className="adm-btn" disabled={!!busy} onClick={() => input.current.click()}>{busy || '+ Ajouter des photos'}</button>
