@@ -280,25 +280,73 @@
         "src": "/photos/le-regard/mesa/tango-casal.jpg"
       },
       {
-        "src": "/photos/le-regard/abraco-pb.jpg"
+        "src": "/photos/le-regard/abraco-pb.jpg",
+        "crop": {
+          "mobile": {
+            "x": 0.841,
+            "y": 0.5
+          },
+          "desktop": {
+            "x": 0.5,
+            "y": 0.536
+          }
+        }
       },
       {
-        "src": "/photos/le-regard/casal-deitado.jpg"
+        "src": "/photos/le-regard/casal-deitado.jpg",
+        "crop": {
+          "mobile": {
+            "x": 0.186,
+            "y": 0.5
+          }
+        }
       },
       {
-        "src": "/photos/le-regard/mesa/bolhas-salto.jpg"
+        "src": "/photos/le-regard/mesa/bolhas-salto.jpg",
+        "crop": {
+          "mobile": {
+            "x": 0.768,
+            "y": 0.5
+          },
+          "desktop": {
+            "x": 0.5,
+            "y": 0
+          }
+        }
       },
       {
-        "src": "/photos/le-regard/mesa/teresopolis-bracos.jpg"
-      },
-      {
-        "src": "/photos/le-regard/mesa/dunas-bracos.jpg"
+        "src": "/photos/le-regard/mesa/dunas-bracos.jpg",
+        "crop": {
+          "mobile": {
+            "x": 0.375,
+            "y": 0.5
+          },
+          "desktop": {
+            "x": 0.5,
+            "y": 0.405
+          }
+        }
       },
       {
         "src": "/Projets-web/Fotos/site/louis-e-marco-1-sur-1-mvwwx46u.webp"
       },
       {
-        "src": "/Projets-web/Fotos/site/img-5719-mvwx6crx.jpg"
+        "src": "/Projets-web/Fotos/site/img-5719-mvwx6crx.jpg",
+        "crop": {
+          "mobile": {
+            "x": 0.29,
+            "y": 0.5
+          }
+        }
+      },
+      {
+        "src": "/Projets-web/Fotos/site/bolhasarpoador2-5-sur-17-mvxsa4mp.jpg",
+        "crop": {
+          "desktop": {
+            "x": 0.5,
+            "y": 0.422
+          }
+        }
       }
     ]
   },
