@@ -100,8 +100,8 @@
     }
   },
   "film_dia": {
-    "video": "/videos/header_scroll.mp4",
-    "poster": "/photos/hero-poster.jpg",
+    "video": "/videos/scroll/essai-admin-video.mp4",
+    "poster": "/videos/scroll/essai-admin-video-poster.jpg",
     "chapters": [
       {
         "kicker": "Um gesto",
@@ -144,11 +144,10 @@
       }
     ],
     "frames": {
-      "path": "/videos/header_scroll_frames/f-{n}.jpg",
-      "count": 172,
-      "duration": 14.3
-    },
-    "video_source": "/videos/source/essai-admin-video.mp4"
+      "path": "/videos/scroll/essai-admin-video-frames/f-{n}.jpg",
+      "count": 48,
+      "duration": 4
+    }
   },
   "oferta": {
     "eyebrow": "II · O que eu faço",
