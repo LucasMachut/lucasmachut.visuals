@@ -4,6 +4,7 @@
 import SerieFilm from './SerieFilm.jsx';
 import SerieLightbox from './SerieLightbox.jsx';
 import VideoFacade from './VideoFacade.jsx';
+import Pic from './Pic.jsx';
 import { placeDate } from '../lib/serie-text.js';
 
 // base : préfixe de langue des liens ('' en portugais, '/fr'…) ; ui : textes du plein écran.
@@ -24,7 +25,7 @@ export default function SerieBody({ s, next, p, base = '', ui = UI_PT }) {
   return (
     <>
       <section className="sh" data-edit="hero">
-        <img className="sh-img" src={s.hero} alt={s.title} decoding="async" fetchpriority="high" />
+        <Pic className="sh-img" src={s.hero} mobile={s.hero_mobile} alt={s.title} fetchpriority="high" />
         <div className="sh-content">
           {s.eyebrow && <div className="clip"><p className="heroLine sh-eyebrow">{s.eyebrow}</p></div>}
           <h1 className="sh-title t-title"><span className="clip"><span className="heroLine">{s.title}</span></span></h1>

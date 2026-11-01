@@ -8,6 +8,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Segments, Arrow } from './Segments.jsx';
 import { pinPriority, scheduleRefresh } from './scroll.js';
+import Pic from './Pic.jsx';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -74,7 +75,7 @@ export default function Oferta({ data }) {
                 <div className="galFrame" data-edit={`oferta.cards.${i}.photo`}>
                   <div className="galLine" />
                   <div className="galClip">
-                    <img className="galImg" src={c.photo} alt={c.title} decoding="async"
+                    <Pic className="galImg" src={c.photo} mobile={c.photo_mobile} alt={c.title}
                       style={c.crop ? { objectPosition: `${c.crop.x * 100}% ${c.crop.y * 100}%` } : undefined} />
                   </div>
                 </div>

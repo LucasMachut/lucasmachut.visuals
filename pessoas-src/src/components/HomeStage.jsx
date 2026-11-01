@@ -7,6 +7,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { pinPriority, scheduleRefresh } from './scroll.js';
+import Pic, { pick, isTall } from './Pic.jsx';
 
 function dustTexture(THREE) {
   // Un grain de poussière : point doux, cœur rose poussière, bord qui s'efface
@@ -187,14 +188,25 @@ export default function HomeStage({ hero, edit = false }) {
       gsap.ticker.add(tick);
 
       fitRef.current = fitHero;
+      // Photo du hero : la version téléphone (hero.photo_mobile) sur un écran
+      // plus haut que large, rechargée si l'écran passe de l'un à l'autre.
+      let tall = isTall();
+      const loadHero = (src, done) => new THREE.TextureLoader().load(src, (tex) => {
+        if (!alive) return;
+        heroUniforms.uTex.value = tex;
+        imgAspect = tex.image.width / tex.image.height;
+        fitHero();
+        if (done) done();
+      });
       onResize = () => {
         W = innerWidth; H = innerHeight;
         cam.left = -W / 2; cam.right = W / 2; cam.top = H / 2; cam.bottom = -H / 2; cam.updateProjectionMatrix();
         renderer.setSize(W, H, false); fitHero();
+        if (hero.photo_mobile && isTall() !== tall) { tall = isTall(); loadHero(pick(hero.photo, hero.photo_mobile)); }
       };
       addEventListener('resize', onResize);
 
-      new THREE.TextureLoader().load(hero.photo, (tex) => {
+      new THREE.TextureLoader().load(pick(hero.photo, hero.photo_mobile), (tex) => {
         if (!alive) return;
         // Pas de colorSpace : le shader renvoie les pixels tels quels. Déclarée sRGB,
         // la photo était linéarisée sans être reconvertie : assombrie et contrastée.
@@ -263,7 +275,7 @@ export default function HomeStage({ hero, edit = false }) {
       <canvas id="gl" className="gl" aria-hidden="true" />
 
       <section id="hero" className="hero" data-pin data-edit="hero.photo">
-        <img className="hero-fallback" src={hero.photo} alt="" />
+        <Pic className="hero-fallback" src={hero.photo} mobile={hero.photo_mobile} />
         <div id="heroContent" className="hero-content">
           <div className="clip"><p className="heroLine eyebrow-hero" data-edit="hero.eyebrow">{hero.eyebrow}</p></div>
           <h1 className="hero-name" data-edit="hero.name">

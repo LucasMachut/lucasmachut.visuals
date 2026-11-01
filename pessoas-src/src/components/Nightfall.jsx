@@ -7,6 +7,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Lines } from './Segments.jsx';
 import { pinPriority, scheduleRefresh } from './scroll.js';
 import { cropFor } from './HomeStage.jsx';
+import Pic, { pick, isTall } from './Pic.jsx';
 
 export default function Nightfall({ data }) {
   const root = useRef(null);
@@ -80,15 +81,23 @@ export default function Nightfall({ data }) {
       fit();
       // Photos sans colorSpace, comme au hero : pixels rendus tels quels, sans contraste ajouté.
       const loader = new THREE.TextureLoader();
-      loader.load(data.day, (t) => { dUni.uA.value = t; aAsp = t.image.width / t.image.height; fit(); ready++; });
-      loader.load(data.night, (t) => { dUni.uB.value = t; bAsp = t.image.width / t.image.height; fit(); ready++; });
+      // version téléphone (day_mobile, night_mobile) sur un écran plus haut que large
+      const loadBoth = () => {
+        loader.load(pick(data.day, data.day_mobile), (t) => { dUni.uA.value = t; aAsp = t.image.width / t.image.height; fit(); ready = Math.min(2, ready + 1); });
+        loader.load(pick(data.night, data.night_mobile), (t) => { dUni.uB.value = t; bAsp = t.image.width / t.image.height; fit(); ready = Math.min(2, ready + 1); });
+      };
+      let tall = isTall();
+      loadBoth();
 
       let visible = false;
       const io = new IntersectionObserver((e) => { visible = e[0].isIntersecting; }, { rootMargin: '20%' });
       io.observe(sec);
       tick = () => { if (visible && ready === 2) renderer.render(scene, cam); };
       gsap.ticker.add(tick);
-      onResize = () => { W = innerWidth; H = innerHeight; fit(); };
+      onResize = () => {
+        W = innerWidth; H = innerHeight; fit();
+        if ((data.day_mobile || data.night_mobile) && isTall() !== tall) { tall = isTall(); loadBoth(); }
+      };
       addEventListener('resize', onResize);
     });
 
@@ -108,7 +117,7 @@ export default function Nightfall({ data }) {
       <section id="nightfall" ref={root} className="nightfall" data-pin>
         <div className="dissolveWrap" data-edit="noite.day">
           <canvas className="dissolve" aria-hidden="true" />
-          <img className="dissolve-fallback" src={data.night} alt="" loading="lazy" decoding="async" />
+          <Pic className="dissolve-fallback" src={data.night} mobile={data.night_mobile} loading="lazy" />
         </div>
         <div className="nf-text">
           <p className="nf-kicker" data-edit="noite.kicker">{data.kicker}</p>

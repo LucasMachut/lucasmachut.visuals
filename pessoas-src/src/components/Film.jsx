@@ -6,6 +6,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Segments } from './Segments.jsx';
+import Pic, { isTall } from './Pic.jsx';
 import { pinPriority, scheduleRefresh } from './scroll.js';
 
 const ROMAN = ['Ⅰ', 'Ⅱ', 'Ⅲ', 'Ⅳ', 'Ⅴ', 'Ⅵ', 'Ⅶ', 'Ⅷ'];
@@ -24,6 +25,8 @@ export default function Film({ id, data, variant = 'dia' }) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isMobile = matchMedia('(max-width: 767px)').matches;
     const video = sec.querySelector('.filmVid');
+    // photo d'attente du film : version téléphone si l'écran est plus haut que large
+    if (video && data.poster_mobile && isTall()) video.poster = data.poster_mobile;
     const bar = sec.querySelector('.filmBar'), time = sec.querySelector('.filmTime');
     const ch = sec.querySelectorAll('.chapter'), roms = sec.querySelectorAll('.romNum');
     const q = sec.querySelector('.quote'), dark = sec.querySelector('.filmDark');
@@ -162,11 +165,11 @@ export default function Film({ id, data, variant = 'dia' }) {
           ? <video className="filmVid film-media" poster={data.poster} muted playsInline preload="auto" />
           : data.slides && data.slides.length
             ? data.slides.map((sl, i) => (
-              <img key={sl.src} className={`film-media film-slide${i === 0 ? ' is-on' : ''}`} src={sl.src} alt="" decoding="async"
+              <Pic key={sl.src} className={`film-media film-slide${i === 0 ? ' is-on' : ''}`} src={sl.src} mobile={sl.src_mobile}
                 style={slideCrop(sl.crop)}
                 loading={i < 2 ? 'eager' : 'lazy'} />
             ))
-            : <img className="film-media" src={data.poster} alt="" decoding="async" />}
+            : <Pic className="film-media" src={data.poster} mobile={data.poster_mobile} />}
         {data.frames && <canvas className="film-media film-canvas" hidden aria-hidden="true" />}
         {night && <div className="filmDark" />}
         {data.chapters.map((c, i) => (
